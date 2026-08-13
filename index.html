@@ -5605,7 +5605,7 @@ function fetchAndRenderUploadedHTML(sub, unit, targetSubchapter, data) {
   }
 
   toFetch.forEach(item => {
-    const url = 'https://raw.githubusercontent.com/montyheroism01-wq/test/main/' + item.url;
+    const url = 'https://raw.githubusercontent.com/montyheroism01-wq/test/main/' + encodeURI(item.url).replace(/#/g, '%23').replace(/\?/g, '%3F');
     fetch(url + '?v=' + Date.now())
       .then(r => {
         if (!r.ok) throw new Error("HTTP " + r.status);
