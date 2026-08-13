@@ -5621,11 +5621,10 @@ function injectUploadedHTMLSets(subject, targetUnitName, targetSubchapter) {
 
     const setList = subData[scName];
     setList.forEach(item => {
-      fetch(item.url + '?v=' + Date.now()).then(r => {
-        if (!r.ok) {
-          const rawUrl = `https://raw.githubusercontent.com/montyheroism01-wq/test/main/` + item.url;
-          return fetch(rawUrl);
-        }
+      const rawUrl = `https://raw.githubusercontent.com/montyheroism01-wq/test/main/` + item.url;
+      
+      fetch(rawUrl + '?v=' + Date.now()).then(r => {
+        if (!r.ok) return fetch(item.url + '?v=' + Date.now());
         return r;
       }).then(r => r.text()).then(htmlText => {
         const match = htmlText.match(/const\s+QUIZ_DATA\s*=\s*(\{[\s\S]*?\})\s*;/);
