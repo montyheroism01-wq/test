@@ -1231,9 +1231,13 @@ function selectDiff(el){ document.querySelectorAll('.diff-btn').forEach(b=>b.cla
 // Check if an HTML file exists and trigger a callback
 function checkUploadedHTML(subject, cls, unit, subchapter, callback) {
   const capSub = subject.charAt(0).toUpperCase() + subject.slice(1);
+  const encUnit = encodeURIComponent(unit);
+  const encSub = encodeURIComponent(subchapter);
+  
   const basePaths = [
     `assets/upload/${capSub}/Class ${cls}/${unit}/${subchapter}/`,
-    `upload/${capSub}/Class ${cls}/${unit}/${subchapter}/`
+    `upload/${capSub}/Class ${cls}/${unit}/${subchapter}/`,
+    `https://raw.githubusercontent.com/montyheroism01-wq/test/main/assets/upload/${capSub}/Class%20${cls}/${encUnit}/${encSub}/`
   ];
   
   basePaths.forEach(basePath => {
