@@ -5441,4 +5441,116 @@ function fetchSets(sub, unit = null, targetSubchapter = null) {
   xhr.send();
 }
 
+function renderSets(data, unit = null, targetSubchapter = null) {
+  const list = document.getElementById('setsList');
+  if (!list) return;
+  list.innerHTML = '';
+  
+  const hdrTitle = document.getElementById('setsHeaderTitle');
+  const hdrSub = document.getElementById('setsHeaderSub');
+  const subName = SUB_LABELS[curSubject] || curSubject;
+
+  if (hdrTitle) {
+    if (targetSubchapter) {
+      hdrTitle.textContent = targetSubchapter;
+      hdrSub.textContent = (unit ? unit.u : subName);
+    } else if (unit && unit !== 'mixed') {
+      hdrTitle.textContent = unit.u;
+      hdrSub.textContent = subName;
+    } else {
+      hdrTitle.textContent = subName + ' Sets';
+      hdrSub.textContent = 'Select a practice set to test your knowledge';
+    }
+  }
+
+  let sets = data.quiz_sets || [];
+  
+  if (targetSubchapter) {
+    sets = sets.filter(s => {
+      const sub = s.subchapter || s.chapter_name || '';
+      return sub.toLowerCase() === targetSubchapter.toLowerCase() ||
+             sub.replace('_', ' ').toLowerCase() === targetSubchapter.replace('_', ' ').toLowerCase();
+    });
+  } else if (unit && unit !== 'mixed') {
+    sets = sets.filter(s => {
+      const u = s.unit_name || s.unit || '';
+      return u.toLowerCase() === unit.u.toLowerCase();
+    });
+  }
+
+  if (sets.length === 0) {
+    list.innerHTML = `<div class="empty-msg">No practice sets available for this section yet.</div>`;
+    return;
+  }
+
+  sets.forEach((s, localIdx) => {
+    const qCount = s.questions ? s.questions.length : 0;
+    const localSetNum = localIdx + 1;
+    const globalIdx = (data.quiz_sets || []).indexOf(s);
+    const setIdx = globalIdx >= 0 ? globalIdx : localIdx;
+    
+    const recKey = `_nc_${curSubject}_${setIdx}`;
+    const rec = JSON.parse(localStorage.getItem(recKey) || 'null');
+    const acc = rec?.accuracy || 0, correct = rec?.correct || 0, total = rec?.total || qCount;
+    const isAttempted = !!(rec?.completed);
+
+    let tCls = '', tLbl = 'New', tbCls = '';
+    if (isAttempted) {
+      if (acc >= 80) { tCls = 'tier-green'; tLbl = 'Excellent'; tbCls = 'tier-badge-g'; }
+      else if (acc >= 60) { tCls = 'tier-purple'; tLbl = 'Good'; tbCls = 'tier-badge-p'; }
+      else if (acc >= 40) { tCls = 'tier-yellow'; tLbl = 'Fair'; tbCls = 'tier-badge-y'; }
+      else if (acc >= 20) { tCls = 'tier-orange'; tLbl = 'Poor'; tbCls = 'tier-badge-o'; }
+      else { tCls = 'tier-red'; tLbl = 'Retry'; tbCls = 'tier-badge-r'; }
+    }
+
+    const setName = (s.set_name && s.set_name !== "Practice Set" && s.set_name !== "Generated Practice Set") 
+      ? s.set_name 
+      : ((targetSubchapter || (unit ? unit.u : subName)) + " - Set " + localSetNum);
+
+    const card = document.createElement('div');
+    card.className = `set-card ${tCls}`;
+    card.setAttribute('data-setnum', localSetNum);
+    card.innerHTML = `
+      <div class="set-card-accent"></div>
+      <div class="set-card-top">
+        <div class="set-card-info">
+          <div class="set-badges">
+            <span class="set-badge">Set ${localSetNum}</span>
+            <span class="set-badge">${qCount} Qs</span>
+            ${isAttempted ? `<span class="set-badge ${tbCls}">${tLbl}</span>` : ''}
+          </div>
+          <div class="set-title">${setName}</div>
+          <div class="set-desc">${s.set_description || ('Practice questions for ' + (targetSubchapter || (unit ? unit.u : subName)))}</div>
+        </div>
+        <div class="set-chart" style="--p:${acc}">
+          <div class="set-chart-val">${isAttempted ? acc+'%' : qCount}</div>
+        </div>
+      </div>
+      <div class="set-progress-wrap">
+        <div class="set-progress-meta">
+          <span class="set-progress-score">${isAttempted ? `${correct}/${total} (${acc}%)` : 'Not attempted'}</span>
+          <span class="set-progress-cta">${isAttempted ? 'Tap for options' : 'Start →'}</span>
+        </div>
+        <div class="set-progress-track"><div class="set-progress-fill" style="width:${acc}%"></div></div>
+      </div>
+      ${isAttempted ? `<div class="analytics-bar">
+        <div class="anl-btn view" data-viewidx="${setIdx}">📊 View Analytics</div>
+        <div class="anl-btn" data-retryidx="${setIdx}">🔄 Test Again</div>
+      </div>` : ''}
+    `;
+
+    if (isAttempted) {
+      card.querySelector('.set-card-top').onclick = () => showAnalytics(setIdx);
+      const vBtn = card.querySelector('[data-viewidx]');
+      if (vBtn) vBtn.onclick = e => { e.stopPropagation(); showAnalytics(setIdx); };
+      const rBtn = card.querySelector('[data-retryidx]');
+      if (rBtn) rBtn.onclick = e => { e.stopPropagation(); startSetGame(data.quiz_sets[setIdx], setIdx); };
+    } else {
+      card.onclick = () => startSetGame(data.quiz_sets[setIdx], setIdx);
+    }
+
+    list.appendChild(card);
+  });
+}
+
 
