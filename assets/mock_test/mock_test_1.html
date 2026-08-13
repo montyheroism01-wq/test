@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEET Mock Test-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* DARK THEME (Cyber) */
+            --bg: #030712;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --card: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --marked: #8b5cf6;
+            --border: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00e5ff;
+            --neon-purple: #b388ff;
+        }
+
+        body.light {
+            /* LIGHT THEME (Professional) */
+            --bg: #f8fafc;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --neon-blue: #2563eb;
+            --neon-purple: #7c3aed;
+            --marked: #7c3aed;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); 
+            height: 100vh; height: 100dvh; display: flex; flex-direction: column; 
+            overflow: hidden; line-height: 1.5; 
+            transition: background 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 8px 16px; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 100; flex-shrink: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        body.light header { background: #fff; color: #000; border-bottom: 1.5px solid var(--border); }
+
+        .btn-theme { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 4px 8px; border-radius: 8px; color: #fff; font-size: 11px; cursor: pointer; }
+        body.light .btn-theme { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .btn-back { background: rgba(255,255,255,0.05); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: 1px solid var(--card-border); color: white; }
+        body.light .btn-back { background: #f1f5f9; color: #000; border-color: #cbd5e1; }
+        
+        .title { 
+            font-size: 14px; font-weight: 800; 
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        body.light .title { background: none; -webkit-text-fill-color: var(--primary); color: var(--primary); }
+        
+        .timer-box { 
+            background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 10px; 
+            font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--neon-blue);
+        }
+        body.light .timer-box { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; box-shadow: none; }
+
+        /* MAIN COLUMNAR LAYOUT */
+        main { 
+            flex: 1; display: flex; flex-direction: column; overflow: hidden; 
+            padding: 8px; gap: 8px; max-width: 600px; margin: 0 auto; width: 100%;
+        }
+
+        /* Progress Card - THIN */
+        .progress-card { 
+            background: var(--card); backdrop-filter: blur(10px);
+            padding: 8px 12px; border-radius: 12px; border: 1px solid var(--card-border); flex-shrink:0; 
+        }
+        .progress-container { 
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1); 
+            border-radius: 10px; margin: 4px 0; overflow: hidden; 
+        }
+        body.light .progress-container { background: #cbd5e1; }
+        .progress-fill { 
+            height: 100%; width: 0%; 
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: width 0.4s ease-out;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Question Section - Scrollable */
+        .q-section {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .q-card { 
+            background: var(--card); border-radius: 16px; padding: 16px; 
+            border: 1px solid var(--card-border); 
+            animation: fadeIn 0.4s ease-out;
+        }
+        body.light .q-card { box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .q-meta { font-size: 11px; font-weight: 800; color: var(--neon-blue); margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .q-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; }
+        
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .opt-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: all 0.2s;
+            text-align: left; font-size: 14px; font-weight: 500; color: var(--text-main);
+        }
+        body.light .opt-btn { background: #fff; }
+        .opt-btn.selected { 
+            border-color: var(--primary); background: rgba(99, 102, 241, 0.1); 
+            color: var(--text-main);
+        }
+        body.light .opt-btn.selected { background: #eff6ff; }
+        
+        .opt-letter { 
+            width: 24px; height: 24px; min-width: 24px; border-radius: 6px; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 12px; border: 1px solid var(--card-border);
+        }
+        body.light .opt-letter { background: #f1f5f9; }
+
+        /* PALETTE - COMPACT */
+        .palette-card { 
+            background: var(--card); border-radius: 16px; padding: 10px; 
+            border: 1px solid var(--card-border); flex-shrink: 0; 
+        }
+        .palette-head { font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; display: flex; justify-content: space-between; letter-spacing: 0.5px; }
+        
+        .sub-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 10px; scrollbar-width: none; }
+        .s-tab { 
+            white-space: nowrap; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); cursor: pointer; border: 1px solid transparent;
+        }
+        body.light .s-tab { background: #f1f5f9; }
+        .s-tab.active { background: rgba(99, 102, 241, 0.1); color: var(--neon-blue); border-color: var(--primary); }
+
+        .palette-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+        .p-btn { 
+            min-width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+            cursor: pointer; background: rgba(255,255,255,0.03); color: var(--text-sub);
+            transition: all 0.2s;
+        }
+        body.light .p-btn { background: #fff; border-color: #cbd5e1; }
+        
+        .p-btn.active { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0,229,255,0.05) !important; z-index: 10; transform: scale(1.1); }
+        .p-btn.answered { background: var(--success) !important; border-color: var(--success) !important; color: white !important; }
+        .p-btn.not-answered { background: var(--danger) !important; border-color: var(--danger) !important; color: white !important; }
+        .p-btn.marked { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; }
+        .p-btn.marked-answered { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; position: relative; }
+        .p-btn.marked-answered::after { 
+            content: '✓'; position: absolute; bottom: -2px; right: -2px; font-size: 8px; 
+            background: var(--success); width: 12px; height: 12px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--bg); 
+        }
+
+        /* LEGEND - Dots */
+        .legend { display: flex; justify-content: space-between; gap: 4px; border-top: 1px solid var(--card-border); padding-top: 8px; margin-top: 4px; }
+        .leg-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--text-sub); }
+        .leg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); }
+        body.light .leg-dot { border-color: rgba(0,0,0,0.1); }
+
+        /* ACTIONS FOOTER - COMPACT */
+        .actions {
+            background: var(--card); padding: 8px 16px; border-top: 1px solid var(--card-border);
+            display: flex; gap: 8px; flex-shrink: 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        .btn { flex: 1; padding: 10px 4px; border-radius: 12px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; }
+        .btn-outline { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--card-border); }
+        body.light .btn-outline { background: #fff; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+
+        /* RESULT VIEW stays full screen */
+        #resultView {
+            position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto;
+            padding: 20px 16px; display: none;
+        }
+        .res-hero { 
+            background: var(--card); border-radius: 24px; padding: 30px 20px; text-align: center; 
+            border: 1px solid var(--card-border); margin-bottom: 20px; 
+        }
+        body.light .res-hero { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+        .res-score { font-size: 48px; font-weight: 950; color: var(--text-main); }
+        .res-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+        .rs-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px; border: 1px solid var(--card-border); }
+        body.light .rs-item { background: #fff; }
+
+        .rs-val { font-size: 18px; font-weight: 800; display: block; color: var(--text-main); }
+        .rs-lbl { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-top: 2px; }
+
+        .rev-item { 
+            background: rgba(255,255,255,0.03); border-radius: 18px; padding: 16px; 
+            border: 1px solid var(--card-border); margin-bottom: 12px; 
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        body.light .rev-item { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+
+        .rev-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-main); line-height: 1.5; }
+        .rev-ans { padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 10px; border: 1px solid transparent; }
+        .rev-ans.correct { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.2); }
+        body.light .rev-ans.correct { background: #ecfdf5; color: #065f46; }
+
+        .rev-ans.wrong { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.2); }
+        body.light .rev-ans.wrong { background: #fef2f2; color: #991b1b; }
+
+        .rev-exp { font-size: 13px; color: var(--text-sub); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); }
+        body.light .rev-exp { background: #f8fafc; }
+
+        .hidden { display: none !important; }
+    </style>
+
+    <script>
+    // Auto theme sync from main app
+    (function(){
+      var th = localStorage.getItem('_th');
+      if(th === 'light'){
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+        // try data-theme too
+        document.body.dataset.theme = 'light';
+      } else {
+        document.body.dataset.theme = 'dark';
+      }
+    })();
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <button class="btn-back" onclick="handleExit()">✕</button>
+        <div class="title">NEET Premium Mock</div>
+    </div>
+    <div class="timer-box">
+        <span id="timerText">180:00</span>
+    </div>
+</header>
+
+<main id="examView">
+    <!-- Progress Section -->
+    <div class="progress-card" style="display:flex; align-items:center; gap:12px">
+        <div style="flex:1">
+            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--text-sub); margin-bottom:2px">
+                <span>PROGRESS</span>
+                <span id="progressText">0/180</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        <button class="btn-theme" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
+    </div>
+
+    <!-- Scrollable Question Area -->
+    <div class="q-section">
+        <div class="q-card">
+            <div class="q-meta">
+                <span id="qSubject" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:10px">Subject</span>
+                <span id="qCounter" style="color:var(--text-sub)">Question 1/180</span>
+            </div>
+            <div class="q-text" id="qText">Loading question...</div>
+            <div class="options-list" id="optionsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Fixed Status Area -->
+    <div class="palette-card">
+        <div class="palette-head">
+            Quick Palette
+            <span style="font-size:10px; color:var(--primary)">Slide to browse </span>
+        </div>
+        
+        <div class="sub-tabs">
+            <div class="s-tab active" onclick="jumpToSubject('Botany')">Botany</div>
+            <div class="s-tab" onclick="jumpToSubject('Zoology')">Zoology</div>
+            <div class="s-tab" onclick="jumpToSubject('Physics')">Physics</div>
+            <div class="s-tab" onclick="jumpToSubject('Chemistry')">Chemistry</div>
+        </div>
+
+        <div class="palette-scroll" id="paletteGrid"></div>
+        
+        <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,0.03); border:1px solid #555"></div> Not Visited</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div> Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--danger)"></div> Not Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--marked)"></div> Marked</div>
+        </div>
+    </div>
+</main>
+
+<footer class="actions" id="actionButtons">
+    <button class="btn btn-outline" style="flex:0.6" onclick="handleClear()">Clear</button>
+    <button class="btn btn-warning" onclick="handleMark()">Mark</button>
+    <button class="btn btn-primary" onclick="handleNext()">Save & Next</button>
+    <button class="btn btn-outline" id="btnSubmit" style="background:#1e293b; color:white; flex:0.4; display:none;" onclick="confirmSubmit()">Submit</button>
+</footer>
+
+<!-- RESULT VIEW -->
+<div id="resultView">
+    <div class="res-hero">
+        <div class="res-score" id="resScore">00</div>
+        <div class="res-lbl">Final NEET Score</div>
+        <div class="res-stats">
+            <div class="rs-item"><span class="rs-val" style="color:var(--success)" id="resCorrect">0</span><span class="rs-lbl">Correct</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--danger)" id="resWrong">0</span><span class="rs-lbl">Wrong</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--text-sub)" id="resSkipped">0</span><span class="rs-lbl">Skipped</span></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px; width:100%" onclick="window.close() || alert('Please use back button to exit.')">Close Result</button>
+    </div>
+    
+    <div id="reviewContainer">
+        <h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+    </div>
+</div>
+
+<script>
+    const QUESTIONS = [
+        // BOTANY (1-45)
+        
+        { sub:"Botany", q:"Which pigment is primarily responsible for photosynthesis?", opts:["Chlorophyll a", "Chlorophyll b", "Carotene", "Xanthophyll"], ans:0, exp:"Chlorophyll a is the primary pigment involved in photosynthesis." },
+
+{ sub:"Botany", q:"Which organelle is known as the powerhouse of the cell?", opts:["Nucleus", "Chloroplast", "Mitochondria", "Ribosome"], ans:2, exp:"Mitochondria produce ATP, hence called the powerhouse of the cell." },
+
+{ sub:"Botany", q:"Which plant hormone promotes cell elongation?", opts:["Cytokinin", "Auxin", "Ethylene", "ABA"], ans:1, exp:"Auxin promotes cell elongation in plants." },
+
+{ sub:"Botany", q:"Opening and closing of stomata is controlled by:", opts:["Guard cells", "Mesophyll cells", "Epidermal cells", "Xylem"], ans:0, exp:"Guard cells regulate stomatal movement." },
+
+{ sub:"Botany", q:"Which process converts glucose into pyruvate?", opts:["Photosynthesis", "Glycolysis", "Krebs cycle", "Fermentation"], ans:1, exp:"Glycolysis breaks glucose into pyruvate." },
+
+{ sub:"Botany", q:"Which tissue transports water in plants?", opts:["Phloem", "Xylem", "Parenchyma", "Collenchyma"], ans:1, exp:"Xylem transports water and minerals." },
+
+{ sub:"Botany", q:"Which plant hormone is responsible for fruit ripening?", opts:["Auxin", "Cytokinin", "Ethylene", "Gibberellin"], ans:2, exp:"Ethylene promotes fruit ripening." },
+
+{ sub:"Botany", q:"Which phase is longest in cell cycle?", opts:["G1", "S", "G2", "M"], ans:0, exp:"G1 phase is usually the longest phase." },
+
+{ sub:"Botany", q:"Which structure is absent in prokaryotic cells?", opts:["Cell wall", "Ribosome", "Nucleus", "Plasma membrane"], ans:2, exp:"Prokaryotes lack a true nucleus." },
+
+{ sub:"Botany", q:"Which enzyme fixes CO2 in Calvin cycle?", opts:["PEP carboxylase", "RuBisCO", "ATP synthase", "DNA polymerase"], ans:1, exp:"RuBisCO fixes CO2 in Calvin cycle." },
+
+{ sub:"Botany", q:"Which mineral is part of chlorophyll?", opts:["Iron", "Magnesium", "Calcium", "Potassium"], ans:1, exp:"Magnesium is central atom in chlorophyll." },
+
+{ sub:"Botany", q:"Which type of RNA carries amino acids?", opts:["mRNA", "tRNA", "rRNA", "snRNA"], ans:1, exp:"tRNA carries amino acids to ribosome." },
+
+{ sub:"Botany", q:"Which structure stores genetic material?", opts:["Golgi body", "Nucleus", "Mitochondria", "Lysosome"], ans:1, exp:"Nucleus contains DNA." },
+
+{ sub:"Botany", q:"Which is a C4 plant?", opts:["Wheat", "Rice", "Maize", "Barley"], ans:2, exp:"Maize is a C4 plant." },
+
+{ sub:"Botany", q:"Which vitamin is synthesized by plants?", opts:["Vitamin C", "Vitamin D", "Vitamin B12", "Vitamin K"], ans:0, exp:"Plants synthesize Vitamin C." },
+
+{ sub:"Botany", q:"Which gas is released during photosynthesis?", opts:["CO2", "O2", "N2", "H2"], ans:1, exp:"Oxygen is released in photosynthesis." },
+
+{ sub:"Botany", q:"Which structure forms spindle fibers?", opts:["Centrosome", "Nucleus", "Golgi", "Ribosome"], ans:0, exp:"Centrosome forms spindle fibers." },
+
+{ sub:"Botany", q:"Which type of reproduction involves one parent?", opts:["Sexual", "Asexual", "Binary fission", "Meiosis"], ans:1, exp:"Asexual reproduction involves one parent." },
+
+{ sub:"Botany", q:"Which enzyme unwinds DNA?", opts:["Ligase", "Helicase", "Polymerase", "Topoisomerase"], ans:1, exp:"Helicase unwinds DNA strands." },
+
+{ sub:"Botany", q:"Which structure protects plant cells?", opts:["Cell membrane", "Cell wall", "Cytoplasm", "Vacuole"], ans:1, exp:"Cell wall provides protection." },
+
+{ sub:"Botany", q:"Which phase involves chromosome alignment?", opts:["Prophase", "Metaphase", "Anaphase", "Telophase"], ans:1, exp:"Chromosomes align at equator in metaphase." },
+
+{ sub:"Botany", q:"Which element is essential for nitrogen fixation?", opts:["Iron", "Molybdenum", "Calcium", "Sulfur"], ans:1, exp:"Molybdenum is required for nitrogenase enzyme." },
+
+{ sub:"Botany", q:"Which plant tissue is dead?", opts:["Phloem", "Xylem", "Parenchyma", "Collenchyma"], ans:1, exp:"Xylem consists of dead cells." },
+
+{ sub:"Botany", q:"Which organelle modifies proteins?", opts:["Ribosome", "Golgi apparatus", "Mitochondria", "Chloroplast"], ans:1, exp:"Golgi modifies and packages proteins." },
+
+{ sub:"Botany", q:"Which part absorbs water in plants?", opts:["Stem", "Leaves", "Root hairs", "Xylem"], ans:2, exp:"Root hairs absorb water." },
+
+{ sub:"Botany", q:"Which molecule stores energy?", opts:["DNA", "RNA", "ATP", "Glucose"], ans:2, exp:"ATP is energy currency of cell." },
+
+{ sub:"Botany", q:"Which kingdom includes algae?", opts:["Plantae", "Fungi", "Protista", "Monera"], ans:2, exp:"Algae belong to Protista." },
+
+{ sub:"Botany", q:"Which structure synthesizes proteins?", opts:["Golgi", "Ribosome", "Mitochondria", "Lysosome"], ans:1, exp:"Ribosomes synthesize proteins." },
+
+{ sub:"Botany", q:"Which is the unit of inheritance?", opts:["Chromosome", "Gene", "DNA", "RNA"], ans:1, exp:"Gene is basic unit of inheritance." },
+
+{ sub:"Botany", q:"Which hormone inhibits growth?", opts:["Auxin", "Cytokinin", "ABA", "Gibberellin"], ans:2, exp:"ABA inhibits growth." },
+
+{ sub:"Botany", q:"Which cycle produces NADH and FADH2?", opts:["Calvin cycle", "Krebs cycle", "Glycolysis", "ETS"], ans:1, exp:"Krebs cycle produces NADH and FADH2." },
+
+{ sub:"Botany", q:"Which plant shows double fertilization?", opts:["Gymnosperms", "Angiosperms", "Algae", "Fungi"], ans:1, exp:"Double fertilization occurs in angiosperms." },
+
+{ sub:"Botany", q:"Which type of venation in monocots?", opts:["Reticulate", "Parallel", "Dichotomous", "None"], ans:1, exp:"Monocots show parallel venation." },
+
+{ sub:"Botany", q:"Which enzyme synthesizes DNA?", opts:["Helicase", "Ligase", "DNA polymerase", "Primase"], ans:2, exp:"DNA polymerase synthesizes DNA." },
+
+{ sub:"Botany", q:"Which pigment protects from photooxidation?", opts:["Chlorophyll", "Carotenoids", "Phycoerythrin", "Phycocyanin"], ans:1, exp:"Carotenoids protect from photooxidation." },
+
+{ sub:"Botany", q:"Which part is edible in potato?", opts:["Root", "Stem", "Leaf", "Flower"], ans:1, exp:"Potato is modified stem." },
+
+{ sub:"Botany", q:"Which transport is against gradient?", opts:["Passive", "Active", "Diffusion", "Osmosis"], ans:1, exp:"Active transport moves against gradient." },
+
+{ sub:"Botany", q:"Which tissue conducts food?", opts:["Xylem", "Phloem", "Cambium", "Epidermis"], ans:1, exp:"Phloem transports food." },
+
+{ sub:"Botany", q:"Which is site of photosynthesis?", opts:["Mitochondria", "Chloroplast", "Nucleus", "Golgi"], ans:1, exp:"Photosynthesis occurs in chloroplast." },
+
+{ sub:"Botany", q:"Which is a living tissue?", opts:["Xylem", "Phloem", "Sclerenchyma", "Cork"], ans:1, exp:"Phloem is living tissue." },
+
+{ sub:"Botany", q:"Which phase has DNA duplication?", opts:["G1", "S", "G2", "M"], ans:1, exp:"DNA replicates in S phase." },
+
+{ sub:"Botany", q:"Which is unit membrane?", opts:["Trilaminar", "Bilayer", "Single layer", "None"], ans:1, exp:"Membrane is lipid bilayer." },
+
+{ sub:"Botany", q:"Which plant hormone delays senescence?", opts:["Ethylene", "ABA", "Cytokinin", "Auxin"], ans:2, exp:"Cytokinin delays aging." },
+
+{ sub:"Botany", q:"Which organelle contains enzymes for digestion?", opts:["Lysosome", "Golgi", "Ribosome", "ER"], ans:0, exp:"Lysosomes contain digestive enzymes." },
+
+{ sub:"Botany", q:"Which cycle is light independent?", opts:["Light reaction", "Calvin cycle", "ETS", "Glycolysis"], ans:1, exp:"Calvin cycle is light independent." },
+
+        // ZOOLOGY (46-90)
+        { sub:"Zoology", q:"Which vitamin is essential for blood clotting?", opts:["Vitamin A", "Vitamin B", "Vitamin K", "Vitamin D"], ans:2, exp:"Vitamin K is essential for synthesis of clotting factors." },
+
+{ sub:"Zoology", q:"Which part of brain controls balance?", opts:["Cerebrum", "Cerebellum", "Medulla", "Hypothalamus"], ans:1, exp:"Cerebellum maintains posture and balance." },
+
+{ sub:"Zoology", q:"Which blood cells carry oxygen?", opts:["WBC", "RBC", "Platelets", "Plasma"], ans:1, exp:"RBCs contain hemoglobin which carries oxygen." },
+
+{ sub:"Zoology", q:"Functional unit of kidney is:", opts:["Neuron", "Nephron", "Alveoli", "Glomerulus"], ans:1, exp:"Nephron is the functional unit of kidney." },
+
+{ sub:"Zoology", q:"Which hormone regulates blood sugar?", opts:["Insulin", "Thyroxine", "Adrenaline", "Estrogen"], ans:0, exp:"Insulin regulates blood glucose levels." },
+
+{ sub:"Zoology", q:"Which enzyme digests proteins in stomach?", opts:["Amylase", "Pepsin", "Lipase", "Trypsin"], ans:1, exp:"Pepsin digests proteins in acidic medium." },
+
+{ sub:"Zoology", q:"Which organ produces bile?", opts:["Pancreas", "Liver", "Gall bladder", "Stomach"], ans:1, exp:"Liver produces bile." },
+
+{ sub:"Zoology", q:"Which structure filters blood in kidney?", opts:["Loop of Henle", "Glomerulus", "Ureter", "Tubule"], ans:1, exp:"Glomerulus filters blood." },
+
+{ sub:"Zoology", q:"Which hormone controls metamorphosis in frog?", opts:["Insulin", "Thyroxine", "Testosterone", "Estrogen"], ans:1, exp:"Thyroxine controls metamorphosis." },
+
+{ sub:"Zoology", q:"Which gas is transported by hemoglobin?", opts:["CO2", "O2", "N2", "H2"], ans:1, exp:"Hemoglobin mainly transports oxygen." },
+
+{ sub:"Zoology", q:"Which type of immunity is inherited?", opts:["Acquired", "Innate", "Active", "Passive"], ans:1, exp:"Innate immunity is present from birth." },
+
+{ sub:"Zoology", q:"Which part of neuron receives impulses?", opts:["Axon", "Dendrite", "Cell body", "Synapse"], ans:1, exp:"Dendrites receive impulses." },
+
+{ sub:"Zoology", q:"Which vitamin deficiency causes rickets?", opts:["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], ans:3, exp:"Vitamin D deficiency causes rickets." },
+
+{ sub:"Zoology", q:"Which gland secretes growth hormone?", opts:["Thyroid", "Pituitary", "Adrenal", "Pancreas"], ans:1, exp:"Pituitary gland secretes growth hormone." },
+
+{ sub:"Zoology", q:"Which part of heart pumps oxygenated blood?", opts:["Right atrium", "Right ventricle", "Left atrium", "Left ventricle"], ans:3, exp:"Left ventricle pumps oxygenated blood." },
+
+{ sub:"Zoology", q:"Which organ helps in excretion of nitrogenous waste?", opts:["Lungs", "Kidney", "Skin", "Liver"], ans:1, exp:"Kidneys remove nitrogenous wastes." },
+
+{ sub:"Zoology", q:"Which molecule carries genetic information?", opts:["Protein", "DNA", "Lipid", "Carbohydrate"], ans:1, exp:"DNA carries genetic information." },
+
+{ sub:"Zoology", q:"Which blood group is universal donor?", opts:["A", "B", "AB", "O"], ans:3, exp:"O blood group is universal donor." },
+
+{ sub:"Zoology", q:"Which enzyme digests starch?", opts:["Pepsin", "Amylase", "Lipase", "Trypsin"], ans:1, exp:"Amylase digests starch." },
+
+{ sub:"Zoology", q:"Which part of eye controls light entry?", opts:["Lens", "Cornea", "Iris", "Retina"], ans:2, exp:"Iris regulates amount of light." },
+
+{ sub:"Zoology", q:"Which cell organelle produces ATP?", opts:["Nucleus", "Mitochondria", "Golgi", "ER"], ans:1, exp:"Mitochondria produce ATP." },
+
+{ sub:"Zoology", q:"Which hormone is called emergency hormone?", opts:["Insulin", "Adrenaline", "Thyroxine", "Progesterone"], ans:1, exp:"Adrenaline prepares body for emergency." },
+
+{ sub:"Zoology", q:"Which part connects muscles to bones?", opts:["Ligament", "Tendon", "Cartilage", "Joint"], ans:1, exp:"Tendons connect muscles to bones." },
+
+{ sub:"Zoology", q:"Which is smallest bone in human body?", opts:["Femur", "Stapes", "Humerus", "Radius"], ans:1, exp:"Stapes is smallest bone." },
+
+{ sub:"Zoology", q:"Which blood cells help in clotting?", opts:["RBC", "WBC", "Platelets", "Plasma"], ans:2, exp:"Platelets help in clotting." },
+
+{ sub:"Zoology", q:"Which vitamin deficiency causes scurvy?", opts:["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], ans:2, exp:"Vitamin C deficiency causes scurvy." },
+
+{ sub:"Zoology", q:"Which organ is responsible for detoxification?", opts:["Kidney", "Liver", "Heart", "Lungs"], ans:1, exp:"Liver detoxifies harmful substances." },
+
+{ sub:"Zoology", q:"Which part of ear maintains balance?", opts:["Cochlea", "Semicircular canals", "Eardrum", "Ossicles"], ans:1, exp:"Semicircular canals maintain balance." },
+
+{ sub:"Zoology", q:"Which process forms gametes?", opts:["Mitosis", "Meiosis", "Binary fission", "Budding"], ans:1, exp:"Meiosis produces gametes." },
+
+{ sub:"Zoology", q:"Which hormone regulates calcium?", opts:["Insulin", "Parathormone", "Thyroxine", "Estrogen"], ans:1, exp:"Parathormone regulates calcium levels." },
+
+{ sub:"Zoology", q:"Which organ pumps blood?", opts:["Lungs", "Heart", "Liver", "Kidney"], ans:1, exp:"Heart pumps blood." },
+
+{ sub:"Zoology", q:"Which part absorbs nutrients?", opts:["Stomach", "Small intestine", "Large intestine", "Esophagus"], ans:1, exp:"Small intestine absorbs nutrients." },
+
+{ sub:"Zoology", q:"Which is respiratory pigment?", opts:["Melanin", "Hemoglobin", "Keratin", "Collagen"], ans:1, exp:"Hemoglobin carries oxygen." },
+
+{ sub:"Zoology", q:"Which gland controls metabolism?", opts:["Pituitary", "Thyroid", "Adrenal", "Pancreas"], ans:1, exp:"Thyroid regulates metabolism." },
+
+{ sub:"Zoology", q:"Which nerve carries impulse away?", opts:["Sensory", "Motor", "Mixed", "Reflex"], ans:1, exp:"Motor neuron carries impulse away from CNS." },
+
+{ sub:"Zoology", q:"Which structure is basic unit of life?", opts:["Tissue", "Organ", "Cell", "System"], ans:2, exp:"Cell is basic unit of life." },
+
+{ sub:"Zoology", q:"Which vitamin helps in vision?", opts:["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], ans:0, exp:"Vitamin A is important for vision." },
+
+{ sub:"Zoology", q:"Which organ stores urine?", opts:["Kidney", "Bladder", "Ureter", "Liver"], ans:1, exp:"Urinary bladder stores urine." },
+
+{ sub:"Zoology", q:"Which hormone regulates water balance?", opts:["ADH", "Insulin", "Thyroxine", "Adrenaline"], ans:0, exp:"ADH controls water reabsorption." },
+
+{ sub:"Zoology", q:"Which part protects brain?", opts:["Skull", "Rib", "Spine", "Pelvis"], ans:0, exp:"Skull protects brain." },
+
+{ sub:"Zoology", q:"Which blood vessel carries oxygenated blood?", opts:["Vein", "Artery", "Capillary", "Venule"], ans:1, exp:"Arteries carry oxygenated blood." },
+
+{ sub:"Zoology", q:"Which enzyme digests fats?", opts:["Amylase", "Lipase", "Pepsin", "Trypsin"], ans:1, exp:"Lipase digests fats." },
+
+{ sub:"Zoology", q:"Which organ controls body temperature?", opts:["Heart", "Brain", "Skin", "Liver"], ans:2, exp:"Skin helps regulate temperature." },
+
+{ sub:"Zoology", q:"Which system transports oxygen?", opts:["Digestive", "Respiratory", "Circulatory", "Nervous"], ans:2, exp:"Circulatory system transports oxygen." },
+{ sub:"Zoology", q:"Which part of brain controls involuntary actions like breathing?", opts:["Cerebrum", "Cerebellum", "Medulla oblongata", "Hypothalamus"], ans:2, exp:"Medulla oblongata controls involuntary functions such as breathing and heartbeat." },
+
+        // PHYSICS (91-135)
+        { sub:"Physics", q:"SI unit of force is:", opts:["Newton", "Joule", "Watt", "Pascal"], ans:0, exp:"Force is measured in Newton (N)." },
+
+{ sub:"Physics", q:"Velocity is a:", opts:["Scalar", "Vector", "Constant", "Unit"], ans:1, exp:"Velocity has both magnitude and direction, so it is a vector." },
+
+{ sub:"Physics", q:"Acceleration due to gravity on Earth is:", opts:["9.8 m/s²", "10 m/s", "8.9 m/s²", "9 m/s"], ans:0, exp:"Standard value of g is 9.8 m/s²." },
+
+{ sub:"Physics", q:"Work done formula is:", opts:["F/d", "F×d", "d/F", "F+d"], ans:1, exp:"Work = Force × displacement." },
+
+{ sub:"Physics", q:"Unit of power is:", opts:["Joule", "Watt", "Newton", "Volt"], ans:1, exp:"Power is measured in Watt." },
+
+{ sub:"Physics", q:"Which law states F=ma?", opts:["Newton’s 1st law", "Newton’s 2nd law", "Newton’s 3rd law", "Law of gravitation"], ans:1, exp:"Newton’s second law states F=ma." },
+
+{ sub:"Physics", q:"Momentum is product of:", opts:["Mass & velocity", "Force & time", "Mass & acceleration", "Force & velocity"], ans:0, exp:"Momentum = mass × velocity." },
+
+{ sub:"Physics", q:"Unit of energy is:", opts:["Newton", "Joule", "Watt", "Pascal"], ans:1, exp:"Energy is measured in Joules." },
+
+{ sub:"Physics", q:"Kinetic energy formula is:", opts:["1/2 mv²", "mv", "mgh", "F×d"], ans:0, exp:"Kinetic energy = 1/2 mv²." },
+
+{ sub:"Physics", q:"Potential energy depends on:", opts:["Mass only", "Height only", "Mass & height", "Velocity"], ans:2, exp:"PE = mgh depends on mass and height." },
+
+{ sub:"Physics", q:"Unit of pressure is:", opts:["Newton", "Pascal", "Joule", "Watt"], ans:1, exp:"Pressure is measured in Pascal." },
+
+{ sub:"Physics", q:"Density formula is:", opts:["m×v", "m/v", "v/m", "mv²"], ans:1, exp:"Density = mass/volume." },
+
+{ sub:"Physics", q:"Speed of light is:", opts:["3×10^8 m/s", "3×10^6 m/s", "3×10^5 m/s", "3×10^7 m/s"], ans:0, exp:"Speed of light in vacuum is 3×10^8 m/s." },
+
+{ sub:"Physics", q:"Ohm’s law is:", opts:["V=IR", "P=VI", "E=mc²", "F=ma"], ans:0, exp:"Ohm’s law states V=IR." },
+
+{ sub:"Physics", q:"Unit of resistance is:", opts:["Volt", "Ampere", "Ohm", "Watt"], ans:2, exp:"Resistance is measured in Ohm." },
+
+{ sub:"Physics", q:"Current is flow of:", opts:["Electrons", "Protons", "Neutrons", "Atoms"], ans:0, exp:"Electric current is flow of electrons." },
+
+{ sub:"Physics", q:"Unit of current is:", opts:["Volt", "Ampere", "Ohm", "Watt"], ans:1, exp:"Current is measured in Ampere." },
+
+{ sub:"Physics", q:"Magnetic field is produced by:", opts:["Charge at rest", "Moving charge", "Neutron", "Proton"], ans:1, exp:"Moving charges produce magnetic field." },
+
+{ sub:"Physics", q:"Lens used to correct myopia:", opts:["Convex", "Concave", "Plane", "Cylindrical"], ans:1, exp:"Concave lens corrects myopia." },
+
+{ sub:"Physics", q:"Unit of frequency is:", opts:["Hertz", "Newton", "Joule", "Volt"], ans:0, exp:"Frequency is measured in Hertz." },
+
+{ sub:"Physics", q:"Time period formula is:", opts:["1/f", "f", "f²", "2f"], ans:0, exp:"Time period = 1/frequency." },
+
+{ sub:"Physics", q:"Wave speed formula is:", opts:["v=fλ", "v=f/λ", "v=λ/f", "v=f²λ"], ans:0, exp:"Wave speed = frequency × wavelength." },
+
+{ sub:"Physics", q:"Unit of charge is:", opts:["Coulomb", "Ampere", "Volt", "Ohm"], ans:0, exp:"Charge is measured in Coulomb." },
+
+{ sub:"Physics", q:"Capacitor stores:", opts:["Charge", "Energy", "Both", "None"], ans:2, exp:"Capacitor stores charge and energy." },
+
+{ sub:"Physics", q:"Mirror formula is:", opts:["1/f=1/v+1/u", "f=uv", "v=u+f", "f=u/v"], ans:0, exp:"Mirror formula relates object and image distances." },
+
+{ sub:"Physics", q:"Refractive index is:", opts:["c/v", "v/c", "c×v", "c+v"], ans:0, exp:"Refractive index = speed of light in vacuum/speed in medium." },
+
+{ sub:"Physics", q:"Unit of electric field is:", opts:["N/C", "J", "W", "V"], ans:0, exp:"Electric field is measured in N/C." },
+
+{ sub:"Physics", q:"Unit of capacitance is:", opts:["Farad", "Ohm", "Volt", "Ampere"], ans:0, exp:"Capacitance is measured in Farad." },
+
+{ sub:"Physics", q:"Transformer works on:", opts:["AC", "DC", "Both", "None"], ans:0, exp:"Transformer works only with AC." },
+
+{ sub:"Physics", q:"Which law explains conservation of charge?", opts:["Ohm’s law", "Kirchhoff’s law", "Newton’s law", "Faraday’s law"], ans:1, exp:"Kirchhoff’s law is based on conservation of charge." },
+
+{ sub:"Physics", q:"Unit of magnetic field is:", opts:["Tesla", "Weber", "Henry", "Volt"], ans:0, exp:"Magnetic field is measured in Tesla." },
+
+{ sub:"Physics", q:"Energy of photon is:", opts:["hf", "mc²", "mv²", "F×d"], ans:0, exp:"Photon energy = h×frequency." },
+
+{ sub:"Physics", q:"Photoelectric effect was explained by:", opts:["Newton", "Einstein", "Bohr", "Maxwell"], ans:1, exp:"Einstein explained photoelectric effect." },
+
+{ sub:"Physics", q:"Bohr model applies to:", opts:["Hydrogen atom", "All atoms", "Molecules", "Solids"], ans:0, exp:"Bohr model is valid for hydrogen-like atoms." },
+
+{ sub:"Physics", q:"Unit of work is:", opts:["Joule", "Watt", "Newton", "Pascal"], ans:0, exp:"Work is measured in Joule." },
+
+{ sub:"Physics", q:"Which is scalar quantity?", opts:["Force", "Velocity", "Speed", "Acceleration"], ans:2, exp:"Speed has only magnitude." },
+
+{ sub:"Physics", q:"Which device measures current?", opts:["Voltmeter", "Ammeter", "Galvanometer", "Thermometer"], ans:1, exp:"Ammeter measures current." },
+
+{ sub:"Physics", q:"Which device measures voltage?", opts:["Ammeter", "Voltmeter", "Ohmmeter", "Barometer"], ans:1, exp:"Voltmeter measures voltage." },
+
+{ sub:"Physics", q:"Unit of inductance is:", opts:["Henry", "Tesla", "Weber", "Farad"], ans:0, exp:"Inductance is measured in Henry." },
+
+{ sub:"Physics", q:"Which phenomenon causes rainbow?", opts:["Reflection", "Refraction", "Dispersion", "Diffraction"], ans:2, exp:"Rainbow is due to dispersion of light." },
+
+{ sub:"Physics", q:"Which force acts at a distance?", opts:["Friction", "Normal", "Gravitational", "Tension"], ans:2, exp:"Gravitational force acts without contact." },
+
+{ sub:"Physics", q:"Unit of angular velocity is:", opts:["rad/s", "m/s", "Hz", "s"], ans:0, exp:"Angular velocity is measured in rad/s." },
+
+{ sub:"Physics", q:"Escape velocity depends on:", opts:["Mass only", "Radius only", "Mass & radius", "Height"], ans:2, exp:"Escape velocity depends on mass and radius of planet." },
+
+{ sub:"Physics", q:"Which wave needs medium?", opts:["Light", "Sound", "Radio", "X-ray"], ans:1, exp:"Sound waves need medium to travel." },
+
+{ sub:"Physics", q:"Which quantity remains conserved in collision?", opts:["Energy only", "Momentum", "Velocity", "Force"], ans:1, exp:"Momentum is always conserved." },
+
+        // CHEMISTRY (136-180)
+        { sub:"Chemistry", q:"Atomic number represents:", opts:["Number of neutrons", "Number of protons", "Number of electrons + neutrons", "Mass number"], ans:1, exp:"Atomic number equals number of protons." },
+
+{ sub:"Chemistry", q:"pH of neutral solution is:", opts:["0", "7", "14", "1"], ans:1, exp:"Neutral solution has pH 7." },
+
+{ sub:"Chemistry", q:"Avogadro number is:", opts:["6.022×10^23", "3×10^8", "1.6×10^-19", "9.8"], ans:0, exp:"Avogadro number is 6.022×10^23." },
+
+{ sub:"Chemistry", q:"Which bond is strongest?", opts:["Ionic", "Covalent", "Hydrogen", "Van der Waals"], ans:1, exp:"Covalent bonds are strongest among given options." },
+
+{ sub:"Chemistry", q:"SI unit of concentration is:", opts:["mol/L", "mol/kg", "mol/m³", "g/L"], ans:2, exp:"SI unit is mol/m³." },
+
+{ sub:"Chemistry", q:"Which gas is ideal?", opts:["O2", "H2", "N2", "None"], ans:3, exp:"Ideal gas is hypothetical, no real gas is perfectly ideal." },
+
+{ sub:"Chemistry", q:"Oxidation is:", opts:["Gain of electrons", "Loss of electrons", "Gain of proton", "Loss of neutron"], ans:1, exp:"Oxidation is loss of electrons." },
+
+{ sub:"Chemistry", q:"Reduction is:", opts:["Loss of electrons", "Gain of electrons", "Loss of proton", "Gain of neutron"], ans:1, exp:"Reduction is gain of electrons." },
+
+{ sub:"Chemistry", q:"Which element has highest electronegativity?", opts:["Oxygen", "Fluorine", "Chlorine", "Nitrogen"], ans:1, exp:"Fluorine is most electronegative." },
+
+{ sub:"Chemistry", q:"Which is strongest acid?", opts:["HCl", "H2SO4", "HNO3", "HF"], ans:1, exp:"H2SO4 is strongest among given." },
+
+{ sub:"Chemistry", q:"Which is a noble gas?", opts:["Oxygen", "Nitrogen", "Helium", "Hydrogen"], ans:2, exp:"Helium is noble gas." },
+
+{ sub:"Chemistry", q:"Which orbital has highest energy?", opts:["s", "p", "d", "f"], ans:3, exp:"Energy increases from s to f." },
+
+{ sub:"Chemistry", q:"Molarity is:", opts:["mol/kg", "mol/L", "g/L", "mol/m³"], ans:1, exp:"Molarity = moles per liter." },
+
+{ sub:"Chemistry", q:"Which law states PV=nRT?", opts:["Boyle's law", "Charles law", "Ideal gas law", "Dalton law"], ans:2, exp:"PV=nRT is ideal gas equation." },
+
+{ sub:"Chemistry", q:"Which is reducing agent?", opts:["Gains electrons", "Loses electrons", "Gains proton", "Loses neutron"], ans:1, exp:"Reducing agent donates electrons." },
+
+{ sub:"Chemistry", q:"Which compound shows hydrogen bonding?", opts:["CH4", "NH3", "CO2", "HCl"], ans:1, exp:"NH3 forms hydrogen bonds." },
+
+{ sub:"Chemistry", q:"Which metal is liquid at room temp?", opts:["Iron", "Mercury", "Sodium", "Copper"], ans:1, exp:"Mercury is liquid metal." },
+
+{ sub:"Chemistry", q:"Which gas is used in photosynthesis?", opts:["O2", "CO2", "N2", "H2"], ans:1, exp:"CO2 is used in photosynthesis." },
+
+{ sub:"Chemistry", q:"Which element is most abundant?", opts:["Oxygen", "Hydrogen", "Carbon", "Nitrogen"], ans:0, exp:"Oxygen is most abundant in Earth's crust." },
+
+{ sub:"Chemistry", q:"Which is amphoteric oxide?", opts:["Na2O", "CaO", "Al2O3", "CO2"], ans:2, exp:"Al2O3 shows amphoteric nature." },
+
+{ sub:"Chemistry", q:"Which process is exothermic?", opts:["Melting", "Evaporation", "Combustion", "Sublimation"], ans:2, exp:"Combustion releases heat." },
+
+{ sub:"Chemistry", q:"Which is endothermic?", opts:["Combustion", "Freezing", "Photosynthesis", "Condensation"], ans:2, exp:"Photosynthesis absorbs energy." },
+
+{ sub:"Chemistry", q:"Which is strongest base?", opts:["NaOH", "KOH", "NH4OH", "Ca(OH)2"], ans:1, exp:"KOH is strongest among given." },
+
+{ sub:"Chemistry", q:"Which has highest boiling point?", opts:["H2O", "NH3", "HF", "CH4"], ans:0, exp:"Water has highest BP due to strong H-bonding." },
+
+{ sub:"Chemistry", q:"Which element is halogen?", opts:["Oxygen", "Fluorine", "Nitrogen", "Sulfur"], ans:1, exp:"Fluorine is halogen." },
+
+{ sub:"Chemistry", q:"Which is alkali metal?", opts:["Na", "Mg", "Al", "Ca"], ans:0, exp:"Na is alkali metal." },
+
+{ sub:"Chemistry", q:"Which bond involves electron sharing?", opts:["Ionic", "Covalent", "Metallic", "Hydrogen"], ans:1, exp:"Covalent bond involves sharing." },
+
+{ sub:"Chemistry", q:"Which has highest ionization energy?", opts:["Na", "Mg", "Cl", "Ne"], ans:3, exp:"Noble gases have highest IE." },
+
+{ sub:"Chemistry", q:"Which compound is organic?", opts:["NaCl", "CO2", "CH4", "H2O"], ans:2, exp:"CH4 is organic compound." },
+
+{ sub:"Chemistry", q:"Which functional group is alcohol?", opts:["-COOH", "-OH", "-NH2", "-CHO"], ans:1, exp:"Alcohol contains -OH group." },
+
+{ sub:"Chemistry", q:"Which is saturated hydrocarbon?", opts:["Alkene", "Alkyne", "Alkane", "Benzene"], ans:2, exp:"Alkanes are saturated." },
+
+{ sub:"Chemistry", q:"Which reaction is addition?", opts:["Substitution", "Elimination", "Addition", "Redox"], ans:2, exp:"Addition adds atoms to molecule." },
+
+{ sub:"Chemistry", q:"Which is aromatic compound?", opts:["Methane", "Ethene", "Benzene", "Ethyne"], ans:2, exp:"Benzene is aromatic." },
+
+{ sub:"Chemistry", q:"Which is isomerism?", opts:["Same formula different structure", "Different formula same structure", "Same structure", "None"], ans:0, exp:"Isomers have same formula but different structures." },
+
+{ sub:"Chemistry", q:"Which acid is organic?", opts:["HCl", "H2SO4", "CH3COOH", "HNO3"], ans:2, exp:"Acetic acid is organic." },
+
+{ sub:"Chemistry", q:"Which polymer is natural?", opts:["Nylon", "PVC", "Protein", "Polythene"], ans:2, exp:"Proteins are natural polymers." },
+
+{ sub:"Chemistry", q:"Which is biodegradable?", opts:["Plastic", "Glass", "Paper", "Metal"], ans:2, exp:"Paper is biodegradable." },
+
+{ sub:"Chemistry", q:"Which is electrolyte?", opts:["Sugar", "NaCl", "Urea", "Glucose"], ans:1, exp:"NaCl ionizes in solution." },
+
+{ sub:"Chemistry", q:"Which solution conducts electricity?", opts:["Sugar", "Alcohol", "Salt solution", "Distilled water"], ans:2, exp:"Salt solution conducts electricity." },
+
+{ sub:"Chemistry", q:"Which is buffer solution?", opts:["Strong acid", "Strong base", "Weak acid + salt", "Strong acid + base"], ans:2, exp:"Buffer resists pH change." },
+
+{ sub:"Chemistry", q:"Which is catalyst?", opts:["Consumed", "Increases rate", "Decreases rate", "None"], ans:1, exp:"Catalyst increases reaction rate." },
+
+{ sub:"Chemistry", q:"Which is oxidation number of O?", opts:["-2", "-1", "+1", "+2"], ans:0, exp:"Oxygen usually has -2 oxidation state." },
+
+{ sub:"Chemistry", q:"Which is strongest oxidizing agent?", opts:["Cl2", "F2", "Br2", "I2"], ans:1, exp:"Fluorine is strongest oxidizer." },
+
+{ sub:"Chemistry", q:"Which gas is greenhouse gas?", opts:["O2", "CO2", "N2", "H2"], ans:1, exp:"CO2 contributes to greenhouse effect." },
+
+{ sub:"Chemistry", q:"Which element forms maximum bonds?", opts:["Carbon", "Oxygen", "Nitrogen", "Hydrogen"], ans:0, exp:"Carbon shows tetravalency." },
+    ];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let status = new Array(QUESTIONS.length).fill('not-visited'); 
+    let timeLeft = 180 * 60; // 3 Hours
+    let timerInterval;
+
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        const isLight = document.body.classList.contains('light');
+        document.getElementById('themeToggleBtn').textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        localStorage.setItem('_th', isLight ? 'light' : 'dark');
+    }
+
+    function init() {
+        const savedTheme = localStorage.getItem('_th');
+        if (savedTheme === 'light') toggleTheme();
+
+        renderPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const h = Math.floor(timeLeft / 3600);
+            const m = Math.floor((timeLeft % 3600) / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerText').textContent = `${h > 0 ? h + ':' : ''}${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (timeLeft < 600) document.getElementById('timerText').style.color = '#ef4444';
+        }, 1000);
+    }
+
+    function renderPalette() {
+        const grid = document.getElementById('paletteGrid');
+        grid.innerHTML = '';
+        QUESTIONS.forEach((q, i) => {
+            const btn = document.createElement('div');
+            btn.className = `p-btn ${status[i]} ${i === currentIdx ? 'active' : ''}`;
+            btn.textContent = (i + 1).toString();
+            btn.id = `palBtn-${i}`;
+            btn.onclick = () => loadQuestion(i);
+            grid.appendChild(btn);
+        });
+        scrollPaletteToActive();
+        updateProgressBar();
+    }
+
+    function scrollPaletteToActive() {
+        const activeBtn = document.getElementById(`palBtn-${currentIdx}`);
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+
+    function updateProgressBar() {
+        const ans = status.filter(s => s === 'answered' || s === 'marked-answered').length;
+        const mark = status.filter(s => s === 'marked' || s === 'marked-answered').length;
+        const total = QUESTIONS.length;
+        const perc = (ans / total) * 100;
+        document.getElementById('progressBar').style.width = perc + '%';
+        document.getElementById('progressText').innerHTML = `<span>ANS: <b>${ans}</b></span> <span>MARKED: <b>${mark}</b></span> <span>TOTAL: <b>${total}</b></span>`;
+    }
+
+    function jumpToSubject(sub) {
+        const idx = QUESTIONS.findIndex(q => q.sub === sub);
+        if (idx !== -1) loadQuestion(idx);
+    }
+
+    function updateTabs() {
+        const sub = QUESTIONS[currentIdx].sub;
+        document.querySelectorAll('.s-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === sub);
+        });
+    }
+
+    function loadQuestion(idx) {
+        if (status[currentIdx] === 'not-visited') status[currentIdx] = 'not-answered';
+        currentIdx = idx;
+        const q = QUESTIONS[idx];
+        
+        document.getElementById('qSubject').textContent = q.sub;
+        document.getElementById('qCounter').textContent = `Question ${idx + 1}/${QUESTIONS.length}`;
+        document.getElementById('qText').innerHTML = q.q;
+        document.querySelector('.q-section').scrollTop = 0;
+
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        const letters = ['A','B','C','D'];
+        
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = `opt-btn ${userAnswers[idx] === i ? 'selected' : ''}`;
+            btn.innerHTML = `<div class="opt-letter">${letters[i]}</div> <span>${opt}</span>`;
+            btn.onclick = () => selectOption(i);
+            grid.appendChild(btn);
+        });
+
+        if (idx === QUESTIONS.length - 1) {
+            document.getElementById('btnSubmit').style.display = 'block';
+        }
+
+        updateTabs();
+        renderPalette();
+    }
+
+    function selectOption(optIdx) {
+        userAnswers[currentIdx] = optIdx;
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach((b, i) => b.classList.toggle('selected', i === optIdx));
+        
+        // Auto update status if marked, keep marked-answered
+        if (status[currentIdx] === 'marked' || status[currentIdx] === 'marked-answered') {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'answered';
+        }
+        renderPalette();
+    }
+
+    function handleClear() {
+        userAnswers[currentIdx] = null;
+        // If it was marked-answered, revert to marked. Otherwise not-answered.
+        status[currentIdx] = (status[currentIdx] === 'marked-answered') ? 'marked' : 'not-answered';
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach(b => b.classList.remove('selected'));
+        renderPalette();
+    }
+
+    function handleMark() {
+        if (userAnswers[currentIdx] !== null) {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'marked';
+        }
+        renderPalette();
+        if (currentIdx < QUESTIONS.length - 1) loadQuestion(currentIdx + 1);
+    }
+
+    function handleNext() {
+        if (userAnswers[currentIdx] === null && status[currentIdx] !== 'marked' && status[currentIdx] !== 'marked-answered') {
+            status[currentIdx] = 'not-answered';
+        }
+        if (currentIdx < QUESTIONS.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmSubmit();
+        }
+    }
+
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to submit the exam?")) {
+            submitExam();
+        }
+    }
+
+    function submitExam() {
+        clearInterval(timerInterval);
+        document.getElementById('examView').classList.add('hidden');
+        document.getElementById('actionButtons').classList.add('hidden');
+        document.getElementById('resultView').style.display = 'block';
+        renderResults();
+    }
+
+    function renderResults(filter = 'all') {
+        const container = document.getElementById('reviewContainer');
+        container.innerHTML = `<h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+            <div class="sub-tabs" style="margin-bottom:20px">
+                <div class="s-tab ${filter === 'all' ? 'active' : ''}" onclick="renderResults('all')">All</div>
+                <div class="s-tab ${filter === 'wrong' ? 'active' : ''}" onclick="renderResults('wrong')">Incorrect</div>
+                <div class="s-tab ${filter === 'correct' ? 'active' : ''}" onclick="renderResults('correct')">Correct</div>
+                <div class="s-tab ${filter === 'skipped' ? 'active' : ''}" onclick="renderResults('skipped')">Skipped</div>
+            </div>`;
+
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+
+        QUESTIONS.forEach((q, i) => {
+            if (userAnswers[i] === null) skipped++;
+            else if (userAnswers[i] === q.ans) correct++;
+            else wrong++;
+        });
+
+        const score = (correct * 4) - (wrong * 1);
+        document.getElementById('resScore').textContent = score;
+        document.getElementById('resCorrect').textContent = correct;
+        document.getElementById('resWrong').textContent = wrong;
+        document.getElementById('resSkipped').textContent = skipped;
+
+        QUESTIONS.forEach((q, i) => {
+            const isCorrect = userAnswers[i] === q.ans;
+            const isSkipped = userAnswers[i] === null;
+            
+            if (filter === 'wrong' && (isCorrect || isSkipped)) return;
+            if (filter === 'correct' && (!isCorrect || isSkipped)) return;
+            if (filter === 'skipped' && !isSkipped) return;
+
+            const item = document.createElement('div');
+            item.className = 'rev-item';
+            
+            let userAnsText = isSkipped ? 'Not Answered' : q.opts[userAnswers[i]];
+            let statusColor = isCorrect ? 'correct' : (isSkipped ? '' : 'wrong');
+            
+            item.innerHTML = `
+                <div class="rev-q"><span style="color:var(--text-sub)">#${i+1}</span> ${q.q}</div>
+                <div class="rev-ans ${statusColor}">
+                    <b>Your Answer:</b> ${userAnsText} ${isCorrect ? '✓' : ''}
+                </div>
+                ${!isCorrect ? `
+                <div class="rev-ans correct">
+                    <b>Correct Answer:</b> ${q.opts[q.ans]}
+                </div>` : ''}
+                <div class="rev-exp">
+                    <b>Explanation:</b> ${q.exp}
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function handleExit() {
+        if (confirm("Do you want to exit the mock test? Your progress will be lost.")) {
+            window.history.back();
+        }
+    }
+
+    init();
+</script>
+
+</body>
+</html>

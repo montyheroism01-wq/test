@@ -1,0 +1,984 @@
+Created At: 2026-08-10T21:29:56+05:30
+Completed At: 2026-08-10T21:29:58+05:30
+File Path: `file:///C:/Users/123/Desktop/assets/Neethome.html`
+Total Lines: 3463
+Total Bytes: 166032
+Showing lines 2500 to 3299
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+2500:             card.innerHTML = `
+2501:                 <div class="set-card-content">
+2502:                     <div class="set-info">
+2503:                         <div class="set-label-row">
+2504:                             <span class="set-tag">Set ${setIndex + 1}</span>
+2505:                             <span class="q-total">${chunk.length} MCQs</span>
+2506:                         </div>
+2507:                         <h3 class="set-title">${labels[subject]} Bookmarks</h3>
+2508:                         <p class="set-description">Collection of your bookmarked questions in ${labels[subject]}.</p>
+2509:                         
+2510:                         <div class="set-progress-row">
+2511:                             <div class="progress-meta">
+2512:                                 <span class="progress-score">${accuracy > 0 ? `${correctCount}/${totalCount} (${accuracy}%) Correct` : 'Not Attempted'}</span>
+2513:                                 <span class="retry-text">Practice Now ›</span>
+2514:                             </div>
+2515:                             <div class="mini-progress-track">
+2516:                                 <div class="mini-progress-fill" style="width: ${accuracy}%"></div>
+2517:                             </div>
+2518:                         </div>
+2519:                     </div>
+2520:                     <div class="set-chart-box">
+2521:                         <div class="circular-chart" style="--p: ${accuracy}">
+2522:                             <span class="percent-val">${accuracy > 0 ? accuracy + '%' : chunk.length}</span>
+2523:                             <div class="chart-badge">${accuracy > 0 ? tierLabel : 'SET'}</div>
+2524:                         </div>
+2525:                     </div>
+2526:                 </div>
+2527:             `;
+2528:             list.appendChild(card);
+2529:         }
+2530:     }
+2531: }
+2532: 
+2533: function startBookmarkSet(subject, setIndex) {
+2534:     const bms = getBookmarks().filter(q => q.cat === subject);
+2535:     const chunk = bms.slice(setIndex * 10, (setIndex * 10) + 10);
+2536:     
+2537:     gameQuestions = chunk;
+2538:     currentTotalQ = gameQuestions.length;
+2539:     activeSubject = subject;
+2540:     activeSetIndex = 'bm_' + setIndex; 
+2541:     
+2542:     qIndex = 0; score = 0; combo = 1; correct = 0; wrong = 0; skipped = 0; extraTimeNext = 0;
+2543:     userResponses = []; startTime = Date.now();
+2544:     
+2545:     updateScoreDisplay(); updateComboDisplay();
+2546:     showScreen('gameScreen');
+2547:     sfx.start();
+2548:     loadQuestion();
+2549: }
+2550: 
+2551: // ─────────────────────────────────────────────────────────────
+2552: // SKIP SYSTEM
+2553: // ─────────────────────────────────────────────────────────────
+2554: let skipped = 0;
+2555: 
+2556: function skipQuestion() {
+2557:     if (answered) return;
+2558:     answered = true;
+2559:     clearInterval(timer);
+2560:     skipped++;
+2561:     
+2562:     const qDuration = Math.round((Date.now() - qStartTime) / 1000);
+2563:     userResponses.push({ qIndex: qIndex, picked: -1, isCorrect: false, isSkipped: true, duration: qDuration });
+2564:     
+2565:     sfx.tick();
+2566:     const q = gameQuestions[qIndex];
+2567:     document.querySelectorAll('.opt-btn').forEach(b => {
+2568:         if (b.dataset.isCorrect === 'true') b.classList.add('reveal');
+2569:     });
+2570:     showFact(`⏩ Question Skipped. Correct: ${q.opts[q.ans]}`, false);
+2571:     document.getElementById('btnNextGame').classList.add('show');
+2572:     document.getElementById('btnSkipGame').classList.add('disabled');
+2573: }
+2574: 
+2575: // ─────────────────────────────────────────────────────────────
+2576: // GAME FUNCTIONS
+2577: // ─────────────────────────────────────────────────────────────
+2578: function shuffle(arr) {
+2579:     const a = [...arr];
+2580:     for (let i = a.length-1; i > 0; i--) {
+2581:         const j = Math.floor(Math.random()*(i+1));
+2582:         [a[i],a[j]] = [a[j],a[i]];
+2583:     }
+2584:     return a;
+2585: }
+2586: 
+2587: function startGame() {
+2588:     // Filter questions
+2589:     let pool = selectedCat === 'all' ? QUESTIONS : QUESTIONS.filter(q => q.cat === selectedCat);
+2590:     if (pool.length < 5) pool = QUESTIONS; // fallback
+2591:     
+2592:     // Only randomize the fallback pool
+2593:     pool = shuffle(pool);
+2594:     
+2595:     currentTotalQ = pool.length; // use full length (or limit to a max if you prefer, but user wants all)
+2596:     gameQuestions = pool; 
+2597:     timePerQ = DIFF[selectedDiff];
+2598: 
+2599:     qIndex  = 0;
+2600:     score   = 0;
+2601:     combo   = 1;
+2602:     correct = 0;
+2603:     wrong   = 0;
+2604:     skipped = 0;
+2605:     extraTimeNext = 0;
+2606: 
+2607:     updateScoreDisplay();
+2608:     updateComboDisplay();
+2609:     showScreen('gameScreen');
+2610:     sfx.start();
+2611:     loadQuestion();
+2612: }
+2613: 
+2614: function startSetGame(set, index) {
+2615:     activeSetIndex = index;
+2616:     activeSubject  = selectedCat;
+2617:     userResponses  = [];
+2618:     startTime      = Date.now();
+2619: 
+2620:     // Map the external JSON set to our internal question format
+2621:     let mappedQuestions = set.questions.map(q => {
+2622:         return {
+2623:             cat: activeSubject,
+2624:             q: q.question,
+2625:             opts: q.options,
+2626:             ans: q.answer,
+2627:             fact: q.explanation
+2628:         };
+2629:     });
+2630: 
+2631:     gameQuestions = shuffle(mappedQuestions); // Shuffle within the set
+2632:     currentTotalQ = gameQuestions.length; 
+2633:     timePerQ = DIFF[selectedDiff];
+2634: 
+2635:     qIndex  = 0;
+2636:     score   = 0;
+2637:     combo   = 1;
+2638:     correct = 0;
+2639:     wrong   = 0;
+2640:     skipped = 0;
+2641:     extraTimeNext = 0;
+2642: 
+2643:     updateScoreDisplay();
+2644:     updateComboDisplay();
+2645:     showScreen('gameScreen');
+2646:     sfx.start();
+2647:     loadQuestion();
+2648: }
+2649: 
+2650: // ─────────────────────────────────────────────────────────────
+2651: // NAVIGATION ENGINE — Professional Back-Stack Management
+2652: // ─────────────────────────────────────────────────────────────
+2653: 
+2654: const ALL_SCREENS = ['startScreen','setsScreen','gameScreen','resultScreen',
+2655:                      'bookmarksScreen','bookmarkSetsScreen','mockTestListScreen','pyqListScreen',
+2656:                      'revisionScreen','notesListScreen'];
+2657: 
+2658: // Per-screen refresh callbacks — called whenever a screen becomes visible
+2659: const screenRefresh = {
+2660:     setsScreen: () => {
+2661:         // Re-render the sets list so localStorage completion data is always fresh
+2662:         if (typeof currentSetData !== 'undefined' && currentSetData) {
+2663:             renderSets(currentSetData);
+2664:         }
+2665:     },
+2666:     bookmarkSetsScreen: () => {
+2667:         // Re-render bookmark sets to show updated progress/accuracy instantly
+2668:         if (typeof activeSubject !== 'undefined' && activeSubject) {
+2669:             renderBookmarkSets(activeSubject);
+2670:         }
+2671:     },
+2672:     startScreen: () => {
+2673:         // Stop any running timer when returning home
+2674:         clearInterval(timer);
+2675:     },
+2676:     resultScreen: () => {
+2677:         // Scroll to top whenever result is shown
+2678:         const rs = document.getElementById('resultScreen');
+2679:         if (rs) rs.scrollTop = 0;
+2680:     }
+2681: };
+2682: 
+2683: let adCounter = 0;
+2684: function showScreen(id, push = true) {
+2685:     if (id === 'resultScreen') {
+2686:         adCounter++;
+2687:         if (adCounter % 2 === 0) {
+2688:             try {
+2689:                 if (window.Android && typeof window.Android.showInterstitial === 'function') {
+2690:                     window.Android.showInterstitial();
+2691:                 }
+2692:             } catch (e) { console.error(e); }
+2693:         }
+2694:     }
+2695:     if (push) {
+2696:         history.pushState({ screenId: id }, '');
+2697:     }
+2698:     ALL_SCREENS.forEach(s => {
+2699:         document.getElementById(s).classList.toggle('hidden', s !== id);
+2700:     });
+2701:     // Fire refresh callback for this screen
+2702:     if (screenRefresh[id]) screenRefresh[id]();
+2703: }
+2704: 
+2705: // Initial history entry
+2706: if (!history.state || !history.state.screenId) {
+2707:     history.replaceState({ screenId: 'startScreen' }, '');
+2708: } else {
+2709:     // Restore the screen based on saved history state
+2710:     const id = history.state.screenId;
+2711:     if (id === 'notesListScreen') {
+2712:         const sId = sessionStorage.getItem('currentNotesSubjectId');
+2713:         const sName = sessionStorage.getItem('currentNotesSubjectName');
+2714:         if (sId && sName) {
+2715:             showNotesList(sId, sName, false);
+2716:         } else {
+2717:             showScreen('startScreen', false);
+2718:         }
+2719:     } else if (id === 'revisionScreen') {
+2720:         renderRevisionSubjects();
+2721:         showScreen('revisionScreen', false);
+2722:     } else {
+2723:         showScreen(id, false);
+2724:     }
+2725: }
+2726: 
+2727: window.onpopstate = function(event) {
+2728:     if (event.state && event.state.screenId) {
+2729:         const id = event.state.screenId;
+2730:         
+2731:         // State Guard: If attempting to go back to Game/Result without active session
+2732:         // This prevents "ghost" results/games from appearing on Back button after going home
+2733:         if ((id === 'gameScreen' || id === 'resultScreen') && activeSetIndex === -1) {
+2734:             showScreen('startScreen', false);
+2735:             return;
+2736:         }
+2737: 
+2738:         const currentlyVisible = ALL_SCREENS.find(s =>
+2739:             !document.getElementById(s).classList.contains('hidden'));
+2740:         if (currentlyVisible === 'gameScreen') {
+2741:             clearInterval(timer);
+2742:         }
+2743:         showScreen(id, false);
+2744:     } else {
+2745:         showScreen('startScreen', false);
+2746:     }
+2747: };
+2748: 
+2749: 
+2750: function loadQuestion() {
+2751:     clearInterval(timer);
+2752:     answered = false;
+2753: 
+2754:     const q = gameQuestions[qIndex];
+2755:     const CAT_LABELS = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry', physics_numericals:'Physics Numericals', chemistry_numericals:'Chemistry Numericals' };
+2756: 
+2757:     document.getElementById('qNumber').textContent    = `Q ${qIndex+1} / ${currentTotalQ}`;
+2758:     document.getElementById('qCategory').textContent  = CAT_LABELS[q.cat] || q.cat;
+2759:     document.getElementById('qText').innerHTML        = q.q;
+2760:     document.getElementById('progressBar').style.width = `${((qIndex)/currentTotalQ)*100}%`;
+2761:     document.getElementById('factBar').className      = 'fact-bar';
+2762:     document.getElementById('btnNextGame').classList.remove('show');
+2763:     document.getElementById('btnSkipGame').classList.remove('disabled');
+2764:     updateBookmarkUI();
+2765: 
+2766:     // Build options (shuffle display order)
+2767:     const optGrid = document.getElementById('optionsGrid');
+2768:     optGrid.innerHTML = '';
+2769:     const letters = ['A','B','C','D'];
+2770: 
+2771:     // Shuffle the options along with their index
+2772:     const indices = shuffle([0,1,2,3]);
+2773:     const corrDisplayIdx = indices.indexOf(q.ans); // display position of correct answer
+2774: 
+2775:     indices.forEach((origIdx, dispIdx) => {
+2776:         const btn = document.createElement('button');
+2777:         btn.className = 'opt-btn';
+2778:         btn.dataset.orig = origIdx;
+2779:         btn.dataset.isCorrect = (origIdx === q.ans);
+2780:         btn.innerHTML = `<div class="opt-letter">${letters[dispIdx]}</div> ${q.opts[origIdx]}`;
+2781:         btn.onclick = () => handleAnswer(btn, origIdx === q.ans, q);
+2782:         optGrid.appendChild(btn);
+2783:     });
+2784: 
+2785:     // Start timer with extra time bonus if earned (capped at 360s maximum)
+2786:     const MAX_TIME_CAP = 360;
+2787:     const maxQTime = Math.min(timePerQ + extraTimeNext, MAX_TIME_CAP);
+2788:     timeLeft = maxQTime;
+2789:     qStartTime = Date.now(); // Record when question was shown
+2790: 
+2791:     updateTimer(timeLeft, maxQTime);
+2792:     timer = setInterval(() => {
+2793:         timeLeft--;
+2794:         updateTimer(timeLeft, maxQTime);
+2795:         if (timeLeft <= 3) sfx.tick();
+2796:         if (timeLeft <= 0) {
+2797:             clearInterval(timer);
+2798:             handleTimeout(q);
+2799:         }
+2800:     }, 1000);
+2801: }
+2802: 
+2803: function updateTimer(t, max) {
+2804:     const timerText = document.getElementById('timerText');
+2805:     const ring = document.getElementById('timerRing');
+2806:     const container = document.querySelector('.hud-timer-compact');
+2807: 
+2808:     timerText.textContent = t;
+2809:     const progress = (t / max) * 100;
+2810:     
+2811:     // SVG circular progress calculation: 2 * PI * R (R=15.9155) ≈ 100
+2812:     ring.style.strokeDasharray = `${progress}, 100`;
+2813: 
+2814:     // MAX REACH GAME ANIMATION CONDITION (When max capacity is 360s or time is >= 360s)
+2815:     if (max >= 360 || t >= 360) {
+2816:         if (container) container.classList.add('timer-max-active');
+2817:         ring.classList.add('timer-max-ring');
+2818:         timerText.classList.add('timer-max-text');
+2819:         ring.style.stroke = '';
+2820:         timerText.style.color = '';
+2821:         return;
+2822:     } else {
+2823:         if (container) container.classList.remove('timer-max-active');
+2824:         ring.classList.remove('timer-max-ring');
+2825:         timerText.classList.remove('timer-max-text');
+2826:     }
+2827: 
+2828:     const ratio = t/max;
+2829:     if (ratio > 0.5) {
+2830:         ring.style.stroke = '#10b981';
+2831:         timerText.style.color = '#10b981';
+2832:     } else if (ratio > 0.25) {
+2833:         ring.style.stroke = '#f59e0b';
+2834:         timerText.style.color = '#f59e0b';
+2835:     } else {
+2836:         ring.style.stroke = '#ef4444';
+2837:         timerText.style.color = '#ef4444';
+2838:     }
+2839: }
+2840: 
+2841: function handleAnswer(btn, isCorrect, q) {
+2842:     if (answered) return;
+2843:     answered = true;
+2844:     clearInterval(timer);
+2845: 
+2846:     const pickedIdx = parseInt(btn.dataset.orig);
+2847:     const qDuration = Math.round((Date.now() - qStartTime) / 1000);
+2848:     userResponses.push({ qIndex: qIndex, picked: pickedIdx, isCorrect: isCorrect, duration: qDuration });
+2849: 
+2850:     if (isCorrect) {
+2851:         sfx.correct();
+2852:         btn.classList.add('correct');
+2853:         combo = Math.min(combo + 1, 5);
+2854:         correct++;
+2855: 
+2856:         // Extra time for next question (capped at MAX_TIME_CAP = 360s)
+2857:         const MAX_TIME_CAP = 360;
+2858:         const maxExtraAllowed = Math.max(0, MAX_TIME_CAP - timePerQ);
+2859:         const baseBonus = Math.max(3, Math.round(timeLeft * combo * 0.5));
+2860:         extraTimeNext = Math.min(extraTimeNext + baseBonus, maxExtraAllowed);
+2861: 
+2862:         showFloatScore(`+${baseBonus}s ⏱️`, btn);
+2863:         showFact(`✔ Correct! (+${baseBonus}s Extra Time added)\n${q.fact}`, false);
+2864:     } else {
+2865:         sfx.wrong();
+2866:         btn.classList.add('wrong');
+2867:         combo = 1;
+2868:         wrong++;
+2869:         // Reveal correct
+2870:         document.querySelectorAll('.opt-btn').forEach(b => {
+2871:             if (b.dataset.isCorrect === 'true') b.classList.add('reveal');
+2872:         });
+2873:         showFact(`✗ Correct: ${q.opts[q.ans]}\n${q.fact}`, true);
+2874:     }
+2875: 
+2876:     updateScoreDisplay();
+2877:     updateComboDisplay();
+2878:     document.getElementById('btnNextGame').classList.add('show');
+2879:     document.getElementById('btnSkipGame').classList.add('disabled');
+2880: }
+2881: 
+2882: function handleTimeout(q) {
+2883:     if (answered) return;
+2884:     answered = true;
+2885:     sfx.wrong();
+2886:     const qDuration = timePerQ; // Timed out
+2887:     userResponses.push({ qIndex: qIndex, picked: -1, isCorrect: false, duration: qDuration });
+2888:     combo = 1;
+2889:     wrong++;
+2890:     // Reveal correct
+2891:     document.querySelectorAll('.opt-btn').forEach(b => {
+2892:         if (b.dataset.isCorrect === 'true') b.classList.add('reveal');
+2893:     });
+2894:     showFact(`⏰ Time's up! Correct: ${q.opts[q.ans]}. ${q.fact}`, true);
+2895:     updateComboDisplay();
+2896:     document.getElementById('btnNextGame').classList.add('show');
+2897:     document.getElementById('btnSkipGame').classList.add('disabled');
+2898: }
+2899: 
+2900: 
+2901: function showMaxReachToast() {
+2902:     const banner = document.createElement('div');
+2903:     banner.className = 'max-reach-banner';
+2904:     banner.innerHTML = `🔥 MAX TIME REACHED! 🔥<br><span style="font-size:12px; font-weight:800; opacity:0.95;">360s TIMER CAP UNLOCKED ⚡</span>`;
+2905:     document.body.appendChild(banner);
+2906:     
+2907:     try { if (typeof spawnConfetti === 'function') spawnConfetti(); } catch(e) {}
+2908:     try { sfx.start(); } catch(e) {}
+2909:     
+2910:     setTimeout(() => banner.remove(), 2200);
+2911: }
+2912: 
+2913: function showBonusTimeToast(sec) {
+2914:     const toast = document.createElement('div');
+2915:     toast.className = 'bonus-time-toast';
+2916:     toast.innerHTML = typeof sec === 'string' ? sec : `⚡ +${sec}s Extra Time Added!`;
+2917:     document.body.appendChild(toast);
+2918:     setTimeout(() => toast.remove(), 1800);
+2919: }
+2920: 
+2921: function showFact(text, isWrong) {
+2922:     const fb = document.getElementById('factBar');
+2923:     fb.innerHTML = text.replace(/\n/g, '<br>');
+2924:     fb.className = 'fact-bar show' + (isWrong ? ' wrong-fact' : '');
+2925: }
+2926: 
+2927: function nextQuestion() {
+2928:     qIndex++;
+2929:     if (qIndex >= gameQuestions.length) {
+2930:         endGame();
+2931:     } else {
+2932:         loadQuestion();
+2933:     }
+2934: }
+2935: 
+2936: function endGame() {
+2937:     clearInterval(timer);
+2938:     sfx.end();
+2939:     
+2940:     const timeTakenSec = Math.round((Date.now() - startTime) / 1000);
+2941:     const skippedCount = typeof skipped !== 'undefined' ? skipped : 0;
+2942:     const un = currentTotalQ - correct - wrong - skippedCount;
+2943:     const neetScore = (correct * 4) - (wrong * 1);
+2944:     const acc = Math.round((correct / currentTotalQ) * 100);
+2945:     const avgSpeed = (timeTakenSec / currentTotalQ).toFixed(1);
+2946: 
+2947:     // Save completion to localStorage
+2948:     if (activeSetIndex !== -1 && activeSubject !== '') {
+2949:         const recordKey = `neet_comp_${activeSubject.toLowerCase()}_${activeSetIndex}`;
+2950:         localStorage.setItem(recordKey, JSON.stringify({ 
+2951:             completed: true, 
+2952:             accuracy: acc, 
+2953:             correct: correct, 
+2954:             total: currentTotalQ 
+2955:         }));
+2956:     }
+2957: 
+2958:     // Grade Tier
+2959:     const CAT_LABELS = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry' };
+2960:     let grade, gradeColor, feedbackMsg;
+2961:     if      (acc >= 95) { grade = 'S'; gradeColor = '#fbbf24'; feedbackMsg = 'Legendary! You are NEET-ready!'; }
+2962:     else if (acc >= 80) { grade = 'A'; gradeColor = '#10b981'; feedbackMsg = 'Excellent! Outstanding accuracy!'; }
+2963:     else if (acc >= 65) { grade = 'B'; gradeColor = '#00e5ff'; feedbackMsg = 'Good job! Keep polishing!'; }
+2964:     else if (acc >= 50) { grade = 'C'; gradeColor = '#f59e0b'; feedbackMsg = 'Fair attempt. More practice needed!'; }
+2965:     else if (acc >= 30) { grade = 'D'; gradeColor = '#f97316'; feedbackMsg = 'Keep going! Review concepts.'; }
+2966:     else                { grade = 'F'; gradeColor = '#ef4444'; feedbackMsg = "Don't give up! Start fresh!"; }
+2967: 
+2968:     // Basic text
+2969:     document.getElementById('resSubject').textContent = CAT_LABELS[activeSubject.toLowerCase()] || activeSubject || 'Practice';
+2970:     document.getElementById('resScoreText').textContent = `${correct}/${currentTotalQ}`;
+2971:     document.getElementById('statNeetScore').textContent = neetScore > 0 ? '+' + neetScore : neetScore;
+2972:     document.getElementById('statAvgSpeed').textContent = `${avgSpeed}s`;
+2973:     document.getElementById('statCorrectCount').textContent = correct;
+2974:     document.getElementById('statWrongCount').textContent = wrong;
+2975:     document.getElementById('legCorrect').textContent = correct;
+2976:     document.getElementById('legWrong').textContent = wrong;
+2977:     document.getElementById('legUn').textContent = skippedCount + un;
+2978:     document.getElementById('heatmapCount').textContent = `${currentTotalQ} Questions`;
+2979:     document.getElementById('reviewCount').textContent = `${userResponses.length} Items`;
+2980: 
+2981:     // Grade badge
+2982:     const gradeEl = document.getElementById('resGrade');
+2983:     gradeEl.textContent = grade;
+2984:     gradeEl.style.cssText = `background:linear-gradient(135deg,#fff 30%,${gradeColor} 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:42px;font-weight:950;line-height:1;`;
+2985: 
+2986:     // Accuracy pill
+2987:     const accPill = document.getElementById('resAccPill');
+2988:     accPill.textContent = `${acc}% Accuracy`;
+2989:     accPill.style.cssText = `background:${gradeColor}26;color:${gradeColor};border:1px solid ${gradeColor}40;padding:5px 16px;border-radius:20px;font-size:14px;font-weight:900;`;
+2990:     document.getElementById('resFeedback').textContent = feedbackMsg;
+2991: 
+2992:     // Radial ring
+2993:     const ringFill = document.getElementById('resRingFill');
+2994:     const ringCircum = 427.3;
+2995:     ringFill.style.stroke = gradeColor;
+2996:     ringFill.setAttribute('filter', `drop-shadow(0 0 6px ${gradeColor})`);
+2997:     ringFill.style.strokeDasharray = `0 ${ringCircum}`;
+2998:     setTimeout(() => {
+2999:         ringFill.style.transition = 'stroke-dasharray 1.6s cubic-bezier(0.4,0,0.2,1)';
+3000:         ringFill.style.strokeDasharray = `${(acc / 100) * ringCircum} ${ringCircum}`;
+3001:     }, 200);
+3002: 
+3003:     // Donut chart (circumference = 2 * PI * 48 ~= 301.6)
+3004:     const C = 301.6;
+3005:     const dashC = (correct / currentTotalQ) * C;
+3006:     const dashW = (wrong / currentTotalQ) * C;
+3007:     const dashU = C - dashC - dashW;
+3008:     document.getElementById('donutPct').textContent = acc + '%';
+3009:     setTimeout(() => {
+3010:         const dc = document.getElementById('donutCorrect');
+3011:         const dw = document.getElementById('donutWrong');
+3012:         const du = document.getElementById('donutSkipped');
+3013:         if (dc) { dc.setAttribute('stroke-dasharray', `${dashC} ${C}`); dc.setAttribute('stroke-dashoffset','0'); }
+3014:         setTimeout(() => {
+3015:             if (dw) { dw.setAttribute('stroke-dasharray', `${dashW} ${C}`); dw.setAttribute('stroke-dashoffset', `-${dashC}`); }
+3016:             setTimeout(() => {
+3017:                 if (du) { du.setAttribute('stroke-dasharray', `${dashU} ${C}`); du.setAttribute('stroke-dashoffset', `-${dashC + dashW}`); }
+3018:             }, 200);
+3019:         }, 200);
+3020:     }, 300);
+3021: 
+3022:     // Question Heatmap
+3023:     const heatmapGrid = document.getElementById('heatmapGrid');
+3024:     heatmapGrid.innerHTML = '';
+3025:     userResponses.forEach((res, i) => {
+3026:         const cell = document.createElement('div');
+3027:         let cls = 'hmap-cell ';
+3028:         if (res.isCorrect) cls += 'correct';
+3029:         else if (res.isSkipped) cls += 'skipped';
+3030:         else if (res.picked === -1) cls += 'timeout';
+3031:         else cls += 'wrong';
+3032:         cell.className = cls;
+3033:         cell.textContent = i + 1;
+3034:         cell.title = `Q${i+1}: ${res.isCorrect?'Correct':res.isSkipped?'Skipped':'Wrong'} (${res.duration}s)`;
+3035:         heatmapGrid.appendChild(cell);
+3036:     });
+3037: 
+3038:     // Time Bars
+3039:     const timeBars = document.getElementById('timeBars');
+3040:     timeBars.innerHTML = '';
+3041:     const midQ = Math.ceil(userResponses.length / 2);
+3042:     const midEl = document.getElementById('timeXMid'); if (midEl) midEl.textContent = midQ > 0 ? `Q${midQ}` : '';
+3043:     const endEl = document.getElementById('timeXEnd'); if (endEl) endEl.textContent = `Q${userResponses.length}`;
+3044:     userResponses.forEach((res, i) => {
+3045:         const bar = document.createElement('div');
+3046:         const pct = Math.min(100, Math.max(4, (res.duration / timePerQ) * 100));
+3047:         let barClass = 'tbar ';
+3048:         if (res.isSkipped || res.picked === -1) barClass += 'tbar-skip';
+3049:         else if (res.duration <= timePerQ * 0.4) barClass += 'tbar-fast';
+3050:         else if (res.duration <= timePerQ * 0.75) barClass += 'tbar-medium';
+3051:         else barClass += 'tbar-slow';
+3052:         bar.className = barClass;
+3053:         bar.style.height = '0%';
+3054:         bar.title = `Q${i+1}: ${res.duration}s`;
+3055:         setTimeout(() => { bar.style.height = pct + '%'; bar.style.transition = 'height 0.7s cubic-bezier(0.4,0,0.2,1)'; }, 400 + i * 35);
+3056:         timeBars.appendChild(bar);
+3057:     });
+3058: 
+3059:     // Smart Summary
+3060:     const fastCorrect = userResponses.filter(r => r.isCorrect && r.duration < timePerQ * 0.4).length;
+3061:     const subName = CAT_LABELS[activeSubject.toLowerCase()] || activeSubject || 'this subject';
+3062:     let summary = '';
+3063:     if (acc >= 95) {
+3064:         summary = `<strong>Legendary Performance!</strong> You dominated <strong>${subName}</strong> with near-perfect precision. `;
+3065:         if (fastCorrect > currentTotalQ * 0.5) summary += `Your average speed of <strong>${avgSpeed}s/Q</strong> is remarkable. You are NEET-exam ready!`;
+3066:         else summary += `Consistency is your biggest strength. Keep maintaining this accuracy!`;
+3067:     } else if (acc >= 80) {
+3068:         summary = `<strong>Excellent Work!</strong> Strong command over the subject with <strong>${acc}%</strong> accuracy. `;
+3069:         summary += `Focus on the <strong>${wrong}</strong> missed question${wrong!==1?'s':''} — review their explanations carefully.`;
+3070:     } else if (acc >= 65) {
+3071:         summary = `<strong>Good Performance!</strong> You are on the right track in <strong>${subName}</strong>. `;
+3072:         summary += `Revisit concepts behind the wrong answers. Time management can be improved (current: <strong>${avgSpeed}s/Q</strong>).`;
+3073:     } else if (acc >= 50) {
+3074:         summary = `<strong>Keep Practicing!</strong> You scored <strong>${acc}%</strong> — more concept clarity is needed. `;
+3075:         summary += `Read the explanation for every wrong answer. Focus on accuracy before speed.`;
+3076:     } else {
+3077:         summary = `<strong>Don't Give Up!</strong> This set was challenging. Revisit your <strong>${subName}</strong> textbook. `;
+3078:         summary += `Start with the basics and attempt this set again. Consistent practice leads to improvement!`;
+3079:     }
+3080:     document.getElementById('smartSummary').innerHTML = summary;
+3081: 
+3082:     // Badges
+3083:     ['badge-perfect','badge-speed','badge-consistent','badge-first','badge-survivor','badge-noskip'].forEach(id => {
+3084:         const el = document.getElementById(id);
+3085:         if (el) el.classList.remove('unlocked');
+3086:     });
+3087:     const unlock = (id, delay) => { const el = document.getElementById(id); if (el) setTimeout(() => el.classList.add('unlocked'), delay); };
+3088:     if (acc === 100)                              unlock('badge-perfect', 600);
+3089:     if (parseFloat(avgSpeed) < 7 && acc > 80)    unlock('badge-speed', 800);
+3090:     if (correct >= currentTotalQ * 0.8)          unlock('badge-consistent', 1000);
+3091:     if (acc >= 60)                                unlock('badge-first', 1200);
+3092:     if (timeTakenSec > 10)                        unlock('badge-survivor', 1400);
+3093:     if (skippedCount === 0 && currentTotalQ > 0)  unlock('badge-noskip', 1600);
+3094: 
+3095:     // Detailed Review Cards
+3096:     const reviewList = document.getElementById('reviewList');
+3097:     reviewList.innerHTML = '';
+3098:     userResponses.forEach((res, i) => {
+3099:         const q = gameQuestions[res.qIndex];
+3100:         if (!q) return;
+3101:         const isCorr = res.isCorrect;
+3102:         const isSkip = res.isSkipped || (res.picked === -1 && !res.isCorrect);
+3103:         const chipClass = isCorr ? 'chip-correct' : isSkip ? 'chip-skipped' : 'chip-wrong';
+3104:         const chipText  = isCorr ? '&#10003; Correct' : isSkip ? '&#9193; Skipped' : '&#10005; Wrong';
+3105:         const card = document.createElement('div');
+3106:         card.className = 'rev-card';
+3107:         card.style.borderColor = isCorr ? 'rgba(16,185,129,0.2)' : isSkip ? 'rgba(245,158,11,0.15)' : 'rgba(239,68,68,0.2)';
+3108:         card.innerHTML = `
+3109:             <div class="rev-card-header">
+3110:                 <span class="rev-qnum">Q ${i+1} &bull; ${res.duration}s</span>
+3111:                 <span class="rev-status-chip ${chipClass}">${chipText}</span>
+3112:             </div>
+3113:             <div class="rev-question">${q.q}</div>
+3114:             <div class="rev-divider"></div>
+3115:             <div class="rev-ans-block">
+3116:                 <div class="rev-ans-row cr"><span class="rev-ans-icon">&#10003;</span>&nbsp;${q.opts[q.ans]}</div>
+3117:                 ${(!isCorr && !isSkip && res.picked !== -1) ? `<div class="rev-ans-row wr"><span class="rev-ans-icon">&#10005;</span>&nbsp;${q.opts[res.picked]}</div>` : ''}
+3118:             </div>
+3119:             <div class="rev-exp"><strong>Concept:</strong> ${q.fact || 'Standard NEET concept application.'}</div>
+3120:         `;
+3121:         reviewList.appendChild(card);
+3122:     });
+3123: 
+3124:     // Confetti for high scores
+3125:     if (acc >= 80) spawnConfetti();
+3126: 
+3127:     // Back-stack fix: replace gameScreen entry with setsScreen so back returns to sets not game
+3128:     history.replaceState({ screenId: 'setsScreen' }, '');
+3129:     showScreen('resultScreen');
+3130:     setTimeout(() => { const rs = document.getElementById('resultScreen'); if (rs) rs.scrollTop = 0; }, 100);
+3131: }
+3132: 
+3133: function spawnConfetti() {
+3134:     const colors = ['#00e5ff','#b388ff','#10b981','#fbbf24','#f97316','#ec4899'];
+3135:     for (let i = 0; i < 40; i++) {
+3136:         setTimeout(() => {
+3137:             const p = document.createElement('div');
+3138:             p.className = 'confetti-piece';
+3139:             p.style.cssText = `
+3140:                 left:${Math.random()*100}%;top:-10px;
+3141:                 background:${colors[Math.floor(Math.random()*colors.length)]};
+3142:                 transform:rotate(${Math.random()*360}deg);
+3143:                 animation-duration:${1.2+Math.random()*1.8}s;
+3144:                 width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+3145:                 border-radius:${Math.random()>0.5?'50%':'2px'};
+3146:             `;
+3147:             document.body.appendChild(p);
+3148:             setTimeout(() => p.remove(), 3200);
+3149:         }, i * 50);
+3150:     }
+3151: }
+3152: 
+3153: function retryQuiz() {
+3154:     if (activeSetIndex === -1 && activeSubject === '') {
+3155:         startGame();
+3156:     } else {
+3157:         // Find the set object from currentSetData
+3158:         if (currentSetData && currentSetData.quiz_sets[activeSetIndex]) {
+3159:             startSetGame(currentSetData.quiz_sets[activeSetIndex], activeSetIndex);
+3160:         } else {
+3161:             showStart();
+3162:         }
+3163:     }
+3164: }
+3165: 
+3166: function showSets() {
+3167:     showScreen('setsScreen');
+3168: }
+3169: 
+3170: function showStart() {
+3171:     clearInterval(timer);
+3172:     // Deep Reset: Clear all quiz session data to prevent navigation bugs
+3173:     activeSetIndex = -1;
+3174:     activeSubject = '';
+3175:     gameQuestions = [];
+3176:     qIndex = 0;
+3177:     answered = false;
+3178:     userResponses = [];
+3179:     score = 0;
+3180:     combo = 1;
+3181:     correct = 0;
+3182:     wrong = 0;
+3183:     skipped = 0;
+3184:     
+3185:     showScreen('startScreen');
+3186: }
+3187: 
+3188: function updateScoreDisplay() {
+3189:     document.getElementById('scoreDisplay').textContent = score;
+3190: }
+3191: 
+3192: function updateComboDisplay() {
+3193:     const el = document.getElementById('comboDisplay');
+3194:     el.textContent = `x${combo}`;
+3195:     el.classList.remove('hot');
+3196:     if (combo >= 3) {
+3197:         void el.offsetWidth; // reflow for animation
+3198:         el.classList.add('hot');
+3199:         if (combo === 3 || combo === 5) sfx.combo();
+3200:     }
+3201: }
+3202: 
+3203: function showMockTests() {
+3204:     showScreen('mockTestListScreen');
+3205:     const list = document.getElementById('mockTestSetsList');
+3206:     list.scrollTop = 0;
+3207:     list.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8; font-size:13px">✨ Loading CBT Mock Tests...</div>';
+3208: 
+3209:     let files = [];
+3210:     try {
+3211:         if (window.Android && typeof Android.getMockTests === 'function') {
+3212:             const raw = Android.getMockTests();
+3213:             files = JSON.parse(raw);
+3214:         } else {
+3215:             files = ['mock_test_1.html', 'mock_test-2.html', 'mock_test_3_premium.html'];
+3216:         }
+3217:     } catch(e) {
+3218:         files = ['mock_test_1.html', 'mock_test-2.html', 'mock_test_3_premium.html'];
+3219:     }
+3220: 
+3221:     // Sort files naturally by test number
+3222:     files.sort((a, b) => {
+3223:         const numA = parseInt((a.match(/\d+/) || [0])[0]);
+3224:         const numB = parseInt((b.match(/\d+/) || [0])[0]);
+3225:         return numA - numB;
+3226:     });
+3227: 
+3228:     const colorPalettes = [
+3229:         { grad: 'linear-gradient(135deg, #00c6ff, #0072ff)', glow: 'rgba(0, 198, 255, 0.4)', iconBg: 'rgba(0, 198, 255, 0.2)', icon: '📊', badge: 'FULL CBT MOCK' },
+3230:         { grad: 'linear-gradient(135deg, #a855f7, #6366f1)', glow: 'rgba(168, 85, 247, 0.4)', iconBg: 'rgba(168, 85, 247, 0.2)', icon: '⚡', badge: 'HIGH YIELD' },
+3231:         { grad: 'linear-gradient(135deg, #10b981, #059669)', glow: 'rgba(16, 185, 129, 0.4)', iconBg: 'rgba(16, 185, 129, 0.2)', icon: '🎯', badge: 'NEET PATTERN' },
+3232:         { grad: 'linear-gradient(135deg, #f43f5e, #e11d48)', glow: 'rgba(244, 63, 94, 0.4)', iconBg: 'rgba(244, 63, 94, 0.2)', icon: '🔥', badge: 'SCORE BOOSTER' },
+3233:         { grad: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245, 158, 11, 0.4)', iconBg: 'rgba(245, 158, 11, 0.2)', icon: '🏆', badge: 'RANK BUILDER' }
+3234:     ];
+3235: 
+3236:     list.innerHTML = `
+3237:         <div class="list-banner">
+3238:             <div class="list-banner-icon">🎯</div>
+3239:             <div class="list-banner-text">
+3240:                 <h3>Full NEET CBT Mock Tests</h3>
+3241:                 <p>3 Hour 20 Min Real Exam Simulation • 720 Marks</p>
+3242:             </div>
+3243:         </div>
+3244:     `;
+3245: 
+3246:     if (files.length === 0) {
+3247:         list.innerHTML += '<div style="text-align:center; padding:40px; color:#94a3b8">No HTML files found in mock_test folder.</div>';
+3248:     } else {
+3249:         files.forEach((file, index) => {
+3250:             let cleanTitle = file.replace('.html', '').replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
+3251:             const matchNum = file.match(/\d+/);
+3252:             if (matchNum) {
+3253:                 cleanTitle = `NEET CBT MOCK TEST ${matchNum[0]}`;
+3254:                 if (file.toLowerCase().includes('premium')) cleanTitle += ' (PREMIUM)';
+3255:             }
+3256: 
+3257:             const palette = colorPalettes[index % colorPalettes.length];
+3258:             const card = document.createElement('div');
+3259:             card.className = 'colorful-list-card';
+3260:             card.style.animationDelay = `${index * 0.06}s`;
+3261:             card.style.setProperty('--glow-color', palette.glow);
+3262:             card.style.setProperty('--border-glow', palette.glow);
+3263:             card.onclick = () => loadMockTest(file);
+3264: 
+3265:             card.innerHTML = `
+3266:                 <div class="colorful-card-header">
+3267:                     <div class="colorful-card-icon" style="background:${palette.iconBg}">
+3268:                         ${palette.icon}
+3269:                     </div>
+3270:                     <span class="colorful-card-badge" style="background:${palette.iconBg}; color:#fff; border-color:${palette.glow}">
+3271:                         ${palette.badge}
+3272:                     </span>
+3273:                 </div>
+3274:                 <div>
+3275:                     <div class="colorful-card-title">${cleanTitle}</div>
+3276:                     <div class="colorful-card-desc">Complete 180 Questions • Physics, Chemistry, Botany & Zoology</div>
+3277:                 </div>
+3278:                 <div class="colorful-card-footer">
+3279:                     <div class="colorful-card-tag">
+3280:                         <span>⏱️ 200 Mins</span> • <span>720 Marks</span>
+3281:                     </div>
+3282:                     <button class="btn-colorful-action" style="background:${palette.grad}">
+3283:                         <span>ENTER EXAM</span> ➔
+3284:                     </button>
+3285:                 </div>
+3286:             `;
+3287:             list.appendChild(card);
+3288:         });
+3289:     }
+3290: }
+3291: 
+3292: function loadMockTest(file) {
+3293:     window.location.href = 'mock_test/' + file;
+3294: }
+3295: 
+3296: function showPYQs() {
+3297:     showScreen('pyqListScreen');
+3298:     const list = document.getElementById('pyqSetsList');
+3299:     list.scrollTop = 0;
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+
+---
+Now I'll write the complete new `Neethome.html` with all 6 features:
+---
+Created At: 2026-08-10T23:39:33+05:30
+Completed At: 2026-08-10T23:39:33+05:30
+File Path: `file:///C:/Users/123/Desktop/assets/index.html`
+Total Lines: 1338
+Total Bytes: 93308
+Showing lines 900 to 1000
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+900: 
+901: function startSetGame(set, idx){
+902:   _activeSub=curSubject.toLowerCase(); _activeSetIdx=idx;
+903:   _userResponses=[]; _sessionStart=Date.now(); _extraTime=0;
+904:   _gameQs=shuffle(set.questions.map(q=>({ cat:_activeSub, q:q.question, opts:q.options, ans:q.answer, fact:q.explanation||'' })));
+905:   _totalQ=_gameQs.length; _timePerQ=DIFF_SEC[selDiff];
+906:   _qIdx=0; _correct=0; _wrong=0; _skipped=0;
+907:   buildPills();
+908:   document.getElementById('solverTitle').textContent=CAT_LABELS[_activeSub]||_activeSub;
+909:   document.getElementById('solverSub').textContent=set.set_name||`Set ${idx+1}`;
+910:   showScreen('gameScreen'); playSeq(SFX.go); loadQ();
+911: }
+912: 
+913: /* ══════════ QUESTION PILLS ══════════ */
+914: function buildPills(){
+915:   const row=document.getElementById('qPillsRow'); row.innerHTML='';
+916:   for(let i=0;i<_totalQ;i++){
+917:     const p=document.createElement('div'); p.className='q-pill'+(i===0?' active':''); p.textContent=i+1; p.dataset.qi=i;
+918:     p.onclick=()=>{ if(_answered||i===_qIdx){ _qIdx=i; loadQ(); } };
+919:     row.appendChild(p);
+920:   }
+921: }
+922: 
+923: function updatePill(idx, cls){
+924:   document.querySelectorAll('.q-pill').forEach(p=>{ p.classList.remove('active'); if(parseInt(p.dataset.qi)===idx&&cls) { p.classList.remove('p-correct','p-wrong','p-skip'); p.classList.add(cls); } });
+925:   const cur=document.querySelector(`.q-pill[data-qi="${_qIdx}"]`);
+926:   if(cur){ cur.classList.add('active'); cur.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+927: }
+928: 
+929: /* ══════════ LOAD QUESTION ══════════ */
+930: function loadQ(){
+931:   clearInterval(_tmr); _answered=false;
+932:   const q=_gameQs[_qIdx];
+933:   document.getElementById('qNumLbl').textContent=`Q ${_qIdx+1} / ${_totalQ}`;
+934:   document.getElementById('qCatBadge').textContent=CAT_LABELS[q.cat]||q.cat;
+935:   document.getElementById('qText').textContent=q.q;
+936:   document.getElementById('solverProgress').style.width=`${(_qIdx/_totalQ)*100}%`;
+937:   const ec=document.getElementById('expCard'); ec.className='exp-card';
+938:   document.getElementById('btnPrev').disabled=_qIdx===0;
+939:   document.getElementById('btnNext').textContent=_qIdx===_totalQ-1?'Finish 🏁':'Next →';
+940:   document.getElementById('btnSkip').style.display='';
+941:   updateBmBtn();
+942: 
+943:   // Build options
+944:   const grid=document.getElementById('optionsGrid'); grid.innerHTML='';
+945:   const LETTERS=['A','B','C','D'];
+946:   const idxs=shuffle([0,1,2,3]);
+947:   idxs.forEach((oi,di)=>{
+948:     const c=document.createElement('div'); c.className='opt-card'; c.dataset.oi=oi; c.dataset.ic=(oi===q.ans);
+949:     c.innerHTML=`<div class="opt-letter">${LETTERS[di]}</div><div class="opt-text">${q.opts[oi]}</div>`;
+950:     c.onclick=()=>handleAnswer(c,oi===q.ans,q);
+951:     grid.appendChild(c);
+952:   });
+953: 
+954:   // Restore prior answer
+955:   const prev=_userResponses.find(r=>r.qi===_qIdx);
+956:   if(prev){ _answered=true; showPriorAnswer(prev,q); }
+957: 
+958:   // Timer
+959:   const MAX=360, cap=Math.min(_timePerQ+_extraTime,MAX);
+960:   _timeLeft=prev?0:cap; _qStart=Date.now();
+961:   updateTimerUI(_timeLeft,cap);
+962:   if(!prev){
+963:     _tmr=setInterval(()=>{
+964:       _timeLeft--; updateTimerUI(_timeLeft,cap);
+965:       if(_timeLeft<=3) SFX.tick();
+966:       if(_timeLeft<=0){ clearInterval(_tmr); handleTimeout(q); }
+967:     },1000);
+968:   }
+969: }
+970: 
+971: function showPriorAnswer(resp, q){
+972:   document.querySelectorAll('.opt-card').forEach(c=>{
+973:     const oi=parseInt(c.dataset.oi);
+974:     if(oi===q.ans) c.classList.add('correct');
+975:     else if(oi===resp.picked&&!resp.ic) c.classList.add('wrong');
+976:   });
+977:   if(!resp.skipped) showExp(q,resp.ic);
+978:   document.getElementById('btnSkip').style.display='none';
+979: }
+980: 
+981: function updateTimerUI(t, max){
+982:   const el=document.getElementById('solverTimer'); if(!el) return;
+983:   el.textContent=t; el.className='solver-timer';
+984:   if(max>=360){ el.classList.add('max-mode'); return; }
+985:   const r=t/max;
+986:   if(r<=.25) el.classList.add('danger');
+987:   else if(r<=.5) el.classList.add('warn');
+988: }
+989: 
+990: function handleAnswer(card, isCorrect, q){
+991:   if(_answered) return; _answered=true; clearInterval(_tmr);
+992:   const oi=parseInt(card.dataset.oi);
+993:   const dur=Math.round((Date.now()-_qStart)/1000);
+994:   _userResponses=_userResponses.filter(r=>r.qi!==_qIdx);
+995:   _userResponses.push({qi:_qIdx,picked:oi,ic:isCorrect,dur,skipped:false});
+996:   if(isCorrect){
+997:     SFX.ok(); card.classList.add('correct'); _correct++;
+998:     const bonus=Math.max(3,Math.round(_timeLeft*1.5));
+999:     _extraTime=Math.min(_extraTime+bonus,360-_timePerQ);
+1000:     showFloat(`+${bonus}s`,card);
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+
+---
+Created At: 2026-08-10T23:47:52+05:30
+Completed At: 2026-08-10T23:47:52+05:30
+File Path: `file:///C:/Users/123/Desktop/assets/index.html`
+Total Lines: 1408
+Total Bytes: 98210
+Showing lines 950 to 1000
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+950:     } else {
+951:       card.onclick=()=>startSetGame(data.quiz_sets[idx],idx);
+952:     }
+953:     list.appendChild(card);
+954:   });
+955: }
+956: 
+957: /* ══════════ ANALYTICS VIEW ══════════ */
+958: function showAnalytics(idx){
+959:   const sub=curSubject.toLowerCase();
+960:   const rec=JSON.parse(localStorage.getItem(`_nc_${sub}_${idx}`)||'null'); if(!rec) return;
+961:   _userResponses=JSON.parse(localStorage.getItem(`_nr_${sub}_${idx}`)||'[]');
+962:   _gameQs=JSON.parse(localStorage.getItem(`_nq_${sub}_${idx}`)||'[]');
+963:   _activeSetIdx=idx; _activeSub=sub;
+964:   _correct=rec.correct||0; _wrong=rec.wrong||0; _skipped=rec.skipped||0; _totalQ=rec.total||0;
+965:   _buildResult(rec);
+966:   showScreen('resultScreen');
+967: }
+968: 
+969: /* ══════════ GAME STATE ══════════ */
+970: let _gameQs=[], _qIdx=0, _correct=0, _wrong=0, _skipped=0, _answered=false;
+971: let _userResponses=[], _tmr=null;
+972: let _qStart=0, _sessionStart=0, _activeSetIdx=-1, _activeSub='', _totalQ=0;
+973: 
+974: function _resetGame(){ clearInterval(_tmr); _gameQs=[]; _qIdx=0; _correct=0; _wrong=0; _skipped=0; _answered=false; _userResponses=[]; _tmr=null; _activeSetIdx=-1; _activeSub=''; _totalQ=0; }
+975: 
+976: function shuffle(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; }
+977: 
+978: const DIFF_SEC={ easy:20, medium:12, hard:7 };
+979: 
+980: function startSetGame(set, idx){
+981:   _activeSub=curSubject.toLowerCase(); _activeSetIdx=idx;
+982:   _userResponses=[]; _sessionStart=Date.now();
+983:   _gameQs=shuffle(set.questions.map(q=>({ cat:_activeSub, q:q.question, opts:q.options, ans:q.answer, fact:q.explanation||'' })));
+984:   _totalQ=_gameQs.length; 
+985:   _qIdx=0; _correct=0; _wrong=0; _skipped=0;
+986:   buildPills();
+987:   document.getElementById('solverTitle').textContent=CAT_LABELS[_activeSub]||_activeSub;
+988:   document.getElementById('solverSub').textContent=set.set_name||`Set ${idx+1}`;
+989:   showScreen('gameScreen'); playSeq(SFX.go); loadQ();
+990: }
+991: 
+992: /* ══════════ QUESTION PILLS ══════════ */
+993: function buildPills(){
+994:   const row=document.getElementById('qPillsRow'); row.innerHTML='';
+995:   for(let i=0;i<_totalQ;i++){
+996:     const p=document.createElement('div'); p.className='q-pill'+(i===0?' active':''); p.textContent=i+1; p.dataset.qi=i;
+997:     p.onclick=()=>{ if(_answered||i===_qIdx){ _qIdx=i; loadQ(); } };
+998:     row.appendChild(p);
+999:   }
+1000: }
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
+
+---

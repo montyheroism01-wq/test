@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEET Mock Test-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* DARK THEME (Cyber) */
+            --bg: #030712;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --card: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --marked: #8b5cf6;
+            --border: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00e5ff;
+            --neon-purple: #b388ff;
+        }
+
+        body.light {
+            /* LIGHT THEME (Professional) */
+            --bg: #f8fafc;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --neon-blue: #2563eb;
+            --neon-purple: #7c3aed;
+            --marked: #7c3aed;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main);
+            height: 100vh; height: 100dvh; display: flex; flex-direction: column;
+            overflow: hidden; line-height: 1.5;
+            transition: background 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 8px 16px; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 100; flex-shrink: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        body.light header { background: #fff; color: #000; border-bottom: 1.5px solid var(--border); }
+
+        .btn-theme { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 4px 8px; border-radius: 8px; color: #fff; font-size: 11px; cursor: pointer; }
+        body.light .btn-theme { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .btn-back { background: rgba(255,255,255,0.05); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: 1px solid var(--card-border); color: white; }
+        body.light .btn-back { background: #f1f5f9; color: #000; border-color: #cbd5e1; }
+
+        .title {
+            font-size: 14px; font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        body.light .title { background: none; -webkit-text-fill-color: var(--primary); color: var(--primary); }
+
+        .timer-box {
+            background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 10px;
+            font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--neon-blue);
+        }
+        body.light .timer-box { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; box-shadow: none; }
+
+        /* MAIN COLUMNAR LAYOUT */
+        main {
+            flex: 1; display: flex; flex-direction: column; overflow: hidden;
+            padding: 8px; gap: 8px; max-width: 600px; margin: 0 auto; width: 100%;
+        }
+
+        /* Progress Card - THIN */
+        .progress-card {
+            background: var(--card); backdrop-filter: blur(10px);
+            padding: 8px 12px; border-radius: 12px; border: 1px solid var(--card-border); flex-shrink:0;
+        }
+        .progress-container {
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; margin: 4px 0; overflow: hidden;
+        }
+        body.light .progress-container { background: #cbd5e1; }
+        .progress-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: width 0.4s ease-out;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Question Section - Scrollable */
+        .q-section {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .q-card {
+            background: var(--card); border-radius: 16px; padding: 16px;
+            border: 1px solid var(--card-border);
+            animation: fadeIn 0.4s ease-out;
+        }
+        body.light .q-card { box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .q-meta { font-size: 11px; font-weight: 800; color: var(--neon-blue); margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .q-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; }
+
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .opt-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: all 0.2s;
+            text-align: left; font-size: 14px; font-weight: 500; color: var(--text-main);
+        }
+        body.light .opt-btn { background: #fff; }
+        .opt-btn.selected {
+            border-color: var(--primary); background: rgba(99, 102, 241, 0.1);
+            color: var(--text-main);
+        }
+        body.light .opt-btn.selected { background: #eff6ff; }
+
+        .opt-letter {
+            width: 24px; height: 24px; min-width: 24px; border-radius: 6px;
+            background: rgba(255,255,255,0.05); color: var(--text-sub);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 12px; border: 1px solid var(--card-border);
+        }
+        body.light .opt-letter { background: #f1f5f9; }
+
+        /* PALETTE - COMPACT */
+        .palette-card {
+            background: var(--card); border-radius: 16px; padding: 10px;
+            border: 1px solid var(--card-border); flex-shrink: 0;
+        }
+        .palette-head { font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; display: flex; justify-content: space-between; letter-spacing: 0.5px; }
+
+        .sub-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 10px; scrollbar-width: none; }
+        .s-tab {
+            white-space: nowrap; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 800;
+            background: rgba(255,255,255,0.05); color: var(--text-sub); cursor: pointer; border: 1px solid transparent;
+        }
+        body.light .s-tab { background: #f1f5f9; }
+        .s-tab.active { background: rgba(99, 102, 241, 0.1); color: var(--neon-blue); border-color: var(--primary); }
+
+        .palette-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+        .p-btn {
+            min-width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+            cursor: pointer; background: rgba(255,255,255,0.03); color: var(--text-sub);
+            transition: all 0.2s;
+        }
+        body.light .p-btn { background: #fff; border-color: #cbd5e1; }
+
+        .p-btn.active { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0,229,255,0.05) !important; z-index: 10; transform: scale(1.1); }
+        .p-btn.answered { background: var(--success) !important; border-color: var(--success) !important; color: white !important; }
+        .p-btn.not-answered { background: var(--danger) !important; border-color: var(--danger) !important; color: white !important; }
+        .p-btn.marked { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; }
+        .p-btn.marked-answered { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; position: relative; }
+        .p-btn.marked-answered::after {
+            content: '✓'; position: absolute; bottom: -2px; right: -2px; font-size: 8px;
+            background: var(--success); width: 12px; height: 12px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--bg);
+        }
+
+        /* LEGEND - Dots */
+        .legend { display: flex; justify-content: space-between; gap: 4px; border-top: 1px solid var(--card-border); padding-top: 8px; margin-top: 4px; }
+        .leg-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--text-sub); }
+        .leg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); }
+        body.light .leg-dot { border-color: rgba(0,0,0,0.1); }
+
+        /* ACTIONS FOOTER - COMPACT */
+        .actions {
+            background: var(--card); padding: 8px 16px; border-top: 1px solid var(--card-border);
+            display: flex; gap: 8px; flex-shrink: 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        .btn { flex: 1; padding: 10px 4px; border-radius: 12px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; }
+        .btn-outline { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--card-border); }
+        body.light .btn-outline { background: #fff; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+
+        /* RESULT VIEW stays full screen */
+        #resultView {
+            position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto;
+            padding: 20px 16px; display: none;
+        }
+        .res-hero {
+            background: var(--card); border-radius: 24px; padding: 30px 20px; text-align: center;
+            border: 1px solid var(--card-border); margin-bottom: 20px;
+        }
+        body.light .res-hero { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+        .res-score { font-size: 48px; font-weight: 950; color: var(--text-main); }
+        .res-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+        .rs-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px; border: 1px solid var(--card-border); }
+        body.light .rs-item { background: #fff; }
+
+        .rs-val { font-size: 18px; font-weight: 800; display: block; color: var(--text-main); }
+        .rs-lbl { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-top: 2px; }
+
+        .rev-item {
+            background: rgba(255,255,255,0.03); border-radius: 18px; padding: 16px;
+            border: 1px solid var(--card-border); margin-bottom: 12px;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        body.light .rev-item { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+
+        .rev-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-main); line-height: 1.5; }
+        .rev-ans { padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 10px; border: 1px solid transparent; }
+        .rev-ans.correct { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.2); }
+        body.light .rev-ans.correct { background: #ecfdf5; color: #065f46; }
+
+        .rev-ans.wrong { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.2); }
+        body.light .rev-ans.wrong { background: #fef2f2; color: #991b1b; }
+
+        .rev-exp { font-size: 13px; color: var(--text-sub); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); }
+        body.light .rev-exp { background: #f8fafc; }
+
+        .hidden { display: none !important; }
+    </style>
+
+    <script>
+    // Auto theme sync from main app
+    (function(){
+      var th = localStorage.getItem('_th');
+      if(th === 'light'){
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+        // try data-theme too
+        document.body.dataset.theme = 'light';
+      } else {
+        document.body.dataset.theme = 'dark';
+      }
+    })();
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <button class="btn-back" onclick="handleExit()">✕</button>
+        <div class="title">NEET Premium Mock</div>
+    </div>
+    <div class="timer-box">
+        <span id="timerText">180:00</span>
+    </div>
+</header>
+
+<main id="examView">
+    <!-- Progress Section -->
+    <div class="progress-card" style="display:flex; align-items:center; gap:12px">
+        <div style="flex:1">
+            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--text-sub); margin-bottom:2px">
+                <span>PROGRESS</span>
+                <span id="progressText">0/180</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        <button class="btn-theme" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
+    </div>
+
+    <!-- Scrollable Question Area -->
+    <div class="q-section">
+        <div class="q-card">
+            <div class="q-meta">
+                <span id="qSubject" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:10px">Subject</span>
+                <span id="qCounter" style="color:var(--text-sub)">Question 1/180</span>
+            </div>
+            <div class="q-text" id="qText">Loading question...</div>
+            <div class="options-list" id="optionsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Fixed Status Area -->
+    <div class="palette-card">
+        <div class="palette-head">
+            Quick Palette
+            <span style="font-size:10px; color:var(--primary)">Slide to browse </span>
+        </div>
+
+        <div class="sub-tabs">
+            <div class="s-tab active" onclick="jumpToSubject('Botany')">Botany</div>
+            <div class="s-tab" onclick="jumpToSubject('Zoology')">Zoology</div>
+            <div class="s-tab" onclick="jumpToSubject('Physics')">Physics</div>
+            <div class="s-tab" onclick="jumpToSubject('Chemistry')">Chemistry</div>
+        </div>
+
+        <div class="palette-scroll" id="paletteGrid"></div>
+
+        <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,0.03); border:1px solid #555"></div> Not Visited</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div> Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--danger)"></div> Not Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--marked)"></div> Marked</div>
+        </div>
+    </div>
+</main>
+
+<footer class="actions" id="actionButtons">
+    <button class="btn btn-outline" style="flex:0.6" onclick="handleClear()">Clear</button>
+    <button class="btn btn-warning" onclick="handleMark()">Mark</button>
+    <button class="btn btn-primary" onclick="handleNext()">Save & Next</button>
+    <button class="btn btn-outline" id="btnSubmit" style="background:#1e293b; color:white; flex:0.4; display:none;" onclick="confirmSubmit()">Submit</button>
+</footer>
+
+<!-- RESULT VIEW -->
+<div id="resultView">
+    <div class="res-hero">
+        <div class="res-score" id="resScore">00</div>
+        <div class="res-lbl">Final NEET Score</div>
+        <div class="res-stats">
+            <div class="rs-item"><span class="rs-val" style="color:var(--success)" id="resCorrect">0</span><span class="rs-lbl">Correct</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--danger)" id="resWrong">0</span><span class="rs-lbl">Wrong</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--text-sub)" id="resSkipped">0</span><span class="rs-lbl">Skipped</span></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px; width:100%" onclick="window.close() || alert('Please use back button to exit.')">Close Result</button>
+    </div>
+
+    <div id="reviewContainer">
+        <h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+    </div>
+</div>
+
+<script>
+    const QUESTIONS = [
+{
+"sub": "Botany",
+"q": "<b>Assertion (A):</b> Cyanobacteria (Blue-green algae) are classified under Kingdom Monera.<br><b>Reason (R):</b> They possess a prokaryotic cell structure with photosynthetic pigments such as chlorophyll 'a'.",
+"opts": [
+"Both (A) and (R) are true and (R) is the correct explanation of (A)",
+"Both (A) and (R) are true but (R) is not the correct explanation of (A)",
+"(A) is true but (R) is false",
+"Both (A) and (R) are false"
+],
+"ans": 0,
+"exp": "Cyanobacteria are prokaryotes containing chlorophyll 'a' and are classified under Kingdom Monera."
+},
+{
+"sub": "Botany",
+"q": "Which of the following algae produces Agar-agar used in culture media and ice-creams?",
+"opts": [
+"Gelidium and Gracilaria",
+"Volvox and Spirogyra",
+"Sargassum and Fucus",
+"Ectocarpus and Dictyota"
+],
+"ans": 0,
+"exp": "Agar is a hydrocolloid obtained from red algae Gelidium and Gracilaria."
+},
+{
+"sub": "Botany",
+"q": "<b>Match Column-I with Column-II:</b><br>Column I: A. Chlorophyceae, B. Phaeophyceae, C. Rhodophyceae, D. Cyanophyceae<br>Column II: i. Fucoxanthin, ii. Phycoerythrin, iii. Chlorophyll a & b, iv. Phycocyanin",
+"opts": [
+"A-iii, B-i, C-ii, D-iv",
+"A-i, B-iii, C-ii, D-iv",
+"A-iii, B-ii, C-i, D-iv",
+"A-iv, B-i, C-ii, D-iii"
+],
+"ans": 0,
+"exp": "Chlorophyceae contains chlorophyll a&b, Phaeophyceae has fucoxanthin, Rhodophyceae has r-phycoerythrin, Cyanophyceae has phycocyanin."
+},
+{
+"sub": "Botany",
+"q": "The dominant phase in the life cycle of a bryophyte is the:",
+"opts": [
+"Free-living haploid gametophyte",
+"Dependent diploid sporophyte",
+"Free-living diploid sporophyte",
+"Dependent haploid gametophyte"
+],
+"ans": 0,
+"exp": "Bryophytes have a dominant, photosynthetic, free-living haploid gametophyte stage."
+},
+{
+"sub": "Botany",
+"q": "In angiosperms, double fertilization involves:",
+"opts": [
+"Syngamy and Triple fusion",
+"Syngamy and Apomixis",
+"Triple fusion and Parthenocarpy",
+"Two syngamy events"
+],
+"ans": 0,
+"exp": "Double fertilization consists of Syngamy (egg + male gamete -> zygote) and Triple Fusion (2 polar nuclei + male gamete -> PEN)."
+},
+{
+"sub": "Botany",
+"q": "Which floral family is characterized by bicarpellary syncarpous gynoecium with swollen placenta and oblique septum?",
+"opts": [
+"Solanaceae",
+"Fabaceae",
+"Liliaceae",
+"Brassicaceae"
+],
+"ans": 0,
+"exp": "Solanaceae possesses bicarpellary syncarpous ovary with oblique septum and swollen placenta carrying many ovules."
+},
+{
+"sub": "Botany",
+"q": "Vascular bundles in dicot stems are described as:",
+"opts": [
+"Conjoint, collateral, open with endarch xylem",
+"Conjoint, collateral, closed with exarch xylem",
+"Radial, open with exarch xylem",
+"Conjoint, bicollateral, closed with endarch xylem"
+],
+"ans": 0,
+"exp": "Dicot stem vascular bundles are conjoint, collateral, open (having cambium), with endarch protoxylem."
+},
+{
+"sub": "Botany",
+"q": "Fluid Mosaic Model of cell membrane was proposed by Singer and Nicolson in:",
+"opts": [
+"1972",
+"1950",
+"1839",
+"1965"
+],
+"ans": 0,
+"exp": "Singer and Nicolson proposed the widely accepted Fluid Mosaic Model of plasma membrane in 1972."
+},
+{
+"sub": "Botany",
+"q": "During which sub-stage of Prophase-I of meiosis does crossing over take place?",
+"opts": [
+"Pachytene",
+"Leptotene",
+"Zygotene",
+"Diplotene"
+],
+"ans": 0,
+"exp": "Crossing over between non-sister chromatids of homologous chromosomes occurs during Pachytene stage catalyzed by recombinase enzyme."
+},
+{
+"sub": "Botany",
+"q": "Synaptonemal complex dissolves during which sub-phase of Meiosis-I?",
+"opts": [
+"Diplotene",
+"Pachytene",
+"Zygotene",
+"Diakinesis"
+],
+"ans": 0,
+"exp": "Dissolution of synaptonemal complex occurs at Diplotene, making X-shaped Chiasmata visible."
+},
+{
+"sub": "Botany",
+"q": "Primary CO2 acceptor in C4 plants during Hatch and Slack pathway is:",
+"opts": [
+"Phosphoenolpyruvate (PEP)",
+"Ribulose-1,5-bisphosphate (RuBP)",
+"Oxaloacetic acid (OAA)",
+"Phosphoglyceric acid (PGA)"
+],
+"ans": 0,
+"exp": "PEP (3-carbon molecule) present in mesophyll cells is the primary CO2 acceptor in C4 plants."
+},
+{
+"sub": "Botany",
+"q": "First stable product of Calvin Cycle (C3 pathway) is:",
+"opts": [
+"3-Phosphoglyceric acid (3-PGA)",
+"Oxaloacetic acid (OAA)",
+"Glucose",
+"RuBP"
+],
+"ans": 0,
+"exp": "Fixation of CO2 by RuBisCO produces two molecules of 3-Phosphoglyceric acid (3-carbon compound)."
+},
+{
+"sub": "Botany",
+"q": "How many ATP and NADPH molecules are required for the synthesis of one molecule of Glucose in C3 cycle?",
+"opts": [
+"18 ATP and 12 NADPH",
+"12 ATP and 18 NADPH",
+"30 ATP and 12 NADPH",
+"24 ATP and 12 NADPH"
+],
+"ans": 0,
+"exp": "Synthesis of 1 Glucose (6 CO2 fixed) requires 6 x 3 = 18 ATP and 6 x 2 = 12 NADPH."
+},
+{
+"sub": "Botany",
+"q": "Which enzyme converts Glucose to Glucose-6-phosphate in the first step of Glycolysis?",
+"opts": [
+"Hexokinase",
+"Phosphofructokinase",
+"Pyruvate kinase",
+"Enolase"
+],
+"ans": 0,
+"exp": "Hexokinase phosphorylates glucose into glucose-6-phosphate using 1 ATP."
+},
+{
+"sub": "Botany",
+"q": "Respiratory Quotient (RQ) for pure tripalmitin (fat) is approximately:",
+"opts": [
+"0.7",
+"1.0",
+"0.9",
+"4.0"
+],
+"ans": 0,
+"exp": "RQ = CO2 evolved / O2 consumed. For fats like tripalmitin, RQ = 102 CO2 / 145 O2 ≈ 0.7."
+},
+{
+"sub": "Botany",
+"q": "Gaseous plant hormone responsible for respiratory climacteric in ripening fruits is:",
+"opts": [
+"Ethylene",
+"Abscisic acid (ABA)",
+"Gibberellic acid (GA3)",
+"Zeatin"
+],
+"ans": 0,
+"exp": "Ethylene enhances rate of respiration during fruit ripening, termed respiratory climacteric."
+},
+{
+"sub": "Botany",
+"q": "Stress hormone in plants that induces stomatal closure during water deficit is:",
+"opts": [
+"Abscisic Acid (ABA)",
+"Auxin (IAA)",
+"Cytokinin",
+"Gibberellin"
+],
+"ans": 0,
+"exp": "ABA stimulates stomatal closure to minimize transpiration loss under drought conditions."
+},
+{
+"sub": "Botany",
+"q": "Functional megaspore in an angiosperm embryo sac develops into:",
+"opts": [
+"Female gametophyte (Embryo sac)",
+"Male gametophyte",
+"Endosperm",
+"Zygote"
+],
+"ans": 0,
+"exp": "Monosporic development: Functional megaspore undergoes 3 mitotic divisions to form 7-celled, 8-nucleate embryo sac."
+},
+{
+"sub": "Botany",
+"q": "Transfer of pollen grains from anther to stigma of another flower of the same plant is called:",
+"opts": [
+"Geitonogamy",
+"Autogamy",
+"Xenogamy",
+"Cleistogamy"
+],
+"ans": 0,
+"exp": "Geitonogamy is functionally cross-pollination (involving pollinator) but genetically autogamy."
+},
+{
+"sub": "Botany",
+"q": "In a dihybrid cross between AaBb x AaBb, what is the phenotypic ratio of offspring?",
+"opts": [
+"9 : 3 : 3 : 1",
+"1 : 2 : 1",
+"3 : 1",
+"9 : 7"
+],
+"ans": 0,
+"exp": "Mendelian dihybrid phenotypic ratio is 9 (DOM/DOM) : 3 (DOM/rec) : 3 (rec/DOM) : 1 (rec/rec)."
+},
+{
+"sub": "Botany",
+"q": "A human female with Turner's Syndrome has which of the following karyotypes?",
+"opts": [
+"45 with XO",
+"47 with XXY",
+"47 with trisomy 21",
+"47 with XXX"
+],
+"ans": 0,
+"exp": "Turner's syndrome is caused by absence of one X chromosome (44 autosomes + XO = 45 chromosomes)."
+},
+{
+"sub": "Botany",
+"q": "According to Chargaff's rule for double-stranded DNA:",
+"opts": [
+"A + G = T + C (Purines = Pyrimidines)",
+"A + T = G + C",
+"A / G = 1",
+"A + C = T + G is false"
+],
+"ans": 0,
+"exp": "Chargaff rule states [A]=[T] and [G]=[C], hence [A]+[G] = [T]+[C]."
+},
+{
+"sub": "Botany",
+"q": "In Lac Operon of E. coli, lac z gene encodes for which enzyme?",
+"opts": [
+"Beta-galactosidase",
+"Permease",
+"Transacetylase",
+"RNA Polymerase"
+],
+"ans": 0,
+"exp": "lac z codes for β-galactosidase which hydrolyzes lactose into glucose and galactose."
+},
+{
+"sub": "Botany",
+"q": "Which enzyme unzips double-stranded DNA during replication by breaking hydrogen bonds?",
+"opts": [
+"DNA Helicase",
+"DNA Ligase",
+"DNA Polymerase III",
+"Topoisomerase"
+],
+"ans": 0,
+"exp": "Helicase unwinds the double helix at replication fork by breaking hydrogen bonds between base pairs."
+},
+{
+"sub": "Botany",
+"q": "Initiation codon for protein synthesis in eukaryotes is:",
+"opts": [
+"AUG (coding for Methionine)",
+"UAA",
+"UAG",
+"UGA"
+],
+"ans": 0,
+"exp": "AUG is the universal start codon coding for Methionine (Formyl-methionine in prokaryotes)."
+},
+{
+"sub": "Botany",
+"q": "Which restriction enzyme produces blunt ends instead of sticky ends?",
+"opts": [
+"EcoRV",
+"EcoRI",
+"HindIII",
+"BamHI"
+],
+"ans": 0,
+"exp": "EcoRV cuts at GAT|ATC producing blunt (flush) ends."
+},
+{
+"sub": "Botany",
+"q": "In Polymerase Chain Reaction (PCR), correct order of steps in one cycle is:",
+"opts": [
+"Denaturation -> Annealing -> Extension",
+"Annealing -> Extension -> Denaturation",
+"Extension -> Denaturation -> Annealing",
+"Denaturation -> Extension -> Annealing"
+],
+"ans": 0,
+"exp": "PCR steps: 1. Denaturation (~94°C), 2. Annealing (~54°C), 3. Extension (~72°C using Taq polymerase)."
+},
+{
+"sub": "Botany",
+"q": "Ti plasmid used as a cloning vector for transforming plant cells is isolated from:",
+"opts": [
+"Agrobacterium tumefaciens",
+"Escherichia coli",
+"Bacillus thuringiensis",
+"Thermus aquaticus"
+],
+"ans": 0,
+"exp": "Agrobacterium tumefaciens contains Tumor-inducing (Ti) plasmid naturally transferring T-DNA to plant cells."
+},
+{
+"sub": "Botany",
+"q": "Bt toxin protein produced by Bacillus thuringiensis is converted into active toxin in insect gut due to:",
+"opts": [
+"Alkaline pH of insect midgut",
+"Acidic pH of insect stomach",
+"Body temperature of insect",
+"Enzymes in salivary glands"
+],
+"ans": 0,
+"exp": "Inactive protoxin is solubilized and activated in the alkaline pH of insect midgut, forming pores."
+},
+{
+"sub": "Botany",
+"q": "RNA interference (RNAi) technology used to control nematode Meloidogyne incognita involves silencing of specific mRNA using:",
+"opts": [
+"Double-stranded RNA (dsRNA)",
+"Single-stranded DNA",
+"Transfer RNA (tRNA)",
+"Ribosomal RNA"
+],
+"ans": 0,
+"exp": "RNAi uses complementary dsRNA to bind and silence specific target mRNA via RISC complex."
+},
+{
+"sub": "Botany",
+"q": "Pyramid of biomass in a deep aquatic (sea) ecosystem is generally:",
+"opts": [
+"Inverted",
+"Upright",
+"Spindle-shaped",
+"Square"
+],
+"ans": 0,
+"exp": "Biomass of fishes far exceeds biomass of short-lived phytoplankton, making aquatic biomass pyramid inverted."
+},
+{
+"sub": "Botany",
+"q": "Which of the following is an In-situ conservation strategy for biodiversity?",
+"opts": [
+"National Parks and Biosphere Reserves",
+"Botanical Gardens",
+"Zoological Parks",
+"Cryopreservation of gametes"
+],
+"ans": 0,
+"exp": "In-situ conservation protects species within natural habitats (National Parks, Wildlife Sanctuaries, Biosphere Reserves)."
+},
+{
+"sub": "Botany",
+"q": "High Biological Oxygen Demand (BOD) value of a water body indicates that:",
+"opts": [
+"Water is highly polluted with organic matter",
+"Water is pure and potable",
+"Dissolved oxygen content is extremely high",
+"Aquatic life is thriving"
+],
+"ans": 0,
+"exp": "High BOD means microbes consume high oxygen to decompose heavy organic pollution."
+},
+{
+"sub": "Botany",
+"q": "Which gas contributed maximum (60%) to total global warming?",
+"opts": [
+"Carbon dioxide (CO2)",
+"Methane (CH4)",
+"CFCs",
+"Nitrous oxide (N2O)"
+],
+"ans": 0,
+"exp": "CO2 contributes 60%, CH4 20%, CFCs 14%, and N2O 6% to total global warming."
+},
+{
+"sub": "Botany",
+"q": "Kranz anatomy is a characteristic feature of leaves of:",
+"opts": [
+"C4 plants (Maize, Sugarcane)",
+"C3 plants (Wheat, Rice)",
+"CAM plants (Cactus)",
+"Hydrophytes (Hydrilla)"
+],
+"ans": 0,
+"exp": "Kranz anatomy (wreath-like bundle sheath cells around vascular bundles) is present in C4 plants."
+},
+{
+"sub": "Botany",
+"q": "Movement of water through apoplast pathway occurs through:",
+"opts": [
+"Cell walls and intercellular spaces without crossing cell membranes",
+"Plasmodesmata",
+"Cytoplasm",
+"Vacuoles"
+],
+"ans": 0,
+"exp": "Apoplast is non-living continuous system of cell walls and intercellular spaces."
+},
+{
+"sub": "Botany",
+"q": "Enzyme nitrogenase responsible for biological nitrogen fixation is highly sensitive to:",
+"opts": [
+"Molecular Oxygen (O2)",
+"Nitrogen (N2)",
+"Carbon dioxide",
+"Hydrogen"
+],
+"ans": 0,
+"exp": "Nitrogenase is poisoned by O2; leghemoglobin acts as an oxygen scavenger to create anaerobic environment."
+},
+{
+"sub": "Botany",
+"q": "Which plant tissue consists of dead cells with heavily lignified walls and narrow lumen?",
+"opts": [
+"Sclerenchyma",
+"Parenchyma",
+"Collenchyma",
+"Aerenchyma"
+],
+"ans": 0,
+"exp": "Sclerenchyma cells are dead at maturity with thick lignified walls providing mechanical support."
+},
+{
+"sub": "Botany",
+"q": "Pollen grains are well preserved as fossils due to the presence of extremely resistant organic material:",
+"opts": [
+"Sporopollenin",
+"Pectin",
+"Cellulose",
+"Lignin"
+],
+"ans": 0,
+"exp": "Exine layer of pollen wall contains sporopollenin, resistant to high temp, strong acids, and alkalis."
+},
+{
+"sub": "Botany",
+"q": "Number of chromosomes in endosperm of a maize plant (diploid 2n = 20) is:",
+"opts": [
+"30",
+"20",
+"10",
+"40"
+],
+"ans": 0,
+"exp": "Angiosperm endosperm is triploid (3n). Since 2n = 20 => n = 10 => 3n = 30."
+},
+{
+"sub": "Botany",
+"q": "Who experimentally proved that DNA replication is Semi-Conservative in E. coli using N15 isotope?",
+"opts": [
+"Meselson and Stahl",
+"Hershey and Chase",
+"Watson and Crick",
+"Avery, MacLeod, and McCarty"
+],
+"ans": 0,
+"exp": "Matthew Meselson and Franklin Stahl (1958) proved semi-conservative DNA replication using 15N isotope."
+},
+{
+"sub": "Botany",
+"q": "Sequence of bases on mRNA synthesized from template DNA strand 3'-ATCGGCTA-5' is:",
+"opts": [
+"5'-UAGCCGAU-3'",
+"5'-TAGCCGAT-3'",
+"5'-AUCGGCUA-3'",
+"3'-UAGCCGAU-5'"
+],
+"ans": 0,
+"exp": "Transcription complementary base pairing: A->U, T->A, C->G, G->C in 5' to 3' direction."
+},
+{
+"sub": "Botany",
+"q": "A gene showing multiple phenotypic effects is called a:",
+"opts": [
+"Pleiotropic gene",
+"Polygenic gene",
+"Codominant gene",
+"Epistatic gene"
+],
+"ans": 0,
+"exp": "Pleiotropy occurs when a single gene influences multiple phenotypic traits (e.g. Phenylketonuria)."
+},
+{
+"sub": "Botany",
+"q": "Which part of human brain controls body temperature, urge for eating and drinking?",
+"opts": [
+"Hypothalamus",
+"Thalamus",
+"Cerebellum",
+"Medulla oblongata"
+],
+"ans": 0,
+"exp": "Hypothalamus contains centers for thermoregulation, hunger, thirst, and satiety."
+},
+{
+"sub": "Botany",
+"q": "EcoRI restriction enzyme cuts DNA at which specific palindromic sequence?",
+"opts": [
+"5'-GAATTC-3'",
+"5'-GATATC-3'",
+"5'-AAGCTT-3'",
+"5'-GGATCC-3'"
+],
+"ans": 0,
+"exp": "EcoRI recognizes 5'-GAATTC-3' and cuts between G and A."
+},
+{
+"sub": "Zoology",
+"q": "Which animal phylum exhibits bilateral symmetry in larvae but radial symmetry in adults?",
+"opts": [
+"Echinodermata",
+"Coelenterata",
+"Annelida",
+"Mollusca"
+],
+"ans": 0,
+"exp": "Echinoderms have free-swimming bilaterally symmetrical larvae and pentamerous radially symmetrical adults."
+},
+{
+"sub": "Zoology",
+"q": "Excretory structures in Cockroach (Periplaneta americana) are:",
+"opts": [
+"Malpighian tubules",
+"Nephridia",
+"Flame cells",
+"Green glands"
+],
+"ans": 0,
+"exp": "Malpighian tubules located at junction of midgut and hindgut extract uric acid from hemolymph."
+},
+{
+"sub": "Zoology",
+"q": "Which epithelial tissue lines inner surfaces of fallopian tubes and bronchioles to move particles?",
+"opts": [
+"Ciliated epithelium",
+"Squamous epithelium",
+"Cuboidal epithelium",
+"Compound epithelium"
+],
+"ans": 0,
+"exp": "Ciliated epithelium possesses cilia whose rhythmic beating moves mucus and ova in specific direction."
+},
+{
+"sub": "Zoology",
+"q": "Competitive inhibitor of succinate dehydrogenase enzyme in respiration is:",
+"opts": [
+"Malonate",
+"Oxaloacetate",
+"Malate",
+"Fumarate"
+],
+"ans": 0,
+"exp": "Malonate closely resembles substrate succinate and acts as competitive inhibitor of succinate dehydrogenase."
+},
+{
+"sub": "Zoology",
+"q": "Which component of gastric juice protects stomach mucosa from excoriation by HCl?",
+"opts": [
+"Mucus and Bicarbonates",
+"Pepsinogen",
+"Intrinsic factor",
+"Gastrin"
+],
+"ans": 0,
+"exp": "Mucus and sodium bicarbonate form a protective alkaline gel barrier lining stomach epithelium."
+},
+{
+"sub": "Zoology",
+"q": "Volume of air remaining in lungs even after a forcible expiration is called:",
+"opts": [
+"Residual Volume (RV ~1100-1200 mL)",
+"Tidal Volume",
+"Expiratory Reserve Volume",
+"Vital Capacity"
+],
+"ans": 0,
+"exp": "Residual Volume (RV) cannot be measured by simple spirometry and keeps alveoli inflated."
+},
+{
+"sub": "Zoology",
+"q": "P-wave in a standard ECG represents:",
+"opts": [
+"Depolarization (excitation) of Atria",
+"Depolarization of Ventricles",
+"Repolarization of Ventricles",
+"Repolarization of Atria"
+],
+"ans": 0,
+"exp": "P-wave represents atrial depolarization leading to contraction of both atria."
+},
+{
+"sub": "Zoology",
+"q": "Glomerular Filtration Rate (GFR) in a healthy human adult is approximately:",
+"opts": [
+"125 mL/min (180 Liters/day)",
+"125 Liters/min",
+"50 mL/min",
+"180 mL/day"
+],
+"ans": 0,
+"exp": "GFR is ~125 mL/min, yielding ~180 L of filtrate per day, of which 99% is reabsorbed."
+},
+{
+"sub": "Zoology",
+"q": "Functional unit of muscle contraction bounded between two adjacent Z-lines is called:",
+"opts": [
+"Sarcomere",
+"Sarcolemma",
+"Sarcoplasm",
+"Myofibril"
+],
+"ans": 0,
+"exp": "Sarcomere is the structural and functional unit of myofibril between two consecutive Z-discs."
+},
+{
+"sub": "Zoology",
+"q": "Resting membrane potential of a neuron (-70 mV) is maintained primarily by:",
+"opts": [
+"Na+/K+ ATPase pump (3 Na+ out, 2 K+ in)",
+"Passive diffusion of Na+",
+"Ca2+ influx",
+"Cl- efflux"
+],
+"ans": 0,
+"exp": "Na+/K+ pump actively transports 3 Na+ outwards for every 2 K+ inside using ATP."
+},
+{
+"sub": "Zoology",
+"q": "Which hormone stimulates ovulation and maintenance of Corpus Luteum?",
+"opts": [
+"Luteinizing Hormone (LH)",
+"Follicle Stimulating Hormone (FSH)",
+"Prolactin",
+"Oxytocin"
+],
+"ans": 0,
+"exp": "LH surge around day 14 triggers rupture of Graafian follicle (ovulation) and forms corpus luteum."
+},
+{
+"sub": "Zoology",
+"q": "Spermatogenesis is initiated at puberty due to significant increase in secretion of:",
+"opts": [
+"Gonadotropin Releasing Hormone (GnRH)",
+"Progesterone",
+"Estrogen",
+"Oxytocin"
+],
+"ans": 0,
+"exp": "Hypothalamic GnRH stimulates anterior pituitary to release LH and FSH, initiating spermatogenesis."
+},
+{
+"sub": "Zoology",
+"q": "Surgical sterilization procedure in human males involving cutting and tying of vas deferens is:",
+"opts": [
+"Vasectomy",
+"Tubectomy",
+"Castration",
+"MTP"
+],
+"ans": 0,
+"exp": "Vasectomy blocks transport of sperm into semen by severing vas deferens."
+},
+{
+"sub": "Zoology",
+"q": "Which Assisted Reproductive Technology (ART) involves transferring an embryo up to 8 blastomeres into fallopian tube?",
+"opts": [
+"ZIFT (Zygote Intra Fallopian Transfer)",
+"GIFT",
+"IUI",
+"ICSI"
+],
+"ans": 0,
+"exp": "ZIFT transfers early embryo (up to 8 blastomeres) into fallopian tube."
+},
+{
+"sub": "Zoology",
+"q": "Industrial Melanism observed in Peppered Moth (Biston betularia) in England is an example of:",
+"opts": [
+"Natural Selection (Directional selection)",
+"Artificial Selection",
+"Genetic Drift",
+"Mutation"
+],
+"ans": 0,
+"exp": "Post-industrialization dark melanic moths had camouflage advantage against soot-covered trees, illustrating directional natural selection."
+},
+{
+"sub": "Zoology",
+"q": "Fossils of Homo habilis revealed brain capacity of approximately:",
+"opts": [
+"650 - 800 cc",
+"1400 cc",
+"900 cc",
+"1600 cc"
+],
+"ans": 0,
+"exp": "Homo habilis (handy man) had cranial capacity between 650 - 800 cc."
+},
+{
+"sub": "Zoology",
+"q": "Which class of Immunoglobulin (Antibody) can cross the placenta to provide passive immunity to fetus?",
+"opts": [
+"IgG",
+"IgA",
+"IgM",
+"IgE"
+],
+"ans": 0,
+"exp": "IgG is the only antibody class capable of crossing placental barrier."
+},
+{
+"sub": "Zoology",
+"q": "IgA antibody is predominantly present in:",
+"opts": [
+"Colostrum (mother's early milk) and secretions",
+"Blood plasma during secondary response",
+"Mast cell surfaces during allergy",
+"Basophils"
+],
+"ans": 0,
+"exp": "Colostrum is rich in IgA antibodies providing passive immunity to newborn."
+},
+{
+"sub": "Zoology",
+"q": "Malignant malaria caused by which Plasmodium species is most fatal?",
+"opts": [
+"Plasmodium falciparum",
+"Plasmodium vivax",
+"Plasmodium malariae",
+"Plasmodium ovale"
+],
+"ans": 0,
+"exp": "Plasmodium falciparum causes cerebral malignant malaria which can be fatal."
+},
+{
+"sub": "Zoology",
+"q": "Morphine and Heroin opiates are extracted from latex of which plant?",
+"opts": [
+"Papaver somniferum (Opium poppy)",
+"Cannabis sativa",
+"Erythroxylum coca",
+"Atropa belladonna"
+],
+"ans": 0,
+"exp": "Heroin (diacetylmorphine) is obtained by acetylation of morphine from latex of Papaver somniferum."
+},
+{
+"sub": "Zoology",
+"q": "Which part of human ear contains organ of Corti located on basilar membrane?",
+"opts": [
+"Cochlea (Inner ear)",
+"Tympanic membrane",
+"Eustachian tube",
+"Semi-circular canals"
+],
+"ans": 0,
+"exp": "Organ of Corti containing hair cells (auditory receptors) rests on basilar membrane inside cochlear duct."
+},
+{
+"sub": "Zoology",
+"q": "Which hormone decreases blood calcium level (Hypocalcemic hormone)?",
+"opts": [
+"Thyrocalcitonin (TCT)",
+"Parathyroid Hormone (PTH)",
+"Thyroxine (T4)",
+"Aldosterone"
+],
+"ans": 0,
+"exp": "TCT secreted by thyroid parafollicular cells lowers blood Ca2+ by promoting bone deposition."
+},
+{
+"sub": "Zoology",
+"q": "Aldosterone (mineralocorticoid) acts mainly at renal tubules to stimulate:",
+"opts": [
+"Reabsorption of Na+ and water, excretion of K+",
+"Excretion of Na+",
+"Reabsorption of K+",
+"Excretion of water"
+],
+"ans": 0,
+"exp": "Aldosterone promotes Na+ and water reabsorption at distal tubules, maintaining blood pressure."
+},
+{
+"sub": "Zoology",
+"q": "Master endocrine gland controlled by Hypothalamic releasing hormones is:",
+"opts": [
+"Pituitary Gland",
+"Thyroid Gland",
+"Adrenal Gland",
+"Pancreas"
+],
+"ans": 0,
+"exp": "Anterior pituitary gland synthesizes tropic hormones under direct control of hypothalamic releasing/inhibiting factors."
+},
+{
+"sub": "Zoology",
+"q": "Which blood vessel carries oxygenated blood from lungs to left atrium of heart?",
+"opts": [
+"Pulmonary Vein",
+"Pulmonary Artery",
+"Vena Cava",
+"Aorta"
+],
+"ans": 0,
+"exp": "Pulmonary veins (4 in number) carry freshly oxygenated blood from lungs to left atrium."
+},
+{
+"sub": "Zoology",
+"q": "T-waves in normal ECG represent:",
+"opts": [
+"Ventricular Repolarization (return to resting state)",
+"Ventricular Depolarization",
+"Atrial Depolarization",
+"Atrial Repolarization"
+],
+"ans": 0,
+"exp": "T-wave marks ventricular repolarization."
+},
+{
+"sub": "Zoology",
+"q": "Presence of Glucose (Glycosuria) and Ketone bodies (Ketonuria) in urine is indicative of:",
+"opts": [
+"Diabetes Mellitus",
+"Diabetes Insipidus",
+"Uremia",
+"Bright's disease"
+],
+"ans": 0,
+"exp": "Insulin deficiency in Diabetes Mellitus leads to hyperglycemia, glycosuria, and ketonuria."
+},
+{
+"sub": "Zoology",
+"q": "Myasthenia gravis is an autoimmune disorder affecting:",
+"opts": [
+"Neuromuscular junction leading to fatigue and paralysis of skeletal muscle",
+"Smooth muscles",
+"Joint cartilage",
+"Bones"
+],
+"ans": 0,
+"exp": "Autoantibodies attack ACh receptors at neuromuscular junction in Myasthenia gravis."
+},
+{
+"sub": "Zoology",
+"q": "Joint between Atlas and Axis vertebrae is a:",
+"opts": [
+"Pivot joint",
+"Hinge joint",
+"Gliding joint",
+"Saddle joint"
+],
+"ans": 0,
+"exp": "Pivot joint allows rotational movement of head ('no' movement)."
+},
+{
+"sub": "Zoology",
+"q": "Corpus callosum is a tract of nerve fibers connecting:",
+"opts": [
+"Left and right cerebral hemispheres",
+"Cerebellum to brainstem",
+"Pons to medulla",
+"Thalamus to hypothalamus"
+],
+"ans": 0,
+"exp": "Corpus callosum connects two cerebral hemispheres for interhemispheric communication."
+},
+{
+"sub": "Zoology",
+"q": "Blind spot in human eye is the area where:",
+"opts": [
+"Optic nerve leaves eye and photoreceptors (rods & cones) are absent",
+"Cones are densely packed",
+"Rods are maximum",
+"Light intensity is highest"
+],
+"ans": 0,
+"exp": "Blind spot lacks rods and cones, making it insensitive to light."
+},
+{
+"sub": "Zoology",
+"q": "Which hormone uses secondary messengers like cyclic AMP (cAMP) or Ca2+?",
+"opts": [
+"Peptide/Protein hormones (e.g. FSH, LH, Insulin)",
+"Steroid hormones (Estrogen, Progesterone)",
+"Thyroid hormones (T3, T4)",
+"Cortisol"
+],
+"ans": 0,
+"exp": "Water-soluble peptide hormones bind cell membrane receptors, generating second messengers inside cell."
+},
+{
+"sub": "Zoology",
+"q": "First milk produced by mother after parturition containing essential antibodies is called:",
+"opts": [
+"Colostrum",
+"Lactogen",
+"Secretion",
+"Mucus"
+],
+"ans": 0,
+"exp": "Colostrum is yellow fluid rich in IgA antibodies conferring passive immunity to newborn."
+},
+{
+"sub": "Zoology",
+"q": "Implantation of blastocyst into endometrium of uterus occurs around how many days after fertilization?",
+"opts": [
+"6 to 7 days",
+"14 days",
+"1 day",
+"28 days"
+],
+"ans": 0,
+"exp": "Blastocyst implants into uterine endometrium 6-7 days post fertilization."
+},
+{
+"sub": "Zoology",
+"q": "Which contraceptive method prevents ovulation and alters cervical mucus quality?",
+"opts": [
+"Oral Contraceptive Pills (e.g. Saheli)",
+"Condoms",
+"Tubectomy",
+"Copper-T"
+],
+"ans": 0,
+"exp": "Oral pills contain progestogens/estrogen inhibiting ovulation and thickening cervical mucus."
+},
+{
+"sub": "Zoology",
+"q": "Saheli, a non-steroidal oral contraceptive pill developed at CDRI Lucknow, is taken:",
+"opts": [
+"Once a week",
+"Daily",
+"Once a month",
+"Before intercourse"
+],
+"ans": 0,
+"exp": "Saheli contains centchroman and is a once-a-week pill with high contraceptive value and few side effects."
+},
+{
+"sub": "Zoology",
+"q": "Analogous structures which indicate Convergent Evolution are:",
+"opts": [
+"Wings of Butterfly and Wings of Bird",
+"Forelimbs of Whale and Human",
+"Thorn of Bougainvillea and Tendril of Cucurbita",
+"Flipper of Seal and Forelimb of Horse"
+],
+"ans": 0,
+"exp": "Butterfly and bird wings have different anatomical origins but perform same flying function (Convergent Evolution)."
+},
+{
+"sub": "Zoology",
+"q": "Hardy-Weinberg equilibrium equation for allele frequencies in a population is:",
+"opts": [
+"p^2 + 2pq + q^2 = 1",
+"p + q = 2",
+"p^2 + q^2 = 1",
+"(p+q)^3 = 1"
+],
+"ans": 0,
+"exp": "Genotypic frequency distribution p^2 (AA) + 2pq (Aa) + q^2 (aa) = 1."
+},
+{
+"sub": "Zoology",
+"q": "Human evolutionary ancestor known as 'Handy Man' who first made stone tools was:",
+"opts": [
+"Homo habilis",
+"Australopithecus",
+"Homo erectus",
+"Neanderthal man"
+],
+"ans": 0,
+"exp": "Homo habilis was the first human-like hominid tool-maker."
+},
+{
+"sub": "Zoology",
+"q": "Humoral immune response is mediated by:",
+"opts": [
+"B-Lymphocytes (producing antibodies)",
+"T-Lymphocytes",
+"Macrophage engulfment",
+"NK cells"
+],
+"ans": 0,
+"exp": "B-cells produce circulating antibodies in body fluids (humors)."
+},
+{
+"sub": "Zoology",
+"q": "Cell-mediated immunity (CMI) responsible for graft/organ transplant rejection is mediated by:",
+"opts": [
+"T-Lymphocytes",
+"B-Lymphocytes",
+"Neutrophils",
+"Eosinophils"
+],
+"ans": 0,
+"exp": "T-cells recognize non-self MHC molecules on transplanted organs, causing graft rejection."
+},
+{
+"sub": "Zoology",
+"q": "In HIV infection, the virus primarily attacks and destroys which host cells?",
+"opts": [
+"Helper T-cells (CD4+ T-lymphocytes)",
+"Cytotoxic T-cells",
+"Red Blood Cells",
+"B-cells"
+],
+"ans": 0,
+"exp": "HIV infects Helper T-cells, causing progressive decline in CD4 count and immune deficiency."
+},
+{
+"sub": "Zoology",
+"q": "Infective stage of Plasmodium parasite transmitted to human body by female Anopheles mosquito bite is:",
+"opts": [
+"Sporozoite",
+"Trophozoite",
+"Merozoite",
+"Gametocyte"
+],
+"ans": 0,
+"exp": "Mosquito injects sporozoites into human bloodstream during blood meal."
+},
+{
+"sub": "Zoology",
+"q": "Which enzyme synthesized by retroviruses converts viral RNA into complementary DNA (cDNA)?",
+"opts": [
+"Reverse Transcriptase",
+"DNA Polymerase",
+"RNA Polymerase",
+"Restriction Endonuclease"
+],
+"ans": 0,
+"exp": "Reverse transcriptase transcribes viral ssRNA into dsDNA inside host cell."
+},
+{
+"sub": "Zoology",
+"q": "Normal cellular genes that can transform into cancer-causing oncogenes upon mutation are:",
+"opts": [
+"Proto-oncogenes",
+"Tumor suppressor genes",
+"Transposons",
+"Silencer genes"
+],
+"ans": 0,
+"exp": "Proto-oncogenes regulate normal cell growth; oncogenic transformation causes uncontrolled cancer division."
+},
+{
+"sub": "Physics",
+"q": "Dimensional formula of Planck's Constant (h) is:",
+"opts": [
+"[M^1 L^2 T^-1]",
+"[M^1 L^1 T^-1]",
+"[M^1 L^2 T^-2]",
+"[M^0 L^2 T^-1]"
+],
+"ans": 0,
+"exp": "E = h ν => h = E / ν = [M L^2 T^-2] / [T^-1] = [M L^2 T^-1]."
+},
+{
+"sub": "Physics",
+"q": "A car accelerates uniformly from rest to 30 m/s in 10 seconds. Distance covered in this time is:",
+"opts": [
+"150 m",
+"300 m",
+"100 m",
+"200 m"
+],
+"ans": 0,
+"exp": "a = (30-0)/10 = 3 m/s^2. s = 1/2 a t^2 = 0.5 * 3 * 100 = 150 m."
+},
+{
+"sub": "Physics",
+"q": "A projectile is thrown with velocity 20 m/s at 30° with horizontal. Maximum height attained is: (g = 10 m/s^2)",
+"opts": [
+"5 m",
+"10 m",
+"15 m",
+"20 m"
+],
+"ans": 0,
+"exp": "Hmax = (u^2 sin^2 θ) / 2g = (400 * 0.25) / 20 = 100 / 20 = 5 m."
+},
+{
+"sub": "Physics",
+"q": "Two vectors A and B are perpendicular to each other if their dot product A · B is:",
+"opts": [
+"0",
+"1",
+"Mag(A)*Mag(B)",
+"-1"
+],
+"ans": 0,
+"exp": "A · B = |A||B| cos 90° = 0."
+},
+{
+"sub": "Physics",
+"q": "Momentum of a 2 kg body is 10 kg m/s. Its Kinetic Energy is:",
+"opts": [
+"25 J",
+"50 J",
+"100 J",
+"12.5 J"
+],
+"ans": 0,
+"exp": "KE = p^2 / 2m = 100 / 4 = 25 J."
+},
+{
+"sub": "Physics",
+"q": "Work done by centripetal force on a body moving in a circle of radius R is:",
+"opts": [
+"Zero",
+"F * R",
+"F * 2πR",
+"1/2 m v^2"
+],
+"ans": 0,
+"exp": "Centripetal force is perpendicular to instantaneous displacement vector (θ = 90°), so W = F d cos 90° = 0."
+},
+{
+"sub": "Physics",
+"q": "Moment of Inertia of a uniform thin rod of mass M and length L about an axis through its center perpendicular to length is:",
+"opts": [
+"M L^2 / 12",
+"M L^2 / 3",
+"M L^2 / 2",
+"M L^2 / 4"
+],
+"ans": 0,
+"exp": "I_center = 1/12 M L^2."
+},
+{
+"sub": "Physics",
+"q": "Acceleration due to gravity at height h = R above Earth's surface (radius R) is:",
+"opts": [
+"g / 4",
+"g / 2",
+"g / 9",
+"zero"
+],
+"ans": 0,
+"exp": "g' = g (R / (R+h))^2 = g (R / 2R)^2 = g / 4."
+},
+{
+"sub": "Physics",
+"q": "Escape velocity from Earth's surface is 11.2 km/s. Escape velocity from a planet having twice the radius and same density as Earth is:",
+"opts": [
+"22.4 km/s",
+"11.2 km/s",
+"5.6 km/s",
+"44.8 km/s"
+],
+"ans": 0,
+"exp": "vesc ∝ R. If R doubles, escape velocity doubles to 2 * 11.2 = 22.4 km/s."
+},
+{
+"sub": "Physics",
+"q": "Young's modulus of elasticity of a perfectly rigid body is:",
+"opts": [
+"Infinite",
+"Zero",
+"1",
+"100"
+],
+"ans": 0,
+"exp": "For rigid body, strain = 0 => Young's modulus Y = Stress / 0 = Infinite."
+},
+{
+"sub": "Physics",
+"q": "Terminal velocity of a spherical rain drop falling in air varies with radius r as:",
+"opts": [
+"r^2",
+"r",
+"1/r",
+"r^3"
+],
+"ans": 0,
+"exp": "Stokes' law: vt = 2/9 r^2 (ρ-σ)g / η => vt ∝ r^2."
+},
+{
+"sub": "Physics",
+"q": "In an adiabatic process of an ideal gas, work done W is equal to:",
+"opts": [
+"- ΔU (Decrease in internal energy)",
+"Zero",
+"Q",
+"P ΔV"
+],
+"ans": 0,
+"exp": "First law ΔQ = ΔU + W. In adiabatic ΔQ = 0 => W = -ΔU."
+},
+{
+"sub": "Physics",
+"q": "Efficiency of a Carnot engine operating between 27°C (300 K) and 327°C (600 K) is:",
+"opts": [
+"50%",
+"25%",
+"75%",
+"33%"
+],
+"ans": 0,
+"exp": "η = 1 - T2/T1 = 1 - 300/600 = 0.5 = 50%."
+},
+{
+"sub": "Physics",
+"q": "Time period of a simple pendulum of length L = 1 m is approximately: (g = π^2 ≈ 9.8 m/s^2)",
+"opts": [
+"2 seconds",
+"1 second",
+"4 seconds",
+"0.5 seconds"
+],
+"ans": 0,
+"exp": "T = 2π √(L/g) = 2π √(1/π^2) = 2 seconds (Second's pendulum)."
+},
+{
+"sub": "Physics",
+"q": "Distance between a node and adjacent antinode in a standing wave of wavelength λ is:",
+"opts": [
+"λ / 4",
+"λ / 2",
+"λ",
+"2 λ"
+],
+"ans": 0,
+"exp": "Distance between consecutive node and antinode = λ / 4."
+},
+{
+"sub": "Physics",
+"q": "Electric field intensity at distance r from a point charge q in vacuum is:",
+"opts": [
+"1/(4πε0) * q/r^2",
+"1/(4πε0) * q/r",
+"q r / (4πε0)",
+"q / r^3"
+],
+"ans": 0,
+"exp": "E = k q / r^2 = 1/(4πε0) * q / r^2."
+},
+{
+"sub": "Physics",
+"q": "Two parallel plate capacitors of capacitances 6 μF and 12 μF are connected in series. Equivalent capacitance is:",
+"opts": [
+"4 μF",
+"18 μF",
+"9 μF",
+"2 μF"
+],
+"ans": 0,
+"exp": "Ceq = (C1 * C2) / (C1 + C2) = (6 * 12) / (6 + 12) = 72 / 18 = 4 μF."
+},
+{
+"sub": "Physics",
+"q": "Equivalent resistance between opposite corners of a square formed by 4 identical wires of 4 Ω each is:",
+"opts": [
+"2 Ω",
+"4 Ω",
+"8 Ω",
+"1 Ω"
+],
+"ans": 0,
+"exp": "Two parallel arms of 8 Ω each (4+4). Req = 8 / 2 = 4 Ω. Between opposite corners (2 sides parallel to 2 sides): 8 || 8 = 4 Ω. Wait! If square has 4 sides of 4Ω each, opposite corners split into two branches of (4+4)=8Ω in parallel. Req = 8/2 = 4 Ω."
+},
+{
+"sub": "Physics",
+"q": "Resistivity of a metallic wire depends on:",
+"opts": [
+"Material and Temperature",
+"Length",
+"Area of cross section",
+"Shape"
+],
+"ans": 0,
+"exp": "Resistivity ρ is an intrinsic material property depending on nature of material and temperature."
+},
+{
+"sub": "Physics",
+"q": "A cell of EMF 2.0 V delivers current 0.5 A across 3.5 Ω external resistor. Internal resistance r of cell is:",
+"opts": [
+"0.5 Ω",
+"1.0 Ω",
+"0.2 Ω",
+"0.1 Ω"
+],
+"ans": 0,
+"exp": "I = E / (R + r) => 0.5 = 2.0 / (3.5 + r) => 3.5 + r = 4.0 => r = 0.5 Ω."
+},
+{
+"sub": "Physics",
+"q": "Magnetic field at center of a long solenoid carrying current I with n turns per unit length is:",
+"opts": [
+"μ0 n I",
+"μ0 N I / 2",
+"μ0 I / (2π r)",
+"Zero"
+],
+"ans": 0,
+"exp": "B_solenoid = μ0 n I inside long solenoid."
+},
+{
+"sub": "Physics",
+"q": "Force per unit length between two long straight parallel conductors separated by 1 m carrying 1 A current each is:",
+"opts": [
+"2 x 10^-7 N/m",
+"10^-7 N/m",
+"4π x 10^-7 N/m",
+"1 N/m"
+],
+"ans": 0,
+"exp": "f = μ0 I1 I2 / (2π d) = (4π x 10^-7 * 1 * 1) / (2π * 1) = 2 x 10^-7 N/m (Definition of Ampere)."
+},
+{
+"sub": "Physics",
+"q": "If current in a coil of self-inductance L = 2 H changes from 5 A to 0 in 0.1 s, induced EMF is:",
+"opts": [
+"100 V",
+"50 V",
+"10 V",
+"20 V"
+],
+"ans": 0,
+"exp": "e = L |di/dt| = 2 * (5 / 0.1) = 2 * 50 = 100 V."
+},
+{
+"sub": "Physics",
+"q": "In a series LCR circuit at resonance, phase angle between current and voltage is:",
+"opts": [
+"0° (in phase)",
+"90°",
+"180°",
+"45°"
+],
+"ans": 0,
+"exp": "At resonance XL = XC => Z = R, so V and I are in phase (φ = 0°)."
+},
+{
+"sub": "Physics",
+"q": "Which electromagnetic wave has shortest wavelength?",
+"opts": [
+"Gamma rays",
+"X-rays",
+"Ultraviolet rays",
+"Radio waves"
+],
+"ans": 0,
+"exp": "Gamma rays have highest frequency and shortest wavelength (< 10^-11 m)."
+},
+{
+"sub": "Physics",
+"q": "Critical angle for light traveling from glass (n = 1.5) to air is sin^-1 of:",
+"opts": [
+"2 / 3",
+"1 / 2",
+"3 / 4",
+"1 / 3"
+],
+"ans": 0,
+"exp": "sin ic = 1 / n = 1 / 1.5 = 2 / 3 => ic = sin^-1(2/3)."
+},
+{
+"sub": "Physics",
+"q": "Power of a thin concave lens of focal length 20 cm (-0.2 m) is:",
+"opts": [
+"-5.0 D",
+"+5.0 D",
+"-2.0 D",
+"+2.0 D"
+],
+"ans": 0,
+"exp": "P = 1 / f(m) = 1 / (-0.2) = -5.0 D."
+},
+{
+"sub": "Physics",
+"q": "In Young's double slit experiment, if slit separation d is halved and screen distance D is doubled, fringe width β becomes:",
+"opts": [
+"4 times original",
+"2 times",
+"Half",
+"Same"
+],
+"ans": 0,
+"exp": "β = λ D / d. New β' = λ (2D) / (d/2) = 4 (λ D / d) = 4 β."
+},
+{
+"sub": "Physics",
+"q": "Polarizing angle (Brewster's angle ip) for glass with refractive index n = √3 is:",
+"opts": [
+"60°",
+"30°",
+"45°",
+"90°"
+],
+"ans": 0,
+"exp": "tan ip = n = √3 => ip = tan^-1(√3) = 60°."
+},
+{
+"sub": "Physics",
+"q": "Work function of a metal is 2.0 eV. Threshold frequency ν0 is approximately: (h = 4.14 x 10^-15 eV s)",
+"opts": [
+"4.8 x 10^14 Hz",
+"6.2 x 10^14 Hz",
+"2.4 x 10^14 Hz",
+"1.2 x 10^15 Hz"
+],
+"ans": 0,
+"exp": "ν0 = W0 / h = 2.0 / (4.14 x 10^-15) ≈ 4.8 x 10^14 Hz."
+},
+{
+"sub": "Physics",
+"q": "De Broglie wavelength of an electron accelerated through potential difference V = 100 V is:",
+"opts": [
+"1.227 Å (0.123 nm)",
+"12.27 Å",
+"0.012 Å",
+"122.7 Å"
+],
+"ans": 0,
+"exp": "λ = 12.27 / √V = 12.27 / √100 = 1.227 Angstroms."
+},
+{
+"sub": "Physics",
+"q": "Radius of 1st Bohr orbit of Hydrogen atom is 0.53 Å. Radius of 2nd orbit (n = 2) is:",
+"opts": [
+"2.12 Å",
+"1.06 Å",
+"4.24 Å",
+"0.53 Å"
+],
+"ans": 0,
+"exp": "rn = r1 * n^2 = 0.53 * 4 = 2.12 Angstroms."
+},
+{
+"sub": "Physics",
+"q": "Total energy of electron in 1st orbit of Hydrogen atom is -13.6 eV. Its Kinetic Energy is:",
+"opts": [
+"+13.6 eV",
+"-13.6 eV",
+"+27.2 eV",
+"-27.2 eV"
+],
+"ans": 0,
+"exp": "KE = - Total Energy = -(-13.6 eV) = +13.6 eV."
+},
+{
+"sub": "Physics",
+"q": "Half-life of a radioactive nucleus is 10 days. Fraction remaining after 30 days is:",
+"opts": [
+"1 / 8",
+"1 / 4",
+"1 / 16",
+"1 / 2"
+],
+"ans": 0,
+"exp": "Number of half-lives n = 30/10 = 3. Remaining fraction = (1/2)^3 = 1/8."
+},
+{
+"sub": "Physics",
+"q": "Depletion layer of a p-n junction under reverse bias condition:",
+"opts": [
+"Widens and barrier potential increases",
+"Narrows",
+"Disappears",
+"Remains unchanged"
+],
+"ans": 0,
+"exp": "Reverse bias pulls majority carriers away from junction, widening depletion layer and barrier height."
+},
+{
+"sub": "Physics",
+"q": "Truth table output Y = 0 only when both inputs A = 0 and B = 0 belongs to:",
+"opts": [
+"OR gate",
+"AND gate",
+"NAND gate",
+"NOR gate"
+],
+"ans": 0,
+"exp": "OR gate Y = A + B is 0 only when A=0 and B=0."
+},
+{
+"sub": "Physics",
+"q": "Zener diode is heavily doped and used primarily as a:",
+"opts": [
+"Voltage Regulator",
+"Rectifier",
+"Amplifier",
+"Oscillator"
+],
+"ans": 0,
+"exp": "Zener diode maintains constant breakdown voltage across output."
+},
+{
+"sub": "Physics",
+"q": "A force F = (5 i + 3 j) N acts on a particle displacing it through s = (2 i + 4 j) m. Work done is:",
+"opts": [
+"22 J",
+"10 J",
+"12 J",
+"30 J"
+],
+"ans": 0,
+"exp": "W = F · s = (5*2) + (3*4) = 10 + 12 = 22 Joules."
+},
+{
+"sub": "Physics",
+"q": "Refractive index of diamond is 2.42. Speed of light in diamond is approximately:",
+"opts": [
+"1.24 x 10^8 m/s",
+"2.0 x 10^8 m/s",
+"3.0 x 10^8 m/s",
+"1.5 x 10^8 m/s"
+],
+"ans": 0,
+"exp": "v = c / n = (3 x 10^8) / 2.42 ≈ 1.24 x 10^8 m/s."
+},
+{
+"sub": "Physics",
+"q": "Current gain β of a transistor in common emitter configuration is 50. Base current Ib = 20 μA. Collector current Ic is:",
+"opts": [
+"1.0 mA (1000 μA)",
+"0.5 mA",
+"2.0 mA",
+"5.0 mA"
+],
+"ans": 0,
+"exp": "Ic = β * Ib = 50 * 20 μA = 1000 μA = 1.0 mA."
+},
+{
+"sub": "Physics",
+"q": "Self-inductance of a solenoid of length L, cross-sectional area A, and total turns N is:",
+"opts": [
+"μ0 N^2 A / L",
+"μ0 N A / L",
+"μ0 N^2 L / A",
+"μ0 N A L"
+],
+"ans": 0,
+"exp": "L = μ0 n^2 A l = μ0 (N/L)^2 A L = μ0 N^2 A / L."
+},
+{
+"sub": "Physics",
+"q": "Angle of deviation δ produced by a thin prism of refractive index n and angle A is:",
+"opts": [
+"δ = (n - 1) A",
+"δ = (n + 1) A",
+"δ = n A",
+"δ = A / (n - 1)"
+],
+"ans": 0,
+"exp": "For thin prism (A < 10°), minimum deviation δ ≈ (n - 1) A."
+},
+{
+"sub": "Physics",
+"q": "Work done in charging a 10 μF capacitor to a potential of 100 V is:",
+"opts": [
+"0.05 J",
+"0.10 J",
+"0.50 J",
+"0.01 J"
+],
+"ans": 0,
+"exp": "W = 1/2 C V^2 = 0.5 * (10 x 10^-6) * 10000 = 0.05 Joules."
+},
+{
+"sub": "Physics",
+"q": "Threshold wavelength λ0 for photoelectric emission from a surface is 500 nm. Work function W0 is: (hc = 1240 eV nm)",
+"opts": [
+"2.48 eV",
+"4.96 eV",
+"1.24 eV",
+"3.10 eV"
+],
+"ans": 0,
+"exp": "W0 = hc / λ0 = 1240 / 500 = 2.48 eV."
+},
+{
+"sub": "Physics",
+"q": "Common base current gain α of a transistor is 0.98. Common emitter current gain β is:",
+"opts": [
+"49",
+"98",
+"50",
+"100"
+],
+"ans": 0,
+"exp": "β = α / (1 - α) = 0.98 / (1 - 0.98) = 0.98 / 0.02 = 49."
+},
+{
+"sub": "Chemistry",
+"q": "Number of moles of solute present in 1 Liter of solution is defined as:",
+"opts": [
+"Molarity (M)",
+"Molality (m)",
+"Normality (N)",
+"Mole fraction"
+],
+"ans": 0,
+"exp": "Molarity M = moles of solute / Volume of solution in Liters."
+},
+{
+"sub": "Chemistry",
+"q": "Quantum numbers n = 3, l = 2 represent which subshell?",
+"opts": [
+"3d subshell",
+"3p subshell",
+"3s subshell",
+"4d subshell"
+],
+"ans": 0,
+"exp": "For l = 0(s), 1(p), 2(d), 3(f). n=3, l=2 is 3d subshell."
+},
+{
+"sub": "Chemistry",
+"q": "Which molecule has trigonal bipyramidal geometry and sp3d hybridization?",
+"opts": [
+"PCl5",
+"SF6",
+"BF3",
+"CH4"
+],
+"ans": 0,
+"exp": "PCl5 has 5 bond pairs (sp3d hybridization) arranged in trigonal bipyramidal shape."
+},
+{
+"sub": "Chemistry",
+"q": "Bond order of Oxygen molecule (O2) according to Molecular Orbital Theory is:",
+"opts": [
+"2.0",
+"1.5",
+"2.5",
+"3.0"
+],
+"ans": 0,
+"exp": "Bond order = 1/2 (Nb - Na) = 1/2 (10 - 6) = 2.0."
+},
+{
+"sub": "Chemistry",
+"q": "According to Le Chatelier's principle, increasing pressure on exothermic reaction N2(g) + 3H2(g) ⇌ 2NH3(g) shifts equilibrium to:",
+"opts": [
+"Forward direction (towards NH3)",
+"Backward direction",
+"No change",
+"Stops reaction"
+],
+"ans": 0,
+"exp": "Increasing pressure shifts equilibrium towards fewer moles of gas (4 moles -> 2 moles, forward direction)."
+},
+{
+"sub": "Chemistry",
+"q": "pH of 10^-3 M HCl solution in water is:",
+"opts": [
+"3.0",
+"11.0",
+"7.0",
+"4.0"
+],
+"ans": 0,
+"exp": "[H+] = 10^-3 M => pH = -log(10^-3) = 3.0."
+},
+{
+"sub": "Chemistry",
+"q": "Solubility product expression (Ksp) for AgCl (s) ⇌ Ag+ (aq) + Cl- (aq) with solubility S mol/L is:",
+"opts": [
+"Ksp = S^2",
+"Ksp = 4 S^3",
+"Ksp = S",
+"Ksp = 27 S^4"
+],
+"ans": 0,
+"exp": "Ksp = [Ag+][Cl-] = (S)(S) = S^2."
+},
+{
+"sub": "Chemistry",
+"q": "Oxidation state of Cr in Potassium Dichromate (K2Cr2O7) is:",
+"opts": [
+"+6",
+"+3",
+"+7",
+"+4"
+],
+"ans": 0,
+"exp": "2(+1) + 2x + 7(-2) = 0 => 2x - 12 = 0 => 2x = 12 => x = +6."
+},
+{
+"sub": "Chemistry",
+"q": "Standard electrode potential of Standard Hydrogen Electrode (SHE) is assigned a value of:",
+"opts": [
+"0.00 V",
+"1.00 V",
+"-0.76 V",
+"1.10 V"
+],
+"ans": 0,
+"exp": "By convention, SHE E° = 0.00 V at all temperatures."
+},
+{
+"sub": "Chemistry",
+"q": "Unit of rate constant (k) for a FIRST-ORDER reaction is:",
+"opts": [
+"s^-1 (or min^-1)",
+"mol L^-1 s^-1",
+"L mol^-1 s^-1",
+"L^2 mol^-2 s^-1"
+],
+"ans": 0,
+"exp": "For n-th order, unit of k = (mol/L)^(1-n) s^-1. For n=1, unit is s^-1."
+},
+{
+"sub": "Chemistry",
+"q": "Half-life period (t1/2) of a first-order reaction is independent of:",
+"opts": [
+"Initial concentration of reactant",
+"Temperature",
+"Rate constant k",
+"Catalyst"
+],
+"ans": 0,
+"exp": "t1/2 = 0.693 / k, independent of initial reactant concentration [A]0."
+},
+{
+"sub": "Chemistry",
+"q": "Tyndall effect (scattering of light) is shown by:",
+"opts": [
+"Colloidal solutions",
+"True solutions",
+"Suspensions",
+"Gases"
+],
+"ans": 0,
+"exp": "Colloidal particles have sizes between 1-1000 nm, scattering light beams (Tyndall effect)."
+},
+{
+"sub": "Chemistry",
+"q": "Purification method for refining Nickel based on formation of volatile carbonyl complex Ni(CO)4 is:",
+"opts": [
+"Mond's Process",
+"van Arkel Process",
+"Zone Refining",
+"Liquation"
+],
+"ans": 0,
+"exp": "Ni + 4CO -> Ni(CO)4 (volatile), which decomposes at higher temp to yield pure Ni (Mond's process)."
+},
+{
+"sub": "Chemistry",
+"q": "Which halide of Nitrogen is STABLE?",
+"opts": [
+"NF3",
+"NCl3",
+"NBr3",
+"NI3"
+],
+"ans": 0,
+"exp": "NF3 is exothermic and stable due to strong N-F bonds and small size of both atoms."
+},
+{
+"sub": "Chemistry",
+"q": "Basicity of Orthophosphoric acid (H3PO4) is:",
+"opts": [
+"3 (Tribasic)",
+"2 (Dibasic)",
+"1 (Monobasic)",
+"0"
+],
+"ans": 0,
+"exp": "H3PO4 has 3 P-OH bonds, releasing 3 H+ ions in aqueous solution."
+},
+{
+"sub": "Chemistry",
+"q": "Lanthanoid contraction is responsible for the fact that:",
+"opts": [
+"Zr and Hf have almost identical atomic radii",
+"Zr and Y have same radius",
+"La and Lu have same radius",
+"Zn and Cd have same radius"
+],
+"ans": 0,
+"exp": "Imperfect shielding of 4f electrons causes progressive atomic size contraction, making 4d (Zr) and 5d (Hf) radii almost equal."
+},
+{
+"sub": "Chemistry",
+"q": "IUPAC name of Coordination Complex [Co(NH3)6]Cl3 is:",
+"opts": [
+"Hexaamminecobalt(III) chloride",
+"Hexaamine cobalt chloride",
+"Cobalt(III) hexaammine chloride",
+"Hexaamminecobalt(II) chloride"
+],
+"ans": 0,
+"exp": "Cation complex named first: Hexaamminecobalt(III) followed by anion chloride."
+},
+{
+"sub": "Chemistry",
+"q": "Which complex shows Linkage Isomerism?",
+"opts": [
+"[Co(NH3)5(NO2)]Cl2",
+"[Co(NH3)6]Cl3",
+"[Fe(H2O)6]Cl3",
+"[Pt(NH3)2Cl2]"
+],
+"ans": 0,
+"exp": "Ambidentate ligand NO2- can bind via N (nitro) or O (nitrito), giving linkage isomerism."
+},
+{
+"sub": "Chemistry",
+"q": "Hyperconjugation effect involves delocalization of electrons of:",
+"opts": [
+"sigma (σ) C-H bond of alkyl group directly attached to unsaturated system",
+"pi (π) electrons",
+"lone pair",
+"d-orbitals"
+],
+"ans": 0,
+"exp": "Hyperconjugation (no-bond resonance) involves σ C-H electrons delocalization into adjacent empty p or π orbital."
+},
+{
+"sub": "Chemistry",
+"q": "Ozonolysis of 2-Methylbut-2-ene followed by Zn/H2O yields:",
+"opts": [
+"Propanone and Ethanal",
+"Ethanal and Methanal",
+"Propanal and Ethanal",
+"Two molecules of Propanone"
+],
+"ans": 0,
+"exp": "CH3-C(CH3)=CH-CH3 + O3/Zn -> CH3-CO-CH3 (Propanone) + CH3-CHO (Ethanal)."
+},
+{
+"sub": "Chemistry",
+"q": "According to Markovnikov's rule, addition of HBr to Propene yields primary product:",
+"opts": [
+"2-Bromopropane",
+"1-Bromopropane",
+"1,2-Dibromopropane",
+"Propane"
+],
+"ans": 0,
+"exp": "H+ adds to carbon with more hydrogens, forming more stable 2° carbocation -> 2-Bromopropane."
+},
+{
+"sub": "Chemistry",
+"q": "SN2 reaction of alkyl halides proceeds with:",
+"opts": [
+"Complete Inversion of Configuration (Walden Inversion)",
+"Racemization",
+"Retention of configuration",
+"Carbocation formation"
+],
+"ans": 0,
+"exp": "SN2 involves backside nucleophilic attack on 1° alkyl halide in single step, leading to Walden inversion."
+},
+{
+"sub": "Chemistry",
+"q": "Lucas Reagent used to distinguish 1°, 2°, and 3° Alcohols is a mixture of:",
+"opts": [
+"Anhydrous ZnCl2 and Concentrated HCl",
+"Dilute HCl and Zn",
+"Concentrated H2SO4 and HNO3",
+"KMnO4 and KOH"
+],
+"ans": 0,
+"exp": "Lucas reagent (Anhydrous ZnCl2 + conc. HCl) reacts instantaneously with 3° alcohols forming cloudy turbidity."
+},
+{
+"sub": "Chemistry",
+"q": "Phenol reacts with Chloroform and KOH to form Salicylaldehyde in:",
+"opts": [
+"Reimer-Tiemann Reaction",
+"Kolbe's Reaction",
+"Williamson Synthesis",
+"Friedel-Crafts Reaction"
+],
+"ans": 0,
+"exp": "Reimer-Tiemann reaction introduces -CHO group at ortho position of phenol via dichlorocarbene intermediate."
+},
+{
+"sub": "Chemistry",
+"q": "Williamson Ether Synthesis involves reaction between:",
+"opts": [
+"Alkyl halide and Sodium alkoxide",
+"Alcohol and conc. H2SO4",
+"Phenol and Benzene",
+"Aldehyde and Alcohol"
+],
+"ans": 0,
+"exp": "R-X + R'-ONa -> R-O-R' + NaX via SN2 mechanism."
+},
+{
+"sub": "Chemistry",
+"q": "Aldehydes lacking alpha-hydrogen atoms (e.g. Formaldehyde, Benzaldehyde) undergo self oxidation-reduction on heating with conc. KOH in:",
+"opts": [
+"Cannizzaro Reaction",
+"Aldol Condensation",
+"Clemmensen Reduction",
+"Wolff-Kishner Reduction"
+],
+"ans": 0,
+"exp": "Cannizzaro reaction yields one molecule of alcohol (reduced) and one molecule of carboxylic acid salt (oxidized)."
+},
+{
+"sub": "Chemistry",
+"q": "Tollens' Reagent used to test for Aldehydes is:",
+"opts": [
+"Ammoniacal Silver Nitrate solution [Ag(NH3)2]+",
+"Alkaline Copper Sulfate solution",
+"Acidified K2Cr2O7",
+"Neutral FeCl3"
+],
+"ans": 0,
+"exp": "Tollens' reagent oxidizes aldehydes to carboxylate ions while forming a silver mirror."
+},
+{
+"sub": "Chemistry",
+"q": "Conversion of an Amide into a primary amine containing one less carbon atom using Br2 and NaOH is:",
+"opts": [
+"Hofmann Bromamide Degradation",
+"Gabriel Phthalimide Synthesis",
+"Stephen Reduction",
+"Etard Reaction"
+],
+"ans": 0,
+"exp": "R-CONH2 + Br2 + 4NaOH -> R-NH2 + Na2CO3 + 2NaBr + 2H2O."
+},
+{
+"sub": "Chemistry",
+"q": "Which test is used to distinguish Primary Amines from secondary and tertiary amines by forming foul-smelling Isocyanides?",
+"opts": [
+"Carbylamine Test (Isocyanide test)",
+"Hinsberg Test",
+"Biuret Test",
+"Xanthoproteic Test"
+],
+"ans": 0,
+"exp": "Primary aliphatic/aromatic amines heated with CHCl3 and KOH produce offensive smelling isocyanides (R-NC)."
+},
+{
+"sub": "Chemistry",
+"q": "Glucose on prolonged heating with HI yields:",
+"opts": [
+"n-Hexane",
+"Gluconic acid",
+"Saccharic acid",
+"Hexanoic acid"
+],
+"ans": 0,
+"exp": "Prolonged heating of glucose with HI proves all 6 carbon atoms are linked in a straight chain (n-hexane)."
+},
+{
+"sub": "Chemistry",
+"q": "Which Vitamin deficiency causes Scurvy (bleeding gums)?",
+"opts": [
+"Vitamin C (Ascorbic acid)",
+"Vitamin A",
+"Vitamin B12",
+"Vitamin D"
+],
+"ans": 0,
+"exp": "Vitamin C deficiency causes Scurvy."
+},
+{
+"sub": "Chemistry",
+"q": "Monomers of Nylon-6,6 are:",
+"opts": [
+"Adipic acid and Hexamethylenediamine",
+"Caprolactam",
+"Terephthalic acid and Ethylene glycol",
+"Styrene and 1,3-Butadiene"
+],
+"ans": 0,
+"exp": "Nylon-6,6 is a condensation polymer of Adipic acid and Hexamethylenediamine."
+},
+{
+"sub": "Chemistry",
+"q": "Buna-S synthetic rubber is a copolymer of:",
+"opts": [
+"1,3-Butadiene and Styrene",
+"1,3-Butadiene and Acrylonitrile",
+"Chloroprene",
+"Isoprene"
+],
+"ans": 0,
+"exp": "Buna-S (Bu = Butadiene, Na = Sodium catalyst, S = Styrene)."
+},
+{
+"sub": "Chemistry",
+"q": "Which of the following is an Antipyretic and Analgesic drug?",
+"opts": [
+"Paracetamol (4-Acetamidophenol)",
+"Penicillin",
+"Chloramphenicol",
+"Ranitidine"
+],
+"ans": 0,
+"exp": "Paracetamol reduces fever (antipyretic) and relieves pain (analgesic)."
+},
+{
+"sub": "Chemistry",
+"q": "Antiseptic dettol is a mixture of:",
+"opts": [
+"Chloroxylenol and Terpineol",
+"Bithionol",
+"Phenol and Iodine",
+"Tincture of Iodine"
+],
+"ans": 0,
+"exp": "Dettol contains Chloroxylenol and Terpineol dissolved in water."
+},
+{
+"sub": "Chemistry",
+"q": "Molar conductivity of electrolyte solution increases with dilution because:",
+"opts": [
+"Total volume containing 1 mole electrolyte increases and degree of dissociation increases",
+"Number of ions per unit volume increases",
+"Viscosity increases",
+"Ionic mobility decreases"
+],
+"ans": 0,
+"exp": "Upon dilution, interionic attraction decreases and weak electrolyte dissociation increases, raising molar conductivity."
+},
+{
+"sub": "Chemistry",
+"q": "For a zero-order reaction A -> Products, integrated rate equation for concentration [A] at time t is:",
+"opts": [
+"[A] = [A]0 - k t",
+"[A] = [A]0 e^(-kt)",
+"ln[A] = ln[A]0 - kt",
+"1/[A] = 1/[A]0 + kt"
+],
+"ans": 0,
+"exp": "Zero order: -d[A]/dt = k => [A] = [A]0 - k t."
+},
+{
+"sub": "Chemistry",
+"q": "Which oxide of Nitrogen is a neutral gas?",
+"opts": [
+"Nitrous oxide (N2O) and Nitric oxide (NO)",
+"Nitrogen dioxide (NO2)",
+"Dinitrogen trioxide (N2O3)",
+"Dinitrogen pentoxide (N2O5)"
+],
+"ans": 0,
+"exp": "N2O and NO are neutral oxides of nitrogen; NO2, N2O3, N2O5 are acidic."
+},
+{
+"sub": "Chemistry",
+"q": "Hybridization of Xenon in XeF4 (Xenon tetrafluoride) molecule is:",
+"opts": [
+"sp3d2 (Square planar shape)",
+"sp3d",
+"sp3",
+"d2sp3"
+],
+"ans": 0,
+"exp": "XeF4 has 4 bond pairs and 2 lone pairs (total 6 electron pairs = sp3d2), giving square planar geometry."
+},
+{
+"sub": "Chemistry",
+"q": "According to Werner's Coordination Theory, secondary valency of central metal ion corresponds to its:",
+"opts": [
+"Coordination Number",
+"Oxidation state",
+"Ionic charge",
+"Group number"
+],
+"ans": 0,
+"exp": "Primary valency = oxidation state (ionizable). Secondary valency = coordination number (non-ionizable, directional)."
+},
+{
+"sub": "Chemistry",
+"q": "Spin-only magnetic moment formula μ is given by: (where n = number of unpaired electrons)",
+"opts": [
+"μ = √(n(n + 2)) BM",
+"μ = √(n(n + 1)) BM",
+"μ = n(n + 2) BM",
+"μ = 2n + 1 BM"
+],
+"ans": 0,
+"exp": "μ = √(n(n + 2)) Bohr Magnetons."
+},
+{
+"sub": "Chemistry",
+"q": "Friedel-Crafts Alkylation of Benzene with CH3Cl in presence of Anhydrous AlCl3 yields:",
+"opts": [
+"Toluene",
+"Chlorobenzene",
+"Nitrobenzene",
+"Benzene sulfonic acid"
+],
+"ans": 0,
+"exp": "C6H6 + CH3Cl --(Anhydrous AlCl3)--> C6H5-CH3 (Toluene) + HCl."
+},
+{
+"sub": "Chemistry",
+"q": "Victor Meyer test gives RED color for which type of alcohol?",
+"opts": [
+"Primary alcohol (1°)",
+"Secondary alcohol (2°)",
+"Tertiary alcohol (3°)",
+"Phenol"
+],
+"ans": 0,
+"exp": "Victor Meyer test colors: 1° Alcohol = RED (Nitrolic acid), 2° = BLUE (Pseudonitrol), 3° = COLORLESS."
+},
+{
+"sub": "Chemistry",
+"q": "Which reaction converts Acetyl chloride (CH3COCl) into Acetaldehyde (CH3CHO) using H2/Pd-BaSO4?",
+"opts": [
+"Rosenmund Reduction",
+"Stephen Reduction",
+"Clemmensen Reduction",
+"Etard Reaction"
+],
+"ans": 0,
+"exp": "Rosenmund reduction uses Lindlar catalyst (Pd on BaSO4 poisoned with sulfur/quinoline) to stop reduction at aldehyde."
+},
+{
+"sub": "Chemistry",
+"q": "Which amino acid is OPTICALLY INACTIVE?",
+"opts": [
+"Glycine",
+"Alanine",
+"Valine",
+"Leucine"
+],
+"ans": 0,
+"exp": "Glycine (H2N-CH2-COOH) lacks an asymmetric chiral carbon, making it optically inactive."
+}
+    ];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let status = new Array(QUESTIONS.length).fill('not-visited');
+    let timeLeft = 180 * 60; // 3 Hours
+    let timerInterval;
+
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        const isLight = document.body.classList.contains('light');
+        document.getElementById('themeToggleBtn').textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        localStorage.setItem('_th', isLight ? 'light' : 'dark');
+    }
+
+    function init() {
+        const savedTheme = localStorage.getItem('_th');
+        if (savedTheme === 'light') toggleTheme();
+
+        renderPalette();
+        loadQuestion(0);
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const h = Math.floor(timeLeft / 3600);
+            const m = Math.floor((timeLeft % 3600) / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerText').textContent = `${h > 0 ? h + ':' : ''}${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (timeLeft < 600) document.getElementById('timerText').style.color = '#ef4444';
+        }, 1000);
+    }
+
+    function renderPalette() {
+        const grid = document.getElementById('paletteGrid');
+        grid.innerHTML = '';
+        QUESTIONS.forEach((q, i) => {
+            const btn = document.createElement('div');
+            btn.className = `p-btn ${status[i]} ${i === currentIdx ? 'active' : ''}`;
+            btn.textContent = (i + 1).toString();
+            btn.id = `palBtn-${i}`;
+            btn.onclick = () => loadQuestion(i);
+            grid.appendChild(btn);
+        });
+        scrollPaletteToActive();
+        updateProgressBar();
+    }
+
+    function scrollPaletteToActive() {
+        const activeBtn = document.getElementById(`palBtn-${currentIdx}`);
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+
+    function updateProgressBar() {
+        const ans = status.filter(s => s === 'answered' || s === 'marked-answered').length;
+        const mark = status.filter(s => s === 'marked' || s === 'marked-answered').length;
+        const total = QUESTIONS.length;
+        const perc = (ans / total) * 100;
+        document.getElementById('progressBar').style.width = perc + '%';
+        document.getElementById('progressText').innerHTML = `<span>ANS: <b>${ans}</b></span> <span>MARKED: <b>${mark}</b></span> <span>TOTAL: <b>${total}</b></span>`;
+    }
+
+    function jumpToSubject(sub) {
+        const idx = QUESTIONS.findIndex(q => q.sub === sub);
+        if (idx !== -1) loadQuestion(idx);
+    }
+
+    function updateTabs() {
+        const sub = QUESTIONS[currentIdx].sub;
+        document.querySelectorAll('.s-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === sub);
+        });
+    }
+
+    function loadQuestion(idx) {
+        if (status[currentIdx] === 'not-visited') status[currentIdx] = 'not-answered';
+        currentIdx = idx;
+        const q = QUESTIONS[idx];
+
+        document.getElementById('qSubject').textContent = q.sub;
+        document.getElementById('qCounter').textContent = `Question ${idx + 1}/${QUESTIONS.length}`;
+        document.getElementById('qText').innerHTML = q.q;
+        document.querySelector('.q-section').scrollTop = 0;
+
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        const letters = ['A','B','C','D'];
+
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = `opt-btn ${userAnswers[idx] === i ? 'selected' : ''}`;
+            btn.innerHTML = `<div class="opt-letter">${letters[i]}</div> <span>${opt}</span>`;
+            btn.onclick = () => selectOption(i);
+            grid.appendChild(btn);
+        });
+
+        if (idx === QUESTIONS.length - 1) {
+            document.getElementById('btnSubmit').style.display = 'block';
+        }
+
+        updateTabs();
+        renderPalette();
+    }
+
+    function selectOption(optIdx) {
+        userAnswers[currentIdx] = optIdx;
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach((b, i) => b.classList.toggle('selected', i === optIdx));
+
+        // Auto update status if marked, keep marked-answered
+        if (status[currentIdx] === 'marked' || status[currentIdx] === 'marked-answered') {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'answered';
+        }
+        renderPalette();
+    }
+
+    function handleClear() {
+        userAnswers[currentIdx] = null;
+        // If it was marked-answered, revert to marked. Otherwise not-answered.
+        status[currentIdx] = (status[currentIdx] === 'marked-answered') ? 'marked' : 'not-answered';
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach(b => b.classList.remove('selected'));
+        renderPalette();
+    }
+
+    function handleMark() {
+        if (userAnswers[currentIdx] !== null) {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'marked';
+        }
+        renderPalette();
+        if (currentIdx < QUESTIONS.length - 1) loadQuestion(currentIdx + 1);
+    }
+
+    function handleNext() {
+        if (userAnswers[currentIdx] === null && status[currentIdx] !== 'marked' && status[currentIdx] !== 'marked-answered') {
+            status[currentIdx] = 'not-answered';
+        }
+        if (currentIdx < QUESTIONS.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmSubmit();
+        }
+    }
+
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to submit the exam?")) {
+            submitExam();
+        }
+    }
+
+    function submitExam() {
+        clearInterval(timerInterval);
+        document.getElementById('examView').classList.add('hidden');
+        document.getElementById('actionButtons').classList.add('hidden');
+        document.getElementById('resultView').style.display = 'block';
+        renderResults();
+    }
+
+    function renderResults(filter = 'all') {
+        const container = document.getElementById('reviewContainer');
+        container.innerHTML = `<h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+            <div class="sub-tabs" style="margin-bottom:20px">
+                <div class="s-tab ${filter === 'all' ? 'active' : ''}" onclick="renderResults('all')">All</div>
+                <div class="s-tab ${filter === 'wrong' ? 'active' : ''}" onclick="renderResults('wrong')">Incorrect</div>
+                <div class="s-tab ${filter === 'correct' ? 'active' : ''}" onclick="renderResults('correct')">Correct</div>
+                <div class="s-tab ${filter === 'skipped' ? 'active' : ''}" onclick="renderResults('skipped')">Skipped</div>
+            </div>`;
+
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+
+        QUESTIONS.forEach((q, i) => {
+            if (userAnswers[i] === null) skipped++;
+            else if (userAnswers[i] === q.ans) correct++;
+            else wrong++;
+        });
+
+        const score = (correct * 4) - (wrong * 1);
+        document.getElementById('resScore').textContent = score;
+        document.getElementById('resCorrect').textContent = correct;
+        document.getElementById('resWrong').textContent = wrong;
+        document.getElementById('resSkipped').textContent = skipped;
+
+        QUESTIONS.forEach((q, i) => {
+            const isCorrect = userAnswers[i] === q.ans;
+            const isSkipped = userAnswers[i] === null;
+
+            if (filter === 'wrong' && (isCorrect || isSkipped)) return;
+            if (filter === 'correct' && (!isCorrect || isSkipped)) return;
+            if (filter === 'skipped' && !isSkipped) return;
+
+            const item = document.createElement('div');
+            item.className = 'rev-item';
+
+            let userAnsText = isSkipped ? 'Not Answered' : q.opts[userAnswers[i]];
+            let statusColor = isCorrect ? 'correct' : (isSkipped ? '' : 'wrong');
+
+            item.innerHTML = `
+                <div class="rev-q"><span style="color:var(--text-sub)">#${i+1}</span> ${q.q}</div>
+                <div class="rev-ans ${statusColor}">
+                    <b>Your Answer:</b> ${userAnsText} ${isCorrect ? '✓' : ''}
+                </div>
+                ${!isCorrect ? `
+                <div class="rev-ans correct">
+                    <b>Correct Answer:</b> ${q.opts[q.ans]}
+                </div>` : ''}
+                <div class="rev-exp">
+                    <b>Explanation:</b> ${q.exp}
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function handleExit() {
+        if (confirm("Do you want to exit the mock test? Your progress will be lost.")) {
+            window.history.back();
+        }
+    }
+
+    init();
+</script>
+
+</body>
+</html>

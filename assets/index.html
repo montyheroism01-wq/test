@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>NEET Practice MCQ</title>
+<meta name="description" content="NEET Practice MCQ App — Biology, Physics, Chemistry. Chapter-wise sets, PYQs, Mock Tests, and analytics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM — LIGHT & DARK ONLY
+════════════════════════════════════════════ */
+:root {
+  --bg-app:#f8fafc; --bg-surface:#ffffff; --bg-surface-light:#f1f5f9;
+  --primary:#2563eb; --primary-glow:rgba(37,99,235,0.2);
+  --text-main:#0f172a; --text-muted:#64748b; --border:#e2e8f0;
+  --shadow-sm:0 2px 8px rgba(15,23,42,0.06); --shadow-md:0 8px 24px rgba(15,23,42,0.10); --shadow-lg:0 20px 48px rgba(15,23,42,0.14);
+  --radius-sm:8px; --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-full:9999px;
+  --bio:#059669; --phy:#d97706; --chem:#db2777; --mix:#7c3aed;
+  --green:#10b981; --red:#ef4444; --yellow:#f59e0b;
+}
+[data-theme="dark"] {
+  --bg-app:#09090b; --bg-surface:#18181b; --bg-surface-light:#27272a;
+  --primary:#3b82f6; --primary-glow:rgba(59,130,246,0.25);
+  --text-main:#f8fafc; --text-muted:#94a3b8; --border:rgba(255,255,255,0.08);
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.35); --shadow-md:0 8px 24px rgba(0,0,0,0.55); --shadow-lg:0 20px 48px rgba(0,0,0,0.75);
+  --bio:#10b981; --phy:#f59e0b; --chem:#ec4899; --mix:#8b5cf6;
+  --green:#10b981; --red:#ef4444; --yellow:#f59e0b;
+}
+
+/* ═══ RESET ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent!important;user-select:none;-webkit-user-select:none;font-family:'Inter',system-ui,sans-serif;outline:none!important;}
+*:focus{outline:none!important;box-shadow:none!important;}
+button,input,textarea,select{outline:none!important;-webkit-appearance:none;}
+a{-webkit-tap-highlight-color:transparent!important;}
+::-webkit-scrollbar{display:none;}
+*{scrollbar-width:none;-ms-overflow-style:none;}
+html,body{width:100%;height:100%;background:var(--bg-app);color:var(--text-main);overflow:hidden;}
+
+/* ═══ SCREENS ═══ */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;background:var(--bg-app);transition:opacity 0.28s ease,transform 0.28s ease;z-index:10;}
+.screen.hidden{opacity:0;pointer-events:none;visibility:hidden;transform:translateY(10px) scale(0.985);}
+
+/* ═══ SPLASH ═══ */
+#splashScreen{position:fixed;inset:0;z-index:1000;background:var(--bg-app);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity 0.7s ease;}
+#splashScreen.fade-out{opacity:0;pointer-events:none;}
+.splash-icon{width:88px;height:88px;border-radius:24px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 0 48px var(--primary-glow),0 8px 32px rgba(0,0,0,.25);animation:splashPop 1.4s ease-in-out infinite alternate;}
+@keyframes splashPop{from{transform:scale(1);}to{transform:scale(1.07);}}
+.splash-title{text-align:center;}
+.splash-title h1{font-size:1.9rem;font-weight:900;color:var(--text-main);letter-spacing:-0.5px;}
+.splash-title p{font-size:.85rem;color:var(--text-muted);font-weight:600;margin-top:4px;}
+.splash-bar-wrap{width:160px;height:3px;background:var(--border);border-radius:99px;overflow:hidden;}
+.splash-bar{height:100%;background:var(--primary);border-radius:99px;animation:splashLoad 2.2s ease forwards;}
+@keyframes splashLoad{0%{width:0;}100%{width:100%;}}
+.splash-footer{display:none;}
+
+/* ═══ BG CANVAS ═══ */
+#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.12;}
+
+/* ═══ SHARED PAGE HEADER ═══ */
+.page-header{width:100%;padding:13px 16px;background:var(--bg-surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);flex-shrink:0;}
+.btn-back-circle{width:36px;height:36px;border-radius:50%;background:var(--bg-surface-light);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;transition:.2s;color:var(--text-main);line-height:1;}
+.btn-back-circle:active{transform:scale(.9);}
+.page-title{font-size:.98rem;font-weight:800;color:var(--text-main);flex:1;}
+.page-sub{font-size:.7rem;color:var(--text-muted);font-weight:600;margin-top:1px;}
+
+/* ═══ START SCREEN ═══ */
+#startScreen{padding:0;overflow-y:auto;}
+.start-inner{width:100%;max-width:480px;margin:0 auto;padding:16px 16px 100px;display:flex;flex-direction:column;gap:20px;}
+.app-header{display:flex;align-items:center;justify-content:space-between;padding:6px 0 2px;}
+.app-logo{display:flex;align-items:center;gap:11px;}
+.logo-icon{width:46px;height:46px;border-radius:13px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 14px var(--primary-glow);}
+.logo-text h1{font-size:1.2rem;font-weight:900;color:var(--text-main);line-height:1;}
+.logo-text p{font-size:.68rem;color:var(--text-muted);font-weight:600;margin-top:2px;}
+.icon-btn{width:38px;height:38px;border-radius:var(--radius-md);background:var(--bg-surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:var(--shadow-sm);transition:.2s;}
+.icon-btn:active{transform:scale(.93);}
+.sec-label{font-size:.68rem;font-weight:800;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.subject-card{background:var(--bg-surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:16px 13px;cursor:pointer;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow-sm);transition:.2s;position:relative;overflow:hidden;}
+.subject-card:active{transform:scale(.97);}
+.sc-icon-wrap{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.sc-name{font-size:.92rem;font-weight:800;color:var(--text-main);}
+.sc-count{font-size:.68rem;color:var(--text-muted);font-weight:600;}
+.subject-card[data-sub="botany"] .sc-icon-wrap{background:rgba(5,150,105,.12);}
+.subject-card[data-sub="zoology"] .sc-icon-wrap{background:rgba(124,58,237,.12);}
+.subject-card[data-sub="physics"] .sc-icon-wrap{background:rgba(217,119,6,.12);}
+.subject-card[data-sub="chemistry"] .sc-icon-wrap{background:rgba(219,39,119,.12);}
+.subject-card[data-sub="physics_numericals"] .sc-icon-wrap{background:rgba(217,119,6,.12);}
+.subject-card[data-sub="chemistry_numericals"] .sc-icon-wrap{background:rgba(219,39,119,.12);}
+
+.feat-strip{display:flex;gap:9px;}
+.feat-chip{flex:1;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:13px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;box-shadow:var(--shadow-sm);transition:.2s;}
+.feat-chip:active{transform:scale(.96);}
+.feat-chip-icon{font-size:22px;}
+.feat-chip-label{font-size:.62rem;font-weight:800;color:var(--text-muted);text-align:center;}
+.diff-row{display:flex;gap:9px;}
+.diff-btn{flex:1;padding:11px 8px;border-radius:var(--radius-md);border:1.5px solid var(--border);background:var(--bg-surface);color:var(--text-muted);font-size:.83rem;font-weight:800;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.diff-btn small{font-size:.6rem;font-weight:600;}
+.diff-btn.active[data-diff="easy"]{border-color:var(--green);background:rgba(16,185,129,.08);color:var(--green);}
+.diff-btn.active[data-diff="medium"]{border-color:var(--yellow);background:rgba(245,158,11,.08);color:var(--yellow);}
+.diff-btn.active[data-diff="hard"]{border-color:var(--red);background:rgba(239,68,68,.08);color:var(--red);}
+
+/* ═══ CHAPTER SCREEN ═══ */
+#chapterScreen{padding:0;overflow-y:auto;}
+.chapter-list{width:100%;max-width:560px;margin:0 auto;padding:12px 14px 100px;display:flex;flex-direction:column;gap:8px;}
+.class-label{font-size:.66rem;font-weight:800;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;padding:10px 2px 4px;}
+.chapter-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:.2s;box-shadow:var(--shadow-sm);}
+.chapter-card:active{transform:scale(.98);}
+.chapter-card-icon{width:42px;height:42px;border-radius:11px;background:var(--bg-surface-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.chapter-card-body{flex:1;min-width:0;}
+.chapter-card-title{font-size:.88rem;font-weight:800;color:var(--text-main);line-height:1.3;}
+.chapter-card-sub{font-size:.67rem;color:var(--text-muted);margin-top:3px;font-weight:600;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.chapter-card-arr{font-size:18px;color:var(--text-muted);flex-shrink:0;}
+
+/* ═══ SETS SCREEN ═══ */
+#setsScreen{padding:0;overflow-y:auto;}
+.sets-list{width:100%;max-width:560px;margin:0 auto;padding:12px 14px 100px;display:flex;flex-direction:column;gap:13px;}
+.set-card{background:var(--bg-surface);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:16px;cursor:pointer;transition:.2s;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:11px;position:relative;overflow:hidden;}
+.set-card-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:99px 99px 0 0;background:var(--border);}
+.set-card.tier-green .set-card-accent{background:var(--green);}
+.set-card.tier-purple .set-card-accent{background:#a855f7;}
+.set-card.tier-yellow .set-card-accent{background:var(--yellow);}
+.set-card.tier-orange .set-card-accent{background:#f97316;}
+.set-card.tier-red .set-card-accent{background:var(--red);}
+.set-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.set-card-info{flex:1;min-width:0;}
+.set-badges{display:flex;gap:5px;align-items:center;margin-bottom:5px;flex-wrap:wrap;}
+.set-badge{font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:var(--radius-full);border:1px solid var(--border);color:var(--text-muted);background:var(--bg-surface-light);}
+.tier-badge-g{border-color:var(--green)!important;color:var(--green)!important;background:rgba(16,185,129,.1)!important;}
+.tier-badge-p{border-color:#a855f7!important;color:#a855f7!important;background:rgba(168,85,247,.1)!important;}
+.tier-badge-y{border-color:var(--yellow)!important;color:var(--yellow)!important;background:rgba(245,158,11,.1)!important;}
+.tier-badge-o{border-color:#f97316!important;color:#f97316!important;background:rgba(249,115,22,.1)!important;}
+.tier-badge-r{border-color:var(--red)!important;color:var(--red)!important;background:rgba(239,68,68,.1)!important;}
+.set-title{font-size:.95rem;font-weight:800;color:var(--text-main);line-height:1.3;}
+.set-desc{font-size:.72rem;color:var(--text-muted);margin-top:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.set-chart{width:68px;height:68px;border-radius:50%;background:conic-gradient(var(--primary) calc(var(--p,0)*1%),var(--border) 0);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;}
+.set-chart::after{content:'';position:absolute;width:50px;height:50px;border-radius:50%;background:var(--bg-surface);}
+.set-chart-val{font-size:.75rem;font-weight:900;color:var(--text-main);z-index:1;}
+.set-progress-wrap{display:flex;flex-direction:column;gap:5px;}
+.set-progress-meta{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700;}
+.set-progress-score{color:var(--primary);}
+.set-progress-cta{color:var(--text-muted);}
+.set-progress-track{height:3px;background:var(--border);border-radius:99px;overflow:hidden;}
+.set-progress-fill{height:100%;background:var(--primary);border-radius:99px;transition:width .8s ease;}
+.analytics-bar{display:flex;gap:8px;margin-top:2px;}
+.anl-btn{flex:1;padding:9px 8px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface-light);font-size:.74rem;font-weight:800;cursor:pointer;color:var(--text-main);transition:.2s;text-align:center;}
+.anl-btn.view{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 12px var(--primary-glow);}
+.anl-btn:active{transform:scale(.97);}
+.list-banner{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;align-items:center;gap:13px;box-shadow:var(--shadow-sm);}
+.list-banner-icon{font-size:30px;flex-shrink:0;}
+.list-banner-text h3{font-size:.95rem;font-weight:800;color:var(--text-main);}
+.list-banner-text p{font-size:.7rem;color:var(--text-muted);margin-top:2px;font-weight:500;}
+
+/* ═══ GAME SCREEN ═══ */
+#gameScreen{padding:0;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;width:100%;max-width:100vw;box-sizing:border-box;}
+.solver-header{padding:10px 13px;background:var(--bg-surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:var(--shadow-sm);gap:8px;width:100%;max-width:100vw;box-sizing:border-box;overflow:hidden;}
+.solver-header-left{display:flex;align-items:center;gap:9px;flex:1;min-width:0;}
+.solver-title-wrap{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;}
+.solver-title-text{font-size:.82rem;font-weight:800;color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.solver-sub-pill{display:inline-block;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 9px;border-radius:var(--radius-full);font-size:.6rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;background:var(--primary-glow);color:var(--primary);border:1px solid rgba(59,130,246,.18);vertical-align:middle;}
+.solver-header-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.solver-timer{font-size:.95rem;font-weight:900;padding:5px 12px;border-radius:var(--radius-full);background:var(--primary-glow);color:var(--primary);font-variant-numeric:tabular-nums;transition:color .3s,background .3s;min-width:48px;text-align:center;}
+.solver-timer.warn{background:rgba(245,158,11,.15);color:var(--yellow);}
+.solver-timer.danger{background:rgba(239,68,68,.15);color:var(--red);}
+.solver-timer.max-mode{animation:rainbowTxt 1.2s infinite linear;background:rgba(255,0,127,.12);}
+@keyframes rainbowTxt{0%{color:#ff007f;}25%{color:#7928ca;}50%{color:#00dfd8;}75%{color:#ffd700;}100%{color:#ff007f;}}
+.bm-btn{width:34px;height:34px;border-radius:50%;background:var(--bg-surface-light);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:.2s;}
+.bm-btn.on{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.4);}
+.bm-btn:active{transform:scale(.9);}
+.solver-progress{height:2.5px;background:var(--border);flex-shrink:0;}
+.solver-progress-fill{height:100%;background:var(--primary);transition:width .4s ease;}
+.q-pills-row{display:flex;overflow-x:auto;padding:12px 18px;gap:8px;background:var(--bg-surface);border-bottom:1px solid var(--border);flex-shrink:0;scroll-padding:0 18px;}
+.q-pill{min-width:33px;height:33px;border-radius:9px;background:var(--bg-surface-light);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:800;cursor:pointer;color:var(--text-muted);flex-shrink:0;transition:.15s;}
+.q-pill.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 3px 10px var(--primary-glow);}
+.q-pill.p-correct{border-color:var(--green);color:var(--green);background:rgba(16,185,129,.08);}
+.q-pill.p-wrong{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08);}
+.q-pill.p-skip{border-color:var(--yellow);color:var(--yellow);background:rgba(245,158,11,.08);}
+.solver-body{flex:1;overflow-y:auto;padding:16px 14px;max-width:680px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+.q-header{display:flex;align-items:center;justify-content:space-between;}
+.q-num-lbl{font-size:.73rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
+.q-cat-badge{font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:var(--radius-full);background:var(--primary-glow);color:var(--primary);border:1px solid rgba(59,130,246,.2);}
+.q-text-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:17px 15px;font-size:.98rem;font-weight:600;line-height:1.6;color:var(--text-main);box-shadow:var(--shadow-sm);white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;max-width:100%;box-sizing:border-box;}
+.options-grid{display:flex;flex-direction:column;gap:9px;}
+.opt-card{background:var(--bg-surface);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:14px;display:flex;align-items:flex-start;gap:13px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-sm);}
+.opt-card:active{transform:scale(.99);}
+.opt-letter{width:32px;height:32px;border-radius:var(--radius-full);background:var(--bg-surface-light);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:900;color:var(--text-muted);flex-shrink:0;transition:.15s;}
+.opt-text{font-size:.92rem;font-weight:600;line-height:1.5;color:var(--text-main);padding-top:3px;flex:1;word-break:break-word;overflow-wrap:break-word;min-width:0;}
+.opt-card.sel{border-color:var(--primary);background:var(--primary-glow);}
+.opt-card.sel .opt-letter{background:var(--primary);color:#fff;border-color:var(--primary);}
+.opt-card.correct{border-color:var(--green);background:rgba(16,185,129,.08);}
+.opt-card.correct .opt-letter{background:var(--green);color:#fff;border-color:var(--green);}
+.opt-card.wrong{border-color:var(--red);background:rgba(239,68,68,.08);}
+.opt-card.wrong .opt-letter{background:var(--red);color:#fff;border-color:var(--red);}
+.opt-card.reveal{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.04);}
+.opt-card.reveal .opt-letter{background:rgba(16,185,129,.2);color:var(--green);border-color:var(--green);}
+.exp-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;display:none;font-size:.84rem;line-height:1.6;color:var(--text-main);box-shadow:var(--shadow-sm);}
+.exp-card.show{display:block;animation:slideUp .3s ease;}
+.exp-card.exp-c{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.05);}
+.exp-card.exp-w{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.04);}
+.exp-label{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+.exp-card.exp-c .exp-label{color:var(--green);}
+.exp-card.exp-w .exp-label{color:var(--red);}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══ NOTES SCREEN ═══ */
+.notes-tab{flex:1;padding:10px 4px;border:none;background:transparent;color:var(--text-muted);font-weight:700;font-size:.72rem;cursor:pointer;border-bottom:2.5px solid transparent;transition:.2s;font-family:inherit;}
+.notes-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
+.note-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow-sm);position:relative;}
+.note-card-chap{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--primary);margin-bottom:6px;}
+.note-card-text{font-size:.88rem;line-height:1.6;color:var(--text-main);white-space:pre-wrap;}
+.note-card-date{font-size:.65rem;color:var(--text-muted);margin-top:8px;}
+.note-card-del{position:absolute;top:10px;right:12px;background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--text-muted);padding:4px;}
+.note-sub-btn{padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg-surface-light);color:var(--text-main);font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit;transition:.2s;}
+.note-sub-btn.active{border-color:var(--primary);background:var(--primary-glow);color:var(--primary);}
+/* ═══ QUICK ACCESS MODAL ═══ */
+#quickAccessModal{display:none;position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;}
+.qa-sheet{background:var(--bg-surface);border-radius:22px 22px 0 0;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;padding-bottom:30px;}
+.qa-header{padding:18px 18px 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg-surface);border-bottom:1px solid var(--border);padding-bottom:12px;}
+.qa-tabs{display:flex;gap:0;width:100%;border-bottom:1px solid var(--border);background:var(--bg-surface);}
+.qa-tab{flex:1;padding:9px 4px;border:none;background:transparent;color:var(--text-muted);font-weight:700;font-size:.7rem;cursor:pointer;border-bottom:2.5px solid transparent;transition:.2s;font-family:inherit;}
+.qa-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
+.qa-set-card{background:var(--bg-surface-light);border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:.2s;}
+.qa-set-card:active{transform:scale(.98);}
+.qa-set-name{font-weight:700;font-size:.85rem;margin-bottom:6px;}
+.qa-set-stats{display:flex;gap:10px;flex-wrap:wrap;}
+.qa-stat{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:8px;}
+.qa-stat.c{background:rgba(16,185,129,.12);color:#10b981;}
+.qa-stat.w{background:rgba(239,68,68,.1);color:#ef4444;}
+.qa-stat.s{background:rgba(245,158,11,.1);color:#f59e0b;}
+.qa-stat.t{background:rgba(99,102,241,.1);color:#6366f1;}
+
+/* ═══ MCQ NAV BUTTONS ═══ */
+.solver-footer{
+  padding:14px 16px;
+  padding-bottom:max(14px,env(safe-area-inset-bottom));
+  background:var(--bg-surface);
+  border-top:1px solid var(--border);
+  flex-shrink:0;
+}
+.solver-footer-inner{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  width:100%;
+  max-width:500px;
+  margin:0 auto;
+}
+/* BASE */
+.btn-solver{
+  border:none;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-family:inherit;
+  font-size:.9rem;
+  font-weight:700;
+  line-height:1;
+  white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  transition:transform .14s ease, opacity .14s;
+}
+.btn-solver:active:not(:disabled){ transform:scale(.94); }
+/* PREV — small square-ish */
+#btnPrev{
+  width:52px;
+  height:48px;
+  flex-shrink:0;
+  border-radius:14px;
+  background:var(--bg-surface-light);
+  border:1.5px solid var(--border);
+  color:var(--text-main);
+}
+#btnPrev:disabled{ opacity:.3; cursor:default; }
+/* SKIP — medium rectangle */
+#btnSkip{
+  width:110px;
+  flex-shrink:0;
+  height:48px;
+  border-radius:14px;
+  background:transparent;
+  border:2px solid #f59e0b;
+  color:#f59e0b;
+  letter-spacing:.2px;
+}
+/* NEXT — wide rectangle fills rest */
+#btnNext{
+  flex:1;
+  height:48px;
+  min-width:130px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#3b82f6 0%,#6366f1 100%);
+  color:#fff;
+  border:none;
+  box-shadow:0 4px 18px rgba(99,102,241,.45);
+  letter-spacing:.2px;
+}
+#btnNext:hover{ filter:brightness(1.08); }
+#btnNext:active{ box-shadow:0 2px 8px rgba(99,102,241,.3); }
+
+
+/* ═══ ANALYTICS SCREEN ═══ */
+.anl-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:var(--shadow-sm); }
+.anl-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+.anl-num { font-weight:900; font-size:.9rem; color:var(--text-main); }
+.anl-time { font-size:.7rem; font-weight:700; color:var(--text-muted); background:var(--bg-surface-light); padding:4px 8px; border-radius:8px; }
+.anl-qtext { font-size:.95rem; font-weight:600; color:var(--text-main); margin-bottom:16px; line-height:1.5; }
+.anl-opt { padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:var(--bg-app); margin-bottom:8px; font-size:.85rem; font-weight:500; display:flex; gap:10px; align-items:center; }
+.anl-opt.correct { background:rgba(16,185,129,.1); border-color:#10b981; color:#064e3b; }
+.anl-opt.wrong { background:rgba(239,68,68,.1); border-color:#ef4444; color:#7f1d1d; }
+.anl-opt-badge { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.75rem; background:rgba(128,128,128,.1); color:var(--text-muted); flex-shrink:0; }
+.anl-opt.correct .anl-opt-badge { background:#10b981; color:#fff; }
+.anl-opt.wrong .anl-opt-badge { background:#ef4444; color:#fff; }
+.anl-fact { margin-top:12px; padding:12px; background:rgba(59,130,246,.08); border-radius:10px; font-size:.8rem; color:var(--text-main); line-height:1.5; border-left:3px solid #3b82f6; }
+
+/* ═══ RESULT SCREEN ═══ */
+#resultScreen{padding:0;overflow-y:auto;}
+.result-inner{width:100%;max-width:560px;margin:0 auto;padding:16px 14px 100px;display:flex;flex-direction:column;gap:18px;}
+.res-hero{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
+.res-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,var(--primary-glow),transparent 55%);pointer-events:none;}
+.res-sub-badge{font-size:.66rem;font-weight:900;padding:4px 13px;border-radius:var(--radius-full);background:var(--primary-glow);color:var(--primary);border:1px solid rgba(59,130,246,.2);letter-spacing:1px;text-transform:uppercase;}
+.res-ring-wrap{position:relative;width:130px;height:130px;display:flex;align-items:center;justify-content:center;}
+.res-ring-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
+.res-ring-bg{fill:none;stroke:var(--border);stroke-width:7;}
+.res-ring-fill{fill:none;stroke:var(--primary);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 440;transition:stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1);}
+.res-ring-center{display:flex;flex-direction:column;align-items:center;gap:2px;z-index:2;}
+.res-grade{font-size:2.4rem;font-weight:900;color:var(--primary);line-height:1;}
+.res-grade-sub{font-size:.62rem;font-weight:800;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;}
+.res-score{font-size:2.6rem;font-weight:900;color:var(--text-main);line-height:1;letter-spacing:-1px;}
+.res-acc-pill{font-size:.88rem;font-weight:900;padding:6px 18px;border-radius:var(--radius-full);}
+.res-feedback{font-size:.82rem;color:var(--text-muted);font-weight:600;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.stat-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;display:flex;flex-direction:column;gap:5px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--sc-accent,var(--border));}
+.sc-icon{font-size:20px;}
+.sc-label{font-size:.62rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
+.sc-val{font-size:1.45rem;font-weight:900;color:var(--text-main);}
+.sc-val.g{color:var(--green);}.sc-val.r{color:var(--red);}.sc-val.b{color:var(--primary);}.sc-val.y{color:var(--yellow);}
+.sec-header{display:flex;align-items:center;gap:9px;font-size:.88rem;font-weight:800;color:var(--text-main);}
+.sec-header-bar{width:3px;height:17px;background:var(--primary);border-radius:99px;flex-shrink:0;}
+.sec-header-count{margin-left:auto;font-size:.68rem;color:var(--text-muted);font-weight:600;}
+.donut-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;display:flex;align-items:center;gap:18px;box-shadow:var(--shadow-sm);}
+.donut-wrap{width:100px;height:100px;position:relative;flex-shrink:0;}
+.donut-svg{width:100%;height:100%;transform:rotate(-90deg);}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.donut-pct{font-size:1.3rem;font-weight:900;color:var(--text-main);}
+.donut-lbl{font-size:.55rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
+.donut-legend{flex:1;display:flex;flex-direction:column;gap:9px;}
+.dleg-row{display:flex;align-items:center;gap:7px;}
+.dleg-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
+.dleg-name{font-size:.72rem;font-weight:600;color:var(--text-muted);}
+.dleg-num{font-size:1rem;font-weight:900;color:var(--text-main);line-height:1;}
+.hmap-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow-sm);}
+.hmap-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;}
+.hmap-cell{width:27px;height:27px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:800;transition:.15s;}
+.hmap-cell.c{background:rgba(16,185,129,.18);border:1px solid rgba(16,185,129,.32);color:var(--green);}
+.hmap-cell.w{background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.32);color:var(--red);}
+.hmap-cell.s{background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.28);color:var(--yellow);}
+.hmap-cell.t{background:rgba(100,116,139,.12);border:1px solid rgba(100,116,139,.22);color:var(--text-muted);}
+.hmap-legend{display:flex;gap:13px;margin-top:10px;flex-wrap:wrap;}
+.hleg{display:flex;align-items:center;gap:5px;font-size:.64rem;font-weight:700;color:var(--text-muted);}
+.hleg-dot{width:9px;height:9px;border-radius:3px;}
+.time-chart-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow-sm);}
+.time-bars{width:100%;height:82px;display:flex;align-items:flex-end;gap:4px;margin-top:12px;}
+.tbar{flex:1;border-radius:3px 3px 2px 2px;min-height:3px;transition:height .7s;}
+.tbar-f{background:linear-gradient(180deg,var(--green),rgba(16,185,129,.3));}
+.tbar-m{background:linear-gradient(180deg,var(--yellow),rgba(245,158,11,.3));}
+.tbar-s{background:linear-gradient(180deg,var(--red),rgba(239,68,68,.3));}
+.tbar-k{background:linear-gradient(180deg,var(--text-muted),rgba(100,116,139,.3));}
+.time-xaxis{display:flex;justify-content:space-between;font-size:.58rem;color:var(--text-muted);margin-top:5px;}
+.time-leg{display:flex;gap:11px;margin-top:8px;flex-wrap:wrap;}
+.tleg{display:flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;color:var(--text-muted);}
+.tleg-dot{width:7px;height:7px;border-radius:2px;}
+.smart-card{background:var(--bg-surface);border:1.5px dashed var(--border);border-radius:var(--radius-lg);padding:16px;font-size:.84rem;line-height:1.7;color:var(--text-main);box-shadow:var(--shadow-sm);}
+.badges-row{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;}
+.badge-card{flex-shrink:0;width:70px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px;opacity:.2;filter:grayscale(1) brightness(.6);transition:.5s;}
+.badge-card.unlocked{opacity:1;filter:none;animation:badgeIn .5s ease;}
+@keyframes badgeIn{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+.badge-ring{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--badge-color,var(--border));background:var(--badge-bg,transparent);}
+.badge-name{font-size:.58rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;line-height:1.3;}
+.badge-card.unlocked .badge-name{color:var(--badge-color);}
+.badge-card.unlocked .badge-ring{box-shadow:0 0 12px var(--badge-color);}
+.review-tabs{display:flex;background:var(--bg-surface-light);border-radius:var(--radius-md);padding:4px;gap:4px;}
+.review-tab{flex:1;padding:7px 5px;border-radius:var(--radius-sm);font-size:.66rem;font-weight:800;cursor:pointer;transition:.2s;color:var(--text-muted);text-align:center;}
+.review-tab.active{background:var(--bg-surface);color:var(--text-main);box-shadow:var(--shadow-sm);}
+.rev-list{display:flex;flex-direction:column;gap:10px;}
+.rev-card{background:var(--bg-surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);}
+.rev-card-header{display:flex;align-items:center;justify-content:space-between;padding:11px 13px 0;}
+.rev-qnum{font-size:.65rem;font-weight:800;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;}
+.rev-chip{padding:3px 9px;border-radius:9px;font-size:.62rem;font-weight:800;text-transform:uppercase;}
+.rev-chip.c{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.22);}
+.rev-chip.w{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.22);}
+.rev-chip.s{background:rgba(245,158,11,.1);color:var(--yellow);border:1px solid rgba(245,158,11,.18);}
+.rev-q-text{font-size:.85rem;font-weight:700;color:var(--text-main);padding:9px 13px;line-height:1.5;}
+.rev-ans-block{padding:7px 13px 13px;display:flex;flex-direction:column;gap:5px;}
+.rev-ans-row{padding:7px 11px;border-radius:8px;font-size:.78rem;font-weight:700;display:flex;align-items:flex-start;gap:8px;}
+.rev-ans-row.cr{background:rgba(16,185,129,.08);color:var(--green);border:1px solid rgba(16,185,129,.18);}
+.rev-ans-row.wr{background:rgba(239,68,68,.06);color:var(--red);border:1px solid rgba(239,68,68,.18);}
+.rev-exp{padding:9px 13px 13px;font-size:.76rem;color:var(--text-muted);line-height:1.55;border-top:1px solid var(--border);}
+.rev-exp strong{color:var(--primary);}
+.res-buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.btn-res{padding:13px 9px;border-radius:var(--radius-lg);border:1px solid var(--border);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px;cursor:pointer;transition:.2s;text-align:center;background:var(--bg-surface-light);color:var(--text-main);}
+.btn-res.primary{background:var(--primary);color:#fff;border-color:var(--primary);grid-column:span 2;box-shadow:0 6px 20px var(--primary-glow);}
+.btn-res:active{transform:scale(.96);}
+
+/* ═══ INNER LISTS (Bookmarks, Notes, etc.) ═══ */
+#bookmarksScreen,#revisionScreen,#bookmarkSetsScreen,#mockTestListScreen,#pyqListScreen,#notesListScreen{padding:0;overflow-y:auto;}
+.inner-list{width:100%;max-width:560px;margin:0 auto;padding:12px 14px 100px;display:flex;flex-direction:column;gap:11px;}
+.colorful-list-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:15px;cursor:pointer;transition:.2s;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:9px;}
+.colorful-list-card:active{transform:scale(.98);}
+.colorful-card-icon-row{display:flex;align-items:center;gap:12px;}
+.colorful-card-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.colorful-card-title{font-size:.9rem;font-weight:800;color:var(--text-main);}
+.colorful-card-desc{font-size:.7rem;color:var(--text-muted);font-weight:500;}
+
+/* ═══ MISC ═══ */
+.confetti-piece{position:fixed;pointer-events:none;z-index:999;animation:confettiFall linear forwards;}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text-main);color:var(--bg-surface);padding:9px 20px;border-radius:var(--radius-full);font-size:.8rem;font-weight:700;z-index:10000;white-space:nowrap;box-shadow:var(--shadow-lg);animation:toastIn .3s ease;pointer-events:none;}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(18px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+.loading-text{text-align:center;padding:36px 20px;font-size:.88rem;color:var(--text-muted);font-weight:600;}
+.empty-state{text-align:center;padding:56px 20px;color:var(--text-muted);}
+.empty-icon{font-size:44px;margin-bottom:14px;opacity:.45;}
+.empty-text{font-size:.95rem;font-weight:700;}
+.float-score{position:fixed;font-size:.95rem;font-weight:900;pointer-events:none;z-index:9999;animation:floatUp .85s ease forwards;}
+@keyframes floatUp{from{opacity:1;transform:translateY(0);}to{opacity:0;transform:translateY(-55px);}}
+.divider{width:100%;height:1px;background:var(--border);}
+
+/* ══════════════════════════════════════════════════════════════
+   STUDIEDX - RESPONSIVE TABLE & MEDIA DESIGN SYSTEM
+   ══════════════════════════════════════════════════════════════ */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 14px 0;
+  border-radius: 10px;
+  border: 1px solid var(--border, #334155);
+  background: var(--bg-surface-light, rgba(15, 23, 42, 0.6));
+  box-shadow: var(--shadow-sm, 0 4px 20px rgba(0, 0, 0, 0.2));
+}
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  color: var(--text-main, #f8fafc);
+  text-align: left;
+}
+.quiz-table thead tr {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(30, 41, 59, 0.8));
+  border-bottom: 2px solid var(--border, #334155);
+}
+.quiz-table th {
+  padding: 11px 15px;
+  font-weight: 700;
+  color: var(--primary, #60a5fa);
+  border-right: 1px solid var(--border, #334155);
+  white-space: nowrap;
+}
+.quiz-table th:first-child, .quiz-table td:first-child {
+  width: 28%;
+  min-width: 95px;
+  font-weight: 700;
+}
+.quiz-table th:last-child {
+  border-right: none;
+}
+.quiz-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border, rgba(51, 65, 85, 0.5));
+  border-right: 1px solid var(--border, rgba(51, 65, 85, 0.5));
+  line-height: 1.5;
+  font-weight: 500;
+}
+.quiz-table td:last-child {
+  border-right: none;
+}
+.quiz-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.quiz-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+.quiz-table tbody tr:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+.img-wrap {
+  text-align: center;
+  margin: 14px 0;
+}
+.quiz-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 420px;
+  border-radius: 10px;
+  border: 1px solid var(--border, #334155);
+  box-shadow: var(--shadow-sm, 0 8px 30px rgba(0, 0, 0, 0.3));
+}
+@media (max-width: 640px) {
+  .quiz-table { font-size: 0.82rem; }
+  .quiz-table th, .quiz-table td { padding: 8px 10px; }
+  .table-container { margin: 12px 0; border-radius: 8px; }
+}
+
+
+/* ══════════ SUBCHAPTER SEPARATION MENU ══════════ */
+.subchapter-nav-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 10px 2px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.subchapter-nav-bar::-webkit-scrollbar {
+  display: none;
+}
+.sub-chip {
+  flex-shrink: 0;
+  padding: 7px 15px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.sub-chip:hover {
+  border-color: var(--primary);
+  color: var(--text-main);
+}
+.sub-chip.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+}
+
+
+/* ══════════ PROFESSIONAL QUIZ & OPTION MEDIA DESIGN ══════════ */
+.img-wrap {
+  text-align: center;
+  margin: 10px 0;
+  width: 100%;
+}
+.quiz-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid var(--border, #334155);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  display: inline-block;
+  background: rgba(15, 23, 42, 0.4);
+}
+.opt-text img, 
+.opt-card img {
+  max-width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 6px auto;
+  display: block;
+  border: 1px solid var(--border, #334155);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  background: var(--bg-surface-light, rgba(255, 255, 255, 0.03));
+}
+@media (max-width: 640px) {
+  .quiz-img { max-height: 280px; }
+  .opt-text img, .opt-card img { max-height: 140px; }
+}
+
+</style>
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) { registration.unregister(); }
+      });
+    }
+  </script>
+
+</head>
+<body data-theme="dark">
+
+<!-- SPLASH -->
+<div id="splashScreen">
+  <div class="splash-icon">🧬</div>
+  <div class="splash-title"><h1>NEET Practice</h1><p>Biology · Physics · Chemistry</p></div>
+  <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+  
+</div>
+
+<!-- CANVAS -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- ═══ START SCREEN ═══ -->
+<div class="screen" id="startScreen">
+  <div class="start-inner">
+    <div class="app-header">
+      <div class="app-logo" onclick="openQuickAccess()" style="cursor:pointer;" title="Quick Access — Results Dashboard">
+        <div class="logo-icon">🧬</div>
+        <div class="logo-text"><h1>NEET MCQ</h1><p>Botany · Zoology · Physics · Chemistry</p></div>
+      </div>
+      <div class="icon-btn" id="themeBtn" onclick="toggleTheme()">☀️</div>
+    </div>
+    <div>
+      <div class="sec-label">Choose Subject</div>
+      <div class="subject-grid">
+        <div class="subject-card" data-sub="botany" onclick="selectSubject('botany')"><div class="sc-icon-wrap">🌿</div><div class="sc-name">Botany</div><div class="sc-count">Click to explore</div></div>
+        <div class="subject-card" data-sub="zoology" onclick="selectSubject('zoology')"><div class="sc-icon-wrap">🦁</div><div class="sc-name">Zoology</div><div class="sc-count">Click to explore</div></div>
+        <div class="subject-card" data-sub="physics" onclick="selectSubject('physics')"><div class="sc-icon-wrap">⚛️</div><div class="sc-name">Physics</div><div class="sc-count">Click to explore</div></div>
+        <div class="subject-card" data-sub="chemistry" onclick="selectSubject('chemistry')"><div class="sc-icon-wrap">🧪</div><div class="sc-name">Chemistry</div><div class="sc-count">Click to explore</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Quick Access</div>
+      <div class="feat-strip">
+        <div class="feat-chip" onclick="showMockTests()"><div class="feat-chip-icon">📊</div><div class="feat-chip-label">Mock Tests</div></div>
+        <div class="feat-chip" onclick="showPYQs()"><div class="feat-chip-icon">📜</div><div class="feat-chip-label">PYQ Papers</div></div>
+        <div class="feat-chip" onclick="showBookmarks()"><div class="feat-chip-icon">⭐</div><div class="feat-chip-label">Starred Qs</div></div>
+        <div class="feat-chip" onclick="showRevisionNotes()"><div class="feat-chip-icon">📖</div><div class="feat-chip-label">Revision</div></div>
+        <div class="feat-chip" onclick="showNotesScreen()"><div class="feat-chip-icon">📝</div><div class="feat-chip-label">Notes</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHAPTER SCREEN ═══ -->
+<div class="screen hidden" id="chapterScreen">
+  <div class="page-header">
+    <button class="btn-back-circle" onclick="showStart()">‹</button>
+    <div><div class="page-title" id="chapterTitle">Chapters</div><div class="page-sub">Select a unit to practice</div></div>
+  </div>
+  <div class="chapter-list" id="chapterList"></div>
+</div>
+
+
+<!-- ═══ SUBCHAPTER SCREEN ═══ -->
+<div class="screen hidden" id="subchapterScreen">
+  <div class="page-header">
+    <button class="btn-back-circle" onclick="showChapterScreen(curSubject)">‹</button>
+    <div><div class="page-title" id="subchapterTitle">Subchapters</div><div class="page-sub" id="subchapterSub">Select a subtopic</div></div>
+  </div>
+  <div class="chapter-list" id="subchapterList"></div>
+</div>
+
+<!-- ═══ SETS SCREEN ═══ -->
+<div class="screen hidden" id="setsScreen">
+  <div class="page-header">
+    <button class="btn-back-circle" id="setsBackBtn" onclick="goBackFromSets()">‹</button>
+    <div><div class="page-title" id="setsTitle">Sets</div><div class="page-sub" id="setsSub">Choose a practice set</div></div>
+  </div>
+  <div class="sets-list" id="setsList"></div>
+</div>
+
+<!-- ═══ GAME SCREEN ═══ -->
+<div class="screen hidden" id="gameScreen">
+  <div class="solver-header">
+    <div class="solver-header-left">
+      <button class="btn-back-circle" onclick="exitGame()">‹</button>
+      <div class="solver-title-wrap">
+        <div class="solver-title-text" id="solverTitle">Practice</div>
+        <div class="solver-sub-pill" id="solverSub">Set 1</div>
+      </div>
+    </div>
+    <div class="solver-header-right">
+      <div class="solver-timer" id="solverTimer">00:00</div>
+      <button class="bm-btn" id="bmBtn" onclick="toggleBookmark()">☆</button>
+    </div>
+  </div>
+  <div class="solver-progress"><div class="solver-progress-fill" id="solverProgress" style="width:0%"></div></div>
+  <div class="q-pills-row" id="qPillsRow"></div>
+  <div class="solver-body" id="solverBody">
+    <div class="q-header">
+      <div class="q-num-lbl" id="qNumLbl">Q 1 / 15</div>
+      <div class="q-cat-badge" id="qCatBadge">Botany</div>
+    </div>
+    <div class="q-text-card" id="qText">Loading...</div>
+    <div class="options-grid" id="optionsGrid"></div>
+    <div class="exp-card" id="expCard"><div class="exp-label" id="expLabel">Explanation</div><div id="expText"></div></div>
+  </div>
+  <div class="solver-footer">
+    <div class="solver-footer-inner">
+
+      <button class="btn-solver" id="btnPrev" onclick="prevQ()" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <button class="btn-solver" id="btnSkip" onclick="skipQ()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
+        Skip
+      </button>
+
+      <button class="btn-solver" id="btnNext" onclick="nextQ()">
+        Next
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RESULT SCREEN ═══ -->
+<div class="screen hidden" id="resultScreen">
+  <div class="page-header">
+    <button class="btn-back-circle" onclick="showStart()">🏠</button>
+    <div class="page-title">Performance Analysis</div>
+  </div>
+  <div class="result-inner">
+    <div class="res-hero">
+      <div class="res-hero-bg"></div>
+      <div class="res-sub-badge" id="resSubBadge">Subject</div>
+      <div class="res-ring-wrap">
+        <svg class="res-ring-svg" viewBox="0 0 160 160"><circle class="res-ring-bg" cx="80" cy="80" r="68"/><circle class="res-ring-fill" id="resRingFill" cx="80" cy="80" r="68"/></svg>
+        <div class="res-ring-center"><div class="res-grade" id="resGrade">-</div><div class="res-grade-sub">Grade</div></div>
+      </div>
+      <div class="res-score" id="resScore">0/0</div>
+      <div class="res-acc-pill" id="resAccPill">0%</div>
+      <div class="res-feedback" id="resFeedback">Analyzing...</div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card" style="--sc-accent:var(--primary)"><div class="sc-icon">🎯</div><div class="sc-label">NEET Score</div><div class="sc-val b" id="statNeet">0</div></div>
+      <div class="stat-card" style="--sc-accent:var(--yellow)"><div class="sc-icon">⚡</div><div class="sc-label">Avg Speed</div><div class="sc-val y" id="statSpeed">0s</div></div>
+      <div class="stat-card" style="--sc-accent:var(--green)"><div class="sc-icon">✅</div><div class="sc-label">Correct</div><div class="sc-val g" id="statCorrect">0</div></div>
+      <div class="stat-card" style="--sc-accent:var(--red)"><div class="sc-icon">❌</div><div class="sc-label">Wrong</div><div class="sc-val r" id="statWrong">0</div></div>
+    </div>
+    <div class="sec-header"><div class="sec-header-bar"></div>Accuracy Breakdown</div>
+    <div class="donut-card">
+      <div class="donut-wrap">
+        <svg class="donut-svg" viewBox="0 0 120 120">
+          <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--border)" stroke-width="14"/>
+          <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--green)" stroke-width="14" id="dnutC" stroke-dasharray="0 301" style="transition:stroke-dasharray 1s ease;"/>
+          <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--red)" stroke-width="14" id="dnutW" stroke-dasharray="0 301" style="transition:stroke-dasharray 1s .2s ease;"/>
+          <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--yellow)" stroke-width="14" id="dnutS" stroke-dasharray="0 301" style="transition:stroke-dasharray 1s .4s ease;"/>
+        </svg>
+        <div class="donut-center"><div class="donut-pct" id="donutPct">0%</div><div class="donut-lbl">Correct</div></div>
+      </div>
+      <div class="donut-legend">
+        <div class="dleg-row"><div class="dleg-dot" style="background:var(--green)"></div><div><div class="dleg-name">Correct</div><div class="dleg-num" id="legC">0</div></div></div>
+        <div class="dleg-row"><div class="dleg-dot" style="background:var(--red)"></div><div><div class="dleg-name">Wrong</div><div class="dleg-num" id="legW">0</div></div></div>
+        <div class="dleg-row"><div class="dleg-dot" style="background:var(--yellow)"></div><div><div class="dleg-name">Skipped</div><div class="dleg-num" id="legS">0</div></div></div>
+      </div>
+    </div>
+    <div class="sec-header"><div class="sec-header-bar"></div>Question Heatmap<span class="sec-header-count" id="hmapCount"></span></div>
+    <div class="hmap-card"><div class="hmap-grid" id="hmapGrid"></div><div class="hmap-legend"><div class="hleg"><div class="hleg-dot" style="background:var(--green)"></div>Correct</div><div class="hleg"><div class="hleg-dot" style="background:var(--red)"></div>Wrong</div><div class="hleg"><div class="hleg-dot" style="background:var(--yellow)"></div>Skipped</div><div class="hleg"><div class="hleg-dot" style="background:var(--text-muted)"></div>Timeout</div></div></div>
+    <div class="sec-header"><div class="sec-header-bar"></div>Time Per Question</div>
+    <div class="time-chart-card"><div class="time-bars" id="timeBars"></div><div class="time-xaxis"><span>Q1</span><span id="txMid"></span><span id="txEnd"></span></div><div class="time-leg"><div class="tleg"><div class="tleg-dot" style="background:var(--green)"></div>Fast</div><div class="tleg"><div class="tleg-dot" style="background:var(--yellow)"></div>Med</div><div class="tleg"><div class="tleg-dot" style="background:var(--red)"></div>Slow</div><div class="tleg"><div class="tleg-dot" style="background:var(--text-muted)"></div>Skip</div></div></div>
+    <div class="sec-header"><div class="sec-header-bar"></div>AI Study Insight</div>
+    <div class="smart-card" id="smartCard">Analyzing...</div>
+    <div class="sec-header"><div class="sec-header-bar"></div>Achievements</div>
+    <div class="badges-row">
+      <div class="badge-card" id="bdg-perfect" style="--badge-color:#fbbf24;--badge-bg:rgba(251,191,36,.08)"><div class="badge-ring">🎯</div><div class="badge-name">Perfect</div></div>
+      <div class="badge-card" id="bdg-speed" style="--badge-color:#00e5ff;--badge-bg:rgba(0,229,255,.08)"><div class="badge-ring">⚡</div><div class="badge-name">Lightning</div></div>
+      <div class="badge-card" id="bdg-consistent" style="--badge-color:#a855f7;--badge-bg:rgba(168,85,247,.08)"><div class="badge-ring">🛡️</div><div class="badge-name">Consistent</div></div>
+      <div class="badge-card" id="bdg-first" style="--badge-color:var(--green);--badge-bg:rgba(16,185,129,.08)"><div class="badge-ring">⭐</div><div class="badge-name">First Win</div></div>
+      <div class="badge-card" id="bdg-noskip" style="--badge-color:#f97316;--badge-bg:rgba(249,115,22,.08)"><div class="badge-ring">💪</div><div class="badge-name">No Skip</div></div>
+    </div>
+    <div class="sec-header"><div class="sec-header-bar"></div>Detailed Review<span class="sec-header-count" id="reviewCount"></span></div>
+    <div class="review-tabs" id="reviewTabs">
+      <div class="review-tab active" onclick="filterReview('all',this)">All</div>
+      <div class="review-tab" onclick="filterReview('correct',this)">✅ Correct</div>
+      <div class="review-tab" onclick="filterReview('wrong',this)">❌ Wrong</div>
+      <div class="review-tab" onclick="filterReview('skipped',this)">⏭ Skipped</div>
+    </div>
+    <div class="rev-list" id="revList"></div>
+    <div class="res-buttons">
+      <button class="btn-res primary" onclick="retryQuiz()">🔄 Test Again</button>
+      <button class="btn-res" onclick="goBackToSets()">📚 More Sets</button>
+      <button class="btn-res" onclick="showStart()">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOOKMARKS ═══ -->
+<div class="screen hidden" id="bookmarksScreen">
+  <div class="page-header"><button class="btn-back-circle" onclick="showStart()">‹</button><div class="page-title">Starred Questions</div></div>
+  <div class="inner-list" id="bookmarksList"></div>
+</div>
+<div class="screen hidden" id="bookmarkSetsScreen">
+  <div class="page-header"><button class="btn-back-circle" onclick="showBookmarks()">‹</button><div class="page-title" id="bmSetsTitle">Sets</div></div>
+  <div class="inner-list" id="bmSetsList"></div>
+</div>
+
+<!-- ═══ REVISION ═══ -->
+<div class="screen hidden" id="revisionScreen">
+  <div class="page-header"><button class="btn-back-circle" onclick="showStart()">‹</button><div class="page-title">Quick Revision</div></div>
+  <div class="inner-list" id="revisionList"></div>
+</div>
+<div class="screen hidden" id="notesListScreen">
+  <div class="page-header"><button class="btn-back-circle" onclick="showScreen('revisionScreen')">‹</button><div class="page-title" id="notesListTitle">Notes</div></div>
+  <div class="inner-list" id="notesListContainer"></div>
+</div>
+
+
+
+
+<!-- ═══ MOCK TESTS ═══ -->
+<div class="screen hidden" id="mockTestListScreen">
+  <div class="page-header"><button class="btn-back-circle" onclick="showStart()">‹</button><div class="page-title">CBT Mock Tests</div></div>
+  <div class="inner-list" id="mockList"></div>
+</div>
+
+<!-- ═══ PYQs ═══ -->
+<div class="screen hidden" id="pyqListScreen">
+  <div class="page-header"><button class="btn-back-circle" onclick="showStart()">‹</button><div class="page-title">PYQ Papers</div></div>
+  <div class="inner-list" id="pyqList"></div>
+</div>
+
+
+<!-- ═══ NOTES SCREEN ═══ -->
+<div class="screen hidden" id="notesScreen" style="overflow-y:auto;">
+  <div class="page-header">
+    <button class="btn-back-circle" onclick="showStart()">‹</button>
+    <div class="page-title">My Notes 📝</div>
+    <button style="background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:700;font-size:.8rem;cursor:pointer;" onclick="openAddNoteModal()">+ Add Note</button>
+  </div>
+
+  <!-- Subject tabs -->
+  <div style="display:flex;gap:0;width:100%;border-bottom:1px solid var(--border);background:var(--bg-surface);position:sticky;top:60px;z-index:5;">
+    <button class="notes-tab active" id="ntab-botany" onclick="switchNotesTab('botany')">🌿 Botany</button>
+    <button class="notes-tab"        id="ntab-zoology"  onclick="switchNotesTab('zoology')">🦁 Zoology</button>
+    <button class="notes-tab"        id="ntab-physics"  onclick="switchNotesTab('physics')">⚛️ Physics</button>
+    <button class="notes-tab"        id="ntab-chemistry" onclick="switchNotesTab('chemistry')">🧪 Chem</button>
+  </div>
+  <div id="notesList" style="padding:14px;max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:10px;min-height:300px;padding-bottom:100px;"></div>
+</div>
+
+<!-- Add Note Modal -->
+<div id="addNoteModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;">
+  <div style="background:var(--bg-surface);border-radius:22px 22px 0 0;padding:22px 18px 40px;width:100%;max-width:600px;">
+    <div style="font-weight:800;font-size:1rem;margin-bottom:14px;">Write a Note</div>
+    <textarea id="noteTextInput" rows="5" placeholder="Write your note here..." style="width:100%;border-radius:12px;border:1.5px solid var(--border);background:var(--bg-app);color:var(--text-main);padding:12px;font-size:.9rem;font-family:inherit;resize:none;"></textarea>
+    <div style="margin-top:12px;font-weight:700;font-size:.85rem;margin-bottom:8px;">📚 Select Subject:</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+      <button class="note-sub-btn" onclick="selectNoteSubject('botany')"   id="nsb-botany"   >🌿 Botany</button>
+      <button class="note-sub-btn" onclick="selectNoteSubject('zoology')"  id="nsb-zoology"  >🧬 Zoology</button>
+      <button class="note-sub-btn" onclick="selectNoteSubject('physics')"  id="nsb-physics"  >⚛️ Physics</button>
+      <button class="note-sub-btn" onclick="selectNoteSubject('chemistry')" id="nsb-chemistry">🧪 Chemistry</button>
+    </div>
+    <div id="noteChapterPickWrap" style="display:none;margin-bottom:14px;">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:8px;">📖 Select Chapter:</div>
+      <select id="noteChapterPick" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg-app);color:var(--text-main);font-size:.88rem;font-family:inherit;"></select>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeAddNoteModal()" style="flex:1;height:44px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text-main);font-weight:700;cursor:pointer;">Cancel</button>
+      <button onclick="saveNewNote()" style="flex:2;height:44px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;border:none;font-weight:700;cursor:pointer;font-size:.9rem;">Save Note ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('error', function(e) {
+  document.body.innerHTML += '<div style="position:fixed;top:0;left:0;z-index:99999;background:red;color:white;padding:20px;font-size:20px;max-width:100vw;word-wrap:break-word;">SYNTAX/GLOBAL ERROR: ' + e.message + '<br>' + e.filename + ':' + e.lineno + '</div>';
+});
+
+/* ══════════ GLOBAL APPLICATION STATE ══════════ */
+var curSubject = '';
+var _activeSub = '';
+var _activeSetIdx = 0;
+var _activeSetObject = null;
+var curUnit = null;
+var curSubjectData = null;
+var fromChapter = false;
+var _gameQs = [];
+var _qIdx = 0;
+var _correct = 0;
+var _wrong = 0;
+var _skipped = 0;
+var _answered = false;
+var _userResponses = [];
+var _sessionStart = Date.now();
+var _tmr = null;
+var _totalQ = 0;
+
+</script>
+<script>
+    window.addEventListener('error', function(e) {
+      document.body.innerHTML += '<div style="position:fixed;top:0;left:0;z-index:9999;background:red;color:white;padding:20px;font-size:20px;max-width:100vw;word-wrap:break-word;">ERROR: ' + e.message + '<br>' + e.filename + ':' + e.lineno + '</div>';
+    });
+    try {
+    
+/* ══════════ GLOBAL GAME STATE ══════════ */
+let _gameQs=[], _qIdx=0, _correct=0, _wrong=0, _skipped=0, _answered=false;
+let _userResponses=[], _tmr=null, _qStart=0, _sessionStart=0;
+let _qDurations=[];
+let _activeSetIdx=-1, _activeSub='', _totalQ=0;
+// Global state declared at top
+function _resetGame(){ clearInterval(_tmr); _tmr=null; _gameQs=[]; _qIdx=0; _correct=0; _wrong=0; _skipped=0; _answered=false; _userResponses=[]; _activeSetIdx=-1; _totalQ=0; }
+function shuffle(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; }
+/* ══════════════════════════════════════════════════════
+   HIDDEN SYNC ENDPOINT — Replace with your URL
+   No trace in UI, all calls are silent background fetches
+══════════════════════════════════════════════════════ */
+/* Google Sheets sync removed — all data stored locally */
+const _ep = '';
+
+function _did() {
+  let id = localStorage.getItem('_d');
+  if (!id) { id = '_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('_d', id); }
+  return id;
+}
+const DID = _did();
+
+function _push(payload) {
+  // All data stored locally — no cloud sync
+  return;
+}
+
+function _fetchCloud() {
+  // All data stored locally — no cloud sync
+  return;
+}
+
+/* ══════════ SYLLABUS ══════════ */
+const SYL = {
+  Botany: {
+    11: [
+      { u: "Diversity in the Living World", i: "🌿", s: ["The Living World", "Biological Classification", "Plant Kingdom"] },
+      { u: "Structural Organisation in Plants", i: "🌿", s: ["Morphology of Flowering Plants", "Anatomy of Flowering Plants"] },
+      { u: "Cell Structure and Function", i: "🌿", s: ["Cell_ The Unit of Life", "Biomolecules", "Cell Cycle and Cell Division"] },
+      { u: "Plant Physiology", i: "🌿", s: ["Photosynthesis in Higher Plants", "Respiration in Plants", "Plant Growth and Development"] }
+    ],
+    12: [
+      { u: "Reproduction", i: "🌿", s: ["Sexual Reproduction in Flowering Plants"] },
+      { u: "Genetics and Evolution", i: "🌿", s: ["Principles of Inheritance and Variation", "Molecular Basis of Inheritance"] },
+      { u: "Biology and Human Welfare", i: "🌿", s: ["Microbes in Human Welfare"] },
+      { u: "Biotechnology and its Applications", i: "🌿", s: ["Biotechnology_ Principles and Processes", "Biotechnology and its Applications"] },
+      { u: "Ecology and Environment", i: "🌿", s: ["Organisms and Populations", "Ecosystem", "Biodiversity and Conservation"] }
+    ]
+  },
+  Zoology: {
+    11: [
+      { u: "Diversity in the Living World", i: "🦁", s: ["Animal Kingdom"] },
+      { u: "Structural Organisation in Animals", i: "🦁", s: ["Structural Organisation in Animals"] },
+      { u: "Cell Structure and Function", i: "🦁", s: ["Cell_ The Unit of Life", "Biomolecules", "Cell Cycle and Cell Division"] },
+      { u: "Human Physiology", i: "🦁", s: ["Breathing and Exchange of Gases", "Body Fluids and Circulation", "Excretory Products and Their Elimination", "Locomotion and Movement", "Neural Control and Coordination", "Chemical Coordination and Integration"] }
+    ],
+    12: [
+      { u: "Reproduction", i: "🦁", s: ["Human Reproduction", "Reproductive Health"] },
+      { u: "Genetics and Evolution", i: "🦁", s: ["Evolution"] },
+      { u: "Biology and Human Welfare", i: "🦁", s: ["Human Health and Disease"] },
+      { u: "Biotechnology and its Applications", i: "🦁", s: ["Biotechnology_ Principles and Processes", "Biotechnology and its Applications"] },
+      { u: "Ecology and Environment", i: "🦁", s: ["Organisms and Populations", "Ecosystem", "Biodiversity and Conservation"] }
+    ]
+  },
+  Physics: {
+    11: [
+      { u: "Physics and Measurement", i: "⚛️", s: ["Units and Measurements", "Errors in Measurement"] },
+      { u: "Kinematics", i: "⚛️", s: ["Motion in a Straight Line", "Motion in a Plane"] },
+      { u: "Laws of Motion", i: "⚛️", s: ["Laws of Motion"] },
+      { u: "Work, Energy, and Power", i: "⚛️", s: ["Work, Energy, and Power"] },
+      { u: "Center of Mass", i: "⚛️", s: ["Center of Mass"] },
+      { u: "Rotational Motion", i: "⚛️", s: ["Rotational Motion"] },
+      { u: "Gravitation", i: "⚛️", s: ["Gravitation"] },
+      { u: "Properties of Solids and Liquids", i: "⚛️", s: ["Properties of Solids and Liquids"] },
+      { u: "Thermal Properties of Matter", i: "⚛️", s: ["Thermal Properties of Matter"] },
+      { u: "Thermodynamics", i: "⚛️", s: ["Thermodynamics"] },
+      { u: "Kinetic Theory", i: "⚛️", s: ["Kinetic Theory"] },
+      { u: "Oscillations and Waves", i: "⚛️", s: ["Oscillations and Waves"] }
+    ],
+    12: [
+      { u: "Electrostatics", i: "⚛️", s: ["Electric Charges and Fields", "Electrostatic Potential and Capacitance", "current electricity"] },
+      { u: "Magnetic Effects of Current and Magnetism", i: "⚛️", s: ["Moving charge and magnetism", "Magnetism and Matter", "Electromagnetic induction", "Alternating Current"] },
+      { u: "Electromagnetic Waves", i: "⚛️", s: ["Electromagnetic Waves"] },
+      { u: "Optics", i: "⚛️", s: ["Ray Optics and Optical Instruments", "Wave Optics"] },
+      { u: "Dual Nature of Radiation and Matter", i: "⚛️", s: ["Dual Nature of Radiation and Matter"] },
+      { u: "Atoms", i: "⚛️", s: ["Atoms"] },
+      { u: "Nuclei", i: "⚛️", s: ["Nuclei"] },
+      { u: "Electronic Devices", i: "⚛️", s: ["Semiconductors"] }
+    ]
+  },
+  Chemistry: {
+    11: [
+      { u: "Physical Chemistry (Class 11)", i: "🧪", s: ["Some Basic Concepts in Chemistry", "Atomic Structure", "Chemical Thermodynamics", "Chemical Equilibrium", "Ionic Equilibrium", "Redox Reactions"] },
+      { u: "Inorganic Chemistry (Class 11)", i: "🧪", s: ["Classification of Elements", "Chemical Bonding and Molecular Structure", "p-Block Elements"] },
+      { u: "Organic Chemistry (Class 11)", i: "🧪", s: ["Basic Principles of Organic Chemistry", "GOC", "Isomerism", "Hydrocarbons"] }
+    ],
+    12: [
+      { u: "Physical Chemistry (Class 12)", i: "🧪", s: ["Solutions", "Electrochemistry", "Chemical Kinetics"] },
+      { u: "Inorganic Chemistry (Class 12)", i: "🧪", s: ["d- and f-Block Elements", "The p-Block Elements", "Coordination Compounds", "Salt Analysis"] },
+      { u: "Organic Chemistry (Class 12)", i: "🧪", s: ["Haloalkanes and Haloarenes", "Alcohols Phenols and Ethers", "Aldehydes Ketones and Carboxylic Acids", "Amines and Diazonium Salts", "Biomolecules", "Practical Organic Chemistry"] }
+    ]
+  }
+};
+
+const SYL_MAP = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry' };
+const FILE_MAP = { botany:'Botany.json', zoology:'Zoology.json', physics:'Physics.json', chemistry:'Chemistry.json' };
+const SUB_LABELS = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry' };
+const SUB_ICONS = { botany:'🌿', zoology:'🦁', physics:'⚛️', chemistry:'🧪' };
+const CAT_LABELS = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry' };
+
+const ALL_SCR = ['startScreen','chapterScreen','subchapterScreen','setsScreen','gameScreen','resultScreen','bookmarksScreen','bookmarkSetsScreen','revisionScreen','notesListScreen','mockTestListScreen','pyqListScreen','notesScreen','quickAccessModal','analyticsScreen'];
+function showScreen(id, push=true) {
+  if (push) history.pushState({ sid: id }, '');
+  ALL_SCR.forEach(s => { const el = document.getElementById(s); if(el) el.classList.toggle('hidden', s !== id); });
+}
+
+/* ══════════ SUBJECT, UNIT & SUBCHAPTER NAVIGATION ══════════ */
+function selectSubject(sub) {
+  curSubject = sub;
+  showChapterScreen(sub);
+}
+
+function showChapterScreen(sub) {
+  curSubject = sub;
+  const sylKey = SYL_MAP[sub] || 'Botany';
+  const subSyl = SYL[sylKey];
+  document.getElementById('chapterTitle').textContent = SUB_LABELS[sub] || sub;
+  const list = document.getElementById('chapterList');
+  if (!list) return;
+  list.innerHTML = '';
+
+  // Mixed Practice Card
+  const mixedCard = document.createElement('div');
+  mixedCard.className = 'chapter-card';
+  mixedCard.innerHTML = `
+    <div class="chapter-card-icon">🔀</div>
+    <div class="chapter-card-info">
+      <div class="chapter-card-title">Mixed Practice Sets</div>
+      <div class="chapter-card-sub">Combined questions from all units</div>
+    </div>
+    <div class="chapter-card-arr">›</div>
+  `;
+  mixedCard.onclick = () => fetchSets(sub, 'mixed');
+  list.appendChild(mixedCard);
+
+  // Render Units from Class 11 and Class 12
+  for (const cls in subSyl) {
+    const units = subSyl[cls];
+    units.forEach(unitObj => {
+      const card = document.createElement('div');
+      card.className = 'chapter-card';
+      card.innerHTML = `
+        <div class="chapter-card-icon">${unitObj.i || '📚'}</div>
+        <div class="chapter-card-info">
+          <div class="chapter-card-title">${unitObj.u}</div>
+          <div class="chapter-card-sub">Class ${cls} • ${unitObj.s.length} Subunits</div>
+        </div>
+        <div class="chapter-card-arr">›</div>
+      `;
+      card.onclick = () => showSubchaptersScreen(unitObj);
+      list.appendChild(card);
+    });
+  }
+
+  showScreen('chapterScreen');
+}
+
+function showSubchaptersScreen(unitObj) {
+  curUnit = unitObj;
+  
+  if (!unitObj || unitObj === 'mixed' || !unitObj.s || unitObj.s.length <= 1) {
+    const subName = (unitObj && unitObj.s && unitObj.s.length === 1) ? unitObj.s[0] : null;
+    fetchSets(curSubject, unitObj, subName);
+    return;
+  }
+
+  const titleEl = document.getElementById('subchapterTitle');
+  if (titleEl) titleEl.textContent = unitObj.u;
+  const subEl = document.getElementById('subchapterSub');
+  if (subEl) subEl.textContent = `${unitObj.s.length} Subunits`;
+  
+  const list = document.getElementById('subchapterList');
+  if (!list) return;
+  list.innerHTML = '';
+
+  unitObj.s.forEach((subName, i) => {
+    const card = document.createElement('div');
+    card.className = 'chapter-card subchapter-card';
+    card.style.background = 'var(--bg-surface-light, rgba(30, 41, 59, 0.5))';
+    card.style.border = '1px solid var(--border, #334155)';
+    card.style.borderRadius = 'var(--radius-lg, 12px)';
+    card.style.marginBottom = '10px';
+    card.innerHTML = `
+      <div class="chapter-card-icon" style="font-size: 1.3rem;">${unitObj.i || '📖'}</div>
+      <div class="chapter-card-info">
+        <div class="chapter-card-title" style="font-size: 0.95rem; font-weight: 700;">${subName}</div>
+        <div class="chapter-card-sub">Subunit ${i + 1} of ${unitObj.s.length}</div>
+      </div>
+      <div class="chapter-card-arr">›</div>
+    `;
+    card.onclick = () => fetchSets(curSubject, unitObj, subName);
+    list.appendChild(card);
+  });
+
+  showScreen('subchapterScreen');
+}
+
+function fetchSets(sub, unit = null, targetSubchapter = null) {
+  curSubject = sub;
+  curUnit = unit;
+  const fileName = FILE_MAP[sub] || (sub + '.json');
+  
+  showScreen('setsScreen');
+  const list = document.getElementById('setsList');
+  if (list) list.innerHTML = `<div class="loading-text">Loading ${targetSubchapter || (unit ? unit.u : (SUB_LABELS[sub] || sub))} practice sets...</div>`;
+  
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', fileName + '?v=' + Date.now(), true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200 || xhr.status === 0) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          window.curSubjectData = data;
+          renderSets(data, unit, targetSubchapter);
+        } catch(e) {
+          console.error('Error parsing json:', e);
+          if (window.curSubjectData) renderSets(window.curSubjectData, unit, targetSubchapter);
+        }
+      } else {
+        if (window.curSubjectData) renderSets(window.curSubjectData, unit, targetSubchapter);
+      }
+    }
+  };
+  xhr.send();
+}
+
+function goBackFromSets() {
+  if (curUnit && curUnit !== 'mixed' && curUnit.s && curUnit.s.length > 1) {
+    showSubchaptersScreen(curUnit);
+  } else if (curSubject) {
+    showChapterScreen(curSubject);
+  } else {
+    showStart();
+  }
+}
+
+function showStart() { clearInterval(_tmr); _resetGame(); showScreen('startScreen'); }
+
+/* ══════════ THEME ══════════ */
+function toggleTheme() {
+  const isDark = document.body.dataset.theme === 'dark';
+  const t = isDark ? 'light' : 'dark';
+  document.body.dataset.theme = t;
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('_th', t);
+}
+(function(){
+  const t = localStorage.getItem('_th') || 'dark';
+  document.body.dataset.theme = t;
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+})();
+
+/* ══════════ CANVAS ══════════ */
+(function(){
+  const c = document.getElementById('bgCanvas'), ctx = c.getContext('2d');
+  let W, H, ns = [], raf;
+  function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+  function init(){ ns=[]; for(let i=0;i<18;i++) ns.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:1.2+Math.random()*1.4,p:Math.random()*6.28}); }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const dk = document.body.dataset.theme==='dark';
+    const rgb = dk ? '59,130,246' : '37,99,235';
+    ns.forEach(n=>{ n.x+=n.vx; n.y+=n.vy; n.p+=.018; if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1; });
+    for(let i=0;i<ns.length;i++) for(let j=i+1;j<ns.length;j++){
+      const d=Math.hypot(ns[i].x-ns[j].x,ns[i].y-ns[j].y);
+      if(d<140){ ctx.beginPath(); ctx.strokeStyle=`rgba(${rgb},${.18*(1-d/140)})`; ctx.lineWidth=.6; ctx.moveTo(ns[i].x,ns[i].y); ctx.lineTo(ns[j].x,ns[j].y); ctx.stroke(); }
+    }
+    ns.forEach(n=>{ ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,6.28); ctx.fillStyle=`rgba(${rgb},${.45+.32*Math.sin(n.p)})`; ctx.fill(); });
+    raf = requestAnimationFrame(draw);
+  }
+  resize(); init(); draw();
+  window.addEventListener('resize',()=>{ resize(); init(); });
+})();
+
+
+/* ══════════ SPLASH ══════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  const splash = document.getElementById('splashScreen');
+  if (sessionStorage.getItem('_sp')) { splash.style.display='none'; } else {
+    sessionStorage.setItem('_sp','1');
+    setTimeout(()=>{ splash.classList.add('fade-out'); setTimeout(()=>{ splash.style.display='none'; }, 700); }, 2300);
+  }
+  _fetchCloud();
+});
+
+/* ══════════ AUDIO ══════════ */
+let _ac = null;
+function _tone(f,t,d,v=.09){
+  try{
+    if(!_ac) _ac = new (window.AudioContext||window.webkitAudioContext)();
+    if(_ac.state==='suspended') _ac.resume();
+    const o=_ac.createOscillator(),g=_ac.createGain();
+    o.type=t; o.frequency.value=f;
+    g.gain.setValueAtTime(v,_ac.currentTime); g.gain.exponentialRampToValueAtTime(.001,_ac.currentTime+d);
+    o.connect(g); g.connect(_ac.destination); o.start(); o.stop(_ac.currentTime+d);
+  }catch(e){}
+}
+const SFX={
+  ok:()=>{ _tone(520,'sine',.12); setTimeout(()=>_tone(660,'sine',.16),120); },
+  err:()=>_tone(180,'sawtooth',.22,.07),
+  tick:()=>_tone(300,'triangle',.05,.04),
+  go:[300,400,500,700],
+  done:[700,500,400,300]
+};
+function playSeq(arr,dur=90){ arr.forEach((f,i)=>setTimeout(()=>_tone(f,'sine',dur/1000),i*dur)); }
+
+/* ══════════ TOAST ══════════ */
+function showToast(msg){
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='.35s'; setTimeout(()=>t.remove(),400); },2500);
+}
+
+/* ══════════ DIFFICULTY ══════════ */
+let selDiff = 'easy';
+function selectDiff(el){ document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); selDiff=el.dataset.diff; }
+
+
+
+
+/* ══════════════════════════════════════════════════════
+   UPLOAD FOLDER SYSTEM — Auto-detect uploaded HTML sets
+══════════════════════════════════════════════════════ */
+
+// Check if an HTML file exists and trigger a callback
+function checkUploadedHTML(subject, cls, unit, subchapter, callback) {
+  const capSub = subject.charAt(0).toUpperCase() + subject.slice(1);
+  const basePath = `upload/${capSub}/Class ${cls}/${unit}/${subchapter}/`;
+  
+  for (let i = 1; i <= 50; i++) {
+    const variations = [];
+    if (i === 1) {
+      variations.push('set.html', 'Set.html', 'SET.html', 'set1.html', 'Set1.html', 'SET1.html');
+    } else {
+      variations.push(`set${i}.html`, `Set${i}.html`, `SET${i}.html`);
+    }
+    
+    let found = false;
+    variations.forEach(fileName => {
+      if (found) return;
+      const url = basePath + fileName + '?v=' + Date.now();
+      const xhr = new XMLHttpRequest();
+      xhr.open('HEAD', url, true);
+      xhr.onreadystatechange = function() {
+        if (!found && xhr.readyState === 4 && (xhr.status === 200 || (xhr.status === 0 && xhr.responseText))) {
+          found = true;
+          callback(url, subchapter, i);
+        }
+      };
+      xhr.send();
+    });
+  }
+}
+
+// Generate the Uploaded HTML set cards directly into the DOM
+
+
+function insertSortedSetCard(container, newCard, newNum) {
+  newCard.setAttribute('data-setnum', newNum);
+  const existingCards = Array.from(container.querySelectorAll('.set-card[data-setnum]'));
+  
+  let inserted = false;
+  for (let i = 0; i < existingCards.length; i++) {
+    const cardNum = parseInt(existingCards[i].getAttribute('data-setnum'), 10);
+    if (newNum < cardNum) {
+      container.insertBefore(newCard, existingCards[i]);
+      inserted = true;
+      break;
+    }
+  }
+  
+  if (!inserted) {
+    if (existingCards.length > 0) {
+      existingCards[existingCards.length - 1].after(newCard);
+    } else {
+      const banner = container.querySelector('.list-banner');
+      if (banner && banner.nextSibling) {
+        container.insertBefore(newCard, banner.nextSibling);
+      } else {
+        container.appendChild(newCard);
+      }
+    }
+  }
+}
+
+function injectUploadedHTMLSets(subject, targetUnitName, targetSubchapter) {
+  const capSub = subject.charAt(0).toUpperCase() + subject.slice(1);
+  const sylData = SYL[capSub];
+  if (!sylData) return;
+  
+  const list = document.getElementById('setsList');
+  
+  for (const cls in sylData) {
+    const units = sylData[cls];
+    units.forEach(unitObj => {
+      if (targetUnitName && targetUnitName !== 'mixed' && unitObj.u.toLowerCase() !== targetUnitName.toLowerCase()) return;
+      
+      unitObj.s.forEach(sub => {
+        if (targetSubchapter && sub.toLowerCase() !== targetSubchapter.toLowerCase()) return;
+        
+        checkUploadedHTML(subject, cls, unitObj.u, sub, function(url, matchedSub, num) {
+          if (url) {
+            fetch(url).then(r => r.text()).then(htmlText => {
+              const match = htmlText.match(/const\s+QUIZ_DATA\s*=\s*(\{[\s\S]*?\})\s*;/);
+              if (match) {
+                try {
+                  const getQuizData = new Function("return " + match[1]);
+                  const quizData = getQuizData();
+                  
+                  quizData.chapter_name = capSub;
+                  quizData.subchapter = matchedSub;
+                  quizData.set_name = (quizData.title && quizData.title !== "Practice Set" && quizData.title !== "Generated Practice Set") ? quizData.title : (matchedSub + " - Set " + num);
+                  if (!quizData.set_description) quizData.set_description = "Uploaded practice questions for " + matchedSub;
+                  
+                  if (!window.curSubjectData) window.curSubjectData = {quiz_sets: []};
+                  if (!window.curSubjectData.quiz_sets) window.curSubjectData.quiz_sets = [];
+                  const idx = window.curSubjectData.quiz_sets.length;
+                  window.curSubjectData.quiz_sets.push(quizData);
+                  
+                  const qCount = quizData.questions ? quizData.questions.length : 0;
+                  const recKey = `_nc_${subject.toLowerCase()}_${idx}`;
+                  const rec = JSON.parse(localStorage.getItem(recKey)||'null');
+                  const acc = rec?.accuracy||0, correct = rec?.correct||0, total = rec?.total||qCount;
+                  const isAttempted = !!(rec?.completed);
+                  let tCls='', tLbl='New', tbCls='';
+                  if(isAttempted){
+                    if(acc>=80){tCls='tier-green';tLbl='Excellent';tbCls='tier-badge-g';}
+                    else if(acc>=60){tCls='tier-purple';tLbl='Good';tbCls='tier-badge-p';}
+                    else if(acc>=40){tCls='tier-yellow';tLbl='Fair';tbCls='tier-badge-y';}
+                    else if(acc>=20){tCls='tier-orange';tLbl='Poor';tbCls='tier-badge-o';}
+                    else{tCls='tier-red';tLbl='Retry';tbCls='tier-badge-r';}
+                  }
+
+                  const card = document.createElement('div');
+                  card.className = `set-card ${tCls}`;
+                  card.innerHTML = `
+                    <div class="set-card-accent"></div>
+                    <div class="set-card-top">
+                      <div class="set-card-info">
+                        <div class="set-badges">
+                          <span class="set-badge">Set ${num}</span>
+                          <span class="set-badge">${qCount} Qs</span>
+                          ${isAttempted ? `<span class="set-badge ${tbCls}">${tLbl}</span>` : ''}
+                        </div>
+                        <div class="set-title">${quizData.set_name}</div>
+                        <div class="set-desc">${quizData.set_description}</div>
+                      </div>
+                      <div class="set-chart" style="--p:${acc}">
+                        <div class="set-chart-val">${isAttempted ? acc+'%' : qCount}</div>
+                      </div>
+                    </div>
+                    <div class="set-progress-wrap">
+                      <div class="set-progress-meta">
+                        <span class="set-progress-score">${isAttempted ? `${correct}/${total} (${acc}%)` : 'Not attempted'}</span>
+                        <span class="set-progress-cta">${isAttempted ? 'Tap for options' : 'Start →'}</span>
+                      </div>
+                      <div class="set-progress-track"><div class="set-progress-fill" style="width:${acc}%"></div></div>
+                    </div>
+                    ${isAttempted ? `<div class="analytics-bar">
+                      <div class="anl-btn view" data-viewidx="${idx}">📊 View Analytics</div>
+                      <div class="anl-btn retry" data-retryidx="${idx}">🔄 Test Again</div>
+                    </div>` : ''}
+                  `;
+                  
+                  if (isAttempted) {
+                    card.querySelector('.view').onclick = (e) => { e.stopPropagation(); _activeSub=subject.toLowerCase(); _activeSetIdx=idx; showAnalytics(idx); };
+                    card.querySelector('.retry').onclick = (e) => { e.stopPropagation(); _activeSub=subject.toLowerCase(); _activeSetIdx=idx; startSetGame(window.curSubjectData.quiz_sets[idx], idx); };
+                  } else {
+                    card.onclick = () => { _activeSub=subject.toLowerCase(); _activeSetIdx=idx; startSetGame(window.curSubjectData.quiz_sets[idx], idx); };
+                  }
+                  
+                  insertSortedSetCard(list, card, num);
+                } catch(e) { console.error('Error parsing uploaded quiz data:', e); }
+              }
+            });
+          }
+        });
+      });
+    });
+  }
+}
+
+function renderSets(data, unit=null, targetSubchapter=null){
+  const list=document.getElementById('setsList'); list.innerHTML='';
+  const sub=curSubject.toLowerCase();
+  
+  // Inject uploaded HTML links
+  const _targetUnit = unit && unit !== 'mixed' ? unit.u : null;
+  injectUploadedHTMLSets(sub, _targetUnit, targetSubchapter);
+  
+  const banner=document.createElement('div'); banner.className='list-banner';
+  const displayTitle = targetSubchapter || (unit === 'mixed' ? 'Mixed Practice' : (unit ? unit.u : (data.chapter_name || SUB_LABELS[sub])));
+  const bannerSub = unit === 'mixed' ? 'General & revision sets' : (targetSubchapter ? (unit ? unit.u : 'Practice sets') : (unit ? unit.s.slice(0,2).join(', ') + (unit.s.length>2?'…':'') : (data.quiz_sets ? data.quiz_sets.length + ' practice sets' : '')));
+  banner.innerHTML=`<div class="list-banner-icon">${unit==='mixed'?'🔀':(SUB_ICONS[sub]||'📚')}</div><div class="list-banner-text"><h3>${displayTitle}</h3><p>${bannerSub}</p></div>`;
+  list.appendChild(banner);
+
+  if(!data.quiz_sets?.length){ list.innerHTML+=`<div class="loading-text">No sets found.</div>`; return; }
+
+  let sets=data.quiz_sets;
+
+  if(unit==='mixed'){
+    const allKws=_getAllUnitKws(sub);
+    const matched=sets.filter(s=>{
+      const hay=((s.set_name||'')+(s.set_description||'')+(s.subchapter||'')).toLowerCase();
+      return allKws.some(k=>hay.includes(k));
+    });
+    const mixed=sets.filter(s=>!matched.includes(s));
+    sets = mixed.length ? mixed : sets;
+  } else if(unit){
+    if (targetSubchapter) {
+      const subKw = targetSubchapter.toLowerCase();
+      const filtered = sets.filter(s => {
+        const sUnit = (s.unit_name||'').toLowerCase();
+        const sSub = (s.subchapter||'').toLowerCase();
+        const sName = (s.set_name||'').toLowerCase();
+        const sDesc = (s.set_description||'').toLowerCase();
+        return sSub === subKw || sSub.includes(subKw) || sName.includes(subKw) || sDesc.includes(subKw);
+      });
+      sets = filtered;
+    } else {
+      const unitNameKw = unit.u.toLowerCase();
+      const subKws = (unit.s || []).map(s => s.toLowerCase());
+      const filtered = sets.filter(s => {
+        const sUnit = (s.unit_name||'').toLowerCase();
+        const sSub = (s.subchapter||'').toLowerCase();
+        const sName = (s.set_name||'').toLowerCase();
+        const sDesc = (s.set_description||'').toLowerCase();
+        return sUnit === unitNameKw || 
+               sUnit.includes(unitNameKw) || 
+               subKws.includes(sSub) || 
+               subKws.some(k => sSub.includes(k) || sName.includes(k) || sDesc.includes(k)) ||
+               sName.includes(unitNameKw) ||
+               sDesc.includes(unitNameKw);
+      });
+      if (filtered.length) sets = filtered;
+    }
+  }
+
+  sets.forEach((set, displayIdx) => {
+    const globalIdx = data.quiz_sets.indexOf(set);
+    const localSetNum = displayIdx + 1;
+    const qCount = set.questions?.length || 0;
+    const recKey = `_nc_${sub}_${globalIdx}`;
+    const rec = JSON.parse(localStorage.getItem(recKey)||'null');
+    const acc = rec?.accuracy || 0, correct = rec?.correct || 0, total = rec?.total || qCount;
+    const isAttempted = !!(rec?.completed);
+    let tCls='', tLbl='New', tbCls='';
+    if(isAttempted){
+      if(acc>=80){tCls='tier-green';tLbl='Excellent';tbCls='tier-badge-g';}
+      else if(acc>=60){tCls='tier-purple';tLbl='Good';tbCls='tier-badge-p';}
+      else if(acc>=40){tCls='tier-yellow';tLbl='Fair';tbCls='tier-badge-y';}
+      else if(acc>=20){tCls='tier-orange';tLbl='Poor';tbCls='tier-badge-o';}
+      else{tCls='tier-red';tLbl='Retry';tbCls='tier-badge-r';}
+    }
+
+    const subOrUnitName = targetSubchapter || set.subchapter || set.unit_name || (unit && unit.u ? unit.u : 'Practice');
+    const cleanDisplayTitle = `${subOrUnitName} - Set ${localSetNum}`;
+
+    const card = document.createElement('div'); card.className = `set-card ${tCls}`;
+    card.innerHTML = `
+      <div class="set-card-accent"></div>
+      <div class="set-card-top">
+        <div class="set-card-info">
+          <div class="set-badges">
+            ${set._uploaded ? '<span style="background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;padding:2px 8px;border-radius:20px;font-size:.6rem;font-weight:900;margin-right:4px;letter-spacing:.5px;">📤 UPLOADED</span>' : ''}
+            <span class="set-badge">Set ${localSetNum}</span>
+            <span class="set-badge">${qCount} Qs</span>
+            ${isAttempted ? `<span class="set-badge ${tbCls}">${tLbl}</span>` : ''}
+          </div>
+          <div class="set-title">${cleanDisplayTitle}</div>
+          <div class="set-desc">${set.set_description || 'NEET practice questions.'}</div>
+        </div>
+        <div class="set-chart" style="--p:${acc}">
+          <div class="set-chart-val">${isAttempted ? acc+'%' : qCount}</div>
+        </div>
+      </div>
+      <div class="set-progress-wrap">
+        <div class="set-progress-meta">
+          <span class="set-progress-score">${isAttempted ? `${correct}/${total} (${acc}%)` : 'Not attempted'}</span>
+          <span class="set-progress-cta">${isAttempted ? 'Tap for options' : 'Start →'}</span>
+        </div>
+        <div class="set-progress-track"><div class="set-progress-fill" style="width:${acc}%"></div></div>
+      </div>
+      ${isAttempted ? `<div class="analytics-bar">
+        <div class="anl-btn view" data-viewidx="${globalIdx}">📊 View Analytics</div>
+        <div class="anl-btn" data-retryidx="${globalIdx}">🔄 Test Again</div>
+      </div>` : ''}
+    `;
+    if(isAttempted){
+      card.querySelector('.set-card-top').onclick=()=>showAnalytics(globalIdx);
+      const vBtn=card.querySelector('[data-viewidx]'); if(vBtn) vBtn.onclick=e=>{ e.stopPropagation(); showAnalytics(globalIdx); };
+      const rBtn=card.querySelector('[data-retryidx]'); if(rBtn) rBtn.onclick=e=>{ e.stopPropagation(); startSetGame(data.quiz_sets[globalIdx],globalIdx); };
+    } else {
+      card.onclick=()=>startSetGame(data.quiz_sets[globalIdx],globalIdx);
+    }
+    insertSortedSetCard(list, card, localSetNum);
+  });
+}
+
+/* ══════════ ANALYTICS VIEW ══════════ */
+function showAnalytics(idx){
+  const sub=curSubject.toLowerCase();
+  const rec=JSON.parse(localStorage.getItem(`_nc_${sub}_${idx}`)||'null'); if(!rec) return;
+  _userResponses=JSON.parse(localStorage.getItem(`_nr_${sub}_${idx}`)||'[]');
+  _gameQs=JSON.parse(localStorage.getItem(`_nq_${sub}_${idx}`)||'[]');
+  _activeSetIdx=idx; _activeSub=sub;
+  _correct=rec.correct||0; _wrong=rec.wrong||0; _skipped=rec.skipped||0; _totalQ=rec.total||0;
+  _buildResult(rec);
+  showScreen('resultScreen');
+}
+
+/* ══════════ GAME STATE ══════════ */
+_gameQs=[]; _qIdx=0; _correct=0; _wrong=0; _skipped=0; _answered=false;
+_userResponses=[]; _tmr=null;
+_qStart=0; _sessionStart=0; _activeSetIdx=-1; _activeSub=''; _totalQ=0;
+
+function _resetGame(){ clearInterval(_tmr); _gameQs=[]; _qIdx=0; _correct=0; _wrong=0; _skipped=0; _answered=false; _userResponses=[]; _tmr=null; _activeSetIdx=-1; _activeSub=''; _totalQ=0; }
+
+function shuffle(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; }
+
+const DIFF_SEC={ easy:20, medium:12, hard:7 };
+
+
+function updateTime(){
+  if(!_answered && _qStart>0){
+    _qDurations[_qIdx] = (_qDurations[_qIdx]||0) + Math.floor((Date.now()-_qStart)/1000);
+    _qStart=0;
+  }
+}
+
+function startSetGame(set, idx){
+  _activeSetObject = set;
+
+  _activeSub=curSubject.toLowerCase(); _activeSetIdx=idx;
+  _userResponses=[]; _sessionStart=Date.now();
+  const unitName = curUnit ? curUnit.u : 'Mixed Practice';
+  const subName = curUnit ? curUnit.s.join(', ') : '';
+  const sName = set.set_name || `Set ${idx+1}`;
+  _gameQs=shuffle(set.questions.slice(0, 10).map(q=>({ cat:_activeSub, unit:unitName, subUnit:subName, set:sName, q:q.question, opts:q.options, ans:q.answer, fact:q.explanation||'' })));
+  _totalQ=_gameQs.length; 
+  _qIdx=0; _correct=0; _wrong=0; _skipped=0;
+  _qDurations=new Array(_totalQ).fill(0);
+  buildPills();
+  document.getElementById('solverTitle').textContent=CAT_LABELS[_activeSub]||_activeSub;
+  document.getElementById('solverSub').textContent=set.set_name||`Set ${idx+1}`;
+  showScreen('gameScreen'); playSeq(SFX.go); loadQ();
+}
+
+/* ══════════ QUESTION PILLS ══════════ */
+function buildPills(){
+  const row=document.getElementById('qPillsRow'); row.innerHTML=''; row.scrollLeft=0;
+  for(let i=0;i<_totalQ;i++){
+    const p=document.createElement('div'); p.className='q-pill'+(i===0?' active':''); p.textContent=i+1; p.dataset.qi=i;
+    p.onclick=()=>{ updateTime(); _qIdx=i; loadQ(); };
+    row.appendChild(p);
+  }
+}
+
+function updatePill(idx, cls){
+  document.querySelectorAll('.q-pill').forEach(p=>{ p.classList.remove('active'); if(parseInt(p.dataset.qi)===idx&&cls) { p.classList.remove('p-correct','p-wrong','p-skip'); p.classList.add(cls); } });
+  const cur=document.querySelector(`.q-pill[data-qi="${_qIdx}"]`);
+  if(cur){ 
+    cur.classList.add('active'); 
+    const row = document.getElementById('qPillsRow');
+    if (row) {
+      if (_qIdx === 0) {
+        row.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        const rowRect = row.getBoundingClientRect();
+        const curRect = cur.getBoundingClientRect();
+        const scrollOffset = (curRect.left - rowRect.left) + row.scrollLeft - (rowRect.width / 2) + (curRect.width / 2);
+        row.scrollTo({ left: Math.max(0, scrollOffset), behavior: 'smooth' });
+      }
+    }
+  }
+}
+
+/* ══════════ LOAD QUESTION ══════════ */
+
+/* ══════════ QUESTION & MARKDOWN FORMATTER ══════════ */
+function formatQuestionText(s) {
+  if (s === null || s === undefined) return '';
+  let safe = String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // ONLY parse tables if string actually contains pipe '|' characters!
+  if (safe.includes('|')) {
+    // Pre-pass: Unpack embedded/merged column items inside existing pipe tables
+    safe = safe.replace(
+      /(\s+)([B-D][\s\.\:\d][^\n|()]*?)(\((?:i|ii|iii|iv|v|1|2|3|4|a|b|c|d)\)[^\n|]+)/g,
+      ' |\n| $2 | $3'
+    );
+
+    const firstPipe = safe.indexOf('|');
+    const lastPipe = safe.lastIndexOf('|');
+
+    if (firstPipe !== -1 && lastPipe > firstPipe) {
+      const before = safe.substring(0, firstPipe);
+      const tablePart = safe.substring(firstPipe, lastPipe + 1);
+      const after = safe.substring(lastPipe + 1);
+
+      const rawLines = tablePart.split('\n');
+      const rows = [];
+      rawLines.forEach(line => {
+        const lStr = line.trim();
+        if (!lStr) return;
+        if (lStr.startsWith('|')) {
+          rows.push(lStr);
+        } else if (rows.length > 0) {
+          rows[rows.length - 1] += ' ' + lStr;
+        }
+      });
+
+      if (rows.length >= 2) {
+        let tableHtml = '<div class="table-container"><table class="quiz-table">';
+        let hasHeader = false;
+
+        rows.forEach((rowStr, rowIdx) => {
+          const trimmedRow = rowStr.trim();
+          if (/^\|[\s\-:|]+\|$/.test(trimmedRow)) return;
+
+          const cells = trimmedRow.split('|').slice(1, -1).map(c => c.trim());
+          if (cells.length === 0 || cells.every(c => c === '')) return;
+
+          if (!hasHeader && (rowIdx === 0 || trimmedRow.toLowerCase().includes('column') || trimmedRow.toLowerCase().includes('list'))) {
+            hasHeader = true;
+            tableHtml += '<thead><tr>';
+            cells.forEach(cell => {
+              tableHtml += `<th>${cell}</th>`;
+            });
+            tableHtml += '</tr></thead><tbody>';
+          } else {
+            tableHtml += '<tr>';
+            cells.forEach((cell, ci) => {
+              const styleAttr = ci === 0 ? ' ' : '';
+              tableHtml += `<td${styleAttr}>${cell}</td>`;
+            });
+            tableHtml += '</tr>';
+          }
+        });
+
+        tableHtml += '</tbody></table></div>';
+        safe = before + tableHtml + after;
+      }
+    }
+  }
+
+  // 1. Render images
+  safe = safe.replace(
+    /!\[(.*?)\]\((.*?)\)/g,
+    '<br><div class="img-wrap"><img src="$2" alt="$1" class="quiz-img"></div><br>'
+  );
+
+  // 2. Paragraph & line break formatting
+  safe = safe.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+  return safe;
+}
+
+function loadQ(){
+  clearInterval(_tmr); _answered=false;
+  const q=_gameQs[_qIdx];
+  updatePill(-1, '');
+  document.getElementById('qNumLbl').textContent=`Q ${_qIdx+1} / ${_totalQ}`;
+  document.getElementById('qCatBadge').textContent=CAT_LABELS[q.cat]||q.cat;
+  document.getElementById('qText').innerHTML=formatQuestionText(q.q);
+  document.getElementById('solverProgress').style.width=`${(_qIdx/_totalQ)*100}%`;
+  const ec=document.getElementById('expCard'); ec.className='exp-card';
+  document.getElementById('btnPrev').disabled=_qIdx===0;
+  document.getElementById('btnNext').textContent=_qIdx===_totalQ-1?'Finish 🏁':'Next →';
+  document.getElementById('btnSkip').style.display='';
+  updateBmBtn();
+
+  // Build options
+  const grid=document.getElementById('optionsGrid'); grid.innerHTML='';
+  const LETTERS=['A','B','C','D'];
+  const idxs=[0,1,2,3];
+  idxs.forEach((oi,di)=>{
+    const c=document.createElement('div'); c.className='opt-card'; c.dataset.oi=oi; c.dataset.ic=(oi===q.ans);
+    c.innerHTML=`<div class="opt-letter">${LETTERS[di]}</div><div class="opt-text">${formatQuestionText(q.opts[oi])}</div>`;
+    c.onclick=()=>handleAnswer(c,oi===q.ans,q);
+    grid.appendChild(c);
+  });
+
+  // Restore prior answer
+  const prev=_userResponses.find(r=>r.qi===_qIdx);
+  if(prev){ _answered=true; showPriorAnswer(prev,q); }
+
+  // Stopwatch Timer
+  const el = document.getElementById('solverTimer');
+  if(!prev){
+    _qStart = Date.now();
+    const startDur = _qDurations[_qIdx] || 0;
+    const m = String(Math.floor(startDur/60)).padStart(2,'0');
+    const s = String(startDur%60).padStart(2,'0');
+    el.textContent = m+':'+s;
+    
+    _tmr=setInterval(()=>{
+      const dur = startDur + Math.floor((Date.now()-_qStart)/1000);
+      const m = String(Math.floor(dur/60)).padStart(2,'0');
+      const s = String(dur%60).padStart(2,'0');
+      el.textContent = m+':'+s;
+    },1000);
+  } else {
+    const dur = prev.dur || 0;
+    const m = String(Math.floor(dur/60)).padStart(2,'0');
+    const s = String(dur%60).padStart(2,'0');
+    el.textContent = m+':'+s;
+  }
+}
+
+function showPriorAnswer(resp, q){
+  document.querySelectorAll('.opt-card').forEach(c=>{
+    const oi=parseInt(c.dataset.oi);
+    if(oi===q.ans) c.classList.add('correct');
+    else if(oi===resp.picked&&!resp.ic) c.classList.add('wrong');
+  });
+  if(!resp.skipped) showExp(q,resp.ic);
+  document.getElementById('btnSkip').style.display='none';
+}
+
+function updateTimerUI(t, max){
+  const el=document.getElementById('solverTimer'); if(!el) return;
+  el.textContent=t; el.className='solver-timer';
+  if(max>=360){ el.classList.add('max-mode'); return; }
+  const r=t/max;
+  if(r<=.25) el.classList.add('danger');
+  else if(r<=.5) el.classList.add('warn');
+}
+
+function handleAnswer(card, isCorrect, q){
+  if(_answered) return; _answered=true; clearInterval(_tmr);
+  const oi=parseInt(card.dataset.oi);
+  updateTime();
+  const dur=_qDurations[_qIdx];
+  _userResponses=_userResponses.filter(r=>r.qi!==_qIdx);
+  _userResponses.push({qi:_qIdx,picked:oi,ic:isCorrect,dur,skipped:false});
+  if(isCorrect){
+    SFX.ok(); card.classList.add('correct'); _correct++;
+
+    updatePill(_qIdx,'p-correct');
+  } else {
+    SFX.err(); card.classList.add('wrong'); _wrong++;
+    document.querySelectorAll('.opt-card').forEach(c=>{ if(c.dataset.ic==='true') c.classList.add('reveal'); });
+    updatePill(_qIdx,'p-wrong');
+  }
+  showExp(q,isCorrect);
+  document.getElementById('btnSkip').style.display='none';
+}
+
+
+function skipQ(){
+  if(_answered) return; _answered=true; clearInterval(_tmr); _skipped++;
+  _userResponses=_userResponses.filter(r=>r.qi!==_qIdx);
+  _userResponses.push({qi:_qIdx,picked:-1,ic:false,dur:Math.round((Date.now()-_qStart)/1000),skipped:true});
+  SFX.tick(); updatePill(_qIdx,'p-skip');
+  document.getElementById('btnSkip').style.display='none';
+  setTimeout(()=>nextQ(),350);
+}
+
+function prevQ(){ updateTime(); if(_qIdx>0){ _qIdx--; loadQ(); } }
+function nextQ(){ updateTime(); if(_qIdx<_gameQs.length-1){ _qIdx++; loadQ(); } else endGame(); }
+
+function showExp(q,isC){
+  const ec=document.getElementById('expCard'),el=document.getElementById('expLabel'),et=document.getElementById('expText');
+  ec.className='exp-card show '+(isC?'exp-c':'exp-w');
+  el.textContent=isC?'✔ Correct!':'✘ Incorrect';
+  et.innerHTML=(isC?'':`<strong>Correct: ${q.opts[q.ans]}</strong><br>`)+((q.fact||'Standard NEET concept.'));
+}
+
+function exitGame(){
+  clearInterval(_tmr);
+  showStart();
+}
+
+/* ══════════ END GAME ══════════ */
+function endGame(){
+  clearInterval(_tmr); playSeq(SFX.done,110);
+  const timeTaken=Math.round((Date.now()-_sessionStart)/1000);
+  const acc=Math.round((_correct/_totalQ)*100);
+  const neet=(_correct*4)-(_wrong*1);
+  const avgSpeed=(timeTaken/_totalQ).toFixed(1);
+  if(_activeSetIdx>=0){
+    const rec={completed:true,accuracy:acc,correct:_correct,wrong:_wrong,skipped:_skipped,total:_totalQ,timeTaken,neet};
+    localStorage.setItem(`_nc_${_activeSub}_${_activeSetIdx}`,JSON.stringify(rec)); _push({updates: [{key: `_nc_${_activeSub}_${_activeSetIdx}`, value: JSON.stringify(rec)}]});
+    localStorage.setItem(`_nr_${_activeSub}_${_activeSetIdx}`,JSON.stringify(_userResponses));
+    localStorage.setItem(`_nq_${_activeSub}_${_activeSetIdx}`,JSON.stringify(_gameQs));
+    // Silent cloud sync
+    _userResponses.forEach(r=>{
+      const q=_gameQs[r.qi]; if(!q) return;
+      _push({type:'question',subject:_activeSub,setIndex:_activeSetIdx,qText:q.q,status:r.ic?'correct':(r.skipped?'skipped':'wrong'),userAnswer:r.picked>=0?q.opts[r.picked]:'Not Answered',correctAnswer:q.opts[q.ans],duration:r.dur});
+    });
+    _push({type:'summary',subject:_activeSub,setIndex:_activeSetIdx,accuracy:acc,correct:_correct,wrong:_wrong,skipped:_skipped,total:_totalQ,timeTaken});
+  }
+  _buildResult({acc,neet,avgSpeed,timeTaken});
+  if(acc>=80) spawnConfetti();
+  showScreen('resultScreen');
+}
+
+/* ══════════ BUILD RESULT ══════════ */
+function _buildResult(summary){
+  const _timePerQ = typeof DIFF_SEC !== 'undefined' ? DIFF_SEC[selDiff] : 15;
+  const {acc,neet,avgSpeed,timeTaken} = summary;
+  let grade,gc,fb;
+  if(acc>=95){grade='S';gc='#fbbf24';fb='Legendary! NEET-ready!';}
+  else if(acc>=80){grade='A';gc='var(--green)';fb='Excellent! Strong performance.';}
+  else if(acc>=65){grade='B';gc='var(--primary)';fb='Good work! Keep polishing.';}
+  else if(acc>=50){grade='C';gc='var(--yellow)';fb='Fair attempt. Practice more!';}
+  else if(acc>=30){grade='D';gc='#f97316';fb='Keep going! Review concepts.';}
+  else{grade='F';gc='var(--red)';fb="Don't give up! Review basics.";}
+
+  const sub=CAT_LABELS[_activeSub]||_activeSub;
+  document.getElementById('resSubBadge').textContent=sub;
+  const grEl=document.getElementById('resGrade'); grEl.textContent=grade; grEl.style.color=gc;
+  document.getElementById('resScore').textContent=`${_correct}/${_totalQ}`;
+  const pill=document.getElementById('resAccPill'); pill.textContent=`${acc}% Accuracy`;
+  pill.style.cssText=`background:${gc}22;color:${gc};border:1px solid ${gc}44;padding:6px 18px;border-radius:999px;font-size:.88rem;font-weight:900;`;
+  document.getElementById('resFeedback').textContent=fb;
+  const ring=document.getElementById('resRingFill'); ring.style.stroke=gc; ring.style.strokeDasharray='0 440';
+  setTimeout(()=>{ ring.style.transition='stroke-dasharray 1.4s cubic-bezier(.4,0,.2,1)'; ring.style.strokeDasharray=`${(acc/100)*427.3} 427.3`; },150);
+  document.getElementById('statNeet').textContent=neet>0?'+'+neet:neet;
+  document.getElementById('statSpeed').textContent=avgSpeed+'s';
+  document.getElementById('statCorrect').textContent=_correct;
+  document.getElementById('statWrong').textContent=_wrong;
+
+  // Donut
+  const C=301.6, dC=(_correct/_totalQ)*C, dW=(_wrong/_totalQ)*C, dS=C-dC-dW;
+  document.getElementById('donutPct').textContent=acc+'%';
+  document.getElementById('legC').textContent=_correct;
+  document.getElementById('legW').textContent=_wrong;
+  document.getElementById('legS').textContent=_skipped;
+  setTimeout(()=>{
+    const dc=document.getElementById('dnutC'),dw=document.getElementById('dnutW'),ds=document.getElementById('dnutS');
+    if(dc){ dc.style.strokeDasharray=`${dC} ${C}`; }
+    setTimeout(()=>{ if(dw){ dw.style.strokeDasharray=`${dW} ${C}`; dw.style.strokeDashoffset=-dC; } },200);
+    setTimeout(()=>{ if(ds){ ds.style.strokeDasharray=`${dS} ${C}`; ds.style.strokeDashoffset=-(dC+dW); } },400);
+  },300);
+
+  // Heatmap
+  document.getElementById('hmapCount').textContent=`${_totalQ} Qs`;
+  const hg=document.getElementById('hmapGrid'); hg.innerHTML='';
+  _userResponses.forEach((r,i)=>{
+    const cell=document.createElement('div'); cell.textContent=i+1;
+    cell.className='hmap-cell '+(r.ic?'c':(r.skipped?'s':(r.picked===-1?'t':'w')));
+    hg.appendChild(cell);
+  });
+
+  // Time bars
+  const tb=document.getElementById('timeBars'); tb.innerHTML='';
+  document.getElementById('txMid').textContent=`Q${Math.ceil(_userResponses.length/2)}`;
+  document.getElementById('txEnd').textContent=`Q${_userResponses.length}`;
+  _userResponses.forEach((r,i)=>{
+    const bar=document.createElement('div');
+    const pct=Math.min(100,Math.max(4,(r.dur/_timePerQ)*100));
+    bar.className='tbar '+(r.skipped||r.picked===-1?'tbar-k':r.dur<=_timePerQ*.4?'tbar-f':r.dur<=_timePerQ*.75?'tbar-m':'tbar-s');
+    bar.style.height='0%'; setTimeout(()=>{ bar.style.height=pct+'%'; bar.style.transition='height .6s'; },350+i*25);
+    tb.appendChild(bar);
+  });
+
+  // Smart insight
+  let ins='';
+  if(acc>=95) ins=`<strong>Outstanding!</strong> You dominated <strong>${sub}</strong> with ${acc}% accuracy. Continue maintaining this consistency.`;
+  else if(acc>=80) ins=`<strong>Excellent!</strong> Strong command over <strong>${sub}</strong>. Review the ${_wrong} missed question${_wrong!==1?'s':''} carefully.`;
+  else if(acc>=65) ins=`<strong>Good work!</strong> You're on track. Focus on the ${_wrong} wrong answers — read each explanation and revisit NCERT.`;
+  else if(acc>=50) ins=`<strong>Keep going!</strong> Half-way there. Make sure to read every explanation for your wrong answers and reattempt the set.`;
+  else ins=`<strong>Don't give up!</strong> Revisit your <strong>${sub}</strong> textbook chapters, then attempt this set again.`;
+  document.getElementById('smartCard').innerHTML=ins;
+
+  // Badges
+  ['bdg-perfect','bdg-speed','bdg-consistent','bdg-first','bdg-noskip'].forEach(id=>{ const el=document.getElementById(id); if(el) el.classList.remove('unlocked'); });
+  const unlk=(id,d)=>{ const el=document.getElementById(id); if(el) setTimeout(()=>el.classList.add('unlocked'),d); };
+  if(acc===100) unlk('bdg-perfect',600);
+  if(parseFloat(avgSpeed)<7&&acc>80) unlk('bdg-speed',800);
+  if(_correct>=_totalQ*.8) unlk('bdg-consistent',1000);
+  if(acc>=60) unlk('bdg-first',1200);
+  if(_skipped===0&&_totalQ>0) unlk('bdg-noskip',1400);
+
+  // Review
+  buildReview('all');
+  document.getElementById('reviewCount').textContent=`${_userResponses.length} items`;
+  document.querySelectorAll('.review-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('.review-tab')?.classList.add('active');
+  setTimeout(()=>{ document.getElementById('resultScreen').scrollTop=0; },100);
+}
+
+function filterReview(f,btn){
+  document.querySelectorAll('.review-tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  buildReview(f);
+}
+
+function buildReview(f){
+  const list=document.getElementById('revList'); list.innerHTML='';
+  let rs=_userResponses;
+  if(f==='correct') rs=rs.filter(r=>r.ic);
+  else if(f==='wrong') rs=rs.filter(r=>!r.ic&&!r.skipped&&r.picked!==-1);
+  else if(f==='skipped') rs=rs.filter(r=>r.skipped||(r.picked===-1&&!r.ic));
+  if(!rs.length){ list.innerHTML=`<div class="loading-text">No ${f} answers.</div>`; return; }
+  rs.forEach(r=>{
+    const q=_gameQs[r.qi]; if(!q) return;
+    const isS=r.skipped||(r.picked===-1&&!r.ic);
+    const cc=r.ic?'c':isS?'s':'w'; const ct=r.ic?'✔ Correct':isS?'⏭ Skipped':'✘ Wrong';
+    const card=document.createElement('div'); card.className='rev-card';
+    let metaHtml = '';
+    if (q.unit) metaHtml += `<div style="font-size:0.65rem; color:var(--primary); font-weight:800; text-transform:uppercase; margin-bottom:5px;">${q.unit}${q.subUnit?' › '+q.subUnit:''}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700; margin-bottom:8px;">${q.set}</div>`;
+
+    card.innerHTML=`
+      <div class="rev-card-header" style="flex-direction:column; align-items:flex-start;">
+        ${metaHtml}
+        <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+          <span class="rev-qnum">Q${r.qi+1} · ${r.dur}s</span>
+          <span class="rev-chip ${cc}">${ct}</span>
+        </div>
+      </div>
+      <div class="rev-q-text">${formatQuestionText(q.q)}</div>
+      <div class="rev-ans-block">
+        ${q.opts.map((opt, oi) => {
+          const isAns = oi === q.ans;
+          const isPick = oi === r.picked;
+          let cls = 'rev-ans-row';
+          if (isAns) cls += ' cr';
+          else if (isPick && !r.ic) cls += ' wr';
+          return `<div class="${cls}" style="${(!isAns && !isPick) ? 'background:var(--bg-surface-light); border:1px solid var(--border); color:var(--text-main);' : ''}">${isAns?'✔ ':isPick?'✘ ':'○ '}${opt}</div>`;
+        }).join('')}
+      </div>
+      <div class="rev-exp"><strong>Concept:</strong> ${q.fact||'Standard NEET concept.'}</div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function retryQuiz(){
+  if(_activeSetObject){
+    startSetGame(_activeSetObject, _activeSetIdx);
+  } else if(_activeSetIdx>=0 && curSubjectData?.quiz_sets?.[_activeSetIdx]){
+    startSetGame(curSubjectData.quiz_sets[_activeSetIdx], _activeSetIdx);
+  } else {
+    showStart();
+  }
+}
+function goBackToSets(){ if(curSubjectData) showScreen('setsScreen'); else showStart(); }
+
+
+/* ══════════ BOOKMARKS ══════════ */
+function getBM(){ return JSON.parse(localStorage.getItem('_bm')||'[]'); }
+function saveBM(bms){ localStorage.setItem('_bm',JSON.stringify(bms)); }
+function toggleBookmark(){
+  if(!_gameQs[_qIdx]) return;
+  const q=_gameQs[_qIdx]; let bms=getBM();
+  const i=bms.findIndex(b=>b.q===q.q);
+  if(i>-1){ bms.splice(i,1); _push({type:'bookmark',action:'remove',qText:q.q,subject:q.cat,correctAnswer:q.opts[q.ans]}); }
+  else{ bms.push(q); _push({type:'bookmark',action:'add',qText:q.q,subject:q.cat,correctAnswer:q.opts[q.ans]}); }
+  saveBM(bms); updateBmBtn();
+}
+function updateBmBtn(){
+  const btn=document.getElementById('bmBtn'); if(!btn||!_gameQs[_qIdx]) return;
+  const isB=getBM().some(b=>b.q===_gameQs[_qIdx].q); btn.classList.toggle('on',isB); btn.textContent=isB?'★':'☆';
+}
+function showBookmarks(){ renderBmSubjects(); showScreen('bookmarksScreen'); }
+function renderBmSubjects(){
+  const list=document.getElementById('bookmarksList'); const bms=getBM();
+  const subs=[{id:'botany',name:'Botany',ic:'🌿'},{id:'zoology',name:'Zoology',ic:'🦁'},{id:'physics',name:'Physics',ic:'⚛️'},{id:'chemistry',name:'Chemistry',ic:'🧪'}];
+  list.innerHTML='<div class="list-banner"><div class="list-banner-icon">⭐</div><div class="list-banner-text"><h3>Starred Questions</h3><p>Select a subject</p></div></div>';
+  const g=document.createElement('div'); g.className='subject-grid';
+  subs.forEach(s=>{
+    const cnt=bms.filter(q=>q.cat===s.id).length;
+    const c=document.createElement('div'); c.className='subject-card'; c.setAttribute('data-sub',s.id);
+    c.onclick=()=>showBmSets(s.id,s.name);
+    c.innerHTML=`<div class="sc-icon-wrap">${s.ic}</div><div class="sc-name">${s.name}</div><div class="sc-count">${cnt} saved</div>`;
+    g.appendChild(c);
+  });
+  list.appendChild(g);
+}
+function showBmSets(sub,name){
+  _activeSub=sub;
+  const bms=getBM().filter(q=>q.cat===sub);
+  const list=document.getElementById('bmSetsList');
+  document.getElementById('bmSetsTitle').textContent=name+' Starred';
+  list.innerHTML='';
+  if(!bms.length){ list.innerHTML=`<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-text">No starred questions yet</div></div>`; showScreen('bookmarkSetsScreen'); return; }
+  for(let i=0;i<bms.length;i+=10){
+    const chunk=bms.slice(i,i+10); const si=Math.floor(i/10);
+    const card=document.createElement('div'); card.className='set-card';
+    card.innerHTML=`<div class="set-card-accent"></div><div class="set-card-top"><div class="set-card-info"><div class="set-badges"><span class="set-badge">Set ${si+1}</span><span class="set-badge">${chunk.length} Qs</span></div><div class="set-title">${name} Starred</div><div class="set-desc">Your saved questions</div></div></div>`;
+    card.onclick=()=>reviewBmSet(sub,si);
+    list.appendChild(card);
+  }
+  showScreen('bookmarkSetsScreen');
+}
+function startBmGame(sub,si){
+  const bms=getBM().filter(q=>q.cat===sub); const chunk=bms.slice(si*10,(si+1)*10);
+  _gameQs=chunk; _totalQ=chunk.length; _activeSub=sub; _activeSetIdx='bm_'+si;
+  _qIdx=0;_correct=0;_wrong=0;_skipped=0;_extraTime=0;_userResponses=[];_sessionStart=Date.now();
+  buildPills();
+  document.getElementById('solverTitle').textContent=CAT_LABELS[sub]+' Bookmarks';
+  document.getElementById('solverSub').textContent=`Set ${si+1}`;
+  showScreen('gameScreen'); playSeq(SFX.go); loadQ();
+}
+
+/* ══════════ REVISION NOTES ══════════ */
+function showRevisionNotes(){ renderRevSubs(); showScreen('revisionScreen'); }
+function renderRevSubs(){
+  const list=document.getElementById('revisionList'); list.innerHTML=`<div class="list-banner"><div class="list-banner-icon">⚡</div><div class="list-banner-text"><h3>Quick Revision Notes</h3><p>Chapter-wise NCERT summaries</p></div></div>`;
+  const subs=[{id:'botany',n:'Botany',i:'🌿',c:'rgba(5,150,105,.12)'},{id:'zoology',n:'Zoology',i:'🧬',c:'rgba(124,58,237,.12)'},{id:'physics',n:'Physics',i:'⚛️',c:'rgba(59,130,246,.12)'},{id:'chemistry',n:'Chemistry',i:'🧪',c:'rgba(219,39,119,.12)'}];
+  subs.forEach(s=>{
+    const c=document.createElement('div'); c.className='colorful-list-card';
+    c.innerHTML=`<div class="colorful-card-icon-row"><div class="colorful-card-icon" style="background:${s.c}">${s.i}</div></div><div class="colorful-card-title">${s.n} Notes</div><div class="colorful-card-desc">NCERT chapter-wise summaries</div>`;
+    c.onclick=()=>showNotesList(s.id,s.n);
+    list.appendChild(c);
+  });
+}
+function showNotesList(sid,sname,push=true){
+  sessionStorage.setItem('_cns',sid); sessionStorage.setItem('_cnn',sname);
+  showScreen('notesListScreen',push);
+  document.getElementById('notesListTitle').textContent=sname+' Notes';
+  const list=document.getElementById('notesListContainer');
+  const FILES={
+    botany:["Anatomy_of_Flowering_Plants.html","Biodiversity_and_Conservation.html","Biological_Classification.html","Biomolecules.html","Cell_Cycle_and_Cell_Division.html","Cell_The_Unit_of_Life.html","Ecosystem.html","Microbes_in_Human_Welfare.html","Molecular_Basis_of_Inheritance.html","Morphology_of_Flowering_Plants.html","Organisms_and_Populations.html","Photosynthesis_in_Higher_Plants.html","Plant_Growth_and_Development.html","Plant_Kingdom.html","Principles_of_Inheritance_and_Variation.html","Respiration_in_Plants.html","Sexual_Reproduction_in_Flowering_Plants.html","The_Living_World.html"],
+    zoology:["Animal_Kingdom.html","Biotechnology_Principles_and_Processes.html","Biotechnology_and_its_Applications.html","Body_Fluids_and_Circulation.html","Breathing_and_Exchange_of_Gases.html","Chemical_Coordination_and_Integration.html","Evolution.html","Excretory_Products_and_their_Elimination.html","Human_Health_and_Disease.html","Human_Reproduction.html","Locomotion_and_Movement.html","Neural_Control_and_Coordination.html","Reproductive_Health.html","Structural_Organisation_in_Animals.html"],
+    chemistry:["Alcohols_Phenols_and_Ethers.html","Aldehydes_Ketones_and_Carboxylic_Acids.html","Amines.html","Biomolecules.html","Chemical_Bonding_and_Molecular_Structure.html","Chemical_Kinetics.html","Classification_of_Elements_and_Periodicity.html","Coordination_Compounds.html","Electrochemistry.html","Equilibrium.html","Haloalkanes_and_Haloarenes.html","Hydrocarbons.html","Organic_Chemistry_Some_Basic_Principles_and_Techniques.html","Redox_Reactions.html","Solutions.html","Some_Basic_Concepts_of_Chemistry.html","Structure_of_Atom.html","Thermodynamics.html","d_and_f_Block_Elements.html"],
+    physics:["Alternating_Current.html","Atoms.html","Current_Electricity.html","Dual_Nature_of_Radiation_and_Matter.html","Electric_Charges_and_Fields.html","Electromagnetic_Induction.html","Electromagnetic_Waves.html","Electrostatic_Potential_and_Capacitance.html","Gravitation.html","Kinetic_Theory.html","Laws_of_Motion.html","Magnetism_and_Matter.html","Mechanical_Properties_of_Fluids.html","Mechanical_Properties_of_Solids.html","Motion_in_a_Plane.html","Motion_in_a_Straight_Line.html","Moving_Charges_and_Magnetism.html","Nuclei.html","Oscillations.html","Ray_Optics.html","Semiconductors.html","System_of_Particles_and_Rotational_Motion.html","Thermal_Properties_of_Matter.html","Thermodynamics.html","Units_and_Measurements.html","Wave_Optics.html","Waves.html","Work_Energy_and_Power.html"]
+  };
+  const files=FILES[sid]||[];
+  list.innerHTML=`<div class="list-banner"><div class="list-banner-icon">${{botany:'🌿',zoology:'🧬',physics:'⚛️',chemistry:'🧪'}[sid]||'📝'}</div><div class="list-banner-text"><h3>${sname} Notes</h3><p>${files.length} chapters</p></div></div>`;
+  files.sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'})).forEach(f=>{
+    const t=f.replace('.html','').replace(/_/g,' ');
+    const c=document.createElement('div'); c.className='colorful-list-card';
+    c.innerHTML=`<div class="colorful-card-title" style="text-transform:capitalize">${t}</div><div class="colorful-card-desc">NCERT chapter summary · key points</div>`;
+    c.onclick=()=>window.location.href='notes/'+sid+'/'+f;
+    list.appendChild(c);
+  });
+}
+
+/* ══════════ MOCK TESTS ══════════ */
+function showMockTests(){
+  showScreen('mockTestListScreen');
+  const list=document.getElementById('mockList');
+  list.innerHTML=`<div class="list-banner"><div class="list-banner-icon">📊</div><div class="list-banner-text"><h3>Full NEET CBT Mock Tests</h3><p>3h 20m · 180 Questions · 720 Marks</p></div></div>`;
+  ['mock_test_1.html','mock_test-2.html','mock_test_3_premium.html'].forEach((f,i)=>{
+    const n=(f.match(/\d+/)||[i+1])[0];
+    const c=document.createElement('div'); c.className='colorful-list-card';
+    c.innerHTML=`<div class="colorful-card-title">NEET CBT Mock Test ${n}${f.includes('premium')?' · Premium':''}</div><div class="colorful-card-desc">180 Questions · Physics, Chemistry, Biology · 720 Marks · 200 Min</div>`;
+    c.onclick=()=>{ localStorage.setItem('_th', document.body.dataset.theme||'dark'); window.location.href='mock_test/'+f; };
+    list.appendChild(c);
+  });
+}
+
+/* ══════════ PYQs ══════════ */
+function showPYQs(){
+  showScreen('pyqListScreen');
+  const list=document.getElementById('pyqList');
+  list.innerHTML=`<div class="list-banner"><div class="list-banner-icon">📜</div><div class="list-banner-text"><h3>Original NEET PYQ Papers</h3><p>Authentic past papers with solutions</p></div></div>`;
+  ['neet_PYQs-1.html','NEET_PYQ-2.html','NEET_PYQ-3.html','NEET_PYQ-4.html','NEET_PYQ-5.html','NEET_PYQ-6.html'].forEach(f=>{
+    const t=f.replace('.html','').replace(/_/g,' ').toUpperCase();
+    const c=document.createElement('div'); c.className='colorful-list-card';
+    c.innerHTML=`<div class="colorful-card-title">${t}</div><div class="colorful-card-desc">Official NTA NEET Paper · Complete Solutions · 720 Marks</div>`;
+    c.onclick=()=>{ localStorage.setItem('_th', document.body.dataset.theme||'dark'); window.location.href='pyqs/'+f; };
+    list.appendChild(c);
+  });
+}
+
+/* ══════════ CONFETTI ══════════ */
+function spawnConfetti(){
+  const cols=['#3b82f6','#10b981','#f59e0b','#ec4899','#8b5cf6','#f97316'];
+  for(let i=0;i<32;i++) setTimeout(()=>{
+    const p=document.createElement('div'); p.className='confetti-piece';
+    p.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${1.2+Math.random()*1.8}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};transform:rotate(${Math.random()*360}deg);`;
+    document.body.appendChild(p); setTimeout(()=>p.remove(),3200);
+  },i*50);
+}
+
+function showFloat(txt,el){
+  const r=el.getBoundingClientRect();
+  const f=document.createElement('div'); f.className='float-score'; f.textContent=txt;
+  f.style.cssText=`left:${r.left+r.width/2-28}px;top:${r.top}px;color:var(--green);`;
+  document.body.appendChild(f); setTimeout(()=>f.remove(),900);
+}
+
+/* ══════════ BACK BUTTON ══════════ */
+if(!history.state?.sid) { history.replaceState({sid:'startScreen'},''); showScreen('startScreen', false); }
+else {
+  const id=history.state.sid;
+  if(id==='notesListScreen'){ const s=sessionStorage.getItem('_cns'),n=sessionStorage.getItem('_cnn'); if(s&&n) showNotesList(s,n,false); else showScreen('startScreen',false); }
+  else showScreen(['gameScreen','resultScreen'].includes(id)?'startScreen':id,false);
+}
+window.onpopstate=e=>{ if(e.state?.sid){ const id=e.state.sid; clearInterval(_tmr); showScreen(['gameScreen','resultScreen'].includes(id)?'startScreen':id,false); } else showScreen('startScreen',false); };
+
+/* ══════════ NOTES SCREEN ══════════ */
+let _curNotesSub = 'botany';
+let _selNoteSub = null;
+
+function showNotesScreen(){
+  showScreen('notesScreen');
+  _curNotesSub = 'botany';
+  switchNotesTab('botany');
+}
+
+function switchNotesTab(sub){
+  _curNotesSub = sub;
+  document.querySelectorAll('.notes-tab').forEach(t=>t.classList.remove('active'));
+  const tab = document.getElementById('ntab-'+sub);
+  if(tab) tab.classList.add('active');
+  renderNotesList(sub);
+}
+
+function getNotes(){
+  try{ return JSON.parse(localStorage.getItem('_notes_v2')||'[]'); }catch(e){ return []; }
+}
+function saveNotes(arr){
+  localStorage.setItem('_notes_v2', JSON.stringify(arr));
+}
+
+function renderNotesList(sub){
+  const el = document.getElementById('notesList');
+  if(!el) return;
+  const all = getNotes().filter(n=>n.sub===sub);
+  if(!all.length){
+    el.innerHTML = '<div style="text-align:center;padding:50px 20px;color:var(--text-muted);font-size:.88rem;">No notes yet.<br>Tap <b>+ Add Note</b> to write one.</div>';
+    return;
+  }
+  // Group by chapter
+  const byChap = {};
+  all.forEach(n=>{ (byChap[n.chap]=byChap[n.chap]||[]).push(n); });
+  let html = '';
+  Object.keys(byChap).forEach(chap=>{
+    html += `<div style="font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin:10px 0 6px;">${chap}</div>`;
+    byChap[chap].forEach((n,i)=>{
+      html += `<div class="note-card">
+        <div class="note-card-chap">${n.chap}</div>
+        <div class="note-card-text">${n.text}</div>
+        <div class="note-card-date">${n.date||''}</div>
+        <button class="note-card-del" onclick="deleteNote('${n.id}')">🗑</button>
+      </div>`;
+    });
+  });
+  el.innerHTML = html;
+}
+
+function openAddNoteModal(){
+  _selNoteSub = null;
+  document.getElementById('noteTextInput').value = '';
+  document.querySelectorAll('.note-sub-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('noteChapterPickWrap').style.display='none';
+  const m = document.getElementById('addNoteModal');
+  m.style.display = 'flex';
+}
+function closeAddNoteModal(){
+  document.getElementById('addNoteModal').style.display = 'none';
+}
+
+function selectNoteSubject(sub){
+  _selNoteSub = sub;
+  document.querySelectorAll('.note-sub-btn').forEach(b=>b.classList.remove('active'));
+  const btn = document.getElementById('nsb-'+sub);
+  if(btn) btn.classList.add('active');
+  // Populate chapter dropdown
+  const sylKey = SYL_MAP[sub];
+  const units = [...(SYL[sylKey][11]||[]), ...(SYL[sylKey][12]||[])];
+  const sel = document.getElementById('noteChapterPick');
+  sel.innerHTML = units.map((u,i)=>`<option value="${i}">${u.u}</option>`).join('');
+  document.getElementById('noteChapterPickWrap').style.display = 'block';
+}
+
+function saveNewNote(){
+  const text = (document.getElementById('noteTextInput').value||'').trim();
+  if(!text){ alert('Please write something first!'); return; }
+  if(!_selNoteSub){ alert('Please select a subject!'); return; }
+  const sylKey = SYL_MAP[_selNoteSub];
+  const units = [...(SYL[sylKey][11]||[]), ...(SYL[sylKey][12]||[])];
+  const chapIdx = parseInt(document.getElementById('noteChapterPick').value)||0;
+  const chap = units[chapIdx]?.u || 'General';
+  const note = {
+    id: '_n'+Date.now(),
+    sub: _selNoteSub,
+    chap,
+    text,
+    date: new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})
+  };
+  const all = getNotes();
+  all.unshift(note);
+  saveNotes(all);
+  // Push to Google Sheets
+  _push({type:'note', sub:_selNoteSub, chapter:chap, text, date:note.date});
+  closeAddNoteModal();
+  if(_curNotesSub === _selNoteSub) renderNotesList(_selNoteSub);
+  else switchNotesTab(_selNoteSub);
+}
+
+function deleteNote(id){
+  if(!confirm('Delete this note?')) return;
+  saveNotes(getNotes().filter(n=>n.id!==id));
+  renderNotesList(_curNotesSub);
+}
+
+/* ══════════ QUICK ACCESS (Logo Click) ══════════ */
+let _qaSub = 'biology';
+
+function openQuickAccess(){
+  const m = document.getElementById('quickAccessModal','analyticsScreen');
+  if(!m) return;
+  m.style.display = 'flex';
+  _qaSub = 'biology';
+  document.querySelectorAll('.qa-tab').forEach(t=>t.classList.remove('active'));
+  const tab = document.querySelector('.qa-tab');
+  if(tab) tab.classList.add('active');
+  renderQAContent('biology');
+}
+function closeQuickAccess(){
+  const m = document.getElementById('quickAccessModal','analyticsScreen');
+  if(m) m.style.display = 'none';
+}
+function switchQATab(sub){
+  _qaSub = sub;
+  document.querySelectorAll('.qa-tab').forEach(t=>t.classList.remove('active'));
+  const tab = document.querySelector(`.qa-tab[data-sub="${sub}"]`);
+  if(tab) tab.classList.add('active');
+  renderQAContent(sub);
+}
+
+function renderQAContent(sub){
+  const wrap = document.getElementById('qaContent');
+  if(!wrap) return;
+  const filename = FILE_MAP[sub];
+  wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted);">Loading...</div>';
+  fetch(filename).then(r=>r.json()).then(data=>{
+    let html = '';
+    let attempted = 0;
+    data.quiz_sets.forEach((set,idx)=>{
+      const rec = JSON.parse(localStorage.getItem(`_nc_${sub}_${idx}`)||'null');
+      if(!rec || !rec.completed) return;
+      attempted++;
+      const acc = rec.accuracy||0;
+      const acColor = acc>=80?'#10b981':acc>=60?'#3b82f6':acc>=40?'#f59e0b':'#ef4444';
+      html += `<div class="qa-set-card" onclick="showAnalyticsForQA('${sub}',${idx})">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div class="qa-set-name">${set.set_name||'Set '+(idx+1)}</div>
+          <div style="font-size:.8rem;font-weight:900;color:${acColor};">${acc}%</div>
+        </div>
+        <div class="qa-set-stats">
+          <span class="qa-stat c">✅ ${rec.correct||0}</span>
+          <span class="qa-stat w">❌ ${rec.wrong||0}</span>
+          <span class="qa-stat s">⏭ ${rec.skipped||0}</span>
+          <span class="qa-stat t">⏱ ${rec.timeTaken?Math.round(rec.timeTaken/60)+'m':'-'}</span>
+        </div>
+      </div>`;
+    });
+    if(!attempted) html = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:.88rem;">No sets attempted yet for '+SUB_LABELS[sub]+'.</div>';
+    wrap.innerHTML = html;
+  }).catch(()=>{
+    wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted);">Could not load data.</div>';
+  });
+}
+
+function showAnalyticsForQA(sub, idx){
+  closeQuickAccess();
+  curSubject = sub;
+  // Restore previous result
+  const rec = JSON.parse(localStorage.getItem(`_nc_${sub}_${idx}`)||'null');
+  const qs  = JSON.parse(localStorage.getItem(`_nq_${sub}_${idx}`)||'null');
+  const rs  = JSON.parse(localStorage.getItem(`_nr_${sub}_${idx}`)||'null');
+  if(!rec || !qs || !rs){ alert('No detailed data saved for this set.'); return; }
+  _activeSub = sub;
+  _activeSetIdx = idx;
+  _gameQs = qs;
+  _userResponses = rs;
+  _totalQ = qs.length;
+  _correct = rec.correct||0; _wrong = rec.wrong||0; _skipped = rec.skipped||0;
+  _sessionStart = Date.now() - (rec.timeTaken||0)*1000;
+  _buildResult({acc:rec.accuracy||0, neet:(_correct*4)-_wrong, avgSpeed:((rec.timeTaken||0)/(_totalQ||1)).toFixed(1), timeTaken:rec.timeTaken||0});
+  showScreen('resultScreen');
+}
+
+/* ══════════ SET HISTORY MODAL ══════════ */
+function checkSetHistory(set, idx, sub){
+  const key = `_nc_${sub}_${idx}`;
+  const rec = JSON.parse(localStorage.getItem(key)||'null');
+  if(!rec || !rec.completed){
+    startSetGame(set, idx);
+    return;
+  }
+  // Show history popup
+  const acc = rec.accuracy||0;
+  const acColor = acc>=80?'#10b981':acc>=60?'#3b82f6':acc>=40?'#f59e0b':'#ef4444';
+  const modal = document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;z-index:9995;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;';
+  modal.innerHTML=`<div style="background:var(--bg-surface);border-radius:22px 22px 0 0;padding:24px 20px 40px;width:100%;max-width:560px;">
+    <div style="font-weight:900;font-size:1rem;margin-bottom:4px;">📊 Previous Attempt</div>
+    <div style="font-size:.78rem;color:var(--text-muted);margin-bottom:16px;">${set.set_name||'Set '+(idx+1)}</div>
+    <div style="display:flex;justify-content:space-around;background:var(--bg-surface-light);border-radius:14px;padding:14px;margin-bottom:18px;">
+      <div style="text-align:center;"><div style="font-size:1.5rem;font-weight:900;color:${acColor};">${acc}%</div><div style="font-size:.65rem;color:var(--text-muted);font-weight:700;margin-top:2px;">ACCURACY</div></div>
+      <div style="text-align:center;"><div style="font-size:1.5rem;font-weight:900;color:#10b981;">${rec.correct||0}</div><div style="font-size:.65rem;color:var(--text-muted);font-weight:700;margin-top:2px;">CORRECT</div></div>
+      <div style="text-align:center;"><div style="font-size:1.5rem;font-weight:900;color:#ef4444;">${rec.wrong||0}</div><div style="font-size:.65rem;color:var(--text-muted);font-weight:700;margin-top:2px;">WRONG</div></div>
+      <div style="text-align:center;"><div style="font-size:1.5rem;font-weight:900;color:#6366f1;">${rec.neet>0?'+':''+(rec.neet||0)}</div><div style="font-size:.65rem;color:var(--text-muted);font-weight:700;margin-top:2px;">NEET PTS</div></div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="flex:1;height:46px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text-main);font-weight:700;cursor:pointer;font-family:inherit;">Cancel</button>
+      <button onclick="this.closest('div[style*=fixed]').remove();showAnalyticsForQA('${sub}',${idx});" style="flex:1;height:46px;border-radius:12px;border:1.5px solid #3b82f6;background:transparent;color:#3b82f6;font-weight:700;cursor:pointer;font-family:inherit;">Review 📋</button>
+      <button onclick="this.closest('div[style*=fixed]').remove();startSetGame(${JSON.stringify(set).replace(/</g,'\u003c')},${idx});" style="flex:1.4;height:46px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;font-weight:700;border:none;cursor:pointer;font-family:inherit;">Test Again 🔄</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+
+
+    } catch (e) {
+      document.body.innerHTML += '<div style="position:fixed;top:0;left:0;z-index:9999;background:red;color:white;padding:20px;font-size:20px;max-width:100vw;word-wrap:break-word;">CATCH ERROR: ' + e.message + '<br>' + e.stack + '</div>';
+    }
+    
+function reviewBmSet(sub, si){
+  const bms=getBM().filter(q=>q.cat===sub);
+  const chunk=bms.slice(si*10,(si+1)*10);
+  if(!chunk.length) return;
+  const rs = chunk.map((q, i) => ({ qi: i, picked: q.ans, dur: 0, ic: true }));
+  showScreen('analyticsScreen');
+  renderFlashcards(chunk, rs, 'analyticsList');
+}
+
+function renderFlashcards(qs, rs, containerId) {
+  const list = document.getElementById(containerId);
+  if (!list) return;
+  list.innerHTML = '';
+  qs.forEach((q, i) => {
+    let metaHtml = '';
+    if (q.unit) metaHtml += `<div style="font-size:0.65rem; color:var(--primary); font-weight:800; text-transform:uppercase; margin-bottom:5px;">${q.unit}${q.subUnit?' › '+q.subUnit:''}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700; margin-bottom:8px;">${q.set}</div>`;
+
+    const card = document.createElement('div'); card.className = 'rev-card';
+    card.style.marginBottom = '12px';
+    card.innerHTML = `
+      <div class="rev-card-header" style="flex-direction:column; align-items:flex-start;">
+        ${metaHtml}
+        <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+          <span class="rev-qnum">★ Bookmarked</span>
+        </div>
+      </div>
+      <div class="rev-q-text">${formatQuestionText(q.q)}</div>
+      <div class="rev-ans-block">
+        ${q.opts.map((opt, oi) => {
+          const isAns = oi === q.ans;
+          let cls = 'rev-ans-row';
+          if (isAns) cls += ' cr';
+          return `<div class="${cls}" style="${(!isAns) ? 'background:var(--bg-surface-light); border:1px solid var(--border); color:var(--text-main);' : ''}">${isAns?'✔ ':'○ '}${opt}</div>`;
+        }).join('')}
+      </div>
+      <div class="rev-exp"><strong>Concept:</strong> ${q.fact||'Standard NEET concept.'}</div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+
+</script>
+
+
+<!-- ═══ ANALYTICS SCREEN ═══ -->
+<div class="screen hidden" id="analyticsScreen" style="overflow-y:auto;">
+  <div class="page-header">
+    <button class="btn-back-circle" onclick="showScreen('startScreen')">‹</button>
+    <div class="page-title">Detailed Analytics 📊</div>
+  </div>
+  <div class="inner-list" id="analyticsList" style="padding-top:20px; max-width:600px; margin:0 auto;"></div>
+</div>
+
+<!-- ═══ QUICK ACCESS MODAL ═══ -->
+<div id="quickAccessModal" style="display:none;position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;" onclick="if(event.target===this)closeQuickAccess()">
+  <div class="qa-sheet">
+    <div class="qa-header">
+      <div style="font-weight:900;font-size:1rem;">⚡ Quick Access — Results</div>
+      <button onclick="closeQuickAccess()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted);">×</button>
+    </div>
+    <div class="qa-tabs">
+      <button class="qa-tab active" data-sub="biology" onclick="switchQATab('biology')">🧬 Biology</button>
+      <button class="qa-tab"        data-sub="physics"   onclick="switchQATab('physics')"  >⚛️ Physics</button>
+      <button class="qa-tab"        data-sub="chemistry" onclick="switchQATab('chemistry')">🧪 Chem</button>
+    </div>
+    <div id="qaContent" style="padding:14px;display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+</div>
+
+</body>
+</html>

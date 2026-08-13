@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEET Mock Test-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* DARK THEME (Cyber) */
+            --bg: #030712;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --card: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --marked: #8b5cf6;
+            --border: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00e5ff;
+            --neon-purple: #b388ff;
+        }
+
+        body.light {
+            /* LIGHT THEME (Professional) */
+            --bg: #f8fafc;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --neon-blue: #2563eb;
+            --neon-purple: #7c3aed;
+            --marked: #7c3aed;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); 
+            height: 100vh; height: 100dvh; display: flex; flex-direction: column; 
+            overflow: hidden; line-height: 1.5; 
+            transition: background 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 8px 16px; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 100; flex-shrink: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        body.light header { background: #fff; color: #000; border-bottom: 1.5px solid var(--border); }
+
+        .btn-theme { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 4px 8px; border-radius: 8px; color: #fff; font-size: 11px; cursor: pointer; }
+        body.light .btn-theme { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .btn-back { background: rgba(255,255,255,0.05); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: 1px solid var(--card-border); color: white; }
+        body.light .btn-back { background: #f1f5f9; color: #000; border-color: #cbd5e1; }
+        
+        .title { 
+            font-size: 14px; font-weight: 800; 
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        body.light .title { background: none; -webkit-text-fill-color: var(--primary); color: var(--primary); }
+        
+        .timer-box { 
+            background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 10px; 
+            font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--neon-blue);
+        }
+        body.light .timer-box { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; box-shadow: none; }
+
+        /* MAIN COLUMNAR LAYOUT */
+        main { 
+            flex: 1; display: flex; flex-direction: column; overflow: hidden; 
+            padding: 8px; gap: 8px; max-width: 600px; margin: 0 auto; width: 100%;
+        }
+
+        /* Progress Card - THIN */
+        .progress-card { 
+            background: var(--card); backdrop-filter: blur(10px);
+            padding: 8px 12px; border-radius: 12px; border: 1px solid var(--card-border); flex-shrink:0; 
+        }
+        .progress-container { 
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1); 
+            border-radius: 10px; margin: 4px 0; overflow: hidden; 
+        }
+        body.light .progress-container { background: #cbd5e1; }
+        .progress-fill { 
+            height: 100%; width: 0%; 
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: width 0.4s ease-out;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Question Section - Scrollable */
+        .q-section {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .q-card { 
+            background: var(--card); border-radius: 16px; padding: 16px; 
+            border: 1px solid var(--card-border); 
+            animation: fadeIn 0.4s ease-out;
+        }
+        body.light .q-card { box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .q-meta { font-size: 11px; font-weight: 800; color: var(--neon-blue); margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .q-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; }
+        
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .opt-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: all 0.2s;
+            text-align: left; font-size: 14px; font-weight: 500; color: var(--text-main);
+        }
+        body.light .opt-btn { background: #fff; }
+        .opt-btn.selected { 
+            border-color: var(--primary); background: rgba(99, 102, 241, 0.1); 
+            color: var(--text-main);
+        }
+        body.light .opt-btn.selected { background: #eff6ff; }
+        
+        .opt-letter { 
+            width: 24px; height: 24px; min-width: 24px; border-radius: 6px; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 12px; border: 1px solid var(--card-border);
+        }
+        body.light .opt-letter { background: #f1f5f9; }
+
+        /* PALETTE - COMPACT */
+        .palette-card { 
+            background: var(--card); border-radius: 16px; padding: 10px; 
+            border: 1px solid var(--card-border); flex-shrink: 0; 
+        }
+        .palette-head { font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; display: flex; justify-content: space-between; letter-spacing: 0.5px; }
+        
+        .sub-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 10px; scrollbar-width: none; }
+        .s-tab { 
+            white-space: nowrap; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); cursor: pointer; border: 1px solid transparent;
+        }
+        body.light .s-tab { background: #f1f5f9; }
+        .s-tab.active { background: rgba(99, 102, 241, 0.1); color: var(--neon-blue); border-color: var(--primary); }
+
+        .palette-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+        .p-btn { 
+            min-width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+            cursor: pointer; background: rgba(255,255,255,0.03); color: var(--text-sub);
+            transition: all 0.2s;
+        }
+        body.light .p-btn { background: #fff; border-color: #cbd5e1; }
+        
+        .p-btn.active { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0,229,255,0.05) !important; z-index: 10; transform: scale(1.1); }
+        .p-btn.answered { background: var(--success) !important; border-color: var(--success) !important; color: white !important; }
+        .p-btn.not-answered { background: var(--danger) !important; border-color: var(--danger) !important; color: white !important; }
+        .p-btn.marked { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; }
+        .p-btn.marked-answered { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; position: relative; }
+        .p-btn.marked-answered::after { 
+            content: '✓'; position: absolute; bottom: -2px; right: -2px; font-size: 8px; 
+            background: var(--success); width: 12px; height: 12px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--bg); 
+        }
+
+        /* LEGEND - Dots */
+        .legend { display: flex; justify-content: space-between; gap: 4px; border-top: 1px solid var(--card-border); padding-top: 8px; margin-top: 4px; }
+        .leg-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--text-sub); }
+        .leg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); }
+        body.light .leg-dot { border-color: rgba(0,0,0,0.1); }
+
+        /* ACTIONS FOOTER - COMPACT */
+        .actions {
+            background: var(--card); padding: 8px 16px; border-top: 1px solid var(--card-border);
+            display: flex; gap: 8px; flex-shrink: 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        .btn { flex: 1; padding: 10px 4px; border-radius: 12px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; }
+        .btn-outline { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--card-border); }
+        body.light .btn-outline { background: #fff; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+
+        /* RESULT VIEW stays full screen */
+        #resultView {
+            position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto;
+            padding: 20px 16px; display: none;
+        }
+        .res-hero { 
+            background: var(--card); border-radius: 24px; padding: 30px 20px; text-align: center; 
+            border: 1px solid var(--card-border); margin-bottom: 20px; 
+        }
+        body.light .res-hero { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+        .res-score { font-size: 48px; font-weight: 950; color: var(--text-main); }
+        .res-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+        .rs-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px; border: 1px solid var(--card-border); }
+        body.light .rs-item { background: #fff; }
+
+        .rs-val { font-size: 18px; font-weight: 800; display: block; color: var(--text-main); }
+        .rs-lbl { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-top: 2px; }
+
+        .rev-item { 
+            background: rgba(255,255,255,0.03); border-radius: 18px; padding: 16px; 
+            border: 1px solid var(--card-border); margin-bottom: 12px; 
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        body.light .rev-item { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+
+        .rev-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-main); line-height: 1.5; }
+        .rev-ans { padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 10px; border: 1px solid transparent; }
+        .rev-ans.correct { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.2); }
+        body.light .rev-ans.correct { background: #ecfdf5; color: #065f46; }
+
+        .rev-ans.wrong { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.2); }
+        body.light .rev-ans.wrong { background: #fef2f2; color: #991b1b; }
+
+        .rev-exp { font-size: 13px; color: var(--text-sub); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); }
+        body.light .rev-exp { background: #f8fafc; }
+
+        .hidden { display: none !important; }
+    </style>
+
+    <script>
+    // Auto theme sync from main app
+    (function(){
+      var th = localStorage.getItem('_th');
+      if(th === 'light'){
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+        // try data-theme too
+        document.body.dataset.theme = 'light';
+      } else {
+        document.body.dataset.theme = 'dark';
+      }
+    })();
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <button class="btn-back" onclick="handleExit()">✕</button>
+        <div class="title">NEET PYQ Paper</div>
+    </div>
+    <div class="timer-box">
+        <span id="timerText">200:00</span>
+    </div>
+</header>
+
+<main id="examView">
+    <!-- Progress Section -->
+    <div class="progress-card" style="display:flex; align-items:center; gap:12px">
+        <div style="flex:1">
+            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--text-sub); margin-bottom:2px">
+                <span>PROGRESS</span>
+                <span id="progressText">0/180</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        <button class="btn-theme" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
+    </div>
+
+    <!-- Scrollable Question Area -->
+    <div class="q-section">
+        <div class="q-card">
+            <div class="q-meta">
+                <span id="qSubject" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:10px">Subject</span>
+                <span id="qCounter" style="color:var(--text-sub)">Question 1/180</span>
+            </div>
+            <div class="q-text" id="qText">Loading question...</div>
+            <div class="options-list" id="optionsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Fixed Status Area -->
+    <div class="palette-card">
+        <div class="palette-head">
+            Quick Palette
+            <span style="font-size:10px; color:var(--primary)">Slide to browse </span>
+        </div>
+        
+        <div class="sub-tabs">
+            <div class="s-tab active" onclick="jumpToSubject('Botany')">Botany</div>
+            <div class="s-tab" onclick="jumpToSubject('Zoology')">Zoology</div>
+            <div class="s-tab" onclick="jumpToSubject('Physics')">Physics</div>
+            <div class="s-tab" onclick="jumpToSubject('Chemistry')">Chemistry</div>
+        </div>
+
+        <div class="palette-scroll" id="paletteGrid"></div>
+        
+        <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,0.03); border:1px solid #555"></div> Not Visited</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div> Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--danger)"></div> Not Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--marked)"></div> Marked</div>
+        </div>
+    </div>
+</main>
+
+<footer class="actions" id="actionButtons">
+    <button class="btn btn-outline" style="flex:0.6" onclick="handleClear()">Clear</button>
+    <button class="btn btn-warning" onclick="handleMark()">Mark</button>
+    <button class="btn btn-primary" onclick="handleNext()">Save & Next</button>
+    <button class="btn btn-outline" id="btnSubmit" style="background:#1e293b; color:white; flex:0.4; display:none;" onclick="confirmSubmit()">Submit</button>
+</footer>
+
+<!-- RESULT VIEW -->
+<div id="resultView">
+    <div class="res-hero">
+        <div class="res-score" id="resScore">00</div>
+        <div class="res-lbl">Final NEET Score</div>
+        <div class="res-stats">
+            <div class="rs-item"><span class="rs-val" style="color:var(--success)" id="resCorrect">0</span><span class="rs-lbl">Correct</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--danger)" id="resWrong">0</span><span class="rs-lbl">Wrong</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--text-sub)" id="resSkipped">0</span><span class="rs-lbl">Skipped</span></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px; width:100%" onclick="window.close() || alert('Please use back button to exit.')">Close Result</button>
+    </div>
+    
+    <div id="reviewContainer">
+        <h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+    </div>
+</div>
+
+<script>
+    let QUESTIONS = [];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let status = new Array(QUESTIONS.length).fill('not-visited');
+            answers = new Array(QUESTIONS.length).fill(null); 
+    let timeLeft = 200 * 60; // 3 Hours
+    let timerInterval;
+
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        const isLight = document.body.classList.contains('light');
+        document.getElementById('themeToggleBtn').textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        localStorage.setItem('_th', isLight ? 'light' : 'dark');
+    }
+
+    async function init() {
+        const savedTheme = localStorage.getItem('_th');
+        if (savedTheme === 'light') toggleTheme();
+        
+        // Show loading screen
+        const examView = document.getElementById('examView');
+        const origHtml = examView.innerHTML;
+        examView.innerHTML = '<div style="text-align:center; padding:40px; font-weight:600; color:var(--neon-blue); font-size:18px;">Loading 200 Real NEET Questions...<br>Please wait...</div>';
+
+        try {
+            const questions = {
+
+botany: [
+  { id:'B1', year:'2023', q:'Which of the following is the correct sequence of photosynthesis?', opts:['Light reaction → Calvin cycle → Carbon fixation','Carbon fixation → Light reaction → Calvin cycle','Light reaction → Carbon fixation → Calvin cycle','Calvin cycle → Carbon fixation → Light reaction'], ans:2, sol:'In photosynthesis, light reactions occur first (in thylakoids) generating ATP and NADPH, followed by carbon fixation and the Calvin cycle (in stroma).' },
+  { id:'B2', year:'2022', q:'In C4 plants, the first stable product of CO₂ fixation is:', opts:['3-phosphoglycerate (3-PGA)','Oxaloacetate (OAA)','Ribulose bisphosphate (RuBP)','Pyruvate'], ans:1, sol:'In C4 plants (Hatch-Slack pathway), CO₂ is first fixed in mesophyll cells by PEP carboxylase to form oxaloacetate (OAA), a 4-carbon compound.' },
+  { id:'B3', year:'2021', q:'Kranz anatomy is characteristic of which type of plants?', opts:['C3 plants','CAM plants','C4 plants','Hydrophytes'], ans:2, sol:'Kranz anatomy is the hallmark of C4 plants. It refers to the wreath-like arrangement of bundle sheath cells around vascular bundles, which are rich in chloroplasts.' },
+  { id:'B4', year:'2022', q:'Which enzyme is responsible for carbon fixation in C3 plants?', opts:['PEP carboxylase','RuBisCO','Pyruvate carboxylase','ATP synthase'], ans:1, sol:'RuBisCO (Ribulose-1,5-bisphosphate carboxylase/oxygenase) catalyzes the carboxylation of RuBP in C3 plants during the Calvin cycle.' },
+  { id:'B5', year:'2023', q:'The process of passing of water through the cuticle is called:', opts:['Transpiration','Guttation','Stomatal transpiration','Cuticular transpiration'], ans:3, sol:'Cuticular transpiration is the loss of water through the cuticle layer of leaves. It accounts for only 5-7% of total transpiration, unlike stomatal transpiration which is ~90%.' },
+  { id:'B6', year:'2020', q:'Which of the following is NOT a feature of gymnosperms?', opts:['Seeds are naked','Presence of archegonia in most','Double fertilization','Xylem lacks vessels mostly'], ans:2, sol:'Double fertilization is a characteristic of angiosperms (flowering plants), not gymnosperms. Gymnosperms have single fertilization.' },
+  { id:'B7', year:'2019', q:'Apical meristem is responsible for:', opts:['Increase in girth','Primary growth','Secondary growth','Healing of wounds'], ans:1, sol:'Apical meristems are located at the tips of roots and shoots and are responsible for primary growth (increase in length) of the plant.' },
+  { id:'B8', year:'2021', q:'Which of the following is a correct match?', opts:['Aleurone — Endosperm','Scutellum — Seed coat','Coleoptile — Radicle','Coleorhiza — Plumule'], ans:0, sol:'Aleurone layer is the peripheral layer of endosperm in cereal grains. It contains protein bodies and enzymes (like amylase) which are activated during germination.' },
+  { id:'B9', year:'2022', q:'Vernalization is the process of:', opts:['Vegetative propagation','Flowering induced by low temperature','Ripening of fruits','Seed germination'], ans:1, sol:'Vernalization is the process by which flowering is promoted in plants by exposure to prolonged cold (low temperatures), typically during winter.' },
+  { id:'B10', year:'2023', q:'Who gave the theory of mutation?', opts:['Charles Darwin','Gregor Mendel','Hugo de Vries','Thomas Morgan'], ans:2, sol:'Hugo de Vries proposed the mutation theory based on his experiments with Oenothera lamarckiana (Evening Primrose). He observed sudden, heritable changes called mutations.' },
+  { id:'B11', year:'2020', q:'Guttation occurs through:', opts:['Stomata','Lenticels','Hydathodes','Cuticle'], ans:2, sol:'Guttation is the exudation of water in liquid form from tips/edges of leaves through specialized pores called hydathodes, especially at night when root pressure is high.' },
+  { id:'B12', year:'2019', q:'Which pigment is responsible for photoperiodism?', opts:['Chlorophyll','Carotenoid','Phytochrome','Anthocyanin'], ans:2, sol:'Phytochrome is the photoreceptor pigment responsible for photoperiodism. It exists in two interconvertible forms: Pr (absorbs red light) and Pfr (absorbs far-red light).' },
+  { id:'B13', year:'2021', q:'In angiosperms, the endosperm is:', opts:['Haploid','Diploid','Triploid','Tetraploid'], ans:2, sol:'In angiosperms, the endosperm is formed by triple fusion (two polar nuclei + one sperm) making it triploid (3n). It provides nutrition to the developing embryo.' },
+  { id:'B14', year:'2022', q:'Which of the following is a macronutrient for plants?', opts:['Zinc','Manganese','Magnesium','Copper'], ans:2, sol:'Magnesium (Mg) is a macronutrient required in large amounts. It is a central component of the chlorophyll molecule and activates many enzymes.' },
+  { id:'B15', year:'2020', q:'The process by which roots grow toward water is called:', opts:['Phototropism','Hydrotropism','Geotropism','Thigmotropism'], ans:1, sol:'Hydrotropism is the growth movement of plant parts (especially roots) in response to water/moisture gradients. Roots show positive hydrotropism.' },
+  { id:'B16', year:'2023', q:'Which hormone promotes cell elongation and is involved in apical dominance?', opts:['Cytokinin','Gibberellin','Auxin','Abscisic acid'], ans:2, sol:'Auxin (IAA) promotes cell elongation and is responsible for apical dominance — the phenomenon where the apical bud suppresses the growth of lateral buds.' },
+  { id:'B17', year:'2019', q:'In Bryophytes, the main plant body is:', opts:['Sporophyte','Gametophyte','Both equally dominant','Neither'], ans:1, sol:'In Bryophytes (mosses, liverworts, hornworts), the dominant and independent plant body is the gametophyte (haploid). The sporophyte is dependent on the gametophyte.' },
+  { id:'B18', year:'2021', q:'Companion cells are associated with which tissue?', opts:['Xylem','Phloem','Parenchyma','Collenchyma'], ans:1, sol:'Companion cells are associated with sieve tube elements in phloem. They are nucleated and metabolically active, assisting sieve tubes which lack a nucleus.' },
+  { id:'B19', year:'2022', q:'Which of the following is the correct sequence in plant kingdom?', opts:['Algae → Fungi → Bryophyta → Pteridophyta → Gymnosperms → Angiosperms','Fungi → Algae → Bryophyta → Pteridophyta → Gymnosperms → Angiosperms','Algae → Bryophyta → Pteridophyta → Gymnosperms → Angiosperms','Bryophyta → Algae → Pteridophyta → Gymnosperms → Angiosperms'], ans:2, sol:'The correct evolutionary sequence is: Algae → Bryophyta → Pteridophyta → Gymnosperms → Angiosperms, representing increasing complexity of plant organization.' },
+  { id:'B20', year:'2020', q:'Chlorophyll a absorbs light maximally in:', opts:['Red and blue-violet regions','Green and yellow regions','Blue and green regions','Orange and red regions'], ans:0, sol:'Chlorophyll a shows maximum absorption in the red region (~680 nm) and blue-violet region (~430 nm). Green light is mostly reflected, which is why plants appear green.' },
+  { id:'B21', year:'2023', q:'Double fertilization is unique to:', opts:['Algae','Bryophytes','Angiosperms','Gymnosperms'], ans:2, sol:'Double fertilization is a hallmark of angiosperms (flowering plants). One sperm fertilizes the egg (→ zygote), and another fuses with two polar nuclei (→ triploid endosperm).' },
+  { id:'B22', year:'2021', q:'Photorespiration occurs in:', opts:['Mitochondria only','Chloroplast only','Peroxisome and mitochondria','Chloroplast, peroxisome and mitochondria'], ans:3, sol:'Photorespiration involves three organelles: chloroplasts (where RuBP is oxygenated), peroxisomes (where glycolate is oxidized), and mitochondria (where CO₂ is released).' },
+  { id:'B23', year:'2019', q:'Which of the following is a floating hydrophyte?', opts:['Hydrilla','Lotus','Pistia','Vallisneria'], ans:2, sol:'Pistia (water lettuce) is a free-floating hydrophyte that floats on the water surface. Lotus is rooted but floating, Hydrilla and Vallisneria are submerged hydrophytes.' },
+  { id:'B24', year:'2022', q:'Which of the following has the thickest cuticle?', opts:['Hydrophytes','Mesophytes','Xerophytes','Halophytes'], ans:2, sol:'Xerophytes (desert plants) have the thickest cuticle to minimize water loss through cuticular transpiration. This is an adaptation to arid environments.' },
+  { id:'B25', year:'2020', q:'Name the plant growth regulator that plays an important role in closing of stomata:', opts:['Auxin','Gibberellin','Cytokinin','Abscisic acid'], ans:3, sol:'Abscisic acid (ABA) is the "stress hormone" that triggers stomatal closure during water stress. It causes K⁺ ions to leave guard cells, leading to stomatal closure.' },
+  { id:'B26', year:'2023', q:'Pneumatophores are found in:', opts:['Xerophytes','Hydrophytes','Halophytes','Epiphytes'], ans:2, sol:'Pneumatophores are specialized breathing roots (aerophores) found in halophytes like Rhizophora (mangroves) that grow in waterlogged, anaerobic soils.' },
+  { id:'B27', year:'2021', q:'Which wood is formed during the rainy/favorable season in dicots?', opts:['Autumn wood','Latewood','Spring wood','Heart wood'], ans:2, sol:'Spring wood (early wood) is formed during the rainy/favorable season. It has wider vessels, large lumen, and lighter color compared to autumn wood (late wood).' },
+  { id:'B28', year:'2019', q:'Which of the following is a parasite?', opts:['Utricularia','Cuscuta','Nepenthes','Drosera'], ans:1, sol:'Cuscuta (dodder) is a holoparasite — it completely depends on the host plant for water, minerals, and food. It lacks chlorophyll and has haustoria for absorption.' },
+  { id:'B29', year:'2022', q:'In Mendelian genetics, the law of independent assortment applies when genes are:', opts:['Linked on the same chromosome','Located on non-homologous chromosomes','Always on the X chromosome','Located close to each other'], ans:1, sol:'Mendel\'s Law of Independent Assortment applies when genes are located on different (non-homologous) chromosomes, allowing them to segregate independently during meiosis.' },
+  { id:'B30', year:'2020', q:'Which of the following is an example of incomplete dominance?', opts:['ABO blood group','Mirabilis jalapa (4 o\'clock plant)','Sickle cell anemia','Tay-Sachs disease'], ans:1, sol:'Mirabilis jalapa shows incomplete dominance. Red × White cross gives pink offspring (F1), because neither allele is completely dominant over the other.' },
+  { id:'B31', year:'2023', q:'What is the ploidy of the cells in the embryo sac (female gametophyte)?', opts:['Haploid','Diploid','Triploid','Mixed'], ans:0, sol:'The embryo sac (female gametophyte) contains haploid (n) cells, including the egg cell, synergids, and antipodal cells. The central cell has two polar nuclei (both haploid).' },
+  { id:'B32', year:'2019', q:'Plasmolysis occurs due to:', opts:['Endosmosis','Exosmosis','Active transport','Diffusion'], ans:1, sol:'Plasmolysis occurs when a plant cell is placed in hypertonic solution. Water moves out of the cell by exosmosis, causing the protoplasm to shrink away from the cell wall.' },
+  { id:'B33', year:'2021', q:'Which of these is NOT a plant growth movement?', opts:['Taxis','Tropism','Nastic','Turgor movement'], ans:0, sol:'Taxis is the locomotory movement of organisms (like bacteria or algae) toward or away from a stimulus. It is not a growth movement. Tropisms, nastics are growth movements.' },
+  { id:'B34', year:'2022', q:'Fertilization in angiosperms takes place in:', opts:['Ovary','Embryo sac','Style','Stigma'], ans:1, sol:'Fertilization in angiosperms takes place inside the embryo sac (female gametophyte). The pollen tube delivers two male gametes into the embryo sac through the micropyle.' },
+  { id:'B35', year:'2020', q:'Which part of the pistil helps in recognizing compatible pollen grains?', opts:['Style','Ovary','Stigma','Ovule'], ans:2, sol:'The stigma is the receptive surface that recognizes and accepts compatible pollen grains. It has special proteins for pollen-pistil recognition (self-incompatibility).' },
+  { id:'B36', year:'2023', q:'Totipotency is the ability of:', opts:['Only root cells to regenerate a whole plant','Only stem cells to regenerate a whole plant','Each plant cell to develop into a complete organism','Only meristematic cells to regenerate'], ans:2, sol:'Totipotency is the ability of every living plant cell to regenerate into a complete organism when given proper conditions. This is the basis of plant tissue culture.' },
+  { id:'B37', year:'2021', q:'Which of the following is a correct statement about Gymnosperms?', opts:['They bear flowers','They have enclosed seeds','They show double fertilization','Ovules are naked (not enclosed in ovary)'], ans:3, sol:'In gymnosperms, the ovules are not enclosed in an ovary — they are "naked" and borne on megasporophylls. This is the key feature distinguishing them from angiosperms.' },
+  { id:'B38', year:'2019', q:'Calyptrogen is associated with:', opts:['Root cap meristem','Shoot apical meristem','Vascular cambium','Intercalary meristem'], ans:0, sol:'Calyptrogen is a special meristematic tissue found in the root tip that gives rise to the root cap (calyptra). It is present in most monocots.' },
+  { id:'B39', year:'2022', q:'Which of the following processes does NOT occur during seed germination?', opts:['Activation of enzymes','Imbibition of water','Oxidative phosphorylation','Meiosis'], ans:3, sol:'Meiosis does not occur during seed germination. Germination involves imbibition, enzyme activation, respiration (including oxidative phosphorylation), and mitosis for cell division.' },
+  { id:'B40', year:'2020', q:'The stamen is the male reproductive part of a flower. The anther produces:', opts:['Pollen grains (microspores)','Ovules','Embryo sac','Seeds'], ans:0, sol:'The anther is the pollen-producing part of the stamen. It undergoes microsporogenesis to produce microspores (pollen grains) through meiosis.' },
+  { id:'B41', year:'2023', q:'Which type of placentation is found in tomato?', opts:['Marginal','Axile','Parietal','Free central'], ans:1, sol:'Axile placentation is found in tomato (and other members of Solanaceae). The ovules are attached to a central axis in a bilocular or multilocular ovary.' },
+  { id:'B42', year:'2021', q:'Vascular bundles in monocot stem are:', opts:['Open and arranged in a ring','Closed and scattered','Open and scattered','Closed and arranged in a ring'], ans:1, sol:'In monocot stems, vascular bundles are closed (no cambium, so no secondary growth) and scattered throughout the ground tissue (not arranged in a ring).' },
+  { id:'B43', year:'2019', q:'The enzyme nitrate reductase contains which metal?', opts:['Iron and Zinc','Molybdenum and Iron','Copper and Zinc','Manganese and Copper'], ans:1, sol:'Nitrate reductase contains Molybdenum (Mo) and Iron (Fe) as cofactors. It catalyzes the reduction of NO₃⁻ to NO₂⁻, the first step of nitrogen assimilation in plants.' },
+  { id:'B44', year:'2022', q:'Which of the following is an example of a natural auxin?', opts:['NAA','2,4-D','IBA','IAA'], ans:3, sol:'IAA (Indole-3-acetic acid) is the only naturally occurring auxin in plants. NAA (naphthaleneacetic acid), IBA, and 2,4-D are all synthetic auxins.' },
+  { id:'B45', year:'2023', q:'The transfer of pollen from the anthers of one flower to the stigma of a genetically different plant of the same species is called:', opts:['Autogamy','Geitonogamy','Xenogamy','Cleistogamy'], ans:2, sol:'Xenogamy (cross-pollination) is the transfer of pollen to the stigma of a genetically different plant of the same species. It promotes genetic diversity.' },
+],
+
+zoology: [
+  { id:'Z1', year:'2023', q:'Which of the following is the correct sequence of development?', opts:['Blastula → Morula → Gastrula → Cleavage','Cleavage → Blastula → Morula → Gastrula','Cleavage → Morula → Blastula → Gastrula','Morula → Blastula → Gastrula → Cleavage'], ans:2, sol:'The correct sequence of early embryonic development is: Cleavage (mitotic divisions) → Morula (solid ball) → Blastula (hollow ball) → Gastrula (germ layers form).' },
+  { id:'Z2', year:'2022', q:'The functional unit of the kidney is:', opts:['Nephron','Bowman\'s capsule','Loop of Henle','Collecting duct'], ans:0, sol:'The nephron is the structural and functional unit of the kidney. Each human kidney contains about 1 million nephrons. It filters blood and produces urine.' },
+  { id:'Z3', year:'2021', q:'Which of the following is an example of an innate behavior?', opts:['Conditioning','Insight learning','Fixed action pattern','Imprinting'], ans:2, sol:'Fixed action patterns (FAPs) are stereotyped, instinctive behaviors triggered by specific stimuli (sign stimuli). They are innate (genetically programmed), not learned.' },
+  { id:'Z4', year:'2020', q:'Haemoglobin is a:', opts:['Lipoprotein','Glycoprotein','Chromoprotein','Nucleoprotein'], ans:2, sol:'Haemoglobin is a chromoprotein (conjugated protein with a colored prosthetic group). It contains the heme group (iron-porphyrin complex) which gives blood its red color.' },
+  { id:'Z5', year:'2023', q:'The acrosome reaction in sperm is triggered by:', opts:['Calcium ions','Sodium ions','Potassium ions','Magnesium ions'], ans:0, sol:'The acrosome reaction in sperm is triggered by Ca²⁺ ions (calcium). Contact with the zona pellucida causes Ca²⁺ influx, leading to acrosome exocytosis and enzyme release.' },
+  { id:'Z6', year:'2019', q:'Which part of the human brain controls respiration and heart rate?', opts:['Cerebellum','Cerebrum','Medulla oblongata','Hypothalamus'], ans:2, sol:'The medulla oblongata (part of the brain stem) contains vital centers that control involuntary functions including respiration, heart rate, and blood pressure.' },
+  { id:'Z7', year:'2022', q:'The yellow spot (macula lutea) in the human eye is:', opts:['The area of maximum visual acuity','The blind spot','The area where the optic nerve exits','The area of rod cells'], ans:0, sol:'The macula lutea (yellow spot) is the area of the retina with maximum visual acuity and color vision. It is densely packed with cone cells and has the fovea centralis at its center.' },
+  { id:'Z8', year:'2021', q:'Synapsis occurs during which stage of meiosis?', opts:['Leptotene','Zygotene','Pachytene','Diplotene'], ans:1, sol:'Synapsis (pairing of homologous chromosomes) occurs during Zygotene of Prophase I of Meiosis I. The protein complex that holds them together is the synaptonemal complex.' },
+  { id:'Z9', year:'2020', q:'Sickle cell anemia is caused by a change in which amino acid?', opts:['Glutamine to Valine','Glutamic acid to Valine','Valine to Glutamic acid','Lysine to Valine'], ans:1, sol:'Sickle cell anemia is caused by a point mutation where Glutamic acid (hydrophilic) at position 6 of the β-globin chain is replaced by Valine (hydrophobic).' },
+  { id:'Z10', year:'2022', q:'Which of the following is NOT a part of the juxtaglomerular apparatus?', opts:['Juxtaglomerular cells','Macula densa','Extraglomerular mesangial cells','Bowman\'s capsule'], ans:3, sol:'Bowman\'s capsule is NOT part of the juxtaglomerular apparatus (JGA). The JGA consists of juxtaglomerular cells, macula densa, and extraglomerular mesangial cells. JGA regulates GFR.' },
+  { id:'Z11', year:'2023', q:'The process of spermiogenesis involves conversion of:', opts:['Spermatogonium to spermatocyte','Spermatocyte to spermatid','Spermatid to spermatozoa','Spermatozoa to spermatogonium'], ans:2, sol:'Spermiogenesis is the process of transformation of spermatid (round, non-motile) into spermatozoa (mature sperm). It involves development of flagellum, acrosome, and loss of cytoplasm.' },
+  { id:'Z12', year:'2019', q:'Which hormone is secreted by the corpus luteum?', opts:['FSH and LH','Estrogen and Progesterone','Testosterone','Oxytocin'], ans:1, sol:'The corpus luteum (formed after ovulation) secretes Progesterone (mainly) and Estrogen. Progesterone maintains the uterine lining and suppresses new follicle development.' },
+  { id:'Z13', year:'2021', q:'Which type of immunity is provided by colostrum?', opts:['Active immunity','Cell-mediated immunity','Passive immunity','Innate immunity'], ans:2, sol:'Colostrum (first milk) provides passive immunity because it contains maternal IgA antibodies. The baby receives ready-made antibodies without having to produce them.' },
+  { id:'Z14', year:'2022', q:'In cockroach, blood flows in:', opts:['Closed circulatory system','Open circulatory system','Double circulatory system','Single circulatory system'], ans:1, sol:'Cockroach (and most insects) have an open circulatory system where blood (hemolymph) flows freely in body cavities (haemocoel) rather than enclosed in blood vessels.' },
+  { id:'Z15', year:'2020', q:'Which enzyme converts pepsinogen to pepsin?', opts:['Trypsin','Enterokinase','Pepsin itself (autocatalysis)','HCl (acid)'], ans:2, sol:'Pepsinogen is converted to pepsin by HCl (initially) and then by pepsin itself (autocatalytic activation). HCl creates the acidic environment necessary for pepsin activity.' },
+  { id:'Z16', year:'2023', q:'Amniocentesis is used for:', opts:['Detecting fetal chromosomal abnormalities','Inducing abortion','Treating infertility','Monitoring fetal heart rate only'], ans:0, sol:'Amniocentesis involves sampling amniotic fluid to detect fetal chromosomal abnormalities (like Down syndrome), genetic disorders, and sex of the fetus. It\'s done around 14-16 weeks.' },
+  { id:'Z17', year:'2019', q:'The human genome contains approximately how many protein-coding genes?', opts:['20,000–25,000','40,000–50,000','100,000–150,000','5,000–10,000'], ans:0, sol:'The Human Genome Project (completed 2003) revealed that the human genome contains approximately 20,000–25,000 protein-coding genes, far fewer than originally estimated.' },
+  { id:'Z18', year:'2021', q:'Which of the following is NOT a granulocyte?', opts:['Neutrophil','Eosinophil','Basophil','Monocyte'], ans:3, sol:'Monocytes are agranulocytes (they have no granules in cytoplasm). The granulocytes are Neutrophils, Eosinophils, and Basophils — collectively called PMNs (polymorphonuclear cells).' },
+  { id:'Z19', year:'2022', q:'The tidal volume in normal breathing is approximately:', opts:['500 mL','1200 mL','2300 mL','4600 mL'], ans:0, sol:'Tidal volume (TV) is the volume of air inhaled or exhaled during normal, quiet breathing — approximately 500 mL in a healthy adult.' },
+  { id:'Z20', year:'2020', q:'Oogenesis begins:', opts:['At puberty','Before birth (in fetal life)','After fertilization','At menarche'], ans:1, sol:'Oogenesis begins during fetal life. Oogonia multiply by mitosis and enter meiosis I, arresting at prophase I (as primary oocytes) before birth. Meiosis resumes after puberty.' },
+  { id:'Z21', year:'2023', q:'DNA fingerprinting uses which technique?', opts:['PCR only','Southern blotting only','RFLP and hybridization','ELISA'], ans:2, sol:'DNA fingerprinting (developed by Alec Jeffreys) uses VNTRs (Variable Number Tandem Repeats) analyzed through RFLP (Restriction Fragment Length Polymorphism) and Southern blotting.' },
+  { id:'Z22', year:'2021', q:'Which of the following is the correct matching of gland and hormone?', opts:['Thyroid — Calcitonin (yes) and PTH','Adrenal cortex — Adrenaline','Anterior pituitary — Oxytocin','Beta cells of pancreas — Glucagon'], ans:0, sol:'Calcitonin is correctly produced by the thyroid gland (parafollicular C-cells). PTH is from parathyroid. Adrenaline is from adrenal medulla. Oxytocin is from posterior pituitary.' },
+  { id:'Z23', year:'2019', q:'In the ECG (electrocardiogram), the QRS complex represents:', opts:['Atrial depolarization','Ventricular depolarization','Atrial repolarization','Ventricular repolarization'], ans:1, sol:'The QRS complex in ECG represents ventricular depolarization (the electrical activation of the ventricles leading to ventricular contraction/systole). P wave = atrial depolarization.' },
+  { id:'Z24', year:'2022', q:'The site of ultrafiltration in the nephron is:', opts:['Loop of Henle','Bowman\'s capsule','Proximal convoluted tubule','Distal convoluted tubule'], ans:1, sol:'Ultrafiltration occurs in the Bowman\'s capsule (glomerular capsule) due to the high pressure in the glomerular capillaries. Blood plasma (except large proteins) is filtered here.' },
+  { id:'Z25', year:'2020', q:'Which of the following is a second messenger in hormone action?', opts:['mRNA','tRNA','cAMP','GDP'], ans:2, sol:'cAMP (cyclic AMP) is a classic second messenger. When a hormone binds to its receptor, adenylyl cyclase is activated, converting ATP to cAMP, which triggers intracellular responses.' },
+  { id:'Z26', year:'2023', q:'Which of the following correctly describes the lac operon?', opts:['It is always ON in the presence of glucose','It is turned ON in the presence of lactose (allolactose)','It codes for structural genes only','Repressor protein is always inactive'], ans:1, sol:'The lac operon is turned ON when lactose (allolactose) is present. Allolactose binds to the repressor protein, inactivating it, so the structural genes (lacZ, lacY, lacA) are transcribed.' },
+  { id:'Z27', year:'2021', q:'Mast cells are associated with which immunoglobulin?', opts:['IgG','IgM','IgE','IgA'], ans:2, sol:'Mast cells have Fc receptors for IgE. When IgE antibodies bound to mast cells encounter antigen, they trigger degranulation releasing histamine — causing allergic reactions.' },
+  { id:'Z28', year:'2019', q:'The human placenta is:', opts:['Haemochorial','Epitheliochorial','Syndesmochorial','Endotheliochorial'], ans:0, sol:'Human placenta is haemochorial — the trophoblast (chorionic villi) is in direct contact with maternal blood. This allows efficient exchange of nutrients and gases.' },
+  { id:'Z29', year:'2022', q:'Which hormone stimulates milk ejection (letdown reflex)?', opts:['Prolactin','Oxytocin','Estrogen','FSH'], ans:1, sol:'Oxytocin (from posterior pituitary) stimulates milk ejection (letdown reflex) by causing contraction of myoepithelial cells around mammary alveoli. Prolactin stimulates milk production.' },
+  { id:'Z30', year:'2020', q:'The resting membrane potential of a neuron is approximately:', opts:['+70 mV','-70 mV','0 mV','+35 mV'], ans:1, sol:'The resting membrane potential of a neuron is approximately -70 mV (inside negative relative to outside), maintained by K⁺ leak channels and the Na⁺/K⁺ ATPase pump.' },
+  { id:'Z31', year:'2023', q:'Erythroblastosis fetalis occurs due to:', opts:['ABO incompatibility always','Rh factor incompatibility (Rh- mother, Rh+ fetus)','Low hemoglobin','Vitamin K deficiency'], ans:1, sol:'Erythroblastosis fetalis (hemolytic disease of newborn) occurs when an Rh-negative mother carries an Rh-positive fetus. Maternal anti-Rh antibodies (IgG) cross the placenta and destroy fetal RBCs.' },
+  { id:'Z32', year:'2021', q:'Which of the following is the site of protein synthesis?', opts:['Nucleus','Mitochondria only','Ribosome','Golgi apparatus'], ans:2, sol:'Ribosomes are the site of protein synthesis (translation). They are found free in cytoplasm or attached to RER. Ribosomes read mRNA and assemble amino acids into polypeptides.' },
+  { id:'Z33', year:'2019', q:'Which of the following is the correct sequence of sperm passage in males?', opts:['Testis → Rete testis → Vas deferens → Epididymis → Urethra','Testis → Epididymis → Rete testis → Vas deferens → Urethra','Testis → Rete testis → Epididymis → Vas deferens → Urethra','Testis → Vas deferens → Epididymis → Rete testis → Urethra'], ans:2, sol:'The correct sequence is: Testis → Rete testis → Vasa efferentia → Epididymis → Vas deferens → Urethra. Sperm mature and are stored in the epididymis.' },
+  { id:'Z34', year:'2022', q:'The phenomenon of single strand of DNA acting as template during transcription is called:', opts:['Semiconservative replication','Transcription','Template principle','Asymmetric transcription'], ans:3, sol:'During transcription, only one strand of the DNA double helix (the template strand/antisense strand) is transcribed. The other strand (coding/sense strand) is not transcribed — this is asymmetric transcription.' },
+  { id:'Z35', year:'2020', q:'Hardy-Weinberg equilibrium is maintained when:', opts:['Natural selection is occurring','Mutations are frequent','Random mating occurs with no evolutionary forces','Population is small'], ans:2, sol:'Hardy-Weinberg equilibrium requires: no mutation, no natural selection, random mating, no gene flow, and large population size. When all these conditions are met, allele frequencies remain constant.' },
+  { id:'Z36', year:'2023', q:'The part of the brain responsible for thermo-regulation is:', opts:['Hypothalamus','Cerebellum','Thalamus','Hippocampus'], ans:0, sol:'The hypothalamus is the thermoregulatory center of the brain. It monitors body temperature and coordinates responses like sweating, shivering, and vasodilation/vasoconstriction.' },
+  { id:'Z37', year:'2021', q:'Restriction endonucleases cut DNA at:', opts:['Any random site','Specific palindromic sequences','Only at promoter regions','Only AT-rich regions'], ans:1, sol:'Restriction endonucleases (restriction enzymes) cut DNA at specific palindromic sequences called restriction sites. For example, EcoRI cuts at GAATTC/CTTAAG.' },
+  { id:'Z38', year:'2019', q:'Which of the following is a vestigial organ in humans?', opts:['Appendix','Liver','Kidney','Spleen'], ans:0, sol:'The vermiform appendix (caecal appendix) is considered a vestigial organ in humans — a remnant of the cecum used by herbivorous ancestors for cellulose digestion. It has no known essential function.' },
+  { id:'Z39', year:'2022', q:'Darwinism does NOT include which of the following?', opts:['Natural selection','Survival of the fittest','Genetic drift','Struggle for existence'], ans:2, sol:'Genetic drift was not part of Darwin\'s theory. It was proposed later as a mechanism of evolution based on random changes in allele frequencies, especially in small populations (Sewall Wright).' },
+  { id:'Z40', year:'2020', q:'The term "Central Dogma" of molecular biology refers to:', opts:['RNA → DNA → Protein','DNA → RNA → Protein','Protein → RNA → DNA','DNA → Protein → RNA'], ans:1, sol:'The Central Dogma (Francis Crick, 1958) states: DNA → RNA (transcription) → Protein (translation). Genetic information flows in this direction. Reverse transcription (RNA→DNA) is an exception.' },
+  { id:'Z41', year:'2023', q:'Which of the following is an example of co-dominance?', opts:['ABO blood group (IA and IB)','Incomplete dominance in snapdragon','Sickle cell trait','Tay-Sachs disease'], ans:0, sol:'In ABO blood group, alleles IA and IB are co-dominant — both are expressed equally in AB blood type individuals. Neither is dominant over the other.' },
+  { id:'Z42', year:'2021', q:'Biopiracy refers to:', opts:['Stealing of money from labs','Unauthorized commercial use of biological resources/traditional knowledge','Bio-terrorism','Hunting of animals'], ans:1, sol:'Biopiracy is the unauthorized appropriation of biological resources and associated traditional knowledge by commercial enterprises without proper compensation to indigenous communities.' },
+  { id:'Z43', year:'2019', q:'Which of the following is a greenhouse gas?', opts:['O₂ and N₂','N₂O and CH₄','H₂ and Ar','HCl and HNO₃'], ans:1, sol:'N₂O (nitrous oxide) and CH₄ (methane) are potent greenhouse gases. Other greenhouse gases include CO₂, water vapor, and CFCs. They trap heat in the atmosphere.' },
+  { id:'Z44', year:'2022', q:'BOD (Biological Oxygen Demand) is an indicator of:', opts:['Water purity','Water pollution','Air pollution','Soil fertility'], ans:1, sol:'BOD (Biological Oxygen Demand) measures the amount of dissolved oxygen needed by microorganisms to decompose organic matter in water. Higher BOD indicates greater water pollution.' },
+  { id:'Z45', year:'2020', q:'The vaccine for smallpox was developed by:', opts:['Louis Pasteur','Alexander Fleming','Edward Jenner','Robert Koch'], ans:2, sol:'Edward Jenner (1796) developed the first vaccine by using cowpox (Vaccinia) to protect against smallpox. He noticed that milkmaids who caught cowpox were immune to smallpox.' },
+],
+
+physics: [
+  { id:'P1', year:'2023', q:'A body moving with uniform acceleration covers 5 m in the 1st second and 9 m in the 2nd second. How much distance will it cover in the 5th second?', opts:['17 m','19 m','21 m','25 m'], ans:0, sol:'Using s_n = u + a(2n-1)/2. From s₁=5 and s₂=9, we get a=4 m/s² and u=3 m/s. s₅ = 3 + 4(2×5-1)/2 = 3 + 4×4.5 = 3 + 14 = 17 m.' },
+  { id:'P2', year:'2022', q:'The dimensional formula of impulse is:', opts:['[MLT⁻¹]','[ML²T⁻²]','[MLT⁻²]','[ML²T⁻¹]'], ans:0, sol:'Impulse = Force × Time = [MLT⁻²] × [T] = [MLT⁻¹]. Impulse equals change in momentum, so it has the same dimensions as momentum: [MLT⁻¹].' },
+  { id:'P3', year:'2021', q:'A projectile is thrown at 45° to the horizontal. What is the ratio of horizontal range to maximum height?', opts:['1:1','2:1','4:1','8:1'], ans:2, sol:'R = u²sin(2θ)/g and H = u²sin²θ/(2g). At θ=45°: R = u²/g and H = u²/(4g). So R/H = 4. Ratio is 4:1.' },
+  { id:'P4', year:'2020', q:'Which of the following is a vector quantity?', opts:['Speed','Distance','Temperature','Electric field'], ans:3, sol:'Electric field is a vector quantity because it has both magnitude and direction (direction from positive to negative). Speed, distance, and temperature are scalar quantities.' },
+  { id:'P5', year:'2023', q:'According to Kepler\'s third law, T² ∝ R³. If the orbital radius is doubled, the time period becomes:', opts:['2√2 times','4 times','2 times','√2 times'], ans:0, sol:'T² ∝ R³, so T ∝ R^(3/2). If R becomes 2R, T becomes T×2^(3/2) = T×2√2. So the time period becomes 2√2 times.' },
+  { id:'P6', year:'2022', q:'The work done by a force is zero when the angle between force and displacement is:', opts:['0°','45°','90°','180°'], ans:2, sol:'Work = F·d·cosθ. When θ = 90°, cos90° = 0, so W = 0. The force is perpendicular to displacement (e.g., centripetal force does no work on circular motion).' },
+  { id:'P7', year:'2019', q:'Escape velocity from Earth\'s surface is approximately:', opts:['7.9 km/s','11.2 km/s','3.0 km/s','25 km/s'], ans:1, sol:'Escape velocity from Earth = √(2gR) = √(2 × 9.8 × 6.4×10⁶) ≈ 11.2 km/s. This is the minimum velocity needed for an object to escape Earth\'s gravitational field.' },
+  { id:'P8', year:'2021', q:'The energy stored in a capacitor is given by:', opts:['QV','QV/2','Q²/C','CV'], ans:1, sol:'Energy stored in a capacitor = (1/2)QV = (1/2)CV² = Q²/(2C). The factor of 1/2 arises because as charge builds up, it becomes increasingly difficult to add more charge.' },
+  { id:'P9', year:'2022', q:'Ohm\'s law in vector form is:', opts:['J = σE','J = E/σ','E = ρJ','Both A and C'], ans:3, sol:'Ohm\'s law in vector form: J = σE (where σ is conductivity) is equivalent to E = ρJ (where ρ is resistivity = 1/σ). J is current density, E is electric field. Both A and C are correct.' },
+  { id:'P10', year:'2020', q:'The frequency of a stretched string is proportional to:', opts:['Square root of tension','Square of tension','Tension','Cube root of tension'], ans:0, sol:'Frequency f = (1/2L)√(T/μ), so f ∝ √T (square root of tension). Doubling tension increases frequency by √2 ≈ 1.41 times.' },
+  { id:'P11', year:'2023', q:'The photoelectric effect proves that light has:', opts:['Wave nature','Particle (photon) nature','Both wave and particle nature','Neither'], ans:1, sol:'The photoelectric effect (explained by Einstein in 1905) proves the particle nature of light. The photon concept explains the instantaneous emission and the existence of a threshold frequency.' },
+  { id:'P12', year:'2021', q:'In a transistor, the emitter is:', opts:['Always the input','Heavily doped and emits charge carriers','Lightly doped','The output terminal always'], ans:1, sol:'In a transistor, the emitter is the most heavily doped region. It emits (injects) majority charge carriers into the base. It is always the first terminal of the transistor.' },
+  { id:'P13', year:'2019', q:'The unit of magnetic flux is:', opts:['Tesla','Weber','Henry','Gauss'], ans:1, sol:'Magnetic flux (Φ) is measured in Weber (Wb). 1 Weber = 1 T·m². The SI unit of magnetic field strength (B) is Tesla, while flux linkage uses Weber-turns.' },
+  { id:'P14', year:'2022', q:'The phenomenon of polarisation of light confirms that light is:', opts:['Longitudinal wave','Transverse wave','Mechanical wave','Sound wave'], ans:1, sol:'Polarization of light confirms that light is a transverse wave. Only transverse waves can be polarized. Longitudinal waves (like sound) cannot be polarized because they oscillate in the direction of propagation.' },
+  { id:'P15', year:'2020', q:'According to the Bohr model, the angular momentum of an electron in the nth orbit is:', opts:['nh/2π','nh/4π','nh/π','2nh/π'], ans:0, sol:'Bohr\'s quantization condition: mvr = nh/2π = nℏ, where n = 1,2,3... The angular momentum of an electron in the nth orbit is an integral multiple of h/2π (ℏ).' },
+  { id:'P16', year:'2023', q:'For which type of waves is the medium NOT required for propagation?', opts:['Sound waves','Seismic waves','Electromagnetic waves','Water waves'], ans:2, sol:'Electromagnetic waves (light, radio, X-rays, etc.) do not require a medium for propagation — they can travel through vacuum. All other options are mechanical waves requiring a medium.' },
+  { id:'P17', year:'2021', q:'The de Broglie wavelength of a particle with momentum p is:', opts:['λ = p/h','λ = h/p','λ = h·p','λ = h²/p'], ans:1, sol:'de Broglie wavelength λ = h/p, where h is Planck\'s constant and p is the momentum. This applies to all particles, showing the wave-particle duality of matter.' },
+  { id:'P18', year:'2019', q:'In an adiabatic process:', opts:['Temperature remains constant','Pressure remains constant','Heat exchange is zero','Volume remains constant'], ans:2, sol:'In an adiabatic process, there is NO heat exchange with the surroundings (Q = 0). From the first law: ΔU = -W. The temperature changes as work is done by or on the system.' },
+  { id:'P19', year:'2022', q:'A convex lens of focal length f produces a real, inverted, same-size image when the object is placed at:', opts:['Focus (F)','2F','Infinity','Between F and 2F'], ans:1, sol:'When an object is placed at 2F (center of curvature) from a convex lens, the image is formed at 2F on the other side. It is real, inverted, and the same size as the object (m = -1).' },
+  { id:'P20', year:'2020', q:'The SI unit of electric potential is:', opts:['Coulomb','Farad','Volt','Ampere'], ans:2, sol:'The SI unit of electric potential (and EMF) is Volt (V). 1 Volt = 1 Joule/Coulomb. It represents the work done per unit charge to move a charge from infinity to that point.' },
+  { id:'P21', year:'2023', q:'Fleming\'s left-hand rule is used to find the direction of:', opts:['Induced EMF','Force on a current-carrying conductor in a magnetic field','Magnetic field due to current','Torque on a current loop'], ans:1, sol:'Fleming\'s Left-Hand Rule (for motors) gives the direction of force (thrust) on a current-carrying conductor in a magnetic field. The three fingers represent: B, I, and F.' },
+  { id:'P22', year:'2021', q:'For total internal reflection to occur, light must travel from:', opts:['Rarer to denser medium','Denser to rarer medium at angle ≥ critical angle','Denser to rarer at any angle','Rarer to rarer medium'], ans:1, sol:'Total internal reflection occurs when light travels from a denser to a rarer medium AND the angle of incidence is greater than or equal to the critical angle.' },
+  { id:'P23', year:'2019', q:'The kinetic energy of a gas molecule is directly proportional to:', opts:['Square root of temperature','Absolute temperature (T)','Square of temperature','Volume'], ans:1, sol:'Kinetic energy of a gas molecule = (3/2)k_BT, where k_B is Boltzmann\'s constant and T is absolute temperature in Kelvin. KE is directly proportional to absolute temperature.' },
+  { id:'P24', year:'2022', q:'The half-life of a radioactive element is 10 years. After 30 years, what fraction remains?', opts:['1/2','1/4','1/8','1/16'], ans:2, sol:'After 30 years = 3 half-lives. Remaining fraction = (1/2)³ = 1/8. After each half-life, half the radioactive material decays.' },
+  { id:'P25', year:'2020', q:'Alternating current can be converted to direct current using a:', opts:['Transformer','Rectifier','Inductor','Capacitor'], ans:1, sol:'A rectifier (using diodes) converts AC to DC. A transformer can only change AC voltage, not convert AC to DC. Inductors and capacitors are passive components.' },
+  { id:'P26', year:'2023', q:'Bernoulli\'s theorem is based on conservation of:', opts:['Mass','Momentum','Energy','Both momentum and energy'], ans:2, sol:'Bernoulli\'s theorem is based on conservation of mechanical energy for streamline flow of an ideal fluid. It states: P + (1/2)ρv² + ρgh = constant along a streamline.' },
+  { id:'P27', year:'2021', q:'The resolving power of a microscope is increased by:', opts:['Increasing wavelength of light','Using objective lens of larger focal length','Decreasing wavelength of light (or using electron beam)','Increasing distance from object'], ans:2, sol:'Resolving power RP ∝ 1/λ. Using shorter wavelength (violet light or electron beam) increases resolving power. Electron microscopes use very short wavelengths for very high resolution.' },
+  { id:'P28', year:'2019', q:'Which of the following has maximum penetrating power?', opts:['Alpha rays','Beta rays','Gamma rays','X-rays'], ans:2, sol:'Gamma rays have the highest penetrating power among nuclear radiations because they are high-energy electromagnetic radiation (photons). They require several centimeters of lead to be stopped.' },
+  { id:'P29', year:'2022', q:'In Young\'s double slit experiment, the fringe width is:', opts:['β = λD/d','β = λd/D','β = D/λd','β = λD²/d'], ans:0, sol:'In YDSE, fringe width β = λD/d, where λ is wavelength, D is distance from slits to screen, and d is slit separation. Fringe width is inversely proportional to slit separation.' },
+  { id:'P30', year:'2020', q:'The phenomenon of beats is produced when two waves of:', opts:['Same frequency and phase interfere','Slightly different frequencies are superimposed','Different amplitudes are superimposed','Different directions interfere'], ans:1, sol:'Beats are produced when two waves with slightly different frequencies (Δf small) are superimposed. Beat frequency = f₁ - f₂. The intensity oscillates at the beat frequency.' },
+  { id:'P31', year:'2023', q:'The self-inductance of a coil depends on:', opts:['Material inside the coil (permeability) and geometry','Current only','Voltage only','Resistance of the coil'], ans:0, sol:'Self-inductance L = μN²A/l, so it depends on the geometry (number of turns N, area A, length l) and the magnetic permeability (μ) of the core material. It does NOT depend on current.' },
+  { id:'P32', year:'2021', q:'For n type semiconductor, the majority charge carriers are:', opts:['Holes','Electrons','Protons','Both holes and electrons equally'], ans:1, sol:'In n-type semiconductors, donor atoms (like Phosphorus in Silicon) donate electrons, making electrons the majority charge carriers. Holes are minority carriers in n-type.' },
+  { id:'P33', year:'2019', q:'The maximum kinetic energy of photoelectrons depends on:', opts:['Intensity of light only','Frequency of light only','Both intensity and frequency','Neither'], ans:1, sol:'The maximum KE of photoelectrons = hν - φ (work function). It depends only on the frequency of incident light, NOT on intensity. Intensity affects the number of photoelectrons, not their maximum energy.' },
+  { id:'P34', year:'2022', q:'In a Carnot cycle, which two processes are isothermal?', opts:['1→2 and 3→4 (compression and expansion)','Only 1→2 (isothermal expansion)','2→3 and 4→1','1→2 (isothermal expansion) and 3→4 (isothermal compression)'], ans:3, sol:'The Carnot cycle has two isothermal processes: 1→2 (isothermal expansion at high temperature T₁) and 3→4 (isothermal compression at low temperature T₂), and two adiabatic processes.' },
+  { id:'P35', year:'2020', q:'The angle of deviation in a prism is minimum when:', opts:['Angle of incidence = angle of emergence','Refracted ray in prism is parallel to base','Both A and B','Only for specific materials'], ans:2, sol:'At minimum deviation (δₘ), the angle of incidence = angle of emergence (i = e), and the ray inside the prism travels parallel to the base. Both conditions are simultaneously true.' },
+  { id:'P36', year:'2023', q:'The electric field inside a hollow charged conductor is:', opts:['Equal to surface field','Uniform and non-zero','Inversely proportional to r','Zero'], ans:3, sol:'According to Gauss\'s law, the electric field inside a hollow charged conductor (conducting shell) is zero. All charge resides on the outer surface, and the interior is shielded (Faraday cage).' },
+  { id:'P37', year:'2021', q:'A wave traveling with velocity v and frequency f has wavelength:', opts:['λ = v/f','λ = vf','λ = f/v','λ = 1/vf'], ans:0, sol:'The fundamental relation: v = fλ, therefore λ = v/f. This applies to all types of waves including sound, light, and water waves.' },
+  { id:'P38', year:'2019', q:'The time constant of an RC circuit is:', opts:['RC','R/C','C/R','√(RC)'], ans:0, sol:'The time constant τ = RC (in seconds, when R is in Ohms and C in Farads). It represents the time taken for the capacitor to charge to 63.2% of its maximum charge (or discharge to 36.8%).' },
+  { id:'P39', year:'2022', q:'When two resistors R₁ and R₂ are in parallel, the equivalent resistance is:', opts:['R₁+R₂','R₁R₂/(R₁+R₂)','(R₁+R₂)/2','√(R₁R₂)'], ans:1, sol:'For parallel combination: 1/R_eq = 1/R₁ + 1/R₂, so R_eq = R₁R₂/(R₁+R₂). The equivalent resistance is always less than the smallest individual resistance.' },
+  { id:'P40', year:'2020', q:'The first law of thermodynamics states:', opts:['ΔU = Q + W','ΔQ = ΔU + W (work done by system)','ΔQ = ΔU - W','W = Q + ΔU'], ans:1, sol:'First law of thermodynamics: ΔQ = ΔU + W, where ΔQ = heat added, ΔU = change in internal energy, W = work done BY the system. It is a statement of energy conservation.' },
+  { id:'P41', year:'2023', q:'The critical angle for glass-air interface (μ_glass = 1.5) is approximately:', opts:['30°','41.8°','45°','60°'], ans:1, sol:'sin(C) = 1/μ = 1/1.5 = 2/3. C = sin⁻¹(2/3) ≈ 41.8°. Total internal reflection occurs when light in glass hits the air interface at angles ≥ 41.8°.' },
+  { id:'P42', year:'2021', q:'In an LCR series circuit, resonance occurs when:', opts:['X_L = X_C','R = X_L','R = X_C','R = X_L + X_C'], ans:0, sol:'Resonance in LCR circuit occurs when inductive reactance X_L = capacitive reactance X_C. At resonance, impedance = R (minimum), and current is maximum. Resonant frequency ω₀ = 1/√(LC).' },
+  { id:'P43', year:'2019', q:'Nuclear fission of U-235 by a slow neutron releases energy of approximately:', opts:['200 keV','200 MeV','2 eV','20 GeV'], ans:1, sol:'Each fission of U-235 releases approximately 200 MeV of energy. This is about 10 million times more energy than typical chemical reactions (which release ~1-10 eV per reaction).' },
+  { id:'P44', year:'2022', q:'The speed of light in a medium with refractive index μ is:', opts:['c/μ','μc','c×μ²','c/μ²'], ans:0, sol:'Speed of light in a medium v = c/μ, where c = 3×10⁸ m/s (speed in vacuum) and μ is the refractive index. Higher μ means slower light.' },
+  { id:'P45', year:'2020', q:'The magnetic field at the center of a circular current-carrying loop of radius r and current I is:', opts:['B = μ₀I/2r','B = μ₀I/r','B = μ₀Ir/2','B = 2μ₀I/r'], ans:0, sol:'Magnetic field at the center of a circular loop B = μ₀I/(2r). This is derived from the Biot-Savart law integrating over the entire circular path.' },
+],
+
+chemistry: [
+  { id:'C1', year:'2023', q:'The IUPAC name of CH₃-CH(OH)-CH₂-CH₃ is:', opts:['2-butanol','3-butanol','1-methylpropanol','Butanol'], ans:0, sol:'The compound has the OH group on the 2nd carbon of the 4-carbon chain (butane backbone). IUPAC name: Butan-2-ol or 2-butanol.' },
+  { id:'C2', year:'2022', q:'Which of the following oxides is amphoteric?', opts:['Na₂O','SO₃','Al₂O₃','CaO'], ans:2, sol:'Al₂O₃ (aluminium oxide) is amphoteric — it reacts with both acids (Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O) and bases (Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O).' },
+  { id:'C3', year:'2021', q:'The hybridization of carbon in CO₂ is:', opts:['sp','sp²','sp³','dsp²'], ans:0, sol:'In CO₂ (O=C=O), carbon forms 2 sigma bonds and 2 pi bonds. It undergoes sp hybridization, giving a linear geometry with bond angle of 180°.' },
+  { id:'C4', year:'2020', q:'Which of the following has the highest electronegativity?', opts:['Oxygen','Chlorine','Fluorine','Nitrogen'], ans:2, sol:'Fluorine has the highest electronegativity (3.98 on Pauling scale) among all elements. Electronegativity generally increases across a period and up a group.' },
+  { id:'C5', year:'2023', q:'The unit of rate constant for a first order reaction is:', opts:['mol L⁻¹ s⁻¹','mol⁻¹ L s⁻¹','s⁻¹','mol⁻² L² s⁻¹'], ans:2, sol:'For a first-order reaction: rate = k[A]. Since rate has units mol L⁻¹ s⁻¹ and [A] has units mol L⁻¹, k has units of s⁻¹ (time inverse).' },
+  { id:'C6', year:'2022', q:'Glycogen is a storage polysaccharide in:', opts:['Plants','Animals','Both plants and animals','Bacteria only'], ans:1, sol:'Glycogen is the storage polysaccharide in animals (stored in liver and muscles). Starch is the storage polysaccharide in plants. Both are made of glucose units.' },
+  { id:'C7', year:'2021', q:'Which gas is produced when bleaching powder reacts with CO₂?', opts:['O₂','Cl₂','HCl','ClO₂'], ans:1, sol:'Bleaching powder (Ca(OCl)Cl) reacts with CO₂ from air: Ca(OCl)Cl + CO₂ + H₂O → CaCO₃ + 2Cl₂ + (other products). Chlorine gas is released, which causes bleaching.' },
+  { id:'C8', year:'2019', q:'Which of the following is the correct order of stability of carbocations?', opts:['3° > 2° > 1° > Methyl','1° > 2° > 3° > Methyl','Methyl > 1° > 2° > 3°','3° > 1° > 2° > Methyl'], ans:0, sol:'Stability of carbocations: Tertiary (3°) > Secondary (2°) > Primary (1°) > Methyl cation. Hyperconjugation and inductive effect of alkyl groups stabilize positive charge.' },
+  { id:'C9', year:'2022', q:'The equivalent conductance of an electrolyte at infinite dilution is related to Kohlrausch\'s law. This law states:', opts:['Λ∞ = λ+ + λ−','Λ = κ/c','Λ = constant','Both A and B'], ans:0, sol:'Kohlrausch\'s Law of Independent Migration of Ions: Λ∞ = λ∞+ + λ∞−. The limiting molar conductance is the sum of limiting ionic conductances of cation and anion.' },
+  { id:'C10', year:'2020', q:'Which of the following shows geometrical (cis-trans) isomerism?', opts:['CH₂=CH₂','CHCl=CHCl','CH₂=CCl₂','CH₃-CH₃'], ans:1, sol:'CHCl=CHCl (1,2-dichloroethene) shows geometrical isomerism because each carbon of the double bond bears two different groups. cis form has Cl atoms on same side, trans on opposite.' },
+  { id:'C11', year:'2023', q:'The half-cell reaction at the cathode in the electrolysis of brine is:', opts:['2Cl⁻ → Cl₂ + 2e⁻','2H₂O → O₂ + 4H⁺ + 4e⁻','2H⁺ + 2e⁻ → H₂','Na⁺ + e⁻ → Na'], ans:2, sol:'In electrolysis of brine (NaCl solution), at the cathode (reduction): 2H₂O + 2e⁻ → H₂ + 2OH⁻ or 2H⁺ + 2e⁻ → H₂. H₂ is produced at cathode, Cl₂ at anode.' },
+  { id:'C12', year:'2021', q:'The VSEPR theory predicts the shape of a molecule based on:', opts:['Bond polarity','Electron pair repulsion in the valence shell','Nuclear charge','Hybridization only'], ans:1, sol:'VSEPR (Valence Shell Electron Pair Repulsion) theory states that electron pairs (bonding and non-bonding) repel each other and arrange themselves to minimize repulsion, determining molecular shape.' },
+  { id:'C13', year:'2019', q:'Which of the following is a noble gas used in lighting?', opts:['Krypton','Neon','Argon','Xenon'], ans:1, sol:'Neon is used in neon signs/lighting because it emits a characteristic orange-red glow when electricity passes through it. Different noble gases produce different colors.' },
+  { id:'C14', year:'2022', q:'The chemical name of Aspirin is:', opts:['Acetylsalicylic acid','Salicylic acid','Acetaminophen','Ibuprofen'], ans:0, sol:'Aspirin is the brand name for Acetylsalicylic acid (2-acetoxybenzoic acid). It was synthesized by Felix Hoffmann in 1897 and is used as analgesic, antipyretic, and antiplatelet.' },
+  { id:'C15', year:'2020', q:'In the reaction, A + 2B → products. The order of the reaction is:', opts:['Always 3 (1+2)','1','2','Cannot be determined without experimental data'], ans:3, sol:'The order of a reaction CANNOT be determined from the stoichiometric equation alone. It can only be determined experimentally (from rate laws measured in experiments).' },
+  { id:'C16', year:'2023', q:'The crystal field splitting energy (Δ) is larger for:', opts:['Weak field ligands','Strong field ligands','Monodentate ligands only','Ionic complexes'], ans:1, sol:'Strong field ligands (CN⁻, CO, NO₂⁻) cause larger crystal field splitting (high Δ) leading to low-spin complexes. Weak field ligands (F⁻, Cl⁻, OH⁻) cause smaller Δ (high-spin).' },
+  { id:'C17', year:'2021', q:'Identify the correct statement about SN1 reactions:', opts:['They proceed with inversion of configuration (Walden inversion)','They form a carbocation intermediate','They are favored by primary alkyl halides','They are bimolecular'], ans:1, sol:'SN1 reactions proceed through a carbocation intermediate (unimolecular rate-limiting step). They give racemic products, are favored by 3° alkyl halides and polar protic solvents.' },
+  { id:'C18', year:'2019', q:'Which of the following is an example of homogeneous catalysis?', opts:['MnO₂ catalysing H₂O₂ decomposition','Fe catalysing N₂+H₂ in Haber process','H₂SO₄ (aq) catalysing ester hydrolysis in solution','V₂O₅ in contact process'], ans:2, sol:'In homogeneous catalysis, the catalyst and reactants are in the same phase. H₂SO₄ (aq) catalyzing ester hydrolysis is homogeneous (both in aqueous solution).' },
+  { id:'C19', year:'2022', q:'The bond order of O₂ molecule is:', opts:['1','2','3','2.5'], ans:1, sol:'For O₂: Bond order = (bonding electrons - antibonding electrons)/2 = (10-6)/2 = 2. O₂ has a double bond and is paramagnetic (2 unpaired electrons in π* orbitals).' },
+  { id:'C20', year:'2020', q:'Which of the following has the highest boiling point?', opts:['CH₃OH','CH₃CH₂OH','CH₃CH₂CH₂OH','(CH₃)₂CHOH'], ans:2, sol:'1-propanol (CH₃CH₂CH₂OH) has the highest boiling point (97°C) because it has the highest molecular weight and maximum surface area for London dispersion forces among these options.' },
+  { id:'C21', year:'2023', q:'Baeyer\'s reagent is:', opts:['Acidic KMnO₄','Alkaline KMnO₄','Bromine water','Ozone'], ans:1, sol:'Baeyer\'s reagent is cold, dilute, alkaline potassium permanganate (KMnO₄). It is used to test for unsaturation — it decolorizes when reacting with alkenes (syn-dihydroxylation).' },
+  { id:'C22', year:'2021', q:'Which of the following is an example of Diels-Alder reaction components?', opts:['A diene + dienophile','Alkene + alkene','Alkyne + alcohol','Alkane + halogen'], ans:0, sol:'The Diels-Alder reaction is a [4+2] cycloaddition between a conjugated diene (4π system) and a dienophile (2π system, usually electron-poor alkene). It forms a cyclohexene ring.' },
+  { id:'C23', year:'2019', q:'Which of the following is an organometallic compound?', opts:['Grignard reagent (RMgX)','NaCl','AlCl₃ alone','CaCl₂'], ans:0, sol:'The Grignard reagent (alkyl/aryl magnesium halide, RMgX) is an organometallic compound with a carbon-metal (C-Mg) bond. Grignard reagents are important in organic synthesis.' },
+  { id:'C24', year:'2022', q:'Which of the following is the correct statement about Raoult\'s law?', opts:['p = xp°_solvent (partial pressure of solvent = mole fraction × vapor pressure of pure solvent)','p = xp°_solute','Applies only to electrolytes','Applies only to solids in liquids'], ans:0, sol:'Raoult\'s Law: p_A = x_A × p°_A. The partial vapor pressure of solvent = mole fraction of solvent × vapor pressure of pure solvent. Ideal solutions obey Raoult\'s law.' },
+  { id:'C25', year:'2020', q:'The coordination number of Fe in K₃[Fe(CN)₆] is:', opts:['3','4','6','8'], ans:2, sol:'In K₃[Fe(CN)₆] (potassium hexacyanoferrate III), the Fe³⁺ ion is surrounded by 6 CN⁻ ligands, so the coordination number is 6. The complex is octahedral.' },
+  { id:'C26', year:'2023', q:'Glucose on reduction with HI gives:', opts:['n-hexane','Cyclohexane','Fructose','Sorbitol'], ans:0, sol:'Glucose on reduction with HI (hydroiodic acid, a powerful reducing agent) loses all its functional groups to give n-hexane (straight chain 6-carbon alkane), proving the carbon skeleton is a straight chain.' },
+  { id:'C27', year:'2021', q:'Which of the following is correct about the molar mass of polymer by osmometry?', opts:['Number average molar mass','Weight average molar mass','Z-average molar mass','Viscosity average molar mass'], ans:0, sol:'Osmometry (measuring osmotic pressure) gives the Number Average Molar Mass (M̄_n) of a polymer. M̄_n = Σ(NᵢMᵢ)/ΣNᵢ, which is sensitive to smaller molecules.' },
+  { id:'C28', year:'2019', q:'The shape of XeF₄ is:', opts:['Tetrahedral','Square planar','See-saw','Octahedral'], ans:1, sol:'XeF₄: Xe has 4 bonding pairs and 2 lone pairs (sp³d² hybridization). Lone pairs take axial positions, making it square planar (like PtCl₄²⁻).' },
+  { id:'C29', year:'2022', q:'The product of Friedel-Crafts alkylation of benzene with CH₃Cl/AlCl₃ is:', opts:['Chlorobenzene','Toluene','Benzyl chloride','Aniline'], ans:1, sol:'Friedel-Crafts alkylation: Benzene + CH₃Cl (with AlCl₃ catalyst) → Toluene (methylbenzene) + HCl. The methyl group is introduced into the benzene ring via electrophilic aromatic substitution.' },
+  { id:'C30', year:'2020', q:'Which of the following is used as a mordant in dyeing?', opts:['Alum (KAl(SO₄)₂·12H₂O)','NaCl','CaCO₃','Bleaching powder'], ans:0, sol:'Alum (potassium alum, KAl(SO₄)₂·12H₂O) is widely used as a mordant in the dyeing industry. Mordants help fix dyes onto fabric by forming insoluble complexes.' },
+  { id:'C31', year:'2023', q:'In nucleophilic addition reactions of aldehydes and ketones, which is more reactive?', opts:['Ketones, due to +I effect of two alkyl groups','Aldehydes, due to less steric hindrance and more electrophilic C','Both equally reactive','Ketones, due to higher boiling point'], ans:1, sol:'Aldehydes are more reactive than ketones in nucleophilic addition because: (1) less steric hindrance (one H vs two alkyl groups), and (2) alkyl groups in ketones donate electrons (-I effect), reducing electrophilicity of carbonyl carbon.' },
+  { id:'C32', year:'2021', q:'Which of the following statements is correct for a reversible reaction at equilibrium?', opts:['Forward rate is maximum','Backward rate is maximum','Forward rate = Backward rate','Concentrations are equal'], ans:2, sol:'At chemical equilibrium, the rate of the forward reaction equals the rate of the reverse reaction. Concentrations remain constant but not necessarily equal. The reaction appears to stop macroscopically.' },
+  { id:'C33', year:'2019', q:'The Wurtz reaction is used to prepare:', opts:['Alkenes','Alkynes','Higher alkanes from alkyl halides','Ethers'], ans:2, sol:'The Wurtz reaction: 2RX + 2Na → R-R + 2NaX. It is used to prepare higher symmetrical alkanes from two molecules of alkyl halide using sodium metal.' },
+  { id:'C34', year:'2022', q:'Deficiency of which vitamin leads to rickets?', opts:['Vitamin A','Vitamin B₁₂','Vitamin C','Vitamin D'], ans:3, sol:'Vitamin D deficiency leads to rickets in children (softening and deformation of bones) and osteomalacia in adults. Vitamin D is essential for calcium and phosphorus absorption in bones.' },
+  { id:'C35', year:'2020', q:'The correct decreasing order of bond angles is:', opts:['NH₃ > H₂O > CH₄','CH₄ > NH₃ > H₂O','H₂O > NH₃ > CH₄','CH₄ > H₂O > NH₃'], ans:1, sol:'CH₄ (109.5°) > NH₃ (107°) > H₂O (104.5°). Lone pairs exert more repulsion than bond pairs, compressing bond angles. NH₃ has 1 LP, H₂O has 2 LPs (more compression).' },
+  { id:'C36', year:'2023', q:'Which of the following is NOT a colligative property?', opts:['Depression of freezing point','Elevation of boiling point','Osmotic pressure','Optical rotation'], ans:3, sol:'Optical rotation is NOT a colligative property. Colligative properties (depression of FP, elevation of BP, osmotic pressure, relative lowering of VP) depend only on the number of solute particles.' },
+  { id:'C37', year:'2021', q:'The number of sigma bonds in ethyne (C₂H₂) is:', opts:['2','3','4','5'], ans:1, sol:'In H-C≡C-H: C-H (1) + C-C sigma (1) + C-H (1) = 3 sigma bonds. The triple bond = 1 sigma + 2 pi bonds. Total: 3 sigma bonds + 2 pi bonds.' },
+  { id:'C38', year:'2019', q:'Nessler\'s reagent is used for detection of:', opts:['Sulphide ions','Ammonium ion (NH₄⁺)','Phosphate ions','Chloride ions'], ans:1, sol:'Nessler\'s reagent (K₂[HgI₄] + KOH) gives a brown ppt. with NH₄⁺ ions. It is used to detect ammonium ions. The brown ppt is Millons base: NH₂Hg₂OI.' },
+  { id:'C39', year:'2022', q:'Which of the following is the strongest acid?', opts:['HF','HCl','HBr','HI'], ans:3, sol:'Among HX acids, HI is the strongest acid because I⁻ (large, diffuse) is the most stable conjugate base. Bond strength decreases down the group: H-I is weakest, most easily ionized.' },
+  { id:'C40', year:'2020', q:'Which compound is used in the manufacture of gun powder?', opts:['KNO₃','NaNO₃','NH₄NO₃','Ca(NO₃)₂'], ans:0, sol:'Gunpowder (black powder) consists of KNO₃ (potassium nitrate/saltpeter, 75%) + charcoal (15%) + sulfur (10%). KNO₃ acts as an oxidizer.' },
+  { id:'C41', year:'2023', q:'The number of moles of KMnO₄ needed to oxidize one mole of Fe²⁺ in acidic medium is:', opts:['1/5','5','1','1/2'], ans:0, sol:'MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O. Each MnO₄⁻ accepts 5 electrons. Each Fe²⁺ loses 1 electron. So 5 Fe²⁺ require 1 KMnO₄. Therefore 1 Fe²⁺ requires 1/5 KMnO₄.' },
+  { id:'C42', year:'2021', q:'Ellingham diagram is related to:', opts:['Electrochemistry','Metallurgy (thermodynamic feasibility of reduction)','Polymer chemistry','Nuclear chemistry'], ans:1, sol:'Ellingham diagram plots ΔG° vs temperature for metal oxide formation reactions. It helps predict which reducing agent (C, CO, or H₂) can reduce a given metal oxide at a given temperature in metallurgy.' },
+  { id:'C43', year:'2019', q:'Which of the following is an example of cationic detergent?', opts:['Sodium stearate (soap)','Sodium dodecylbenzene sulphonate (LAS)','Cetyltrimethylammonium bromide (CTAB)','Aerosol-OT'], ans:2, sol:'CTAB (cetyltrimethylammonium bromide) is a cationic detergent — the hydrophilic head carries a positive charge. Cationic detergents are used as germicides/antiseptics.' },
+  { id:'C44', year:'2022', q:'The correct order of ionization enthalpy of 2nd period elements is:', opts:['Li < B < Be < C < O < N < F < Ne','Li < Be < B < C < N < O < F < Ne','Li < B < Be < C < N < O < F < Ne','Li < Be < B < C < O < N < F < Ne'], ans:2, sol:'Li<B<Be<C<N<O<F<Ne. Note exceptions: B < Be (Be has stable 2s² configuration) and O < N (N has stable half-filled 2p³ configuration). Ionization energy generally increases left to right.' },
+  { id:'C45', year:'2020', q:'Which of the following is a natural polymer?', opts:['Nylon-6,6','Teflon','Cellulose','Bakelite'], ans:2, sol:'Cellulose is a natural polymer of β-D-glucose (linked by β-1,4 glycosidic bonds). Nylon-6,6, Teflon, and Bakelite are all synthetic (man-made) polymers.' },
+],
+
+};
+            
+            let collectedAll = [];
+            const subjects = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
+            for (let sub of subjects) {
+                const key = sub.toLowerCase();
+                const qList = questions[key] || [];
+                const mapped = qList.map(q => ({
+                    sub: sub,
+                    q: q.q,
+                    opts: q.opts,
+                    ans: q.ans !== undefined ? q.ans : -1,
+                    exp: q.sol || "No detailed explanation provided for this question."
+                }));
+                collectedAll = collectedAll.concat(mapped);
+            }
+            
+            QUESTIONS = collectedAll;
+            status = new Array(QUESTIONS.length).fill('not-visited');
+            answers = new Array(QUESTIONS.length).fill(null);
+            examView.innerHTML = origHtml;
+            
+            renderPalette();
+            loadQuestion(0);
+            startTimer();
+        } catch(e) {
+            examView.innerHTML = '<div style="text-align:center; padding:40px; color:red;">Failed to load PYQ data.</div>';
+            console.error(e);
+        }
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const h = Math.floor(timeLeft / 3600);
+            const m = Math.floor((timeLeft % 3600) / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerText').textContent = `${h > 0 ? h + ':' : ''}${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (timeLeft < 600) document.getElementById('timerText').style.color = '#ef4444';
+        }, 1000);
+    }
+
+    function renderPalette() {
+        const grid = document.getElementById('paletteGrid');
+        grid.innerHTML = '';
+        QUESTIONS.forEach((q, i) => {
+            const btn = document.createElement('div');
+            btn.className = `p-btn ${status[i]} ${i === currentIdx ? 'active' : ''}`;
+            btn.textContent = (i + 1).toString();
+            btn.id = `palBtn-${i}`;
+            btn.onclick = () => loadQuestion(i);
+            grid.appendChild(btn);
+        });
+        scrollPaletteToActive();
+        updateProgressBar();
+    }
+
+    function scrollPaletteToActive() {
+        const activeBtn = document.getElementById(`palBtn-${currentIdx}`);
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+
+    function updateProgressBar() {
+        const ans = status.filter(s => s === 'answered' || s === 'marked-answered').length;
+        const mark = status.filter(s => s === 'marked' || s === 'marked-answered').length;
+        const total = QUESTIONS.length;
+        const perc = (ans / total) * 100;
+        document.getElementById('progressBar').style.width = perc + '%';
+        document.getElementById('progressText').innerHTML = `<span>ANS: <b>${ans}</b></span> <span>MARKED: <b>${mark}</b></span> <span>TOTAL: <b>${total}</b></span>`;
+    }
+
+    function jumpToSubject(sub) {
+        const idx = QUESTIONS.findIndex(q => q.sub === sub);
+        if (idx !== -1) loadQuestion(idx);
+    }
+
+    function updateTabs() {
+        const sub = QUESTIONS[currentIdx].sub;
+        document.querySelectorAll('.s-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === sub);
+        });
+    }
+
+    function loadQuestion(idx) {
+        if (status[currentIdx] === 'not-visited') status[currentIdx] = 'not-answered';
+        currentIdx = idx;
+        const q = QUESTIONS[idx];
+        
+        document.getElementById('qSubject').textContent = q.sub;
+        document.getElementById('qCounter').textContent = `Question ${idx + 1}/${QUESTIONS.length}`;
+        document.getElementById('qText').innerHTML = q.q;
+        document.querySelector('.q-section').scrollTop = 0;
+
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        const letters = ['A','B','C','D'];
+        
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = `opt-btn ${userAnswers[idx] === i ? 'selected' : ''}`;
+            btn.innerHTML = `<div class="opt-letter">${letters[i]}</div> <span>${opt}</span>`;
+            btn.onclick = () => selectOption(i);
+            grid.appendChild(btn);
+        });
+
+        if (idx === QUESTIONS.length - 1) {
+            document.getElementById('btnSubmit').style.display = 'block';
+        }
+
+        updateTabs();
+        renderPalette();
+    }
+
+    function selectOption(optIdx) {
+        userAnswers[currentIdx] = optIdx;
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach((b, i) => b.classList.toggle('selected', i === optIdx));
+        
+        // Auto update status if marked, keep marked-answered
+        if (status[currentIdx] === 'marked' || status[currentIdx] === 'marked-answered') {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'answered';
+        }
+        renderPalette();
+    }
+
+    function handleClear() {
+        userAnswers[currentIdx] = null;
+        // If it was marked-answered, revert to marked. Otherwise not-answered.
+        status[currentIdx] = (status[currentIdx] === 'marked-answered') ? 'marked' : 'not-answered';
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach(b => b.classList.remove('selected'));
+        renderPalette();
+    }
+
+    function handleMark() {
+        if (userAnswers[currentIdx] !== null) {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'marked';
+        }
+        renderPalette();
+        if (currentIdx < QUESTIONS.length - 1) loadQuestion(currentIdx + 1);
+    }
+
+    function handleNext() {
+        if (userAnswers[currentIdx] === null && status[currentIdx] !== 'marked' && status[currentIdx] !== 'marked-answered') {
+            status[currentIdx] = 'not-answered';
+        }
+        if (currentIdx < QUESTIONS.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmSubmit();
+        }
+    }
+
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to submit the exam?")) {
+            submitExam();
+        }
+    }
+
+    function submitExam() {
+        clearInterval(timerInterval);
+        document.getElementById('examView').classList.add('hidden');
+        document.getElementById('actionButtons').classList.add('hidden');
+        document.getElementById('resultView').style.display = 'block';
+        renderResults();
+    }
+
+    function renderResults(filter = 'all') {
+        const container = document.getElementById('reviewContainer');
+        container.innerHTML = `<h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+            <div class="sub-tabs" style="margin-bottom:20px">
+                <div class="s-tab ${filter === 'all' ? 'active' : ''}" onclick="renderResults('all')">All</div>
+                <div class="s-tab ${filter === 'wrong' ? 'active' : ''}" onclick="renderResults('wrong')">Incorrect</div>
+                <div class="s-tab ${filter === 'correct' ? 'active' : ''}" onclick="renderResults('correct')">Correct</div>
+                <div class="s-tab ${filter === 'skipped' ? 'active' : ''}" onclick="renderResults('skipped')">Skipped</div>
+            </div>`;
+
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+
+        QUESTIONS.forEach((q, i) => {
+            if (userAnswers[i] === null) skipped++;
+            else if (userAnswers[i] === q.ans) correct++;
+            else wrong++;
+        });
+
+        const score = (correct * 4) - (wrong * 1);
+        document.getElementById('resScore').textContent = score;
+        document.getElementById('resCorrect').textContent = correct;
+        document.getElementById('resWrong').textContent = wrong;
+        document.getElementById('resSkipped').textContent = skipped;
+
+        QUESTIONS.forEach((q, i) => {
+            const isCorrect = userAnswers[i] === q.ans;
+            const isSkipped = userAnswers[i] === null;
+            
+            if (filter === 'wrong' && (isCorrect || isSkipped)) return;
+            if (filter === 'correct' && (!isCorrect || isSkipped)) return;
+            if (filter === 'skipped' && !isSkipped) return;
+
+            const item = document.createElement('div');
+            item.className = 'rev-item';
+            
+            let userAnsText = isSkipped ? 'Not Answered' : q.opts[userAnswers[i]];
+            let statusColor = isCorrect ? 'correct' : (isSkipped ? '' : 'wrong');
+            
+            item.innerHTML = `
+                <div class="rev-q"><span style="color:var(--text-sub)">#${i+1}</span> ${q.q}</div>
+                <div class="rev-ans ${statusColor}">
+                    <b>Your Answer:</b> ${userAnsText} ${isCorrect ? '✓' : ''}
+                </div>
+                ${!isCorrect ? `
+                <div class="rev-ans correct">
+                    <b>Correct Answer:</b> ${q.opts[q.ans]}
+                </div>` : ''}
+                <div class="rev-exp">
+                    <b>Explanation:</b> ${q.exp}
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function handleExit() {
+        if (confirm("Do you want to exit the mock test? Your progress will be lost.")) {
+            window.history.back();
+        }
+    }
+
+    init();
+</script>
+
+</body>
+</html>

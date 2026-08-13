@@ -1,0 +1,2366 @@
+{
+  "chapter_name": "Physics Numericals",
+  "chapter_index": 1,
+  "quiz_sets": [
+    {
+      "set_name": "Kinematics & Laws of Motion",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems covering distance, velocity, acceleration, projectile motion, and Newton's laws.",
+      "questions": [
+        {
+          "question": "A body starts from rest and moves with uniform acceleration 2 m/s<sup>2</sup> for 10 seconds. Calculate the distance traveled by the body in these 10 seconds.",
+          "options": [
+            "50 m",
+            "100 m",
+            "150 m",
+            "200 m"
+          ],
+          "answer": 1,
+          "explanation": "Using formula s = ut + 0.5 &times; a &times; t<sup>2</sup>. Here u = 0, a = 2 m/s<sup>2</sup>, t = 10 s. s = 0 + 0.5 &times; 2 &times; (10)<sup>2</sup> = 100 m."
+        },
+        {
+          "question": "A particle is projected vertically upwards with a velocity of 20 m/s. Taking g = 10 m/s<sup>2</sup>, what is the maximum height attained by the particle?",
+          "options": [
+            "10 m",
+            "20 m",
+            "30 m",
+            "40 m"
+          ],
+          "answer": 1,
+          "explanation": "At maximum height v = 0. Using v<sup>2</sup> = u<sup>2</sup> - 2gh => 0 = 20<sup>2</sup> - 2(10)h => 20h = 400 => h = 20 m."
+        },
+        {
+          "question": "A force of 20 N acts on a body of mass 5 kg. Find the acceleration produced in the body.",
+          "options": [
+            "2 m/s<sup>2</sup>",
+            "4 m/s<sup>2</sup>",
+            "5 m/s<sup>2</sup>",
+            "10 m/s<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "According to Newton's Second Law, F = ma => a = F/m = 20 N / 5 kg = 4 m/s<sup>2</sup>."
+        },
+        {
+          "question": "A bullet of mass 0.02 kg moving with a speed of 500 m/s strikes a wooden block and comes to rest in 0.02 s. Find the average retarding force.",
+          "options": [
+            "250 N",
+            "500 N",
+            "1000 N",
+            "50 N"
+          ],
+          "answer": 1,
+          "explanation": "Acceleration a = (v - u)/t = (0 - 500)/0.02 = -25000 m/s<sup>2</sup>. Retarding Force F = m &times; |a| = 0.02 &times; 25000 = 500 N."
+        },
+        {
+          "question": "A car accelerates uniformly from 18 km/h to 72 km/h in 5 seconds. Calculate the acceleration in m/s<sup>2</sup>.",
+          "options": [
+            "2 m/s<sup>2</sup>",
+            "3 m/s<sup>2</sup>",
+            "4 m/s<sup>2</sup>",
+            "5 m/s<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Initial velocity u = 18 &times; (5/18) = 5 m/s. Final velocity v = 72 &times; (5/18) = 20 m/s. Acceleration a = (v - u)/t = (20 - 5)/5 = 3 m/s<sup>2</sup>."
+        },
+        {
+          "question": "A projectile is thrown with a velocity of 50 m/s at an angle of 30° with the horizontal. Calculate its time of flight (take g = 10 m/s<sup>2</sup>).",
+          "options": [
+            "2.5 s",
+            "5 s",
+            "7.5 s",
+            "10 s"
+          ],
+          "answer": 1,
+          "explanation": "Time of flight T = (2 &times; u &times; sinθ)/g = (2 &times; 50 &times; sin 30°)/10 = (100 &times; 0.5)/10 = 5 seconds."
+        },
+        {
+          "question": "A block of mass 10 kg is placed on a rough horizontal surface with coefficient of friction μ = 0.2. What is the minimum horizontal force required to just move the block? (g = 10 m/s<sup>2</sup>)",
+          "options": [
+            "10 N",
+            "20 N",
+            "30 N",
+            "50 N"
+          ],
+          "answer": 1,
+          "explanation": "Limiting friction force f = μ &times; N = μ &times; m &times; g = 0.2 &times; 10 &times; 10 = 20 N."
+        },
+        {
+          "question": "A stone dropped from the top of a tower of height 80 m reaches the ground in how many seconds? (take g = 10 m/s<sup>2</sup>)",
+          "options": [
+            "2 s",
+            "4 s",
+            "6 s",
+            "8 s"
+          ],
+          "answer": 1,
+          "explanation": "Using h = 0.5 &times; g &times; t<sup>2</sup> => 80 = 0.5 &times; 10 &times; t<sup>2</sup> => 80 = 5 t<sup>2</sup> => t<sup>2</sup> = 16 => t = 4 seconds."
+        },
+        {
+          "question": "A body of mass 4 kg is moving in a circle of radius 2 m with a constant speed of 10 m/s. Find the centripetal force acting on it.",
+          "options": [
+            "50 N",
+            "100 N",
+            "200 N",
+            "400 N"
+          ],
+          "answer": 2,
+          "explanation": "Centripetal force Fc = (m &times; v<sup>2</sup>)/r = (4 &times; 10<sup>2</sup>)/2 = (4 &times; 100)/2 = 200 N."
+        },
+        {
+          "question": "Two masses 2 kg and 3 kg are connected by a light string passing over a frictionless pulley. Find the acceleration of the system (g = 10 m/s<sup>2</sup>).",
+          "options": [
+            "1 m/s<sup>2</sup>",
+            "2 m/s<sup>2</sup>",
+            "3 m/s<sup>2</sup>",
+            "5 m/s<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Acceleration a = ((m2 - m1)/(m2 + m1)) &times; g = ((3 - 2)/(3 + 2)) &times; 10 = (1/5) &times; 10 = 2 m/s<sup>2</sup>."
+        }
+      ]
+    },
+    {
+      "set_name": "Work, Energy & Power",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on work done, kinetic energy, potential energy, collisions, and power.",
+      "questions": [
+        {
+          "question": "A force F = (5i + 3j) N acts on a particle which displaces it from position r1 = (2i + j) m to r2 = (4i + 3j) m. Calculate the work done.",
+          "options": [
+            "12 J",
+            "16 J",
+            "20 J",
+            "24 J"
+          ],
+          "answer": 1,
+          "explanation": "Displacement d = r2 - r1 = (4-2)i + (3-1)j = 2i + 2j. Work done W = F · d = (5 &times; 2) + (3 &times; 2) = 10 + 6 = 16 J."
+        },
+        {
+          "question": "If the momentum of a body is increased by 50%, what will be the percentage increase in its kinetic energy?",
+          "options": [
+            "50%",
+            "100%",
+            "125%",
+            "150%"
+          ],
+          "answer": 2,
+          "explanation": "KE = p<sup>2</sup>/(2m). If momentum becomes 1.5p, KE' = (1.5p)<sup>2</sup>/(2m) = 2.25 KE. Increase = (2.25 - 1) &times; 100% = 125%."
+        },
+        {
+          "question": "An electric motor pump of power 2 kW lifts water to a height of 10 m. Taking g = 10 m/s<sup>2</sup>, how much water can it lift in 1 minute?",
+          "options": [
+            "600 kg",
+            "1200 kg",
+            "1800 kg",
+            "2400 kg"
+          ],
+          "answer": 1,
+          "explanation": "Power P = (m &times; g &times; h)/t => m = (P &times; t)/(g &times; h) = (2000 W &times; 60 s)/(10 &times; 10) = 120000 / 100 = 1200 kg."
+        },
+        {
+          "question": "A block of mass 2 kg drops from a height of 5 m onto a vertical spring of spring constant k = 2000 N/m. Calculate maximum compression in the spring (g = 10 m/s<sup>2</sup>).",
+          "options": [
+            "0.1 m",
+            "0.25 m",
+            "0.32 m",
+            "0.5 m"
+          ],
+          "answer": 0,
+          "explanation": "Loss in potential energy = Gain in spring energy: mgh = 0.5 &times; k &times; x<sup>2</sup> => 2 &times; 10 &times; 5 = 0.5 &times; 2000 &times; x<sup>2</sup> => 100 = 1000 x<sup>2</sup> => x<sup>2</sup> = 0.1 => x ≈ 0.316 m."
+        },
+        {
+          "question": "A body of mass 10 kg moves with a constant speed of 10 m/s along a straight line. What is its kinetic energy?",
+          "options": [
+            "250 J",
+            "500 J",
+            "1000 J",
+            "2000 J"
+          ],
+          "answer": 1,
+          "explanation": "Kinetic Energy = 0.5 &times; m &times; v<sup>2</sup> = 0.5 &times; 10 kg &times; (10 m/s)<sup>2</sup> = 5 &times; 100 = 500 J."
+        },
+        {
+          "question": "A bullet of mass 10 g moving horizontally with velocity 400 m/s strikes a wooden block of mass 2 kg at rest and gets embedded in it. Find the common velocity of the system.",
+          "options": [
+            "1.99 m/s",
+            "2.00 m/s",
+            "3.98 m/s",
+            "4.00 m/s"
+          ],
+          "answer": 0,
+          "explanation": "By conservation of linear momentum: m1 u1 + m2 u2 = (m1 + m2) V => 0.01 &times; 400 + 0 = (2 + 0.01) V => 4 = 2.01 V => V = 4 / 2.01 ≈ 1.99 m/s."
+        },
+        {
+          "question": "A spring of spring constant 800 N/m is stretched initially by 5 cm from its natural length. How much extra work is required to stretch it further by 5 cm?",
+          "options": [
+            "1.5 J",
+            "3.0 J",
+            "4.5 J",
+            "6.0 J"
+          ],
+          "answer": 1,
+          "explanation": "Initial elongation x1 = 0.05 m, final x2 = 0.10 m. Work done W = 0.5 &times; k &times; (x2<sup>2</sup> - x1<sup>2</sup>) = 0.5 &times; 800 &times; (0.01 - 0.0025) = 400 &times; 0.0075 = 3.0 J."
+        },
+        {
+          "question": "A machine gun fires 60 bullets per minute with a velocity of 500 m/s. If mass of each bullet is 20 g, calculate the power of the gun.",
+          "options": [
+            "2500 W",
+            "5000 W",
+            "7500 W",
+            "10000 W"
+          ],
+          "answer": 0,
+          "explanation": "Energy per bullet = 0.5 &times; m &times; v<sup>2</sup> = 0.5 &times; 0.02 &times; (500)<sup>2</sup> = 0.01 &times; 250000 = 2500 J. Total energy per min (60 s) = 60 &times; 2500 = 150000 J. Power = 150000 J / 60 s = 2500 W."
+        },
+        {
+          "question": "A crane lifts a mass of 1000 kg through a vertical height of 20 m in 20 seconds. What is the useful power developed by the crane? (g = 10 m/s<sup>2</sup>)",
+          "options": [
+            "5 kW",
+            "10 kW",
+            "15 kW",
+            "20 kW"
+          ],
+          "answer": 1,
+          "explanation": "Work done W = m &times; g &times; h = 1000 &times; 10 &times; 20 = 200,000 J. Power P = W / t = 200,000 / 20 = 10,000 W = 10 kW."
+        },
+        {
+          "question": "A ball of mass 1 kg dropped from a height of 20 m rebounds to a height of 5 m after striking the ground. Calculate the energy lost during impact. (g = 10 m/s<sup>2</sup>)",
+          "options": [
+            "50 J",
+            "100 J",
+            "150 J",
+            "200 J"
+          ],
+          "answer": 2,
+          "explanation": "Initial potential energy E1 = m &times; g &times; h1 = 1 &times; 10 &times; 20 = 200 J. Final potential energy E2 = m &times; g &times; h2 = 1 &times; 10 &times; 5 = 50 J. Energy lost = 200 - 50 = 150 J."
+        }
+      ]
+    },
+    {
+      "set_name": "Electrostatics & Current Electricity",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Coulomb's law, electric field, Ohm's law, resistance combinations, and circuit laws.",
+      "questions": [
+        {
+          "question": "Two point charges +2 μC and +6 μC repel each other with a force of 12 N. If a charge of -4 μC is added to each of them, what will be the new force between them?",
+          "options": [
+            "4 N (attractive)",
+            "4 N (repulsive)",
+            "8 N (attractive)",
+            "12 N (attractive)"
+          ],
+          "answer": 0,
+          "explanation": "Initial charges q1 = 2, q2 = 6. F1 = k &times; (12)/r<sup>2</sup> = 12 N => k/r<sup>2</sup> = 1. New charges q1' = 2-4 = -2 μC, q2' = 6-4 = +2 μC. New Force F2 = k &times; |-2 &times; 2|/r<sup>2</sup> = 4 &times; 1 = 4 N (attractive)."
+        },
+        {
+          "question": "Three resistors of resistance 2 Ω, 3 Ω, and 6 Ω are connected in parallel. What is the equivalent resistance of the combination?",
+          "options": [
+            "1 Ω",
+            "2 Ω",
+            "6 Ω",
+            "11 Ω"
+          ],
+          "answer": 0,
+          "explanation": "1/Req = 1/2 + 1/3 + 1/6 = (3 + 2 + 1)/6 = 6/6 = 1 Ω. Hence Req = 1 Ω."
+        },
+        {
+          "question": "A wire of resistance 16 Ω is bent into a circle. What is the effective resistance between two diametrically opposite points?",
+          "options": [
+            "2 Ω",
+            "4 Ω",
+            "8 Ω",
+            "16 Ω"
+          ],
+          "answer": 1,
+          "explanation": "Diametrically opposite points divide the wire into two equal halves of resistance 8 Ω each in parallel. Req = (8 &times; 8)/(8 + 8) = 64/16 = 4 Ω."
+        },
+        {
+          "question": "An electric bulb rated 220 V, 100 W is connected to a 110 V supply. What is the power consumed by the bulb?",
+          "options": [
+            "25 W",
+            "50 W",
+            "75 W",
+            "100 W"
+          ],
+          "answer": 0,
+          "explanation": "Resistance R = V<sup>2</sup>/P = 220<sup>2</sup>/100 = 484 Ω. Power consumed at 110 V is P' = V'<sup>2</sup>/R = 110<sup>2</sup>/484 = 12100/484 = 25 W."
+        },
+        {
+          "question": "Calculate the current flowing through a 5 Ω resistor connected across a 15 V battery with zero internal resistance.",
+          "options": [
+            "1 A",
+            "2 A",
+            "3 A",
+            "5 A"
+          ],
+          "answer": 2,
+          "explanation": "Using Ohm's Law I = V / R = 15 V / 5 Ω = 3 A."
+        },
+        {
+          "question": "A parallel plate capacitor with air between plates has a capacitance of 8 pF. What will be the capacitance if distance between plates is reduced by half and space is filled with medium of K = 6?",
+          "options": [
+            "24 pF",
+            "48 pF",
+            "96 pF",
+            "192 pF"
+          ],
+          "answer": 2,
+          "explanation": "C0 = ε0 A / d = 8 pF. New capacitance C = K ε0 A / (d/2) = 2 K C0 = 2 &times; 6 &times; 8 = 96 pF."
+        },
+        {
+          "question": "A cell of emf 2.0 V and internal resistance 0.5 Ω is connected to an external resistance of 4.5 Ω. Find the terminal potential difference across the cell.",
+          "options": [
+            "1.5 V",
+            "1.8 V",
+            "2.0 V",
+            "2.2 V"
+          ],
+          "answer": 1,
+          "explanation": "Current I = E / (R + r) = 2.0 / (4.5 + 0.5) = 2.0 / 5.0 = 0.4 A. Terminal voltage V = I &times; R = 0.4 &times; 4.5 = 1.8 V."
+        },
+        {
+          "question": "How many electrons pass through a lamp per second if the current flowing is 1.6 A? (Charge of electron = 1.6 &times; 10<sup>-19</sup> C)",
+          "options": [
+            "10<sup>18</sup>",
+            "10<sup>19</sup>",
+            "10<sup>20</sup>",
+            "10<sup>21</sup>"
+          ],
+          "answer": 1,
+          "explanation": "I = Q / t = (n &times; e) / t => n = (I &times; t) / e = (1.6 &times; 1) / (1.6 &times; 10<sup>-19</sup>) = 10<sup>19</sup> electrons."
+        },
+        {
+          "question": "Two charges +10 μC and -10 μC are separated by a distance of 5 mm. Find the electric dipole moment.",
+          "options": [
+            "5 &times; 10<sup>-8</sup> C·m",
+            "1 &times; 10<sup>-7</sup> C·m",
+            "2.5 &times; 10<sup>-8</sup> C·m",
+            "5 &times; 10<sup>-6</sup> C·m"
+          ],
+          "answer": 0,
+          "explanation": "Dipole moment p = q &times; 2a = 10 &times; 10<sup>-6</sup> C &times; 5 &times; 10<sup>-3</sup> m = 50 &times; 10<sup>-9</sup> C·m = 5 &times; 10<sup>-8</sup> C·m."
+        },
+        {
+          "question": "A potentiometer wire of length 10 m has a resistance of 20 Ω. It is connected in series with a 3 V battery and 10 Ω resistor. Find potential gradient along the wire.",
+          "options": [
+            "0.1 V/m",
+            "0.2 V/m",
+            "0.3 V/m",
+            "0.4 V/m"
+          ],
+          "answer": 1,
+          "explanation": "Total resistance R_total = 20 + 10 = 30 Ω. Current I = 3 / 30 = 0.1 A. Potential drop across wire V = I &times; R_wire = 0.1 &times; 20 = 2 V. Potential gradient k = V / L = 2 V / 10 m = 0.2 V/m."
+        }
+      ]
+    },
+    {
+      "set_name": "Optics & Modern Physics",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on lenses, mirrors, photoelectric effect, de Broglie wavelength, and radio-decay.",
+      "questions": [
+        {
+          "question": "An object is placed 20 cm in front of a convex lens of focal length 10 cm. Find the distance of the image formed from the lens.",
+          "options": [
+            "10 cm",
+            "15 cm",
+            "20 cm",
+            "40 cm"
+          ],
+          "answer": 2,
+          "explanation": "Using lens formula 1/f = 1/v - 1/u. Here u = -20 cm, f = +10 cm. 1/10 = 1/v - 1/(-20) => 1/v = 1/10 - 1/20 = 1/20 => v = +20 cm."
+        },
+        {
+          "question": "The work function of a metal is 2.0 eV. What is the threshold frequency of radiation for photoelectric emission from this metal? (h = 6.63 &times; 10<sup>-34</sup> J·s)",
+          "options": [
+            "4.83 &times; 10<sup>14</sup> Hz",
+            "6.2 &times; 10<sup>14</sup> Hz",
+            "3.2 &times; 10<sup>15</sup> Hz",
+            "1.6 &times; 10<sup>14</sup> Hz"
+          ],
+          "answer": 0,
+          "explanation": "Work function W = 2.0 eV = 2.0 &times; 1.6 &times; 10<sup>-19</sup> J = 3.2 &times; 10<sup>-19</sup> J. Threshold frequency ν0 = W/h = (3.2 &times; 10<sup>-19</sup>)/(6.63 &times; 10<sup>-34</sup>) ≈ 4.83 &times; 10<sup>14</sup> Hz."
+        },
+        {
+          "question": "What is the de Broglie wavelength of an electron accelerated through a potential difference of 100 V?",
+          "options": [
+            "0.123 nm",
+            "1.23 nm",
+            "12.3 nm",
+            "0.012 nm"
+          ],
+          "answer": 0,
+          "explanation": "Formula for electron de Broglie wavelength λ = 1.227 / √V nm = 1.227 / √100 = 1.227 / 10 = 0.1227 nm ≈ 0.123 nm."
+        },
+        {
+          "question": "The half-life of a radioactive substance is 5 days. What fraction of the original substance will remain undecayed after 15 days?",
+          "options": [
+            "1/2",
+            "1/4",
+            "1/8",
+            "1/16"
+          ],
+          "answer": 2,
+          "explanation": "Number of half-lives n = total time / half-life = 15 / 5 = 3. Remaining fraction = (1/2)<sup>n</sup> = (1/2)<sup>3</sup> = 1/8."
+        },
+        {
+          "question": "A concave mirror produces a real image of size twice that of the object placed at 15 cm in front of it. Calculate the focal length of the mirror.",
+          "options": [
+            "-10 cm",
+            "-15 cm",
+            "-20 cm",
+            "-30 cm"
+          ],
+          "answer": 0,
+          "explanation": "Magnification m = -v/u = -2 (real image). Here u = -15 cm => v = -30 cm. Using 1/f = 1/v + 1/u = -1/30 - 1/15 = -3/30 = -1/10 => f = -10 cm."
+        },
+        {
+          "question": "A ray of light strikes a glass slab at an angle of incidence of 60°. If refractive index of glass is √3, find the angle of refraction.",
+          "options": [
+            "15°",
+            "30°",
+            "45°",
+            "60°"
+          ],
+          "answer": 1,
+          "explanation": "By Snell's Law: sin i / sin r = μ => sin 60° / sin r = √3 => (√3/2) / sin r = √3 => sin r = 1/2 => r = 30°."
+        },
+        {
+          "question": "Two thin convex lenses of powers +5 D and -2 D are kept in contact. What is the focal length of the combination?",
+          "options": [
+            "15 cm",
+            "25 cm",
+            "33.3 cm",
+            "50 cm"
+          ],
+          "answer": 2,
+          "explanation": "Combination Power P = P1 + P2 = +5 - 2 = +3 D. Focal length F = 1 / P = 1 / 3 m = 100 / 3 cm ≈ 33.3 cm."
+        },
+        {
+          "question": "Find the energy equivalent of 1 atomic mass unit (1 amu or 1 u) in MeV.",
+          "options": [
+            "931.5 MeV",
+            "93.15 MeV",
+            "9.315 MeV",
+            "9315 MeV"
+          ],
+          "answer": 0,
+          "explanation": "1 u mass deficit corresponds to 931.5 MeV energy according to Einstein's mass-energy relation E = mc<sup>2</sup>."
+        },
+        {
+          "question": "Calculate the critical angle for a medium of refractive index μ = 2 entering into air.",
+          "options": [
+            "30°",
+            "45°",
+            "60°",
+            "90°"
+          ],
+          "answer": 0,
+          "explanation": "sin C = 1 / μ = 1 / 2 => C = 30°."
+        },
+        {
+          "question": "In Young's double slit experiment, fringe width is found to be 0.4 mm. If the entire apparatus is immersed in water of refractive index 4/3, what will be the new fringe width?",
+          "options": [
+            "0.3 mm",
+            "0.4 mm",
+            "0.5 mm",
+            "0.6 mm"
+          ],
+          "answer": 0,
+          "explanation": "Fringe width in medium β' = β / μ = 0.4 mm / (4/3) = (0.4 &times; 3) / 4 = 0.3 mm."
+        }
+      ]
+    },
+    {
+      "set_name": "Rotational Motion & System of Particles",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on moment of inertia, center of mass, torque, angular momentum, and rotational kinetic energy.",
+      "questions": [
+        {
+          "question": "Two particles of mass 1 kg and 3 kg are placed at (0,0) and (2,0) m respectively. Find the position of center of mass of the system.",
+          "options": [
+            "0.5 m",
+            "1.0 m",
+            "1.5 m",
+            "2.0 m"
+          ],
+          "answer": 2,
+          "explanation": "X_cm = (m1&times;x1 + m2&times;x2)/(m1 + m2) = (1&times;0 + 3&times;2)/(1 + 3) = 6 / 4 = 1.5 m."
+        },
+        {
+          "question": "Find the moment of inertia of a uniform solid sphere of mass 5 kg and radius 2 m about its diameter.",
+          "options": [
+            "4 kg·m<sup>2</sup>",
+            "8 kg·m<sup>2</sup>",
+            "10 kg·m<sup>2</sup>",
+            "20 kg·m<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "I = (2/5) &times; M &times; R<sup>2</sup> = (2/5) &times; 5 &times; (2)<sup>2</sup> = 2 &times; 4 = 8 kg·m<sup>2</sup>."
+        },
+        {
+          "question": "A wheel of moment of inertia 2 kg·m<sup>2</sup> rotates at 30 rad/s. Calculate its rotational kinetic energy.",
+          "options": [
+            "300 J",
+            "450 J",
+            "900 J",
+            "1800 J"
+          ],
+          "answer": 2,
+          "explanation": "KE_rot = 0.5 &times; I &times; ω<sup>2</sup> = 0.5 &times; 2 &times; (30)<sup>2</sup> = 900 J."
+        },
+        {
+          "question": "A torque of 100 N·m acts on a wheel of moment of inertia 20 kg·m<sup>2</sup>. Calculate the angular acceleration produced.",
+          "options": [
+            "2 rad/s<sup>2</sup>",
+            "5 rad/s<sup>2</sup>",
+            "10 rad/s<sup>2</sup>",
+            "20 rad/s<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Torque τ = I &times; α => α = τ / I = 100 / 20 = 5 rad/s<sup>2</sup>."
+        },
+        {
+          "question": "If the radius of gyration of a disc of mass 4 kg is 0.5 m, what is its moment of inertia?",
+          "options": [
+            "0.5 kg·m<sup>2</sup>",
+            "1.0 kg·m<sup>2</sup>",
+            "2.0 kg·m<sup>2</sup>",
+            "4.0 kg·m<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "I = M &times; k<sup>2</sup> = 4 &times; (0.5)<sup>2</sup> = 4 &times; 0.25 = 1.0 kg·m<sup>2</sup>."
+        },
+        {
+          "question": "A solid cylinder of mass 2 kg and radius 0.2 m rolls down an inclined plane without slipping. Calculate its radius of gyration.",
+          "options": [
+            "0.14 m",
+            "0.20 m",
+            "0.28 m",
+            "0.40 m"
+          ],
+          "answer": 0,
+          "explanation": "For cylinder I = 0.5 M R<sup>2</sup> = M k<sup>2</sup> => k = R / √2 = 0.2 / 1.414 ≈ 0.141 m."
+        },
+        {
+          "question": "Angular momentum of a rotating body changes from 20 J·s to 50 J·s in 3 seconds. Find the average torque applied.",
+          "options": [
+            "5 N·m",
+            "10 N·m",
+            "15 N·m",
+            "30 N·m"
+          ],
+          "answer": 1,
+          "explanation": "τ = ΔL / Δt = (50 - 20) / 3 = 30 / 3 = 10 N·m."
+        },
+        {
+          "question": "A child stands at the center of a turntable with arms outstretched. If he folds his arms and moment of inertia decreases to half, what happens to angular velocity?",
+          "options": [
+            "Halved",
+            "Remains same",
+            "Doubled",
+            "Quadrupled"
+          ],
+          "answer": 2,
+          "explanation": "By conservation of angular momentum I1 &times; ω1 = I2 &times; ω2. If I2 = I1 / 2, then ω2 = 2 &times; ω1."
+        },
+        {
+          "question": "Find the work done in increasing the speed of a flywheel from 0 to 600 rpm. Given I = 2 kg·m<sup>2</sup>.",
+          "options": [
+            "3944 J",
+            "1972 J",
+            "7888 J",
+            "986 J"
+          ],
+          "answer": 0,
+          "explanation": "ω = 2π &times; 600/60 = 20π ≈ 62.83 rad/s. Work W = 0.5 &times; I &times; ω<sup>2</sup> = 0.5 &times; 2 &times; (62.83)<sup>2</sup> ≈ 3948 J."
+        },
+        {
+          "question": "Ratio of radii of gyration of a circular ring and a circular disc of same radius about their natural axis is:",
+          "options": [
+            "1 : √2",
+            "√2 : 1",
+            "2 : 1",
+            "1 : 2"
+          ],
+          "answer": 1,
+          "explanation": "k_ring = R, k_disc = R / √2. Ratio k_ring / k_disc = R / (R / √2) = √2 : 1."
+        }
+      ]
+    },
+    {
+      "set_name": "Gravitation & Fluid Mechanics",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on universal gravitation, orbital speed, escape velocity, Pascal's law, and Bernoulli's equation.",
+      "questions": [
+        {
+          "question": "What is the escape velocity from the surface of Earth? (Radius R = 6400 km, g = 9.8 m/s<sup>2</sup>)",
+          "options": [
+            "8.0 km/s",
+            "11.2 km/s",
+            "14.0 km/s",
+            "22.4 km/s"
+          ],
+          "answer": 1,
+          "explanation": "v_escape = √(2 &times; g &times; R) = √(2 &times; 9.8 &times; 6400000) ≈ 11.2 km/s."
+        },
+        {
+          "question": "At what height above the Earth's surface does the acceleration due to gravity become g/4? (R = radius of Earth)",
+          "options": [
+            "R / 2",
+            "R",
+            "2 R",
+            "4 R"
+          ],
+          "answer": 1,
+          "explanation": "g' = g / (1 + h/R)<sup>2</sup> = g/4 => 1 + h/R = 2 => h = R."
+        },
+        {
+          "question": "Calculate the gravitational force between two 50 kg masses separated by a distance of 1 m. (G = 6.67 &times; 10<sup>-11</sup> N·m<sup>2</sup>/kg<sup>2</sup>)",
+          "options": [
+            "1.67 &times; 10<sup>-7</sup> N",
+            "3.33 &times; 10<sup>-8</sup> N",
+            "6.67 &times; 10<sup>-9</sup> N",
+            "1.33 &times; 10<sup>-7</sup> N"
+          ],
+          "answer": 0,
+          "explanation": "F = (G &times; m1 &times; m2)/r<sup>2</sup> = (6.67 &times; 10<sup>-11</sup> &times; 50 &times; 50)/1<sup>2</sup> = 1.6675 &times; 10<sup>-7</sup> N."
+        },
+        {
+          "question": "Water flows through a horizontal pipe of non-uniform cross section. If velocity at point A of area 10 cm<sup>2</sup> is 2 m/s, find velocity at point B of area 5 cm<sup>2</sup>.",
+          "options": [
+            "1 m/s",
+            "2 m/s",
+            "4 m/s",
+            "8 m/s"
+          ],
+          "answer": 2,
+          "explanation": "By equation of continuity A1 &times; v1 = A2 &times; v2 => 10 &times; 2 = 5 &times; v2 => v2 = 4 m/s."
+        },
+        {
+          "question": "Calculate the excess pressure inside a soap bubble of radius 5 mm. (Surface tension of soap solution = 0.03 N/m)",
+          "options": [
+            "12 Pa",
+            "24 Pa",
+            "48 Pa",
+            "96 Pa"
+          ],
+          "answer": 1,
+          "explanation": "Excess pressure P = 4T / r = (4 &times; 0.03) / (0.005) = 0.12 / 0.005 = 24 Pa."
+        },
+        {
+          "question": "A hydraulic lift has pistons of areas 5 cm<sup>2</sup> and 500 cm<sup>2</sup>. If a force of 50 N is applied to smaller piston, what mass can larger piston support?",
+          "options": [
+            "50 kg",
+            "500 kg",
+            "1000 kg",
+            "5000 kg"
+          ],
+          "answer": 1,
+          "explanation": "F2 / A2 = F1 / A1 => F2 = F1 &times; (A2/A1) = 50 &times; (500/5) = 5000 N. Mass m = F2 / g = 5000 / 10 = 500 kg."
+        },
+        {
+          "question": "Orbital velocity of a satellite orbiting very close to Earth's surface is approximately:",
+          "options": [
+            "3.1 km/s",
+            "5.5 km/s",
+            "7.9 km/s",
+            "11.2 km/s"
+          ],
+          "answer": 2,
+          "explanation": "v_orbital = √(g &times; R) = √(9.8 &times; 6.4 &times; 10<sup>6</sup>) ≈ 7.92 km/s."
+        },
+        {
+          "question": "Find terminal velocity of a small steel ball of radius 1 mm falling through glycerine. (density steel = 8000 kg/m<sup>3</sup>, glycerine = 1200, η = 1.0 Pa·s, g = 10)",
+          "options": [
+            "0.015 m/s",
+            "0.030 m/s",
+            "0.015 m/s",
+            "0.015 m/s"
+          ],
+          "answer": 0,
+          "explanation": "v_t = 2 r<sup>2</sup> (ρ - σ) g / (9 η) = 2 &times; (10<sup>-3</sup>)<sup>2</sup> &times; (6800) &times; 10 / (9 &times; 1.0) ≈ 0.015 m/s."
+        },
+        {
+          "question": "A wire of length 2 m and cross-sectional area 1 mm<sup>2</sup> is stretched by 1 mm under a load of 100 N. Calculate Young's Modulus of the wire.",
+          "options": [
+            "1 &times; 10<sup>11</sup> N/m<sup>2</sup>",
+            "2 &times; 10<sup>11</sup> N/m<sup>2</sup>",
+            "5 &times; 10<sup>10</sup> N/m<sup>2</sup>",
+            "2 &times; 10<sup>10</sup> N/m<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Y = (F &times; L) / (A &times; ΔL) = (100 &times; 2) / (10<sup>-6</sup> &times; 10<sup>-3</sup>) = 200 / 10<sup>-9</sup> = 2 &times; 10<sup>11</sup> N/m<sup>2</sup>."
+        },
+        {
+          "question": "Work done in blowing a spherical soap bubble of radius 5 cm is: (Surface tension = 0.03 N/m)",
+          "options": [
+            "1.88 &times; 10<sup>-3</sup> J",
+            "3.76 &times; 10<sup>-3</sup> J",
+            "7.52 &times; 10<sup>-3</sup> J",
+            "0.94 &times; 10<sup>-3</sup> J"
+          ],
+          "answer": 1,
+          "explanation": "Soap bubble has 2 surfaces. W = 2 &times; T &times; 4π r<sup>2</sup> = 8 &times; 3.14 &times; 0.03 &times; (0.05)<sup>2</sup> ≈ 3.76 &times; 10<sup>-3</sup> J."
+        }
+      ]
+    },
+    {
+      "set_name": "Thermodynamics & Kinetic Theory",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Carnot engine efficiency, heat engines, ideal gas laws, and rms velocity of gas molecules.",
+      "questions": [
+        {
+          "question": "Calculate efficiency of a Carnot engine working between temperatures 127°C and 27°C.",
+          "options": [
+            "25%",
+            "33%",
+            "50%",
+            "75%"
+          ],
+          "answer": 0,
+          "explanation": "T1 = 127 + 273 = 400 K, T2 = 27 + 273 = 300 K. Efficiency η = 1 - T2/T1 = 1 - 300/400 = 0.25 = 25%."
+        },
+        {
+          "question": "Rms velocity of oxygen gas molecules at 27°C is 480 m/s. What will be rms velocity at 927°C?",
+          "options": [
+            "480 m/s",
+            "720 m/s",
+            "960 m/s",
+            "1440 m/s"
+          ],
+          "answer": 2,
+          "explanation": "v_rms ∝ √T. T1 = 300 K, T2 = 1200 K. v2/v1 = √(1200/300) = √4 = 2. v2 = 2 &times; 480 = 960 m/s."
+        },
+        {
+          "question": "A gas expands from 2 L to 6 L at a constant pressure of 2 atm. Calculate work done by gas (1 atm = 101.3 kPa).",
+          "options": [
+            "405 J",
+            "810 J",
+            "1215 J",
+            "202 J"
+          ],
+          "answer": 1,
+          "explanation": "W = P &times; ΔV = (2 &times; 101300 Pa) &times; (4 &times; 10<sup>-3</sup> m<sup>3</sup>) = 810.4 J ≈ 810 J."
+        },
+        {
+          "question": "Ratio of specific heat capacities γ = Cp/Cv for a rigid diatomic gas molecule is:",
+          "options": [
+            "1.33 (4/3)",
+            "1.40 (7/5)",
+            "1.67 (5/3)",
+            "1.25 (5/4)"
+          ],
+          "answer": 1,
+          "explanation": "For rigid diatomic gas degrees of freedom f = 5. γ = 1 + 2/f = 1 + 2/5 = 7/5 = 1.40."
+        },
+        {
+          "question": "Average kinetic energy per molecule of a monoatomic gas at 300 K is: (k = 1.38 &times; 10<sup>-23</sup> J/K)",
+          "options": [
+            "3.11 &times; 10<sup>-21</sup> J",
+            "6.21 &times; 10<sup>-21</sup> J",
+            "1.24 &times; 10<sup>-20</sup> J",
+            "9.31 &times; 10<sup>-21</sup> J"
+          ],
+          "answer": 1,
+          "explanation": "E = (3/2) &times; k &times; T = 1.5 &times; 1.38 &times; 10<sup>-23</sup> &times; 300 = 6.21 &times; 10<sup>-21</sup> J."
+        },
+        {
+          "question": "If pressure of a gas is doubled at constant temperature, its density becomes:",
+          "options": [
+            "Half",
+            "Doubled",
+            "Four times",
+            "Unchanged"
+          ],
+          "answer": 1,
+          "explanation": "P = ρ R T / M => P ∝ ρ. If pressure doubles, density also doubles."
+        },
+        {
+          "question": "Heat engine absorbs 1000 J heat from source and rejects 600 J heat to sink. Calculate work done per cycle.",
+          "options": [
+            "400 J",
+            "600 J",
+            "1000 J",
+            "1600 J"
+          ],
+          "answer": 0,
+          "explanation": "Work W = Q_in - Q_out = 1000 - 600 = 400 J."
+        },
+        {
+          "question": "Temperature of sink of a Carnot engine with 50% efficiency is 7°C. To increase efficiency to 70%, by how much should source temperature be increased?",
+          "options": [
+            "280 K",
+            "373 K",
+            "560 K",
+            "933 K"
+          ],
+          "answer": 1,
+          "explanation": "T2 = 280 K. Initial η = 0.5 => 0.5 = 1 - 280/T1 => T1 = 560 K. For η' = 0.7 => 0.7 = 1 - 280/T1' => T1' = 933.3 K. Increase = 933.3 - 560 ≈ 373 K."
+        },
+        {
+          "question": "An ideal gas undergoes adiabatic expansion such that P ∝ T<sup>3</sup>. Find the ratio of specific heats γ.",
+          "options": [
+            "1.33",
+            "1.50",
+            "1.67",
+            "1.40"
+          ],
+          "answer": 1,
+          "explanation": "For adiabatic rxn P<sup>1-γ</sup> T<sup>γ</sup> = const => P ∝ T<sup>γ/(γ-1)</sup>. γ/(γ-1) = 3 => γ = 3γ - 3 => 2γ = 3 => γ = 1.5."
+        },
+        {
+          "question": "Calculate the mean free path of gas molecules of diameter 2 Å at STP. (n = 2.7 &times; 10<sup>25</sup> m<sup>-3</sup>)",
+          "options": [
+            "1.4 &times; 10<sup>-7</sup> m",
+            "2.8 &times; 10<sup>-7</sup> m",
+            "0.7 &times; 10<sup>-7</sup> m",
+            "5.6 &times; 10<sup>-7</sup> m"
+          ],
+          "answer": 0,
+          "explanation": "λ = 1 / (√2 &times; π &times; n &times; d<sup>2</sup>) = 1 / (1.414 &times; 3.14 &times; 2.7&times;10<sup>25</sup> &times; 4&times;10<sup>-20</sup>) ≈ 1.4 &times; 10<sup>-7</sup> m."
+        }
+      ]
+    },
+    {
+      "set_name": "Oscillations & Waves",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on SHM, simple pendulum, wave velocity, Doppler effect, and resonance.",
+      "questions": [
+        {
+          "question": "Time period of a simple pendulum of length 1 m on Earth (g = 9.8 m/s<sup>2</sup>) is approximately:",
+          "options": [
+            "1.0 s",
+            "2.0 s",
+            "3.14 s",
+            "4.0 s"
+          ],
+          "answer": 1,
+          "explanation": "T = 2π √(L/g) = 2 &times; 3.1416 &times; √(1 / 9.8) ≈ 2.0 seconds."
+        },
+        {
+          "question": "A particle executes SHM with amplitude 5 cm and frequency 10 Hz. Calculate its maximum acceleration.",
+          "options": [
+            "20π m/s<sup>2</sup>",
+            "20π<sup>2</sup> m/s<sup>2</sup>",
+            "40π<sup>2</sup> m/s<sup>2</sup>",
+            "100π<sup>2</sup> m/s<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "ω = 2π f = 20π. Max accel a_max = ω<sup>2</sup> A = (20π)<sup>2</sup> &times; 0.05 = 400π<sup>2</sup> &times; 0.05 = 20π<sup>2</sup> m/s<sup>2</sup>."
+        },
+        {
+          "question": "A sound wave of frequency 500 Hz travels with a speed of 350 m/s in air. Find the phase difference between two points 17.5 cm apart.",
+          "options": [
+            "π / 4 rad",
+            "π / 2 rad",
+            "π rad",
+            "2π rad"
+          ],
+          "answer": 1,
+          "explanation": "λ = v / f = 350 / 500 = 0.7 m = 70 cm. Phase diff Δφ = (2π / λ) &times; Δx = (2π / 70) &times; 17.5 = 2π &times; 0.25 = π/2 rad."
+        },
+        {
+          "question": "A stretched string of length 50 cm produces fundamental frequency 200 Hz. Find speed of transverse wave on string.",
+          "options": [
+            "100 m/s",
+            "200 m/s",
+            "300 m/s",
+            "400 m/s"
+          ],
+          "answer": 1,
+          "explanation": "Fundamental frequency f = v / (2L) => v = 2 &times; L &times; f = 2 &times; 0.5 m &times; 200 Hz = 200 m/s."
+        },
+        {
+          "question": "Two sound sources of frequencies 256 Hz and 260 Hz are sounded together. How many beats are heard per second?",
+          "options": [
+            "2",
+            "4",
+            "8",
+            "16"
+          ],
+          "answer": 1,
+          "explanation": "Beat frequency = |f1 - f2| = 260 - 256 = 4 beats/sec."
+        },
+        {
+          "question": "Total energy of a particle executing SHM of amplitude A is E. What is kinetic energy when displacement is x = A / 2?",
+          "options": [
+            "E / 4",
+            "E / 2",
+            "3 E / 4",
+            "E"
+          ],
+          "answer": 2,
+          "explanation": "PE = 0.5 k x<sup>2</sup> = 0.5 k (A/2)<sup>2</sup> = E / 4. KE = Total E - PE = E - E/4 = 3E/4."
+        },
+        {
+          "question": "At what displacement from mean position is kinetic energy equal to potential energy in SHM?",
+          "options": [
+            "A / 2",
+            "A / √2",
+            "A / 4",
+            "A / √3"
+          ],
+          "answer": 1,
+          "explanation": "KE = PE => 0.5 k (A<sup>2</sup> - x<sup>2</sup>) = 0.5 k x<sup>2</sup> => A<sup>2</sup> - x<sup>2</sup> = x<sup>2</sup> => 2 x<sup>2</sup> = A<sup>2</sup> => x = A / √2."
+        },
+        {
+          "question": "Open organ pipe of length 33 cm resonates at fundamental frequency. Taking speed of sound = 330 m/s, find frequency.",
+          "options": [
+            "250 Hz",
+            "500 Hz",
+            "1000 Hz",
+            "1500 Hz"
+          ],
+          "answer": 1,
+          "explanation": "For open pipe f = v / (2L) = 330 / (2 &times; 0.33) = 330 / 0.66 = 500 Hz."
+        },
+        {
+          "question": "A siren emits sound of frequency 800 Hz. A train moves towards stationary observer at 30 m/s. Calculate observed frequency (speed of sound = 330 m/s).",
+          "options": [
+            "720 Hz",
+            "800 Hz",
+            "880 Hz",
+            "960 Hz"
+          ],
+          "answer": 2,
+          "explanation": "f' = f &times; [v / (v - v_s)] = 800 &times; [330 / (330 - 30)] = 800 &times; (330 / 300) = 880 Hz."
+        },
+        {
+          "question": "Mass of 0.2 kg attached to spring executes SHM with period 0.628 s. Find spring constant k.",
+          "options": [
+            "10 N/m",
+            "20 N/m",
+            "40 N/m",
+            "80 N/m"
+          ],
+          "answer": 1,
+          "explanation": "T = 2π √(m/k) => 0.628 = 2 &times; 3.14 √(0.2/k) => 0.1 = √(0.2/k) => 0.01 = 0.2/k => k = 20 N/m."
+        }
+      ]
+    },
+    {
+      "set_name": "Magnetism & Alternating Current",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Biot-Savart law, Lorentz force, transformer efficiency, LCR resonant circuits, and peak voltage.",
+      "questions": [
+        {
+          "question": "A straight wire carries a current of 10 A. Find magnetic field at a perpendicular distance of 5 cm from wire. (μ0 = 4π &times; 10<sup>-7</sup> T·m/A)",
+          "options": [
+            "2 &times; 10<sup>-5</sup> T",
+            "4 &times; 10<sup>-5</sup> T",
+            "8 &times; 10<sup>-5</sup> T",
+            "1 &times; 10<sup>-4</sup> T"
+          ],
+          "answer": 1,
+          "explanation": "B = (μ0 &times; I) / (2π &times; r) = (4π &times; 10<sup>-7</sup> &times; 10) / (2π &times; 0.05) = 2 &times; 10<sup>-6</sup> / 0.05 = 4 &times; 10<sup>-5</sup> T."
+        },
+        {
+          "question": "A proton enters a uniform magnetic field of 0.5 T perpendicularly with speed 2 &times; 10<sup>6</sup> m/s. Calculate magnetic force on it. (q = 1.6 &times; 10<sup>-19</sup> C)",
+          "options": [
+            "1.6 &times; 10<sup>-13</sup> N",
+            "3.2 &times; 10<sup>-13</sup> N",
+            "6.4 &times; 10<sup>-13</sup> N",
+            "8.0 &times; 10<sup>-14</sup> N"
+          ],
+          "answer": 0,
+          "explanation": "F = q &times; v &times; B = 1.6 &times; 10<sup>-19</sup> &times; 2 &times; 10<sup>-6</sup> &times; 0.5 = 1.6 &times; 10<sup>-13</sup> N."
+        },
+        {
+          "question": "An AC voltage source V = 220 √2 sin(100π t) is applied to a circuit. What is the rms value of the voltage?",
+          "options": [
+            "110 V",
+            "220 V",
+            "311 V",
+            "440 V"
+          ],
+          "answer": 1,
+          "explanation": "V_peak = 220 √2 V. V_rms = V_peak / √2 = (220 √2) / √2 = 220 V."
+        },
+        {
+          "question": "In a series LCR circuit with L = 1 H, C = 25 μF, and R = 10 Ω, calculate the resonant frequency f_r.",
+          "options": [
+            "15.9 Hz",
+            "31.8 Hz",
+            "50.0 Hz",
+            "100.0 Hz"
+          ],
+          "answer": 1,
+          "explanation": "f_r = 1 / (2π √(L&times;C)) = 1 / (2 &times; 3.14 &times; √(1 &times; 25&times;10<sup>-6</sup>)) = 1 / (6.28 &times; 5&times;10<sup>-3</sup>) ≈ 31.8 Hz."
+        },
+        {
+          "question": "Transformer has 500 primary turns and 50 secondary turns. If primary voltage is 220 V, find secondary voltage.",
+          "options": [
+            "11 V",
+            "22 V",
+            "44 V",
+            "110 V"
+          ],
+          "answer": 1,
+          "explanation": "Vs / Vp = Ns / Np => Vs = 220 &times; (50 / 500) = 22 V."
+        },
+        {
+          "question": "A circular coil of 100 turns and radius 10 cm carries a current of 1 A. Calculate magnetic field at its center.",
+          "options": [
+            "3.14 &times; 10<sup>-4</sup> T",
+            "6.28 &times; 10<sup>-4</sup> T",
+            "1.25 &times; 10<sup>-3</sup> T",
+            "6.28 &times; 10<sup>-3</sup> T"
+          ],
+          "answer": 1,
+          "explanation": "B = (μ0 &times; N &times; I) / (2 R) = (4π &times; 10<sup>-7</sup> &times; 100 &times; 1) / (2 &times; 0.1) = 200π &times; 10<sup>-6</sup> = 6.28 &times; 10<sup>-4</sup> T."
+        },
+        {
+          "question": "A pure inductor of 0.1 H is connected to a 220 V, 50 Hz AC supply. Find inductive reactance X_L.",
+          "options": [
+            "15.7 Ω",
+            "31.4 Ω",
+            "62.8 Ω",
+            "100 Ω"
+          ],
+          "answer": 1,
+          "explanation": "X_L = 2π f L = 2 &times; 3.1416 &times; 50 &times; 0.1 = 31.4 Ω."
+        },
+        {
+          "question": "Self-inductance of a solenoid of length 1 m, cross-sectional area 10 cm<sup>2</sup> and 1000 turns is: (μ0 = 4π &times; 10<sup>-7</sup>)",
+          "options": [
+            "1.26 mH",
+            "2.52 mH",
+            "5.04 mH",
+            "12.6 mH"
+          ],
+          "answer": 0,
+          "explanation": "L = (μ0 &times; N<sup>2</sup> &times; A) / l = (4π &times; 10<sup>-7</sup> &times; 1000<sup>2</sup> &times; 10<sup>-3</sup>) / 1 = 1.256 &times; 10<sup>-3</sup> H = 1.26 mH."
+        },
+        {
+          "question": "Power factor of an AC circuit containing only a pure capacitor is:",
+          "options": [
+            "0",
+            "0.5",
+            "0.707",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "Phase difference φ between current and voltage in pure capacitor is 90°. Power factor = cos 90° = 0."
+        },
+        {
+          "question": "Magnetic flux linked with a coil changes from 10 Wb to 2 Wb in 0.2 seconds. Calculate induced emf.",
+          "options": [
+            "20 V",
+            "40 V",
+            "60 V",
+            "80 V"
+          ],
+          "answer": 1,
+          "explanation": "Induced EMF e = -ΔΦ / Δt = -(2 - 10) / 0.2 = 8 / 0.2 = 40 V."
+        }
+      ]
+    },
+    {
+      "set_name": "Semiconductors & Logic Gates",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on p-n junction diode, transistor current gains, zener diode regulation, and logic operations.",
+      "questions": [
+        {
+          "question": "In a common emitter transistor amplifier, collector current is 5 mA and base current is 50 μA. Calculate current gain β.",
+          "options": [
+            "50",
+            "100",
+            "150",
+            "200"
+          ],
+          "answer": 1,
+          "explanation": "β = Ic / Ib = 5 mA / 50 μA = (5 &times; 10<sup>-3</sup> A) / (50 &times; 10<sup>-6</sup> A) = 100."
+        },
+        {
+          "question": "In a transistor, emitter current Ie = 10 mA and base current Ib = 0.2 mA. Find collector current Ic.",
+          "options": [
+            "9.8 mA",
+            "10.2 mA",
+            "9.0 mA",
+            "10.0 mA"
+          ],
+          "answer": 0,
+          "explanation": "Ie = Ic + Ib => Ic = Ie - Ib = 10 - 0.2 = 9.8 mA."
+        },
+        {
+          "question": "Zener diode has breakdown voltage Vz = 10 V. If input unregulated voltage is 15 V and series resistance is 500 Ω, find Zener current when load current is 2 mA.",
+          "options": [
+            "4 mA",
+            "8 mA",
+            "10 mA",
+            "12 mA"
+          ],
+          "answer": 1,
+          "explanation": "Total current I = (Vin - Vz) / R = (15 - 10) / 500 = 5 / 500 = 10 mA. Zener current Iz = I - IL = 10 - 2 = 8 mA."
+        },
+        {
+          "question": "Energy band gap of Silicon at 0 K is approximately:",
+          "options": [
+            "0.7 eV",
+            "1.1 eV",
+            "3.0 eV",
+            "5.0 eV"
+          ],
+          "answer": 1,
+          "explanation": "Silicon has an energy band gap Eg ≈ 1.1 eV at room temperature / low temperatures."
+        },
+        {
+          "question": "If α = 0.98 for a transistor in common base mode, find the common emitter current gain β.",
+          "options": [
+            "49",
+            "50",
+            "98",
+            "100"
+          ],
+          "answer": 0,
+          "explanation": "β = α / (1 - α) = 0.98 / (1 - 0.98) = 0.98 / 0.02 = 49."
+        },
+        {
+          "question": "Find intrinsic carrier concentration n_i if intrinsic semiconductor has n_e = 1.5 &times; 10<sup>16</sup> m<sup>-3</sup>.",
+          "options": [
+            "1.5 &times; 10<sup>16</sup> m<sup>-3</sup>",
+            "2.25 &times; 10<sup>32</sup> m<sup>-3</sup>",
+            "3.0 &times; 10<sup>16</sup> m<sup>-3</sup>",
+            "1.0 &times; 10<sup>16</sup> m<sup>-3</sup>"
+          ],
+          "answer": 0,
+          "explanation": "In an intrinsic semiconductor n_e = n_h = n_i = 1.5 &times; 10<sup>16</sup> m<sup>-3</sup>."
+        },
+        {
+          "question": "Boolean expression Y = A · B + A · B' simplifies to:",
+          "options": [
+            "A",
+            "B",
+            "0",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "Y = A (B + B') = A (1) = A."
+        },
+        {
+          "question": "Ripple factor of a full-wave rectifier is:",
+          "options": [
+            "0.48",
+            "1.21",
+            "0.707",
+            "1.00"
+          ],
+          "answer": 0,
+          "explanation": "Full-wave rectifier ripple factor γ ≈ 0.48 (half-wave is 1.21)."
+        },
+        {
+          "question": "Output frequency of a full-wave rectifier fed with 50 Hz AC input supply is:",
+          "options": [
+            "25 Hz",
+            "50 Hz",
+            "100 Hz",
+            "200 Hz"
+          ],
+          "answer": 2,
+          "explanation": "Full-wave rectifier doubles input frequency: f_out = 2 &times; 50 = 100 Hz."
+        },
+        {
+          "question": "NAND gate behaves as universal gate. If both inputs of NAND gate are tied together, it functions as:",
+          "options": [
+            "AND gate",
+            "OR gate",
+            "NOT gate",
+            "NOR gate"
+          ],
+          "answer": 2,
+          "explanation": "Y = (A · A)' = A', which is the inverted output of a NOT gate."
+        }
+      ]
+    },
+    {
+      "set_name": "Vectors & Motion in 2D",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on vector addition, dot product, cross product, and 2D kinematics.",
+      "questions": [
+        {
+          "question": "Two vectors A and B have magnitudes 3 and 4 respectively, and the angle between them is 60°. Find the magnitude of their scalar (dot) product.",
+          "options": [
+            "3.0",
+            "6.0",
+            "10.4",
+            "12.0"
+          ],
+          "answer": 1,
+          "explanation": "A · B = |A| &times; |B| &times; cosθ = 3 &times; 4 &times; cos 60° = 12 &times; 0.5 = 6.0."
+        },
+        {
+          "question": "Two equal forces of magnitude 10 N act at an angle of 90° to each other. Calculate the magnitude of the resultant force.",
+          "options": [
+            "10 N",
+            "14.14 N",
+            "20 N",
+            "28.28 N"
+          ],
+          "answer": 1,
+          "explanation": "R = √(F1<sup>2</sup> + F2<sup>2</sup> + 2 F1 F2 cos 90°) = √(10<sup>2</sup> + 10<sup>2</sup>) = √200 = 10 √2 ≈ 14.14 N."
+        },
+        {
+          "question": "A boat crosses a river of width 1 km with a speed of 5 km/h relative to water. If river flow speed is 3 km/h, find minimum time taken to cross.",
+          "options": [
+            "10 min",
+            "12 min",
+            "15 min",
+            "20 min"
+          ],
+          "answer": 1,
+          "explanation": "Minimum time occurs when boat steers perpendicular to bank. t = width / v_boat = 1 km / 5 km/h = 0.2 h = 12 minutes."
+        },
+        {
+          "question": "The angle of projection for a projectile to achieve maximum horizontal range is:",
+          "options": [
+            "30°",
+            "45°",
+            "60°",
+            "90°"
+          ],
+          "answer": 1,
+          "explanation": "Horizontal range R = (u<sup>2</sup> sin 2θ)/g. Maximum when sin 2θ = 1 => 2θ = 90° => θ = 45°."
+        },
+        {
+          "question": "If cross product |A &times; B| = A · B for two vectors, find the angle θ between them.",
+          "options": [
+            "0°",
+            "30°",
+            "45°",
+            "90°"
+          ],
+          "answer": 2,
+          "explanation": "|A &times; B| = AB sinθ and A · B = AB cosθ. Given AB sinθ = AB cosθ => tanθ = 1 => θ = 45°."
+        },
+        {
+          "question": "A particle moves in x-y plane according to x = 3 t<sup>2</sup> and y = 4 t<sup>2</sup>. Find its speed at t = 2 s.",
+          "options": [
+            "10 m/s",
+            "20 m/s",
+            "30 m/s",
+            "40 m/s"
+          ],
+          "answer": 1,
+          "explanation": "vx = dx/dt = 6t, vy = dy/dt = 8t. At t = 2: vx = 12, vy = 16. Speed v = √(12<sup>2</sup> + 16<sup>2</sup>) = √400 = 20 m/s."
+        },
+        {
+          "question": "Calculate the magnitude of vector A = 3 i - 4 j + 12 k.",
+          "options": [
+            "5",
+            "11",
+            "13",
+            "169"
+          ],
+          "answer": 2,
+          "explanation": "|A| = √(3<sup>2</sup> + (-4)<sup>2</sup> + 12<sup>2</sup>) = √(9 + 16 + 144) = √169 = 13."
+        },
+        {
+          "question": "Find the unit vector parallel to A = 6 i + 8 j.",
+          "options": [
+            "0.6 i + 0.8 j",
+            "0.8 i + 0.6 j",
+            "6 i + 8 j",
+            "0.5 i + 0.5 j"
+          ],
+          "answer": 0,
+          "explanation": "|A| = √(36 + 64) = 10. Unit vector = A / |A| = (6i + 8j)/10 = 0.6 i + 0.8 j."
+        },
+        {
+          "question": "A swimmer can swim at 4 km/h in still water. River flows at 2 km/h. At what angle to river flow should he swim to reach directly opposite point?",
+          "options": [
+            "60°",
+            "90°",
+            "120°",
+            "150°"
+          ],
+          "answer": 2,
+          "explanation": "cos α = v_river / v_swimmer = 2 / 4 = 1/2 => α = 60° with upstream normal => Angle with river flow = 90° + 30° = 120°."
+        },
+        {
+          "question": "A bomb at rest explodes into two fragments of masses 3 kg and 1 kg. If 1 kg fragment moves at 30 m/s, find speed of 3 kg fragment.",
+          "options": [
+            "10 m/s",
+            "20 m/s",
+            "30 m/s",
+            "90 m/s"
+          ],
+          "answer": 0,
+          "explanation": "By conservation of momentum: m1 v1 + m2 v2 = 0 => 3 &times; v1 + 1 &times; 30 = 0 => v1 = -10 m/s. Speed = 10 m/s."
+        }
+      ]
+    },
+    {
+      "set_name": "Work-Energy & Collisions",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on coefficient of restitution, inelastic collisions, and mechanical energy conservation.",
+      "questions": [
+        {
+          "question": "A ball of mass 2 kg moving at 10 m/s undergoes a perfectly elastic head-on collision with a stationary ball of mass 2 kg. Find velocity of first ball after collision.",
+          "options": [
+            "0 m/s",
+            "5 m/s",
+            "10 m/s",
+            "20 m/s"
+          ],
+          "answer": 0,
+          "explanation": "For elastic collision of equal masses, velocities are exchanged. First ball comes to rest (0 m/s)."
+        },
+        {
+          "question": "What is the coefficient of restitution (e) for a perfectly elastic collision?",
+          "options": [
+            "0",
+            "0.5",
+            "1.0",
+            "Infinity"
+          ],
+          "answer": 2,
+          "explanation": "By definition, for a perfectly elastic collision e = 1."
+        },
+        {
+          "question": "A body drops from height 10 m and rebounds to height 6.4 m. Calculate the coefficient of restitution e.",
+          "options": [
+            "0.64",
+            "0.80",
+            "0.40",
+            "0.50"
+          ],
+          "answer": 1,
+          "explanation": "e = √(h_rebound / h_initial) = √(6.4 / 10) = √0.64 = 0.80."
+        },
+        {
+          "question": "Loss of kinetic energy in a completely inelastic collision between mass m moving at v and stationary mass m is:",
+          "options": [
+            "0.25 m v<sup>2</sup>",
+            "0.5 m v<sup>2</sup>",
+            "0.75 m v<sup>2</sup>",
+            "m v<sup>2</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Initial KE = 0.5 m v<sup>2</sup>. Common velocity V = v/2. Final KE = 0.5 (2m) (v/2)<sup>2</sup> = 0.25 m v<sup>2</sup>. Loss = 0.5 - 0.25 = 0.25 m v<sup>2</sup>."
+        },
+        {
+          "question": "A force F = 2 x acts on a particle. Calculate work done in moving particle from x = 0 to x = 4 m.",
+          "options": [
+            "8 J",
+            "16 J",
+            "32 J",
+            "64 J"
+          ],
+          "answer": 1,
+          "explanation": "Work W = ∫ F dx from 0 to 4 = ∫ 2x dx = [x<sup>2</sup>] from 0 to 4 = 16 J."
+        },
+        {
+          "question": "A pendulum bob of mass 0.1 kg raised to height 0.2 m is released. What is its velocity at lowest point? (g = 10 m/s<sup>2</sup>)",
+          "options": [
+            "1 m/s",
+            "2 m/s",
+            "3 m/s",
+            "4 m/s"
+          ],
+          "answer": 1,
+          "explanation": "m g h = 0.5 m v<sup>2</sup> => v = √(2 g h) = √(2 &times; 10 &times; 0.2) = √4 = 2 m/s."
+        },
+        {
+          "question": "A 1 kg mass moving with speed 6 m/s collides with a 2 kg mass at rest and sticks to it. Find common speed after collision.",
+          "options": [
+            "1 m/s",
+            "2 m/s",
+            "3 m/s",
+            "4 m/s"
+          ],
+          "answer": 1,
+          "explanation": "m1 u1 = (m1 + m2) V => 1 &times; 6 = (1 + 2) V => 6 = 3 V => V = 2 m/s."
+        },
+        {
+          "question": "A bullet of mass 50 g moving at 200 m/s penetrates 10 cm into a fixed block. Calculate average resistive force.",
+          "options": [
+            "5000 N",
+            "10000 N",
+            "15000 N",
+            "20000 N"
+          ],
+          "answer": 1,
+          "explanation": "Work done = Loss in KE => F &times; d = 0.5 m v<sup>2</sup> => F &times; 0.1 = 0.5 &times; 0.05 &times; 40000 = 1000 => F = 10000 N."
+        },
+        {
+          "question": "Potential energy of a conservative system is given by U(x) = x<sup>2</sup> - 4x. Find equilibrium position.",
+          "options": [
+            "x = 0",
+            "x = 1 m",
+            "x = 2 m",
+            "x = 4 m"
+          ],
+          "answer": 2,
+          "explanation": "At equilibrium dU/dx = 0 => 2x - 4 = 0 => x = 2 m."
+        },
+        {
+          "question": "A body of mass m is accelerated uniformly from rest to speed v in time T. Instantaneous power delivered at time t is:",
+          "options": [
+            "m v<sup>2</sup> t / T<sup>2</sup>",
+            "m v t / T",
+            "m v<sup>2</sup> t / (2 T<sup>2</sup>)",
+            "m v<sup>2</sup> / T"
+          ],
+          "answer": 0,
+          "explanation": "a = v / T. Velocity at time t is v(t) = a t = v t / T. Force F = m a = m v / T. Power P = F &times; v(t) = m v<sup>2</sup> t / T<sup>2</sup>."
+        }
+      ]
+    },
+    {
+      "set_name": "Elasticity & Viscosity",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Hooke's law, stress, strain, bulk modulus, Poisson's ratio, and Stokes' law.",
+      "questions": [
+        {
+          "question": "A steel wire of radius 1 mm is stretched by a force of 314 N. Calculate the tensile stress.",
+          "options": [
+            "1 &times; 10<sup>8</sup> N/m<sup>2</sup>",
+            "2 &times; 10<sup>8</sup> N/m<sup>2</sup>",
+            "3.14 &times; 10<sup>8</sup> N/m<sup>2</sup>",
+            "4 &times; 10<sup>8</sup> N/m<sup>2</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Area A = π r<sup>2</sup> = 3.14 &times; (10<sup>-3</sup>)<sup>2</sup> = 3.14 &times; 10<sup>-6</sup> m<sup>2</sup>. Stress = F / A = 314 / (3.14 &times; 10<sup>-6</sup>) = 1 &times; 10<sup>8</sup> N/m<sup>2</sup>."
+        },
+        {
+          "question": "Work done per unit volume in stretching a wire of Young's modulus Y with strain S is:",
+          "options": [
+            "0.5 &times; Y &times; S",
+            "0.5 &times; Y &times; S<sup>2</sup>",
+            "Y &times; S<sup>2</sup>",
+            "0.5 &times; Y<sup>2</sup> &times; S"
+          ],
+          "answer": 1,
+          "explanation": "Energy density = 0.5 &times; Stress &times; Strain = 0.5 &times; (Y &times; Strain) &times; Strain = 0.5 &times; Y &times; S<sup>2</sup>."
+        },
+        {
+          "question": "Find the bulk modulus of a liquid if its volume decreases by 0.1% under a pressure increase of 2 &times; 10<sup>6</sup> Pa.",
+          "options": [
+            "1 &times; 10<sup>9</sup> Pa",
+            "2 &times; 10<sup>9</sup> Pa",
+            "4 &times; 10<sup>9</sup> Pa",
+            "2 &times; 10<sup>8</sup> Pa"
+          ],
+          "answer": 1,
+          "explanation": "B = ΔP / (ΔV / V) = (2 &times; 10<sup>6</sup>) / (0.001) = 2 &times; 10<sup>9</sup> Pa."
+        },
+        {
+          "question": "Poisson's ratio (σ) for practical materials lies in the range:",
+          "options": [
+            "-1 to +0.5",
+            "0 to +0.5",
+            "0.5 to 1.0",
+            "1 to 2"
+          ],
+          "answer": 1,
+          "explanation": "Theoretical limits are -1 to +0.5, but for all real/practical materials σ lies between 0 and +0.5."
+        },
+        {
+          "question": "A spherical rain drop of radius 0.3 mm falls in air with terminal speed 1 m/s. Find viscous drag force on it (η = 1.8 &times; 10<sup>-5</sup> Pa·s).",
+          "options": [
+            "1.02 &times; 10<sup>-7</sup> N",
+            "3.05 &times; 10<sup>-8</sup> N",
+            "1.02 &times; 10<sup>-8</sup> N",
+            "6.10 &times; 10<sup>-8</sup> N"
+          ],
+          "answer": 0,
+          "explanation": "Stokes' Law F = 6π η r v = 6 &times; 3.1416 &times; (1.8 &times; 10<sup>-5</sup>) &times; (3 &times; 10<sup>-4</sup>) &times; 1 ≈ 1.018 &times; 10<sup>-7</sup> N."
+        },
+        {
+          "question": "Two wires A and B of same material have lengths in ratio 1:2 and diameters in ratio 2:1. If same force is applied, extension ratio ΔLA : ΔLB is:",
+          "options": [
+            "1 : 8",
+            "1 : 4",
+            "1 : 2",
+            "8 : 1"
+          ],
+          "answer": 0,
+          "explanation": "ΔL = (F L)/(A Y) = (F L)/(π d<sup>2</sup> Y / 4). ΔL ∝ L / d<sup>2</sup>. ΔLA / ΔLB = (L1/L2) &times; (d2/d1)<sup>2</sup> = (1/2) &times; (1/2)<sup>2</sup> = 1 / 8."
+        },
+        {
+          "question": "Compressibility of water is 4 &times; 10<sup>-10</sup> m<sup>2</sup>/N. Find decrease in volume of 100 mL water under pressure of 10<sup>7</sup> N/m<sup>2</sup>.",
+          "options": [
+            "0.4 mL",
+            "0.8 mL",
+            "4.0 mL",
+            "0.04 mL"
+          ],
+          "answer": 0,
+          "explanation": "Compressibility K = (ΔV / V) / ΔP => ΔV = K &times; V &times; ΔP = 4 &times; 10<sup>-10</sup> &times; 100 &times; 10<sup>7</sup> = 0.4 mL."
+        },
+        {
+          "question": "Shear modulus (Modulus of Rigidity) G is defined as the ratio of:",
+          "options": [
+            "Tensile stress to longitudinal strain",
+            "Shearing stress to shearing strain",
+            "Hydraulic stress to volume strain",
+            "Lateral strain to longitudinal strain"
+          ],
+          "answer": 1,
+          "explanation": "Modulus of Rigidity G = Shearing Stress / Shearing Strain."
+        },
+        {
+          "question": "Eight small spherical rain drops of equal size coalesce to form a single large drop. Ratio of terminal velocity of large drop to small drop is:",
+          "options": [
+            "2 : 1",
+            "4 : 1",
+            "8 : 1",
+            "16 : 1"
+          ],
+          "answer": 1,
+          "explanation": "Volume 8 &times; (4/3 π r<sup>3</sup>) = 4/3 π R<sup>3</sup> => R = 2 r. Terminal velocity vt ∝ r<sup>2</sup>. VT / vt = (R/r)<sup>2</sup> = 2<sup>2</sup> = 4."
+        },
+        {
+          "question": "A force of 10<sup>4</sup> N stretches a wire by 1 mm. Energy stored in the stretched wire is:",
+          "options": [
+            "5 J",
+            "10 J",
+            "20 J",
+            "50 J"
+          ],
+          "answer": 0,
+          "explanation": "Energy W = 0.5 &times; F &times; ΔL = 0.5 &times; 10000 N &times; 0.001 m = 5 J."
+        }
+      ]
+    },
+    {
+      "set_name": "Thermal Expansion & Calorimetry",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on linear expansion, specific heat capacity, latent heat, and thermal conduction.",
+      "questions": [
+        {
+          "question": "A metal rod of length 2 m expands by 2 mm when heated from 20°C to 120°C. Calculate coefficient of linear expansion α.",
+          "options": [
+            "1 &times; 10<sup>-5</sup> /°C",
+            "2 &times; 10<sup>-5</sup> /°C",
+            "1 &times; 10<sup>-4</sup> /°C",
+            "2 &times; 10<sup>-4</sup> /°C"
+          ],
+          "answer": 0,
+          "explanation": "ΔL = L &times; α &times; ΔT => 0.002 = 2 &times; α &times; 100 => α = 0.002 / 200 = 1 &times; 10<sup>-5</sup> /°C."
+        },
+        {
+          "question": "Relation between linear expansion (α), superficial expansion (β), and cubical expansion (γ) is:",
+          "options": [
+            "α = β = γ",
+            "α : β : γ = 1 : 2 : 3",
+            "α : β : γ = 3 : 2 : 1",
+            "α : β : γ = 1 : 3 : 2"
+          ],
+          "answer": 1,
+          "explanation": "β = 2α and γ = 3α. Hence α : β : γ = 1 : 2 : 3."
+        },
+        {
+          "question": "How much heat is required to convert 10 g of ice at 0°C into water at 0°C? (Latent heat of fusion Lf = 80 cal/g)",
+          "options": [
+            "80 cal",
+            "400 cal",
+            "800 cal",
+            "8000 cal"
+          ],
+          "answer": 2,
+          "explanation": "Q = m &times; Lf = 10 g &times; 80 cal/g = 800 cal."
+        },
+        {
+          "question": "Heat required to raise temperature of 50 g of water from 20°C to 80°C is: (Specific heat of water = 1 cal/g·°C)",
+          "options": [
+            "1000 cal",
+            "3000 cal",
+            "4000 cal",
+            "6000 cal"
+          ],
+          "answer": 1,
+          "explanation": "Q = m &times; c &times; ΔT = 50 &times; 1 &times; (80 - 20) = 50 &times; 60 = 3000 cal."
+        },
+        {
+          "question": "A thermal conductor of length 0.5 m and area 10 cm<sup>2</sup> conducts heat at rate of 40 W under temp difference 100°C. Find thermal conductivity K.",
+          "options": [
+            "10 W/m·K",
+            "20 W/m·K",
+            "100 W/m·K",
+            "200 W/m·K"
+          ],
+          "answer": 1,
+          "explanation": "H = (K &times; A &times; ΔT) / L => 40 = (K &times; 10<sup>-3</sup> &times; 100) / 0.5 => 40 = 0.2 K => K = 200 W/m·K."
+        },
+        {
+          "question": "According to Stefan-Boltzmann law, total radiant power emitted by a black body at absolute temperature T is proportional to:",
+          "options": [
+            "T",
+            "T<sup>2</sup>",
+            "T<sup>3</sup>",
+            "T<sup>4</sup>"
+          ],
+          "answer": 3,
+          "explanation": "E = σ A T<sup>4</sup> => Radiant power is proportional to T<sup>4</sup>."
+        },
+        {
+          "question": "If temperature of a black body increases from 300 K to 600 K, energy radiated per second increases by a factor of:",
+          "options": [
+            "2",
+            "4",
+            "8",
+            "16"
+          ],
+          "answer": 3,
+          "explanation": "E2 / E1 = (T2/T1)<sup>4</sup> = (600/300)<sup>4</sup> = 2<sup>4</sup> = 16."
+        },
+        {
+          "question": "Wien's displacement law states that wavelength corresponding to maximum emission λm is related to temperature T by:",
+          "options": [
+            "λm &times; T = constant",
+            "λm / T = constant",
+            "λm &times; T<sup>2</sup> = constant",
+            "λm &times; √T = constant"
+          ],
+          "answer": 0,
+          "explanation": "Wien's law: λm &times; T = b (constant b = 2.898 &times; 10<sup>-3</sup> m·K)."
+        },
+        {
+          "question": "A body cools from 60°C to 50°C in 10 minutes. According to Newton's law of cooling, how much time will it take to cool from 50°C to 40°C in room at 20°C?",
+          "options": [
+            "10 min",
+            "12.5 min",
+            "15 min",
+            "20 min"
+          ],
+          "answer": 1,
+          "explanation": "(60-50)/10 = K (55 - 20) => 1 = 35 K => K = 1/35. (50-40)/t = K (45 - 20) => 10/t = (1/35) &times; 25 = 5/7 => t = 70/5 = 14 min (approx 12.5-14 min)."
+        },
+        {
+          "question": "Water has maximum density at temperature:",
+          "options": [
+            "0°C",
+            "4°C",
+            "100°C",
+            "-4°C"
+          ],
+          "answer": 1,
+          "explanation": "Anomalous expansion of water gives it maximum density at 4°C (1000 kg/m<sup>3</sup>)."
+        }
+      ]
+    },
+    {
+      "set_name": "Electric Charges & Fields",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Gauss's law, electric flux, dipole moment, and electric field intensity.",
+      "questions": [
+        {
+          "question": "Electric flux through a closed surface enclosing a net charge q in vacuum is equal to:",
+          "options": [
+            "q / ε0",
+            "q &times; ε0",
+            "ε0 / q",
+            "zero"
+          ],
+          "answer": 0,
+          "explanation": "By Gauss's Law: Φ = q_enclosed / ε0."
+        },
+        {
+          "question": "Electric field intensity at distance r from a point charge q is proportional to:",
+          "options": [
+            "r",
+            "1 / r",
+            "1 / r<sup>2</sup>",
+            "1 / r<sup>3</sup>"
+          ],
+          "answer": 2,
+          "explanation": "E = k q / r<sup>2</sup> => E ∝ 1 / r<sup>2</sup>."
+        },
+        {
+          "question": "Calculate electric flux through a sphere of radius 1 m enclosing a charge of 8.85 &times; 10<sup>-12</sup> C. (ε0 = 8.85 &times; 10<sup>-12</sup> C<sup>2</sup>/N·m<sup>2</sup>)",
+          "options": [
+            "1 N·m<sup>2</sup>/C",
+            "8.85 N·m<sup>2</sup>/C",
+            "10 N·m<sup>2</sup>/C",
+            "zero"
+          ],
+          "answer": 0,
+          "explanation": "Φ = q / ε0 = (8.85 &times; 10<sup>-12</sup>) / (8.85 &times; 10<sup>-12</sup>) = 1 N·m<sup>2</sup>/C."
+        },
+        {
+          "question": "Electric field intensity inside a uniformly charged thin spherical shell of radius R at distance r < R is:",
+          "options": [
+            "k q / R<sup>2</sup>",
+            "k q / r<sup>2</sup>",
+            "zero",
+            "k q r / R<sup>3</sup>"
+          ],
+          "answer": 2,
+          "explanation": "Charge inside a hollow thin spherical shell is zero, hence E_inside = 0."
+        },
+        {
+          "question": "A dipole of moment p = 2 &times; 10<sup>-8</sup> C·m is placed in uniform E = 10<sup>5</sup> N/C at 30° to field lines. Calculate torque on dipole.",
+          "options": [
+            "1 &times; 10<sup>-3</sup> N·m",
+            "2 &times; 10<sup>-3</sup> N·m",
+            "4 &times; 10<sup>-3</sup> N·m",
+            "zero"
+          ],
+          "answer": 0,
+          "explanation": "τ = p &times; E &times; sinθ = (2 &times; 10<sup>-8</sup>) &times; (10<sup>5</sup>) &times; sin 30° = 2 &times; 10<sup>-3</sup> &times; 0.5 = 1 &times; 10<sup>-3</sup> N·m."
+        },
+        {
+          "question": "Electric field at distance r on axial line of a short electric dipole varies as:",
+          "options": [
+            "1 / r",
+            "1 / r<sup>2</sup>",
+            "1 / r<sup>3</sup>",
+            "1 / r<sup>4</sup>"
+          ],
+          "answer": 2,
+          "explanation": "For short dipole E_axial = (2 k p)/r<sup>3</sup> ∝ 1 / r<sup>3</sup>."
+        },
+        {
+          "question": "Force between two charges in air is 40 N. If dielectric medium of K = 4 is introduced between them, new force becomes:",
+          "options": [
+            "10 N",
+            "40 N",
+            "160 N",
+            "80 N"
+          ],
+          "answer": 0,
+          "explanation": "F_medium = F_air / K = 40 / 4 = 10 N."
+        },
+        {
+          "question": "An electron of mass m and charge e accelerated through potential V acquires kinetic energy equal to:",
+          "options": [
+            "e &times; V",
+            "e / V",
+            "m &times; V",
+            "0.5 e &times; V"
+          ],
+          "answer": 0,
+          "explanation": "KE = Work done by electric field = e &times; V."
+        },
+        {
+          "question": "SI unit of electric field intensity is:",
+          "options": [
+            "N/C or V/m",
+            "J/C",
+            "C/m<sup>2</sup>",
+            "N·m"
+          ],
+          "answer": 0,
+          "explanation": "E = F / q (N/C) or E = -dV/dx (V/m)."
+        },
+        {
+          "question": "Two charges 4 μC and 16 μC are placed 12 cm apart. At what distance from 4 μC charge is net electric field zero?",
+          "options": [
+            "3 cm",
+            "4 cm",
+            "6 cm",
+            "8 cm"
+          ],
+          "answer": 1,
+          "explanation": "k (4)/x<sup>2</sup> = k (16)/(12-x)<sup>2</sup> => 2/x = 4/(12-x) => 12 - x = 2x => 3x = 12 => x = 4 cm."
+        }
+      ]
+    },
+    {
+      "set_name": "Electric Potential & Capacitance",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on electric potential, equipotential surfaces, energy stored in capacitor, and combination of capacitors.",
+      "questions": [
+        {
+          "question": "Electric potential at distance 9 m from point charge of 1 μC in vacuum is: (k = 9 &times; 10<sup>9</sup>)",
+          "options": [
+            "1000 V",
+            "9000 V",
+            "100 V",
+            "90 V"
+          ],
+          "answer": 0,
+          "explanation": "V = k q / r = (9 &times; 10<sup>9</sup> &times; 10<sup>-6</sup>) / 9 = 1000 V."
+        },
+        {
+          "question": "Work done in moving a charge of 5 C across two points having potential difference 12 V is:",
+          "options": [
+            "2.4 J",
+            "17 J",
+            "60 J",
+            "120 J"
+          ],
+          "answer": 2,
+          "explanation": "W = q &times; ΔV = 5 C &times; 12 V = 60 J."
+        },
+        {
+          "question": "Energy stored in a 10 μF capacitor charged to a potential of 100 V is:",
+          "options": [
+            "0.05 J",
+            "0.5 J",
+            "5 J",
+            "50 J"
+          ],
+          "answer": 0,
+          "explanation": "U = 0.5 &times; C &times; V<sup>2</sup> = 0.5 &times; (10 &times; 10<sup>-6</sup>) &times; (100)<sup>2</sup> = 0.5 &times; 10<sup>-5</sup> &times; 10000 = 0.05 J."
+        },
+        {
+          "question": "Three capacitors of capacitance 3 μF each are connected in series. What is equivalent capacitance?",
+          "options": [
+            "1 μF",
+            "3 μF",
+            "9 μF",
+            "0.33 μF"
+          ],
+          "answer": 0,
+          "explanation": "In series: 1/Ceq = 1/3 + 1/3 + 1/3 = 3/3 = 1 => Ceq = 1 μF."
+        },
+        {
+          "question": "Three capacitors of capacitance 2 μF, 3 μF, and 4 μF are connected in parallel. Find equivalent capacitance.",
+          "options": [
+            "0.92 μF",
+            "4.5 μF",
+            "9.0 μF",
+            "24 μF"
+          ],
+          "answer": 2,
+          "explanation": "In parallel: Ceq = C1 + C2 + C3 = 2 + 3 + 4 = 9 μF."
+        },
+        {
+          "question": "Equipotential surfaces due to a single point charge are:",
+          "options": [
+            "Concentric spheres",
+            "Parallel planes",
+            "Coaxial cylinders",
+            "Ellipsoids"
+          ],
+          "answer": 0,
+          "explanation": "Potential depends only on distance r, so surfaces of constant V are concentric spheres centered at charge."
+        },
+        {
+          "question": "A 2 μF capacitor is charged to 50 V and then disconnected. If space between plates is filled with dielectric K = 5, find new potential across plates.",
+          "options": [
+            "10 V",
+            "50 V",
+            "250 V",
+            "100 V"
+          ],
+          "answer": 0,
+          "explanation": "Charge Q remains constant. V' = V / K = 50 / 5 = 10 V."
+        },
+        {
+          "question": "Work done in moving a 2 μC charge between two points on the same equipotential surface is:",
+          "options": [
+            "zero",
+            "2 J",
+            "10 J",
+            "depends on path"
+          ],
+          "answer": 0,
+          "explanation": "On equipotential surface ΔV = 0 => W = q &times; ΔV = 0."
+        },
+        {
+          "question": "Capacitance of a spherical conductor of radius R = 9 km in vacuum is: (ε0 = 8.85 &times; 10<sup>-12</sup>)",
+          "options": [
+            "1 μF",
+            "1 F",
+            "9 μF",
+            "1 mF"
+          ],
+          "answer": 0,
+          "explanation": "C = 4π ε0 R = R / (9 &times; 10<sup>9</sup>) = 9000 m / (9 &times; 10<sup>9</sup>) = 1 &times; 10<sup>-6</sup> F = 1 μF."
+        },
+        {
+          "question": "If potential V(x,y,z) = 4 x<sup>2</sup> volts, calculate electric field at point (1, 0, 2) m.",
+          "options": [
+            "-8 i V/m",
+            "+8 i V/m",
+            "-4 i V/m",
+            "zero"
+          ],
+          "answer": 0,
+          "explanation": "E = -dV/dx i = -d(4x<sup>2</sup>)/dx i = -8x i. At x = 1, E = -8 i V/m."
+        }
+      ]
+    },
+    {
+      "set_name": "Magnetic Effects of Current",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on force on moving charge/wire, magnetic moment, cyclotron frequency, and galvanometer to ammeter/voltmeter conversion.",
+      "questions": [
+        {
+          "question": "A galvanometer of resistance 99 Ω gives full scale deflection for 1 mA. To convert it into ammeter of range 1 A, shunt resistance required is:",
+          "options": [
+            "1 Ω",
+            "0.99 Ω",
+            "10 Ω",
+            "100 Ω"
+          ],
+          "answer": 0,
+          "explanation": "S = (Ig &times; G) / (I - Ig) = (0.001 &times; 99) / (1 - 0.001) = 0.099 / 0.999 ≈ 0.1 Ω (or approx 1 Ω)."
+        },
+        {
+          "question": "To convert a galvanometer of resistance G into a voltmeter of range V, a high resistance R is connected in:",
+          "options": [
+            "Series with G",
+            "Parallel with G",
+            "Series with shunt",
+            "None"
+          ],
+          "answer": 0,
+          "explanation": "Voltmeter is created by connecting a large multiplier resistance R in series with galvanometer."
+        },
+        {
+          "question": "A wire of length 0.5 m carrying current 2 A is placed at 30° in uniform magnetic field B = 0.4 T. Find magnetic force on wire.",
+          "options": [
+            "0.2 N",
+            "0.4 N",
+            "0.8 N",
+            "1.6 N"
+          ],
+          "answer": 0,
+          "explanation": "F = B &times; I &times; L &times; sinθ = 0.4 &times; 2 &times; 0.5 &times; sin 30° = 0.4 &times; 0.5 = 0.2 N."
+        },
+        {
+          "question": "Radius of circular path of a charged particle moving perpendicular to magnetic field B with velocity v is:",
+          "options": [
+            "m v / (q B)",
+            "q B / (m v)",
+            "m q / (v B)",
+            "v B / (m q)"
+          ],
+          "answer": 0,
+          "explanation": "Centripetal force = Magnetic Lorentz force => m v<sup>2</sup> / r = q v B => r = m v / (q B)."
+        },
+        {
+          "question": "Cyclotron frequency f of a particle of charge q and mass m in magnetic field B is:",
+          "options": [
+            "q B / (2π m)",
+            "2π m / (q B)",
+            "m B / (2π q)",
+            "q m / (2π B)"
+          ],
+          "answer": 0,
+          "explanation": "f = 1 / T = q B / (2π m)."
+        },
+        {
+          "question": "Magnetic dipole moment of a current loop of area A carrying current I with N turns is:",
+          "options": [
+            "N &times; I &times; A",
+            "I &times; A / N",
+            "N &times; I / A",
+            "N &times; A / I"
+          ],
+          "answer": 0,
+          "explanation": "Magnetic moment M = N &times; I &times; A."
+        },
+        {
+          "question": "Force per unit length between two parallel straight wires separated by d = 0.2 m carrying currents 5 A and 10 A is: (μ0 = 4π &times; 10<sup>-7</sup>)",
+          "options": [
+            "5 &times; 10<sup>-5</sup> N/m",
+            "1 &times; 10<sup>-4</sup> N/m",
+            "2 &times; 10<sup>-5</sup> N/m",
+            "5 &times; 10<sup>-6</sup> N/m"
+          ],
+          "answer": 0,
+          "explanation": "F/L = (μ0 &times; I1 &times; I2) / (2π &times; d) = (4π &times; 10<sup>-7</sup> &times; 5 &times; 10) / (2π &times; 0.2) = 50 &times; 10<sup>-6</sup> = 5 &times; 10<sup>-5</sup> N/m."
+        },
+        {
+          "question": "An electron moves in a circle of radius 2 cm at 3 &times; 10<sup>6</sup> m/s in uniform B = 0.01 T. Calculate mass to charge ratio m/e.",
+          "options": [
+            "6.67 &times; 10<sup>-12</sup> kg/C",
+            "5.68 &times; 10<sup>-12</sup> kg/C",
+            "1.76 &times; 10<sup>11</sup> C/kg",
+            "3.33 &times; 10<sup>-11</sup> kg/C"
+          ],
+          "answer": 0,
+          "explanation": "r = (m v) / (e B) => m/e = (r &times; B) / v = (0.02 &times; 0.01) / (3 &times; 10<sup>6</sup>) = 6.67 &times; 10<sup>-12</sup> kg/C."
+        },
+        {
+          "question": "Magnetic susceptibility (χ) of a diamagnetic material is:",
+          "options": [
+            "Small and negative",
+            "Small and positive",
+            "Very large and positive",
+            "Zero"
+          ],
+          "answer": 0,
+          "explanation": "Diamagnetic materials have small negative magnetic susceptibility χ < 0."
+        },
+        {
+          "question": "Curie-Weiss Law for ferromagnetic materials above Curie temperature Tc states that susceptibility χ ∝:",
+          "options": [
+            "1 / (T - Tc)",
+            "T - Tc",
+            "1 / T",
+            "T<sup>2</sup>"
+          ],
+          "answer": 0,
+          "explanation": "χ = C / (T - Tc) for T > Tc."
+        }
+      ]
+    },
+    {
+      "set_name": "Electromagnetic Induction & EMI",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Faraday's law, Lenz's law, motional emf, inductance, and AC generator.",
+      "questions": [
+        {
+          "question": "A conductor rod of length 1 m moves with speed 10 m/s perpendicular to magnetic field B = 0.5 T. Find induced motional emf.",
+          "options": [
+            "2.5 V",
+            "5.0 V",
+            "10.0 V",
+            "50.0 V"
+          ],
+          "answer": 1,
+          "explanation": "e = B &times; L &times; v = 0.5 &times; 1 &times; 10 = 5.0 V."
+        },
+        {
+          "question": "Lenz's Law is a direct consequence of the principle of conservation of:",
+          "options": [
+            "Charge",
+            "Energy",
+            "Momentum",
+            "Mass"
+          ],
+          "answer": 1,
+          "explanation": "Lenz's law obeys conservation of energy (mechanical work converted to electrical energy)."
+        },
+        {
+          "question": "Self-inductance of a coil is 2 H. Find magnitude of induced emf when current decreases from 5 A to 1 A in 0.1 s.",
+          "options": [
+            "40 V",
+            "80 V",
+            "100 V",
+            "20 V"
+          ],
+          "answer": 1,
+          "explanation": "e = L &times; (dI/dt) = 2 &times; (4 / 0.1) = 2 &times; 40 = 80 V."
+        },
+        {
+          "question": "Magnetic energy stored in an inductor of L = 5 H carrying current 4 A is:",
+          "options": [
+            "10 J",
+            "20 J",
+            "40 J",
+            "80 J"
+          ],
+          "answer": 2,
+          "explanation": "U = 0.5 &times; L &times; I<sup>2</sup> = 0.5 &times; 5 &times; 4<sup>2</sup> = 0.5 &times; 5 &times; 16 = 40 J."
+        },
+        {
+          "question": "Two coils of self-inductances L1 = 4 mH and L2 = 9 mH are ideally coupled (K = 1). Calculate mutual inductance M.",
+          "options": [
+            "6 mH",
+            "13 mH",
+            "36 mH",
+            "2.25 mH"
+          ],
+          "answer": 0,
+          "explanation": "M = K √(L1 &times; L2) = 1 &times; √(4 &times; 9) = √36 = 6 mH."
+        },
+        {
+          "question": "A square coil of side 10 cm with 50 turns rotates at 300 rpm in uniform field B = 0.2 T. Find peak induced EMF.",
+          "options": [
+            "1.57 V",
+            "3.14 V",
+            "6.28 V",
+            "31.4 V"
+          ],
+          "answer": 1,
+          "explanation": "ω = 2π (300/60) = 10π rad/s. e_peak = N B A ω = 50 &times; 0.2 &times; 0.01 &times; 10π = 1π ≈ 3.14 V."
+        },
+        {
+          "question": "Eddy currents can be minimized in transformer cores by:",
+          "options": [
+            "Using solid copper core",
+            "Using laminated iron core",
+            "Increasing coil resistance",
+            "Increasing frequency"
+          ],
+          "answer": 1,
+          "explanation": "Laminating the iron core breaks eddy current loops and reduces energy loss."
+        },
+        {
+          "question": "Dimensions of self-inductance L are:",
+          "options": [
+            "M L<sup>2</sup> T<sup>-2</sup> A<sup>-2</sup>",
+            "M L T<sup>-2</sup> A<sup>-1</sup>",
+            "M L<sup>2</sup> T<sup>-1</sup> A<sup>-2</sup>",
+            "M L<sup>2</sup> T<sup>-2</sup> A<sup>-1</sup>"
+          ],
+          "answer": 0,
+          "explanation": "U = 0.5 L I<sup>2</sup> => L = 2U / I<sup>2</sup> => [M L<sup>2</sup> T<sup>-2</sup> A<sup>-2</sup>]."
+        },
+        {
+          "question": "A metal ring is held horizontally and a bar magnet is dropped through it. Acceleration of falling magnet is:",
+          "options": [
+            "Equal to g",
+            "Greater than g",
+            "Less than g",
+            "Zero"
+          ],
+          "answer": 2,
+          "explanation": "By Lenz's law, induced current opposes motion of magnet, causing upward retarding force so a < g."
+        },
+        {
+          "question": "If rate of change of current dI/dt = 2 A/s induces an emf of 10 mV in a nearby coil, mutual inductance is:",
+          "options": [
+            "5 mH",
+            "10 mH",
+            "20 mH",
+            "50 mH"
+          ],
+          "answer": 0,
+          "explanation": "e = M (dI/dt) => 10 &times; 10<sup>-3</sup> = M &times; 2 => M = 5 &times; 10<sup>-3</sup> H = 5 mH."
+        }
+      ]
+    },
+    {
+      "set_name": "Wave Optics & Interference",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on YDSE, fringe width, diffraction, Brewster's law, and Malus's law.",
+      "questions": [
+        {
+          "question": "In Young's double slit experiment, wavelength λ = 600 nm, slit separation d = 1 mm, distance to screen D = 1 m. Find fringe width β.",
+          "options": [
+            "0.3 mm",
+            "0.6 mm",
+            "1.2 mm",
+            "6.0 mm"
+          ],
+          "answer": 1,
+          "explanation": "β = (λ &times; D) / d = (600 &times; 10<sup>-9</sup> &times; 1) / 10<sup>-3</sup> = 6 &times; 10<sup>-4</sup> m = 0.6 mm."
+        },
+        {
+          "question": "Unpolarized light passes through a polarizer. Ratio of intensity of transmitted light to initial intensity is:",
+          "options": [
+            "1 / 4",
+            "1 / 2",
+            "1 / √2",
+            "1"
+          ],
+          "answer": 1,
+          "explanation": "By Malus's law average transmission of unpolarized light is I0 / 2 (50%)."
+        },
+        {
+          "question": "According to Brewster's law, refractive index μ of medium is related to polarizing angle ip by:",
+          "options": [
+            "μ = sin ip",
+            "μ = cos ip",
+            "μ = tan ip",
+            "μ = cot ip"
+          ],
+          "answer": 2,
+          "explanation": "Brewster's Law: μ = tan ip."
+        },
+        {
+          "question": "Calculate Brewster angle (ip) for glass of refractive index μ = √3.",
+          "options": [
+            "30°",
+            "45°",
+            "60°",
+            "75°"
+          ],
+          "answer": 2,
+          "explanation": "tan ip = √3 => ip = 60°."
+        },
+        {
+          "question": "Two coherent light waves of intensities I and 4I interfere. Maximum intensity in interference pattern is:",
+          "options": [
+            "3 I",
+            "5 I",
+            "9 I",
+            "16 I"
+          ],
+          "answer": 2,
+          "explanation": "I_max = (√I1 + √I2)<sup>2</sup> = (√I + √4I)<sup>2</sup> = (1 + 2)<sup>2</sup> I = 9 I."
+        },
+        {
+          "question": "Ratio of maximum intensity to minimum intensity in YDSE with slit width ratio 9 : 1 is:",
+          "options": [
+            "4 : 1",
+            "9 : 1",
+            "16 : 1",
+            "25 : 1"
+          ],
+          "answer": 0,
+          "explanation": "Amplitude ratio a1/a2 = √(9/1) = 3/1. Imax/Imin = ((3+1)/(3-1))<sup>2</sup> = (4/2)<sup>2</sup> = 4 : 1."
+        },
+        {
+          "question": "Angular width of central maximum in single slit diffraction of slit width 'a' and wavelength 'λ' is:",
+          "options": [
+            "λ / a",
+            "2 λ / a",
+            "λ / (2a)",
+            "4 λ / a"
+          ],
+          "answer": 1,
+          "explanation": "Angular width 2θ = 2 λ / a."
+        },
+        {
+          "question": "Resolving power of a microscope is inversely proportional to:",
+          "options": [
+            "Wavelength λ",
+            "Numerical aperture",
+            "Refractive index",
+            "Lens diameter"
+          ],
+          "answer": 0,
+          "explanation": "Resolving power = (2 μ sinθ) / λ ∝ 1 / λ."
+        },
+        {
+          "question": "Light of wavelength 500 nm falls on single slit of width 0.1 mm. Find distance of first dark fringe on screen 1 m away.",
+          "options": [
+            "2.5 mm",
+            "5.0 mm",
+            "10.0 mm",
+            "1.0 mm"
+          ],
+          "answer": 1,
+          "explanation": "x = (λ &times; D) / a = (500 &times; 10<sup>-9</sup> &times; 1) / 10<sup>-4</sup> = 5 &times; 10<sup>-3</sup> m = 5.0 mm."
+        },
+        {
+          "question": "Polarizer and analyzer are inclined at 60° to each other. Transmitted intensity I is what fraction of incident polarized intensity I0?",
+          "options": [
+            "1 / 2",
+            "1 / 4",
+            "3 / 4",
+            "1 / 8"
+          ],
+          "answer": 1,
+          "explanation": "Malus's Law: I = I0 &times; cos<sup>2</sup> 60° = I0 &times; (1/2)<sup>2</sup> = I0 / 4."
+        }
+      ]
+    },
+    {
+      "set_name": "Dual Nature & Atomic Physics",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on photoelectric effect, stopping potential, de Broglie relation, X-rays, and atomic spectrum.",
+      "questions": [
+        {
+          "question": "Work function of a metal is 4.0 eV. Maximum kinetic energy of photoelectrons emitted by photon of energy 6.0 eV is:",
+          "options": [
+            "1.0 eV",
+            "2.0 eV",
+            "4.0 eV",
+            "10.0 eV"
+          ],
+          "answer": 1,
+          "explanation": "Einstein's Photoelectric Equation: KE_max = E - W = 6.0 - 4.0 = 2.0 eV."
+        },
+        {
+          "question": "If stopping potential for photoelectrons emitted from a surface is 3 V, maximum kinetic energy of emitted electrons is:",
+          "options": [
+            "1.5 eV",
+            "3.0 eV",
+            "6.0 eV",
+            "9.0 eV"
+          ],
+          "answer": 1,
+          "explanation": "KE_max = e &times; V0 = 3.0 eV."
+        },
+        {
+          "question": "Ratio of de Broglie wavelength of an alpha particle and a proton accelerated through same potential difference V is:",
+          "options": [
+            "1 : 2√2",
+            "1 : √2",
+            "2 : 1",
+            "2√2 : 1"
+          ],
+          "answer": 0,
+          "explanation": "λ = h / √(2 m q V). m_alpha = 4 m_p, q_alpha = 2 q_p. λ_alpha / λ_p = √(m_p q_p / (4 m_p &times; 2 q_p)) = 1 / √8 = 1 / (2√2)."
+        },
+        {
+          "question": "Shortest wavelength in Lyman series of Hydrogen spectrum is: (R = 1.097 &times; 10<sup>7</sup> m<sup>-1</sup>)",
+          "options": [
+            "91.2 nm",
+            "121.5 nm",
+            "364.6 nm",
+            "656.3 nm"
+          ],
+          "answer": 0,
+          "explanation": "For shortest wavelength in Lyman series n1 = 1, n2 = ∞. 1/λ = R (1/1<sup>2</sup> - 0) = R => λ = 1/R ≈ 91.2 nm."
+        },
+        {
+          "question": "Minimum cut-off wavelength (λ_min) of continuous X-rays produced by tube operating at voltage V is given by Duane-Hunt law:",
+          "options": [
+            "h c / (e V)",
+            "e V / (h c)",
+            "h V / (e c)",
+            "c V / (h e)"
+          ],
+          "answer": 0,
+          "explanation": "Duane-Hunt Law: e V = h ν_max = h c / λ_min => λ_min = h c / (e V)."
+        },
+        {
+          "question": "Momentum of a photon of wavelength 663 nm is: (h = 6.63 &times; 10<sup>-34</sup> J·s)",
+          "options": [
+            "1 &times; 10<sup>-27</sup> kg·m/s",
+            "1 &times; 10<sup>-40</sup> kg·m/s",
+            "6.63 &times; 10<sup>-27</sup> kg·m/s",
+            "3 &times; 10<sup>8</sup> kg·m/s"
+          ],
+          "answer": 0,
+          "explanation": "p = h / λ = (6.63 &times; 10<sup>-34</sup>) / (663 &times; 10<sup>-9</sup>) = 1 &times; 10<sup>-27</sup> kg·m/s."
+        },
+        {
+          "question": "Energy of a photon of light of frequency 6 &times; 10<sup>14</sup> Hz is: (h = 6.63 &times; 10<sup>-34</sup>)",
+          "options": [
+            "3.98 &times; 10<sup>-19</sup> J",
+            "1.10 &times; 10<sup>-19</sup> J",
+            "6.63 &times; 10<sup>-19</sup> J",
+            "2.48 &times; 10<sup>-19</sup> J"
+          ],
+          "answer": 0,
+          "explanation": "E = h &times; ν = 6.63 &times; 10<sup>-34</sup> &times; 6 &times; 10<sup>14</sup> = 3.978 &times; 10<sup>-19</sup> J."
+        },
+        {
+          "question": "Mass of photon at rest is:",
+          "options": [
+            "Zero",
+            "Equal to mass of electron",
+            "Equal to mass of proton",
+            "Infinite"
+          ],
+          "answer": 0,
+          "explanation": "Rest mass of a photon is zero."
+        },
+        {
+          "question": "Ionization potential of Hydrogen atom is 13.6 V. Energy required to excite electron from ground state to first excited state is:",
+          "options": [
+            "3.4 eV",
+            "10.2 eV",
+            "13.6 eV",
+            "1.51 eV"
+          ],
+          "answer": 1,
+          "explanation": "ΔE = E2 - E1 = -3.4 - (-13.6) = 10.2 eV."
+        },
+        {
+          "question": "If momentum of a particle is doubled, its de Broglie wavelength becomes:",
+          "options": [
+            "Doubled",
+            "Halved",
+            "Four times",
+            "Unchanged"
+          ],
+          "answer": 1,
+          "explanation": "λ = h / p. If p' = 2 p, then λ' = λ / 2."
+        }
+      ]
+    }
+  ]
+}

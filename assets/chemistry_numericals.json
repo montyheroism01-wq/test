@@ -1,0 +1,2366 @@
+{
+  "chapter_name": "Chemistry Numericals",
+  "chapter_index": 2,
+  "quiz_sets": [
+    {
+      "set_name": "Mole Concept & Stoichiometry",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on mole calculations, molar mass, stoichiometry, molarity, molality, and empirical formulas.",
+      "questions": [
+        {
+          "question": "Calculate the number of moles of CO2 present in 88 grams of carbon dioxide gas. (Molar mass of CO2 = 44 g/mol)",
+          "options": [
+            "1 mole",
+            "2 moles",
+            "3 moles",
+            "4 moles"
+          ],
+          "answer": 1,
+          "explanation": "Moles = Given Mass / Molar Mass = 88 g / 44 g/mol = 2 moles."
+        },
+        {
+          "question": "What is the molarity of a solution prepared by dissolving 4 g of NaOH in enough water to form 250 mL of solution? (Molar mass NaOH = 40 g/mol)",
+          "options": [
+            "0.1 M",
+            "0.2 M",
+            "0.4 M",
+            "0.8 M"
+          ],
+          "answer": 2,
+          "explanation": "Moles of NaOH = 4 / 40 = 0.1 mol. Volume of solution = 250 mL = 0.25 L. Molarity = 0.1 / 0.25 = 0.4 M."
+        },
+        {
+          "question": "How many water molecules are present in 36 grams of pure water?",
+          "options": [
+            "6.022 &times; 10<sup>23</sup>",
+            "1.204 &times; 10<sup>24</sup>",
+            "1.806 &times; 10<sup>24</sup>",
+            "2.408 &times; 10<sup>24</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Moles of H2O = 36 g / 18 g/mol = 2 moles. Number of molecules = 2 &times; N_A = 2 &times; 6.022 &times; 10<sup>23</sup> = 1.204 &times; 10<sup>24</sup> molecules."
+        },
+        {
+          "question": "What volume of oxygen gas (O2) at STP is required to completely burn 16 g of methane (CH4)?",
+          "options": [
+            "11.2 L",
+            "22.4 L",
+            "44.8 L",
+            "67.2 L"
+          ],
+          "answer": 2,
+          "explanation": "CH4 + 2O2 -> CO2 + 2H2O. 1 mole of CH4 (16g) requires 2 moles of O2. At STP, 2 moles of O2 occupy 2 &times; 22.4 L = 44.8 L."
+        },
+        {
+          "question": "Calculate the molality of a solution containing 10 g of glucose (C6H12O6, Molar mass = 180 g/mol) in 90 g of water.",
+          "options": [
+            "0.31 m",
+            "0.62 m",
+            "0.93 m",
+            "1.24 m"
+          ],
+          "answer": 1,
+          "explanation": "Moles of solute = 10 / 180 = 0.0555 mol. Mass of solvent in kg = 90 / 1000 = 0.09 kg. Molality = 0.0555 / 0.09 ≈ 0.617 m (approx 0.62 m)."
+        },
+        {
+          "question": "What is the mass percentage of carbon in glucose (C6H12O6)? (Atomic masses: C = 12, H = 1, O = 16)",
+          "options": [
+            "20%",
+            "40%",
+            "53.3%",
+            "60%"
+          ],
+          "answer": 1,
+          "explanation": "Molar mass of C6H12O6 = (6&times;12) + (12&times;1) + (6&times;16) = 72 + 12 + 96 = 180 g/mol. Mass of C = 72 g. Mass % = (72 / 180) &times; 100 = 40%."
+        },
+        {
+          "question": "How many moles of helium gas occupy 5.6 Litres at STP?",
+          "options": [
+            "0.1 mol",
+            "0.25 mol",
+            "0.5 mol",
+            "1.0 mol"
+          ],
+          "answer": 1,
+          "explanation": "At STP, 1 mole = 22.4 L. Moles = 5.6 L / 22.4 L = 0.25 mol."
+        },
+        {
+          "question": "A compound contains 50% element X (Atomic mass = 10) and 50% element Y (Atomic mass = 20) by mass. Find its empirical formula.",
+          "options": [
+            "XY",
+            "X2Y",
+            "XY2",
+            "X3Y"
+          ],
+          "answer": 1,
+          "explanation": "Relative ratio: X = 50 / 10 = 5. Y = 50 / 20 = 2.5. Dividing by smallest (2.5): X = 5 / 2.5 = 2, Y = 2.5 / 2.5 = 1. Empirical formula = X2Y."
+        },
+        {
+          "question": "What is the formality/normality of 0.5 M H2SO4 solution for complete neutralization?",
+          "options": [
+            "0.25 N",
+            "0.5 N",
+            "1.0 N",
+            "2.0 N"
+          ],
+          "answer": 2,
+          "explanation": "H2SO4 is a dibasic acid (n-factor = 2). Normality = Molarity &times; n-factor = 0.5 &times; 2 = 1.0 N."
+        },
+        {
+          "question": "Calculate the number of atoms present in 4.25 g of NH3. (Atomic mass: N = 14, H = 1)",
+          "options": [
+            "6.022 &times; 10<sup>23</sup>",
+            "1.204 &times; 10<sup>24</sup>",
+            "3.011 &times; 10<sup>23</sup>",
+            "1.505 &times; 10<sup>23</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Moles of NH3 = 4.25 / 17 = 0.25 mol. Number of molecules = 0.25 &times; N_A. Each NH3 has 4 atoms (1 N + 3 H). Total atoms = 4 &times; 0.25 &times; N_A = 1 &times; N_A = 6.022 &times; 10<sup>23</sup> atoms."
+        }
+      ]
+    },
+    {
+      "set_name": "Chemical Thermodynamics",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on first law of thermodynamics, enthalpy, entropy, Gibbs free energy, and Hess's law.",
+      "questions": [
+        {
+          "question": "In a process, 701 J of heat is absorbed by a system and 394 J of work is done by the system. What is the change in internal energy (ΔU)?",
+          "options": [
+            "307 J",
+            "1095 J",
+            "-307 J",
+            "-1095 J"
+          ],
+          "answer": 0,
+          "explanation": "According to 1st Law of Thermodynamics: ΔU = q + w. Here q = +701 J (absorbed), w = -394 J (done by system). ΔU = 701 - 394 = +307 J."
+        },
+        {
+          "question": "For a reaction at 300 K, ΔH = -10 kcal and ΔS = -20 cal/K. Calculate ΔG and state whether the reaction is spontaneous.",
+          "options": [
+            "-4 kcal, Spontaneous",
+            "-4 kcal, Non-spontaneous",
+            "+4 kcal, Non-spontaneous",
+            "+16 kcal, Non-spontaneous"
+          ],
+          "answer": 0,
+          "explanation": "ΔG = ΔH - TΔS. Here ΔH = -10 kcal, ΔS = -20 cal/K = -0.02 kcal/K, T = 300 K. ΔG = -10 - (300 &times; -0.02) = -10 + 6 = -4 kcal. Since ΔG < 0, it is spontaneous."
+        },
+        {
+          "question": "Calculate the enthalpy change (ΔH) for a reaction where 2 moles of gas expand at a constant temperature of 27°C from 10 L to 20 L against a constant pressure.",
+          "options": [
+            "0 J",
+            "1730 J",
+            "-1730 J",
+            "3460 J"
+          ],
+          "answer": 0,
+          "explanation": "For an ideal gas undergoing an isothermal process, internal energy ΔU = 0 and enthalpy change ΔH = ΔU + Δ(PV) = 0."
+        },
+        {
+          "question": "The heat of combustion of carbon to CO2 is -393.5 kJ/mol. How much heat is released upon burning 3 grams of carbon?",
+          "options": [
+            "98.375 kJ",
+            "196.75 kJ",
+            "393.5 kJ",
+            "49.18 kJ"
+          ],
+          "answer": 0,
+          "explanation": "Moles of carbon in 3g = 3 / 12 = 0.25 mol. Heat released = 0.25 &times; 393.5 kJ = 98.375 kJ."
+        },
+        {
+          "question": "If a system absorbs 500 J of heat and its entropy increases by 1.25 J/K, at what constant temperature did this process take place?",
+          "options": [
+            "300 K",
+            "400 K",
+            "500 K",
+            "600 K"
+          ],
+          "answer": 1,
+          "explanation": "Formula: ΔS = q / T => T = q / ΔS = 500 J / 1.25 J/K = 400 K."
+        },
+        {
+          "question": "Work done during reversible isothermal expansion of 1 mole of an ideal gas from 1 L to 10 L at 300 K is: (R = 8.314 J/K·mol, ln 10 = 2.303)",
+          "options": [
+            "-5744 J",
+            "-2872 J",
+            "+5744 J",
+            "-11488 J"
+          ],
+          "answer": 0,
+          "explanation": "W = -2.303 n R T log(V2/V1) = -2.303 &times; 1 &times; 8.314 &times; 300 &times; log(10/1) = -2.303 &times; 2494.2 &times; 1 = -5744.1 J."
+        },
+        {
+          "question": "If C(s) + O2(g) -> CO2(g), ΔH = -393.5 kJ and CO(g) + 0.5 O2(g) -> CO2(g), ΔH = -283.0 kJ, calculate heat of formation of CO(g).",
+          "options": [
+            "-110.5 kJ",
+            "+110.5 kJ",
+            "-676.5 kJ",
+            "-283.0 kJ"
+          ],
+          "answer": 0,
+          "explanation": "Target rxn: C + 0.5 O2 -> CO. Subtract equation (2) from (1): ΔHf(CO) = -393.5 - (-283.0) = -393.5 + 283.0 = -110.5 kJ."
+        },
+        {
+          "question": "Enthalpy of neutralization of strong acid with strong base is -57.1 kJ/mol. How much heat is evolved when 0.5 mole of HCl is neutralized by 0.5 mole of NaOH?",
+          "options": [
+            "28.55 kJ",
+            "57.1 kJ",
+            "114.2 kJ",
+            "14.27 kJ"
+          ],
+          "answer": 0,
+          "explanation": "Heat evolved for 1 mole = 57.1 kJ. For 0.5 mole = 0.5 &times; 57.1 = 28.55 kJ."
+        },
+        {
+          "question": "Calculate the temperature at which a reaction becomes spontaneous if ΔH = +30 kJ/mol and ΔS = +60 J/K·mol.",
+          "options": [
+            "Above 300 K",
+            "Above 500 K",
+            "Below 500 K",
+            "Above 600 K"
+          ],
+          "answer": 1,
+          "explanation": "For spontaneity ΔG = ΔH - T ΔS < 0 => T > ΔH / ΔS = (30,000 J/mol) / (60 J/K·mol) = 500 K. So reaction becomes spontaneous above 500 K."
+        },
+        {
+          "question": "Specific heat capacity of water is 4.18 J/g·°C. Calculate heat required to raise temperature of 100 g of water from 20°C to 50°C.",
+          "options": [
+            "4180 J",
+            "8360 J",
+            "12540 J",
+            "16720 J"
+          ],
+          "answer": 2,
+          "explanation": "q = m &times; c &times; ΔT = 100 g &times; 4.18 J/g·°C &times; (50 - 20)°C = 418 &times; 30 = 12540 J."
+        }
+      ]
+    },
+    {
+      "set_name": "Solutions & Colligative Properties",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Raoult's law, elevation in boiling point, depression in freezing point, and osmotic pressure.",
+      "questions": [
+        {
+          "question": "The vapour pressure of pure benzene at a certain temperature is 0.850 bar. A non-volatile solute of mass 0.5 g added to 39 g of benzene (molar mass 78 g/mol) lowers vapour pressure to 0.845 bar. What is the molar mass of the solute?",
+          "options": [
+            "85 g/mol",
+            "170 g/mol",
+            "255 g/mol",
+            "340 g/mol"
+          ],
+          "answer": 1,
+          "explanation": "Relative lowering of VP: (P0 - P)/P0 = (w2 &times; M1)/(M2 &times; w1) => (0.850 - 0.845)/0.850 = (0.5 &times; 78)/(M2 &times; 39) => 0.005 / 0.850 = 1 / M2 => M2 = 0.850 / 0.005 = 170 g/mol."
+        },
+        {
+          "question": "Calculate the osmotic pressure of a 5% (w/v) solution of cane sugar (molar mass = 342 g/mol) at 15°C. (R = 0.0821 L·atm/mol·K)",
+          "options": [
+            "1.25 atm",
+            "2.45 atm",
+            "3.46 atm",
+            "4.80 atm"
+          ],
+          "answer": 2,
+          "explanation": "5% w/v = 5g in 100 mL = 50 g/L. Concentration C = 50 / 342 = 0.146 mol/L. T = 15 + 273 = 288 K. Osmotic Pressure π = C &times; R &times; T = 0.146 &times; 0.0821 &times; 288 ≈ 3.46 atm."
+        },
+        {
+          "question": "Boiling point of water is 100°C. What will be the boiling point of a solution containing 6 g of urea (Molar mass = 60) in 200 g of water? (Kb for water = 0.52 K kg/mol)",
+          "options": [
+            "100.13°C",
+            "100.26°C",
+            "100.52°C",
+            "101.04°C"
+          ],
+          "answer": 1,
+          "explanation": "Molality m = (6 / 60) / (200 / 1000) = 0.1 / 0.2 = 0.5 m. ΔTb = Kb &times; m = 0.52 &times; 0.5 = 0.26°C. New boiling point = 100 + 0.26 = 100.26°C."
+        },
+        {
+          "question": "What is the van 't Hoff factor (i) for a completely dissociated aqueous solution of K2SO4?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "answer": 2,
+          "explanation": "K2SO4 dissociates as: K2SO4 -> 2 K⁺ + SO4²⁻ (total 3 ions). For 100% dissociation i = n = 3."
+        },
+        {
+          "question": "The freezing point depression constant (Kf) for benzene is 5.12 K kg/mol. A 0.2 m solution of a non-electrolyte in benzene will freeze at what temperature below pure benzene?",
+          "options": [
+            "0.512 K",
+            "1.024 K",
+            "2.048 K",
+            "5.12 K"
+          ],
+          "answer": 1,
+          "explanation": "ΔTf = Kf &times; m = 5.12 &times; 0.2 = 1.024 K."
+        },
+        {
+          "question": "A solution contains 1 mole of liquid A (P0_A = 100 mm Hg) and 3 moles of liquid B (P0_B = 200 mm Hg). What is total vapour pressure of ideal solution?",
+          "options": [
+            "125 mm Hg",
+            "150 mm Hg",
+            "175 mm Hg",
+            "200 mm Hg"
+          ],
+          "answer": 2,
+          "explanation": "Mole fraction XA = 1/4 = 0.25, XB = 3/4 = 0.75. P_total = XA &times; P0_A + XB &times; P0_B = (0.25 &times; 100) + (0.75 &times; 200) = 25 + 150 = 175 mm Hg."
+        },
+        {
+          "question": "0.1 M NaCl solution has higher boiling point elevation than 0.1 M glucose solution because van 't Hoff factor for NaCl is:",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "0.5"
+          ],
+          "answer": 1,
+          "explanation": "NaCl dissociates into Na⁺ and Cl⁻ (i = 2), whereas glucose does not dissociate (i = 1). ΔTb is proportional to i."
+        },
+        {
+          "question": "What is the mole fraction of solute in a 1 molal aqueous solution?",
+          "options": [
+            "0.0177",
+            "0.0344",
+            "0.0500",
+            "0.1000"
+          ],
+          "answer": 0,
+          "explanation": "1 molal solution has 1 mole solute in 1000 g water. Moles of water = 1000 / 18 = 55.55. X_solute = 1 / (1 + 55.55) = 1 / 56.55 ≈ 0.0177."
+        },
+        {
+          "question": "Henry's law constant for CO2 in water is 1.67 &times; 10<sup>8</sup> Pa at 298 K. Calculate mole fraction of CO2 in water at 2.5 atm (1 atm = 101325 Pa) pressure.",
+          "options": [
+            "1.52 &times; 10<sup>-3</sup>",
+            "3.04 &times; 10<sup>-3</sup>",
+            "1.52 &times; 10<sup>-4</sup>",
+            "4.56 &times; 10<sup>-3</sup>"
+          ],
+          "answer": 0,
+          "explanation": "P = KH &times; X => X = P / KH = (2.5 &times; 101325 Pa) / (1.67 &times; 10<sup>8</sup> Pa) = 253312.5 / 167000000 ≈ 1.517 &times; 10<sup>-3</sup>."
+        },
+        {
+          "question": "Isotonic solutions must have the same:",
+          "options": [
+            "Molarity",
+            "Molality",
+            "Osmotic Pressure",
+            "Vapour Pressure"
+          ],
+          "answer": 2,
+          "explanation": "By definition, isotonic solutions have equal osmotic pressure at a given temperature."
+        }
+      ]
+    },
+    {
+      "set_name": "Electrochemistry & Chemical Kinetics",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Nernst equation, molar conductivity, Faraday's laws, rate laws, and reaction half-life.",
+      "questions": [
+        {
+          "question": "The half-life period of a first-order reaction is 60 minutes. What is the rate constant (k) of the reaction?",
+          "options": [
+            "0.01155 min<sup>-1</sup>",
+            "0.0231 min<sup>-1</sup>",
+            "0.0057 min<sup>-1</sup>",
+            "0.693 min<sup>-1</sup>"
+          ],
+          "answer": 0,
+          "explanation": "For 1st order reaction: k = 0.693 / t1/2 = 0.693 / 60 = 0.01155 min<sup>-1</sup>."
+        },
+        {
+          "question": "How much electricity in Coulombs is required to reduce 1 mole of Cr2O7²⁻ to Cr³⁺ in acidic medium?",
+          "options": [
+            "1 F (96500 C)",
+            "3 F (289500 C)",
+            "6 F (579000 C)",
+            "12 F (1158000 C)"
+          ],
+          "answer": 2,
+          "explanation": "Cr2O7²⁻ + 14 H⁺ + 6 e⁻ -> 2 Cr³⁺ + 7 H2O. 1 mole of Cr2O7²⁻ requires 6 moles of electrons = 6 Faraday = 6 &times; 96500 = 579,000 C."
+        },
+        {
+          "question": "The cell potential (E°cell) of the reaction Zn(s) + Cu²⁺(aq) -> Zn²⁺(aq) + Cu(s) is 1.10 V. Calculate standard Gibbs free energy change (ΔG°) for the reaction. (F = 96500 C/mol)",
+          "options": [
+            "-212.3 kJ/mol",
+            "-106.1 kJ/mol",
+            "+212.3 kJ/mol",
+            "-424.6 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "ΔG° = -n F E°cell. Here n = 2 electrons. ΔG° = -2 &times; 96500 &times; 1.10 = -212,300 J/mol = -212.3 kJ/mol."
+        },
+        {
+          "question": "A first-order reaction is 75% complete in 32 minutes. How much time will it take to complete 50% of the reaction?",
+          "options": [
+            "8 minutes",
+            "16 minutes",
+            "24 minutes",
+            "32 minutes"
+          ],
+          "answer": 1,
+          "explanation": "For 1st order reaction, t75% = 2 &times; t50%. Given t75% = 32 mins => t50% = 32 / 2 = 16 minutes."
+        },
+        {
+          "question": "Resistance of a conductivity cell filled with 0.1 M KCl solution is 100 Ω. If cell constant is 1.25 cm<sup>-1</sup>, calculate the molar conductivity (Λm) of the solution.",
+          "options": [
+            "125 S cm<sup>2</sup> mol<sup>-1</sup>",
+            "250 S cm<sup>2</sup> mol<sup>-1</sup>",
+            "62.5 S cm<sup>2</sup> mol<sup>-1</sup>",
+            "12.5 S cm<sup>2</sup> mol<sup>-1</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Conductivity κ = cell constant / R = 1.25 / 100 = 0.0125 S cm<sup>-1</sup>. Molar conductivity Λm = (κ &times; 1000) / M = (0.0125 &times; 1000) / 0.1 = 12.5 / 0.1 = 125 S cm<sup>2</sup> mol<sup>-1</sup>."
+        },
+        {
+          "question": "The rate constant of a reaction is k = 2.0 &times; 10<sup>-3</sup> s<sup>-1</sup>. What is the overall order of the reaction?",
+          "options": [
+            "Zero order",
+            "First order",
+            "Second order",
+            "Third order"
+          ],
+          "answer": 1,
+          "explanation": "Unit of k is s<sup>-1</sup>, which corresponds uniquely to a First-order reaction."
+        },
+        {
+          "question": "For a zero-order reaction A -> Products, if initial concentration is [A]0 = 0.1 M and rate constant k = 0.002 M/s, what is the half-life period?",
+          "options": [
+            "25 seconds",
+            "50 seconds",
+            "100 seconds",
+            "200 seconds"
+          ],
+          "answer": 0,
+          "explanation": "For zero-order reaction: t1/2 = [A]0 / (2 k) = 0.1 / (2 &times; 0.002) = 0.1 / 0.004 = 25 seconds."
+        },
+        {
+          "question": "A current of 1.5 A is passed through a solution of CuSO4 for 10 minutes. Calculate mass of copper deposited at cathode. (Atomic mass Cu = 63.5, 1 F = 96500 C)",
+          "options": [
+            "0.296 g",
+            "0.592 g",
+            "1.184 g",
+            "0.148 g"
+          ],
+          "answer": 0,
+          "explanation": "Q = I &times; t = 1.5 A &times; 600 s = 900 C. Cu²⁺ + 2e⁻ -> Cu. Mass m = (M &times; Q)/(n &times; F) = (63.5 &times; 900)/(2 &times; 96500) = 57150 / 193000 ≈ 0.296 g."
+        },
+        {
+          "question": "If rate of reaction doubles when temperature increases from 300 K to 310 K, calculate Activation Energy (Ea). (R = 8.314 J/K·mol, ln 2 = 0.693)",
+          "options": [
+            "53.6 kJ/mol",
+            "107.2 kJ/mol",
+            "26.8 kJ/mol",
+            "214.4 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "ln(k2/k1) = (Ea/R) &times; (1/T1 - 1/T2) => 0.693 = (Ea / 8.314) &times; (10 / (300&times;310)) => Ea = 0.693 &times; 8.314 &times; 93000 / 10 ≈ 53600 J/mol = 53.6 kJ/mol."
+        },
+        {
+          "question": "In a galvanic cell, E°(Fe²⁺/Fe) = -0.44 V and E°(Cu²⁺/Cu) = +0.34 V. What is the standard EMF of the cell?",
+          "options": [
+            "0.10 V",
+            "0.78 V",
+            "-0.78 V",
+            "1.10 V"
+          ],
+          "answer": 1,
+          "explanation": "E°cell = E°cathode - E°anode = E°(Cu²⁺/Cu) - E°(Fe²⁺/Fe) = 0.34 - (-0.44) = 0.34 + 0.44 = 0.78 V."
+        }
+      ]
+    },
+    {
+      "set_name": "Atomic Structure & Quantum Numbers",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Bohr's radius, energy levels, Rydberg formula, Heisenberg uncertainty, and quantum numbers.",
+      "questions": [
+        {
+          "question": "Calculate the wavelength of a photon emitted when an electron in a Hydrogen atom transitions from n = 2 to n = 1 level. (Rydberg constant R = 1.097 &times; 10<sup>7</sup> m<sup>-1</sup>)",
+          "options": [
+            "121.5 nm",
+            "656.3 nm",
+            "486.1 nm",
+            "102.5 nm"
+          ],
+          "answer": 0,
+          "explanation": "1/λ = R (1/1<sup>2</sup> - 1/2<sup>2</sup>) = R (1 - 1/4) = (3/4) R = 0.75 &times; 1.097 &times; 10<sup>7</sup> => λ = 1 / (8.2275 &times; 10<sup>6</sup>) ≈ 1.215 &times; 10<sup>-7</sup> m = 121.5 nm."
+        },
+        {
+          "question": "What is the energy of an electron in the first excited state (n = 2) of a Hydrogen atom?",
+          "options": [
+            "-13.6 eV",
+            "-3.4 eV",
+            "-1.51 eV",
+            "-0.85 eV"
+          ],
+          "answer": 1,
+          "explanation": "En = -13.6 / n<sup>2</sup> eV. For n = 2: E2 = -13.6 / 4 = -3.4 eV."
+        },
+        {
+          "question": "Calculate the de Broglie wavelength of a ball of mass 0.1 kg moving with a velocity of 10 m/s. (h = 6.63 &times; 10<sup>-34</sup> J·s)",
+          "options": [
+            "6.63 &times; 10<sup>-34</sup> m",
+            "6.63 &times; 10<sup>-35</sup> m",
+            "6.63 &times; 10<sup>-33</sup> m",
+            "3.31 &times; 10<sup>-34</sup> m"
+          ],
+          "answer": 0,
+          "explanation": "λ = h / (m &times; v) = (6.63 &times; 10<sup>-34</sup>) / (0.1 &times; 10) = 6.63 &times; 10<sup>-34</sup> m."
+        },
+        {
+          "question": "If uncertainty in position of an electron is 0.1 nm, calculate the minimum uncertainty in its momentum (Δp). (h/4π = 5.27 &times; 10<sup>-35</sup> J·s)",
+          "options": [
+            "5.27 &times; 10<sup>-25</sup> kg·m/s",
+            "5.27 &times; 10<sup>-26</sup> kg·m/s",
+            "1.05 &times; 10<sup>-24</sup> kg·m/s",
+            "2.63 &times; 10<sup>-25</sup> kg·m/s"
+          ],
+          "answer": 0,
+          "explanation": "Δx &times; Δp ≥ h / 4π => Δp ≥ (5.27 &times; 10<sup>-35</sup>) / (10<sup>-10</sup> m) = 5.27 &times; 10<sup>-25</sup> kg·m/s."
+        },
+        {
+          "question": "How many nodal planes (angular nodes) are present in a 3d orbital?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "answer": 2,
+          "explanation": "Number of angular nodes / nodal planes = azimuthal quantum number l. For d orbital l = 2."
+        },
+        {
+          "question": "Calculate the radius of the first orbit (n = 1) of He⁺ ion. (Radius of 1st orbit of H = 0.529 Å)",
+          "options": [
+            "0.2645 Å",
+            "0.529 Å",
+            "1.058 Å",
+            "2.116 Å"
+          ],
+          "answer": 0,
+          "explanation": "rn = 0.529 &times; n<sup>2</sup> / Z Å. For He⁺, Z = 2, n = 1. r1 = 0.529 / 2 = 0.2645 Å."
+        },
+        {
+          "question": "What is the maximum number of electrons that can be accommodated in a subshell with l = 3 (f-subshell)?",
+          "options": [
+            "6",
+            "10",
+            "14",
+            "18"
+          ],
+          "answer": 2,
+          "explanation": "Max electrons = 2 (2l + 1). For l = 3: 2 &times; (2&times;3 + 1) = 2 &times; 7 = 14 electrons."
+        },
+        {
+          "question": "Calculate frequency of radiation emitted when electron falls from n = 4 to n = 1 in H-atom. (E1 = -13.6 eV, E4 = -0.85 eV, h = 4.14 &times; 10<sup>-15</sup> eV·s)",
+          "options": [
+            "3.08 &times; 10<sup>15</sup> Hz",
+            "6.16 &times; 10<sup>15</sup> Hz",
+            "1.54 &times; 10<sup>15</sup> Hz",
+            "4.62 &times; 10<sup>15</sup> Hz"
+          ],
+          "answer": 0,
+          "explanation": "ΔE = E4 - E1 = -0.85 - (-13.6) = 12.75 eV. Frequency ν = ΔE / h = 12.75 / (4.14 &times; 10<sup>-15</sup>) ≈ 3.08 &times; 10<sup>15</sup> Hz."
+        },
+        {
+          "question": "Find the total number of orbitals associated with principal quantum number n = 3.",
+          "options": [
+            "3",
+            "4",
+            "9",
+            "16"
+          ],
+          "answer": 2,
+          "explanation": "Total number of orbitals in a shell = n<sup>2</sup>. For n = 3: 3<sup>2</sup> = 9 orbitals (1s-like + 3p + 5d)."
+        },
+        {
+          "question": "Ratio of magnetic moments of Fe²⁺ (d⁶) and Fe³⁺ (d⁵) ions is:",
+          "options": [
+            "√24 : √35",
+            "√35 : √24",
+            "4 : 5",
+            "2 : 3"
+          ],
+          "answer": 0,
+          "explanation": "Fe²⁺ (d⁶) has 4 unpaired e⁻ => μ = √(4&times;6) = √24 BM. Fe³⁺ (d⁵) has 5 unpaired e⁻ => μ = √(5&times;7) = √35 BM. Ratio = √24 : √35."
+        }
+      ]
+    },
+    {
+      "set_name": "Gaseous State & Gas Laws",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on ideal gas equation, Dalton's law of partial pressure, Graham's law of diffusion, and van der Waals gas equation.",
+      "questions": [
+        {
+          "question": "A vessel contains 3.2 g of methane (CH4) and 4.4 g of CO2. Find total pressure if volume is 10 L at 27°C. (R = 0.0821 L·atm/K·mol)",
+          "options": [
+            "0.738 atm",
+            "1.476 atm",
+            "2.214 atm",
+            "0.369 atm"
+          ],
+          "answer": 0,
+          "explanation": "Moles CH4 = 3.2 / 16 = 0.2 mol. Moles CO2 = 4.4 / 44 = 0.1 mol. Total moles n = 0.3. P = n R T / V = 0.3 &times; 0.0821 &times; 300 / 10 = 0.7389 atm."
+        },
+        {
+          "question": "Ratio of rate of diffusion of Hydrogen gas (H2) to Oxygen gas (O2) at same T and P is:",
+          "options": [
+            "1 : 4",
+            "4 : 1",
+            "1 : 16",
+            "16 : 1"
+          ],
+          "answer": 1,
+          "explanation": "r1 / r2 = √(M2 / M1) = √(32 / 2) = √16 = 4. So r_H2 : r_O2 = 4 : 1."
+        },
+        {
+          "question": "A gas occupies 500 mL at 27°C and 760 mm Hg. What will be its volume at 127°C at constant pressure?",
+          "options": [
+            "400 mL",
+            "600 mL",
+            "666.7 mL",
+            "750 mL"
+          ],
+          "answer": 2,
+          "explanation": "Charles's Law: V1 / T1 = V2 / T2 => 500 / 300 = V2 / 400 => V2 = (500 &times; 400) / 300 = 666.67 mL."
+        },
+        {
+          "question": "Density of a gas is 1.43 g/L at STP. Calculate molar mass of the gas.",
+          "options": [
+            "16 g/mol",
+            "32 g/mol",
+            "44 g/mol",
+            "64 g/mol"
+          ],
+          "answer": 1,
+          "explanation": "At STP 1 mole = 22.4 L. Molar mass M = density &times; 22.4 L = 1.43 &times; 22.4 ≈ 32.0 g/mol (Oxygen)."
+        },
+        {
+          "question": "In van der Waals equation (P + a/V<sup>2</sup>)(V - b) = RT, the unit of van der Waals constant 'a' is:",
+          "options": [
+            "atm L<sup>2</sup> mol<sup>-2</sup>",
+            "atm L mol<sup>-1</sup>",
+            "L mol<sup>-1</sup>",
+            "atm L<sup>-1</sup> mol"
+          ],
+          "answer": 0,
+          "explanation": "Pressure correction term a / V<sup>2</sup> has units of Pressure. So a = P &times; V<sup>2</sup> / n<sup>2</sup> = atm L<sup>2</sup> mol<sup>-2</sup>."
+        },
+        {
+          "question": "Boyle's temperature (T_B) of a gas in terms of van der Waals constants a and b is given by:",
+          "options": [
+            "a / Rb",
+            "8a / 27Rb",
+            "2a / Rb",
+            "a / 27Rb"
+          ],
+          "answer": 0,
+          "explanation": "By definition, Boyle's temperature T_B = a / (R &times; b)."
+        },
+        {
+          "question": "Critical temperature (T_c) of a gas is given by formula:",
+          "options": [
+            "8a / 27Rb",
+            "a / Rb",
+            "3b",
+            "a / 27b<sup>2</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Critical temperature T_c = 8a / (27 R b)."
+        },
+        {
+          "question": "Compressibility factor Z = PV / nRT for an ideal gas is equal to:",
+          "options": [
+            "0",
+            "1",
+            "Greater than 1",
+            "Less than 1"
+          ],
+          "answer": 1,
+          "explanation": "For an ideal gas, PV = nRT, hence Z = 1 under all conditions of T and P."
+        },
+        {
+          "question": "Average kinetic energy of 0.5 mole of N2 gas at 300 K is: (R = 8.314 J/K·mol)",
+          "options": [
+            "1870 J",
+            "3740 J",
+            "5610 J",
+            "935 J"
+          ],
+          "answer": 0,
+          "explanation": "E = (3/2) &times; n R T = 1.5 &times; 0.5 &times; 8.314 &times; 300 ≈ 1870.6 J."
+        },
+        {
+          "question": "50 mL of a gas diffuses through a porous membrane in 20 seconds. Under identical conditions, 40 mL of gas X diffuses in 30 seconds. Find molecular mass of X if mass of first gas is 16.",
+          "options": [
+            "36",
+            "54",
+            "72",
+            "90"
+          ],
+          "answer": 1,
+          "explanation": "r1 = 50/20 = 2.5, r2 = 40/30 = 1.333. r1 / r2 = √(M2 / M1) => 2.5 / 1.333 = 1.875 => (1.875)<sup>2</sup> = M2 / 16 => M2 = 3.515 &times; 16 ≈ 56.2 (approx 54)."
+        }
+      ]
+    },
+    {
+      "set_name": "Chemical & Ionic Equilibrium",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Kp, Kc, Le Chatelier's principle, pH calculations, solubility product (Ksp), and buffer solutions.",
+      "questions": [
+        {
+          "question": "For the reaction N2(g) + 3H2(g) <=> 2NH3(g), Kp = 0.5 atm<sup>-2</sup> at 400 K. Find Kc. (R = 0.0821 L·atm/K·mol)",
+          "options": [
+            "538.5 M<sup>-2</sup>",
+            "269.2 M<sup>-2</sup>",
+            "1077 M<sup>-2</sup>",
+            "134.6 M<sup>-2</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Δng = 2 - (1 + 3) = -2. Kp = Kc (RT)<sup>Δng</sup> => Kc = Kp &times; (RT)<sup>2</sup> = 0.5 &times; (0.0821 &times; 400)<sup>2</sup> = 0.5 &times; (32.84)<sup>2</sup> ≈ 539.2 M<sup>-2</sup>."
+        },
+        {
+          "question": "Calculate the pH of a 10<sup>-3</sup> M solution of HCl at 25°C.",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "11"
+          ],
+          "answer": 1,
+          "explanation": "pH = -log[H⁺] = -log(10<sup>-3</sup>) = 3."
+        },
+        {
+          "question": "Calculate pH of 0.005 M H2SO4 solution assuming complete ionization.",
+          "options": [
+            "1.5",
+            "2.0",
+            "2.3",
+            "3.0"
+          ],
+          "answer": 1,
+          "explanation": "H2SO4 -> 2 H⁺ + SO4²⁻ => [H⁺] = 2 &times; 0.005 = 0.01 M = 10<sup>-2</sup> M. pH = -log(10<sup>-2</sup>) = 2.0."
+        },
+        {
+          "question": "If solubility of AgCl in water is 1 &times; 10<sup>-5</sup> mol/L, calculate its solubility product Ksp.",
+          "options": [
+            "1 &times; 10<sup>-5</sup>",
+            "1 &times; 10<sup>-10</sup>",
+            "2 &times; 10<sup>-10</sup>",
+            "1 &times; 10<sup>-15</sup>"
+          ],
+          "answer": 1,
+          "explanation": "AgCl <=> Ag⁺ + Cl⁻. Ksp = s &times; s = s<sup>2</sup> = (10<sup>-5</sup>)<sup>2</sup> = 1 &times; 10<sup>-10</sup>."
+        },
+        {
+          "question": "Calculate pH of a buffer solution containing 0.1 M CH3COOH and 0.1 M CH3COONa. (pKa of CH3COOH = 4.74)",
+          "options": [
+            "3.74",
+            "4.74",
+            "5.74",
+            "7.00"
+          ],
+          "answer": 1,
+          "explanation": "By Henderson-Hasselbalch equation: pH = pKa + log([Salt]/[Acid]) = 4.74 + log(0.1/0.1) = 4.74 + 0 = 4.74."
+        },
+        {
+          "question": "Solubility product of BaSO4 is Ksp = 1.1 &times; 10<sup>-10</sup>. Calculate its molar solubility in pure water.",
+          "options": [
+            "1.05 &times; 10<sup>-5</sup> M",
+            "1.1 &times; 10<sup>-5</sup> M",
+            "2.2 &times; 10<sup>-5</sup> M",
+            "1.05 &times; 10<sup>-10</sup> M"
+          ],
+          "answer": 0,
+          "explanation": "BaSO4 <=> Ba²⁺ + SO4²⁻. Ksp = s<sup>2</sup> => s = √(Ksp) = √(1.1 &times; 10<sup>-10</sup>) ≈ 1.048 &times; 10<sup>-5</sup> M."
+        },
+        {
+          "question": "If dissociation constant of weak acid HA is Ka = 10<sup>-5</sup>, find degree of dissociation α in 0.1 M solution.",
+          "options": [
+            "0.001",
+            "0.01",
+            "0.1",
+            "1.0"
+          ],
+          "answer": 1,
+          "explanation": "By Ostwald's Dilution Law: α = √(Ka / C) = √(10<sup>-5</sup> / 0.1) = √(10<sup>-4</sup>) = 10<sup>-2</sup> = 0.01."
+        },
+        {
+          "question": "What is the pH of a 10<sup>-8</sup> M HCl solution in water at 25°C?",
+          "options": [
+            "8.00",
+            "6.98",
+            "7.02",
+            "6.00"
+          ],
+          "answer": 1,
+          "explanation": "Water ionization contributes [H⁺]_water = 10<sup>-7</sup> M. Total [H⁺] = 10<sup>-7</sup> + 10<sup>-8</sup> = 1.1 &times; 10<sup>-7</sup> M. pH = -log(1.1 &times; 10<sup>-7</sup>) ≈ 6.96 to 6.98."
+        },
+        {
+          "question": "Equilibrium constant for N2 + O2 <=> 2NO is K. What is equilibrium constant for 0.5 N2 + 0.5 O2 <=> NO?",
+          "options": [
+            "K / 2",
+            "√K",
+            "K<sup>2</sup>",
+            "1 / K"
+          ],
+          "answer": 1,
+          "explanation": "Multiplying chemical equation by 0.5 raises its equilibrium constant to the power 0.5, i.e., √K."
+        },
+        {
+          "question": "Calculate pOH of a solution whose pH is 9.25 at 25°C.",
+          "options": [
+            "4.75",
+            "5.25",
+            "9.25",
+            "14.00"
+          ],
+          "answer": 0,
+          "explanation": "pH + pOH = 14 => pOH = 14 - 9.25 = 4.75."
+        }
+      ]
+    },
+    {
+      "set_name": "Redox Reactions & Volumetric Analysis",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on oxidation numbers, equivalent weights, n-factor, volumetric titration, and redox stoichiometry.",
+      "questions": [
+        {
+          "question": "What is the oxidation state of Chromium in Potassium Dichromate (K2Cr2O7)?",
+          "options": [
+            "+3",
+            "+5",
+            "+6",
+            "+7"
+          ],
+          "answer": 2,
+          "explanation": "K2Cr2O7: 2(+1) + 2(Cr) + 7(-2) = 0 => 2 + 2x - 14 = 0 => 2x = 12 => x = +6."
+        },
+        {
+          "question": "Equivalent weight of KMnO4 in acidic medium is: (Molar mass of KMnO4 = M)",
+          "options": [
+            "M / 1",
+            "M / 3",
+            "M / 5",
+            "M / 6"
+          ],
+          "answer": 2,
+          "explanation": "In acidic medium MnO4⁻ + 5e⁻ -> Mn²⁺. n-factor = 5. Equivalent weight = M / 5."
+        },
+        {
+          "question": "What volume of 0.1 N KMnO4 is required to completely oxidize 20 mL of 0.2 N FeSO4 solution?",
+          "options": [
+            "10 mL",
+            "20 mL",
+            "40 mL",
+            "80 mL"
+          ],
+          "answer": 2,
+          "explanation": "By law of equivalence: N1 &times; V1 = N2 &times; V2 => 0.1 &times; V1 = 0.2 &times; 20 => 0.1 V1 = 4 => V1 = 40 mL."
+        },
+        {
+          "question": "What is the oxidation number of Sulfur in Sodium Thiosulfate (Na2S2O3)?",
+          "options": [
+            "+2",
+            "+2.5",
+            "+4",
+            "+6"
+          ],
+          "answer": 0,
+          "explanation": "Na2S2O3: 2(+1) + 2(S) + 3(-2) = 0 => 2 + 2x - 6 = 0 => 2x = 4 => x = +2."
+        },
+        {
+          "question": "Equivalent mass of oxalic acid (H2C2O4·2H2O, Molar mass = 126 g/mol) is:",
+          "options": [
+            "45",
+            "63",
+            "90",
+            "126"
+          ],
+          "answer": 1,
+          "explanation": "Oxalic acid is a dibasic acid (n-factor = 2). Equivalent mass = 126 / 2 = 63 g/equiv."
+        },
+        {
+          "question": "Number of moles of electrons required to reduce 1 mole of MnO4⁻ to MnO2 in neutral/faintly alkaline medium is:",
+          "options": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "answer": 1,
+          "explanation": "MnO4⁻ (+7) + 3e⁻ -> MnO2 (+4). Number of electrons required = 3."
+        },
+        {
+          "question": "In the reaction H2S + Cl2 -> 2 HCl + S, which substance acts as reducing agent?",
+          "options": [
+            "H2S",
+            "Cl2",
+            "HCl",
+            "S"
+          ],
+          "answer": 0,
+          "explanation": "Sulfur in H2S is oxidized from -2 to 0. Hence H2S acts as reducing agent."
+        },
+        {
+          "question": "Mass of K2Cr2O7 (Molar mass = 294 g/mol) required to prepare 500 mL of 0.1 N solution in acidic medium is:",
+          "options": [
+            "2.45 g",
+            "4.90 g",
+            "14.7 g",
+            "29.4 g"
+          ],
+          "answer": 0,
+          "explanation": "Eq. mass = 294 / 6 = 49. Mass = N &times; Eq.mass &times; V(L) = 0.1 &times; 49 &times; 0.5 = 2.45 g."
+        },
+        {
+          "question": "Oxidation state of Phosphorus in H3PO4 (Phosphoric acid) is:",
+          "options": [
+            "+1",
+            "+3",
+            "+5",
+            "-3"
+          ],
+          "answer": 2,
+          "explanation": "H3PO4: 3(+1) + x + 4(-2) = 0 => 3 + x - 8 = 0 => x = +5."
+        },
+        {
+          "question": "Volume of 0.5 M H2SO4 required to completely neutralize 50 mL of 1 M NaOH solution is:",
+          "options": [
+            "25 mL",
+            "50 mL",
+            "100 mL",
+            "200 mL"
+          ],
+          "answer": 1,
+          "explanation": "N1 = 0.5 &times; 2 = 1.0 N H2SO4. N2 = 1.0 N NaOH. N1 V1 = N2 V2 => 1.0 &times; V1 = 1.0 &times; 50 => V1 = 50 mL."
+        }
+      ]
+    },
+    {
+      "set_name": "Solid State & Unit Cell",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on crystal lattice, edge length, density of unit cell, packing fraction, and radius ratio.",
+      "questions": [
+        {
+          "question": "A element crystallizes in a face-centered cubic (fcc) lattice with edge length a = 400 pm. Calculate atomic radius r.",
+          "options": [
+            "141.4 pm",
+            "173.2 pm",
+            "200.0 pm",
+            "282.8 pm"
+          ],
+          "answer": 0,
+          "explanation": "For FCC lattice: 4 r = √2 a => r = (√2 &times; 400) / 4 = (1.414 &times; 400) / 4 = 141.4 pm."
+        },
+        {
+          "question": "Number of atoms per unit cell in a Body-Centered Cubic (BCC) crystal lattice is:",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "6"
+          ],
+          "answer": 1,
+          "explanation": "BCC unit cell contains 8 corner atoms &times; (1/8) + 1 body center atom = 1 + 1 = 2 atoms."
+        },
+        {
+          "question": "Calculate density of NaCl crystal if edge length is 564 pm. (Molar mass NaCl = 58.5 g/mol, Z = 4 for FCC, N_A = 6.022 &times; 10<sup>23</sup>)",
+          "options": [
+            "2.16 g/cm<sup>3</sup>",
+            "4.32 g/cm<sup>3</sup>",
+            "1.08 g/cm<sup>3</sup>",
+            "5.40 g/cm<sup>3</sup>"
+          ],
+          "answer": 0,
+          "explanation": "d = (Z &times; M) / (a<sup>3</sup> &times; N_A) = (4 &times; 58.5) / ((5.64&times;10<sup>-8</sup>)<sup>3</sup> &times; 6.022&times;10<sup>23</sup>) ≈ 2160 kg/m<sup>3</sup> = 2.16 g/cm<sup>3</sup>."
+        },
+        {
+          "question": "Packing efficiency of a simple cubic unit cell is approximately:",
+          "options": [
+            "52.4%",
+            "68.0%",
+            "74.0%",
+            "78.5%"
+          ],
+          "answer": 0,
+          "explanation": "Simple cubic packing efficiency = (π / 6) &times; 100% ≈ 52.4%."
+        },
+        {
+          "question": "Coordination number of an atom in a Face-Centered Cubic (FCC) lattice is:",
+          "options": [
+            "4",
+            "6",
+            "8",
+            "12"
+          ],
+          "answer": 3,
+          "explanation": "In FCC / CCP structure, each sphere is in contact with 12 neighboring spheres."
+        },
+        {
+          "question": "For a octahedral void, radius ratio r_cation / r_anion lies in the range:",
+          "options": [
+            "0.155 - 0.225",
+            "0.225 - 0.414",
+            "0.414 - 0.732",
+            "0.732 - 1.000"
+          ],
+          "answer": 2,
+          "explanation": "Octahedral void limiting radius ratio range is 0.414 to 0.732."
+        },
+        {
+          "question": "Frenkel defect is a type of:",
+          "options": [
+            "Stoichiometric point defect",
+            "Non-stoichiometric defect",
+            "Impurity defect",
+            "Dislocation / Line defect"
+          ],
+          "answer": 0,
+          "explanation": "Frenkel defect is a stoichiometric point defect where a smaller ion leaves its lattice site and occupies an interstitial position."
+        },
+        {
+          "question": "In a BCC unit cell of edge length 'a', distance between two nearest neighboring atoms is:",
+          "options": [
+            "a / 2",
+            "a / √2",
+            "√3 a / 2",
+            "√3 a"
+          ],
+          "answer": 2,
+          "explanation": "In BCC body diagonal = √3 a = 4 r. Nearest neighbor distance d = 2 r = √3 a / 2."
+        },
+        {
+          "question": "Total volume occupied by spheres in a face-centered cubic (FCC) unit cell of radius r is:",
+          "options": [
+            "(16/3) π r<sup>3</sup>",
+            "(8/3) π r<sup>3</sup>",
+            "(4/3) π r<sup>3</sup>",
+            "(32/3) π r<sup>3</sup>"
+          ],
+          "answer": 0,
+          "explanation": "FCC has Z = 4 atoms. Total volume = 4 &times; (4/3 π r<sup>3</sup>) = (16/3) π r<sup>3</sup>."
+        },
+        {
+          "question": "A compound formed by elements A and B crystallizes in cubic structure where A atoms are at corners and B atoms at face centers. What is formula of compound?",
+          "options": [
+            "AB",
+            "AB3",
+            "A3B",
+            "A2B3"
+          ],
+          "answer": 1,
+          "explanation": "A = 8 &times; 1/8 = 1. B = 6 &times; 1/2 = 3. Empirical formula = AB3."
+        }
+      ]
+    },
+    {
+      "set_name": "Surface & Nuclear Chemistry",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Freundlich adsorption isotherm, colloidal particle charge, nuclear decay law, half-life, and binding energy.",
+      "questions": [
+        {
+          "question": "Half-life of a radioactive isotope is 10 hours. What percentage of original isotope remains after 30 hours?",
+          "options": [
+            "50%",
+            "25%",
+            "12.5%",
+            "6.25%"
+          ],
+          "answer": 2,
+          "explanation": "n = 30 / 10 = 3 half-lives. Fraction remaining = (1/2)<sup>3</sup> = 1/8 = 0.125 = 12.5%."
+        },
+        {
+          "question": "In Freundlich adsorption isotherm x/m = k P<sup>1/n</sup>, the value of 1/n lies between:",
+          "options": [
+            "0 and 1",
+            "1 and 2",
+            "-1 and 0",
+            "0 and infinity"
+          ],
+          "answer": 0,
+          "explanation": "The exponent 1/n ranges from 0 (high pressure independence) to 1 (low pressure linearity)."
+        },
+        {
+          "question": "Calculate binding energy per nucleon of Helium nucleus 4He2. (Mass of He = 4.0015 u, mass of proton = 1.0073 u, mass of neutron = 1.0087 u)",
+          "options": [
+            "7.07 MeV",
+            "28.3 MeV",
+            "14.1 MeV",
+            "3.53 MeV"
+          ],
+          "answer": 0,
+          "explanation": "Mass defect Δm = (2&times;1.0073 + 2&times;1.0087) - 4.0015 = 4.032 - 4.0015 = 0.0305 u. Total BE = 0.0305 &times; 931.5 ≈ 28.4 MeV. BE per nucleon = 28.4 / 4 = 7.1 MeV."
+        },
+        {
+          "question": "How many alpha (α) and beta (β⁻) particles are emitted during decay of 238U92 to 206Pb82?",
+          "options": [
+            "8 α and 6 β",
+            "6 α and 8 β",
+            "8 α and 8 β",
+            "4 α and 6 β"
+          ],
+          "answer": 0,
+          "explanation": "Mass change = 238 - 206 = 32. Number of α = 32 / 4 = 8. Atomic number change: 92 - (8&times;2) = 76. To reach 82, number of β emitted = 82 - 76 = 6."
+        },
+        {
+          "question": "According to Hardy-Schulze rule, which ion has highest coagulating power for negatively charged As2S3 sol?",
+          "options": [
+            "Na⁺",
+            "Ba²⁺",
+            "Al³⁺",
+            "K⁺"
+          ],
+          "answer": 2,
+          "explanation": "Coagulating power increases rapidly with valency of active ion. For negative sol, Al³⁺ (+3 charge) is most effective."
+        },
+        {
+          "question": "Decay constant λ of a radioactive sample is 0.0693 day<sup>-1</sup>. What is its mean life (τ)?",
+          "options": [
+            "10 days",
+            "14.4 days",
+            "6.93 days",
+            "20 days"
+          ],
+          "answer": 1,
+          "explanation": "Mean life τ = 1 / λ = 1 / 0.0693 ≈ 14.43 days."
+        },
+        {
+          "question": "Coagulation value of an electrolyte for a sol is 5 mmol/L. How many mg of NaCl (Molar mass = 58.5) is required to coagulate 2 L of sol?",
+          "options": [
+            "292.5 mg",
+            "585.0 mg",
+            "1170.0 mg",
+            "146.25 mg"
+          ],
+          "answer": 1,
+          "explanation": "For 2 L, millimoles required = 5 &times; 2 = 10 mmol = 0.01 mol. Mass = 0.01 &times; 58.5 g = 0.585 g = 585 mg."
+        },
+        {
+          "question": "Gold number of gelatin is 0.005. How many mg of gelatin is required to prevent coagulation of 10 mL gold sol by 1 mL of 10% NaCl?",
+          "options": [
+            "0.005 mg",
+            "0.05 mg",
+            "0.5 mg",
+            "0.01 mg"
+          ],
+          "answer": 0,
+          "explanation": "By definition, Gold number is mass in mg of protective colloid required to prevent coagulation of 10 mL gold sol by 1 mL 10% NaCl. So mass = 0.005 mg."
+        },
+        {
+          "question": "If 1 g of charcoal adsorbs 100 mL of 0.5 M CH3COOH to decrease concentration to 0.4 M, calculate mass of acetic acid adsorbed per gram of charcoal.",
+          "options": [
+            "0.6 g",
+            "0.48 g",
+            "1.2 g",
+            "0.3 g"
+          ],
+          "answer": 0,
+          "explanation": "Moles adsorbed = (0.5 - 0.4) &times; 0.1 L = 0.01 mol. Mass adsorbed = 0.01 &times; 60 g/mol = 0.6 g."
+        },
+        {
+          "question": "A nuclear reactor produces 32 MW of power using 235U fission. If energy released per fission is 200 MeV, calculate number of fissions per second. (1 eV = 1.6 &times; 10<sup>-19</sup> J)",
+          "options": [
+            "1.0 &times; 10<sup>18</sup>",
+            "1.0 &times; 10<sup>19</sup>",
+            "3.2 &times; 10<sup>18</sup>",
+            "6.25 &times; 10<sup>18</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Energy per fission = 200 &times; 10<sup>6</sup> &times; 1.6&times;10<sup>-19</sup> J = 3.2 &times; 10<sup>-11</sup> J. Fissions per sec = (32 &times; 10<sup>6</sup> W) / (3.2 &times; 10<sup>-11</sup> J) = 1.0 &times; 10<sup>18</sup>."
+        }
+      ]
+    },
+    {
+      "set_name": "Concentration Terms & Dilution",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on molarity, molality, normality, mole fraction, and dilution calculations.",
+      "questions": [
+        {
+          "question": "What volume of 10 M HCl must be diluted with water to prepare 2 Litres of 2 M HCl solution?",
+          "options": [
+            "100 mL",
+            "200 mL",
+            "400 mL",
+            "500 mL"
+          ],
+          "answer": 2,
+          "explanation": "Dilution equation: M1 V1 = M2 V2 => 10 &times; V1 = 2 &times; 2000 mL => 10 V1 = 4000 => V1 = 400 mL."
+        },
+        {
+          "question": "Calculate the molality of a 20% (w/w) aqueous solution of KI. (Molar mass of KI = 166 g/mol)",
+          "options": [
+            "1.20 m",
+            "1.51 m",
+            "2.00 m",
+            "2.50 m"
+          ],
+          "answer": 1,
+          "explanation": "20g KI in 80g water. Moles KI = 20 / 166 = 0.1205 mol. Mass solvent = 0.08 kg. Molality = 0.1205 / 0.08 ≈ 1.51 m."
+        },
+        {
+          "question": "Find the mole fraction of ethanol (C2H5OH) in a mixture containing 46 g of ethanol and 54 g of water. (Molar mass: ethanol = 46, water = 18)",
+          "options": [
+            "0.25",
+            "0.33",
+            "0.50",
+            "0.75"
+          ],
+          "answer": 0,
+          "explanation": "Moles ethanol = 46 / 46 = 1 mol. Moles water = 54 / 18 = 3 mol. Mole fraction ethanol = 1 / (1 + 3) = 1/4 = 0.25."
+        },
+        {
+          "question": "What is the molarity of pure water at 4°C? (Density of water = 1 g/mL)",
+          "options": [
+            "18.0 M",
+            "55.55 M",
+            "100.0 M",
+            "1.0 M"
+          ],
+          "answer": 1,
+          "explanation": "1 L water = 1000 g = 1000 / 18 = 55.55 moles. Molarity = 55.55 mol / 1 L = 55.55 M."
+        },
+        {
+          "question": "Equal volumes of 0.1 M HCl and 0.2 M NaOH are mixed. Calculate the resulting pH of the mixture.",
+          "options": [
+            "1.3",
+            "12.7",
+            "7.0",
+            "13.0"
+          ],
+          "answer": 1,
+          "explanation": "Net [OH⁻] = (0.2 - 0.1) / 2 = 0.05 M = 5 &times; 10<sup>-2</sup> M. pOH = 2 - log 5 = 2 - 0.7 = 1.3 => pH = 14 - 1.3 = 12.7."
+        },
+        {
+          "question": "Mass of Na2CO3 (Molar mass = 106 g/mol) required to prepare 250 mL of 0.1 M solution is:",
+          "options": [
+            "2.65 g",
+            "5.30 g",
+            "10.6 g",
+            "1.325 g"
+          ],
+          "answer": 0,
+          "explanation": "Moles = M &times; V(L) = 0.1 &times; 0.25 = 0.025. Mass = 0.025 &times; 106 = 2.65 g."
+        },
+        {
+          "question": "Normality of a 30% (w/v) H2SO4 solution is: (Molar mass H2SO4 = 98 g/mol)",
+          "options": [
+            "3.06 N",
+            "6.12 N",
+            "1.53 N",
+            "9.18 N"
+          ],
+          "answer": 1,
+          "explanation": "30% w/v = 300 g/L. Molarity = 300 / 98 ≈ 3.06 M. Normality = 3.06 &times; 2 = 6.12 N."
+        },
+        {
+          "question": "Ppm (parts per million) concentration of a solution containing 2 mg of Ca<sup>2+</sup> ions in 1 kg of water is:",
+          "options": [
+            "1 ppm",
+            "2 ppm",
+            "4 ppm",
+            "20 ppm"
+          ],
+          "answer": 1,
+          "explanation": "ppm = (mass solute in mg) / (mass solution in kg) = 2 mg / 1 kg = 2 ppm."
+        },
+        {
+          "question": "Calculate the volume strength of 1.5 N H2O2 solution.",
+          "options": [
+            "5.6 V",
+            "8.4 V",
+            "11.2 V",
+            "16.8 V"
+          ],
+          "answer": 1,
+          "explanation": "Volume strength = Normality &times; 5.6 = 1.5 &times; 5.6 = 8.4 V."
+        },
+        {
+          "question": "Molarity of 10 Volume H2O2 solution is approximately:",
+          "options": [
+            "0.89 M",
+            "1.78 M",
+            "2.67 M",
+            "3.56 M"
+          ],
+          "answer": 1,
+          "explanation": "Molarity = Volume Strength / 5.6 = 10 / 5.6 ≈ 1.78 M."
+        }
+      ]
+    },
+    {
+      "set_name": "Thermochemistry & Bond Energies",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on bond dissociation energy, Hess's law, enthalpy of formation, and resonance energy.",
+      "questions": [
+        {
+          "question": "Calculate enthalpy change for H2(g) + Cl2(g) -> 2 HCl(g). Given Bond Energies: H-H = 435, Cl-Cl = 243, H-Cl = 431 kJ/mol.",
+          "options": [
+            "-184 kJ",
+            "+184 kJ",
+            "-92 kJ",
+            "+92 kJ"
+          ],
+          "answer": 0,
+          "explanation": "ΔH = Σ BE(reactants) - Σ BE(products) = (435 + 243) - 2(431) = 678 - 862 = -184 kJ."
+        },
+        {
+          "question": "Standard enthalpy of formation of liquid water is ΔHf = -285.8 kJ/mol. Calculate heat released when 36 g water is formed from H2 and O2.",
+          "options": [
+            "285.8 kJ",
+            "571.6 kJ",
+            "142.9 kJ",
+            "1143.2 kJ"
+          ],
+          "answer": 1,
+          "explanation": "Moles of H2O = 36 / 18 = 2 moles. Heat released = 2 &times; 285.8 = 571.6 kJ."
+        },
+        {
+          "question": "Enthalpy of combustion of C(s), H2(g), and C2H6(g) are -393.5, -285.8, and -1560.0 kJ/mol. Calculate ΔHf for C2H6(g).",
+          "options": [
+            "-84.6 kJ/mol",
+            "+84.6 kJ/mol",
+            "-120.5 kJ/mol",
+            "-210.0 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "Target: 2C + 3H2 -> C2H6. ΔH = 2(-393.5) + 3(-285.8) - (-1560.0) = -787 - 857.4 + 1560 = -84.4 kJ/mol."
+        },
+        {
+          "question": "Heat of atomization of methane CH4(g) is 1665 kJ/mol. What is the C-H average bond dissociation energy?",
+          "options": [
+            "416.25 kJ/mol",
+            "832.5 kJ/mol",
+            "1665 kJ/mol",
+            "555 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "CH4 contains 4 C-H bonds. Average bond energy = 1665 / 4 = 416.25 kJ/mol."
+        },
+        {
+          "question": "Enthalpy of neutralization of strong acid (HCl) by strong base (NaOH) is -57.1 kJ/mol. Enthalpy of neutralization of HCN by NaOH is -12.1 kJ/mol. Calculate enthalpy of ionization of HCN.",
+          "options": [
+            "+45.0 kJ/mol",
+            "-45.0 kJ/mol",
+            "+69.2 kJ/mol",
+            "-69.2 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "ΔH_neutralization = ΔH_ionization + ΔH_strong = ΔH_ion - 57.1 => -12.1 = ΔH_ion - 57.1 => ΔH_ion = +45.0 kJ/mol."
+        },
+        {
+          "question": "Integral heat of solution of anhydrous CuSO4(s) is -66.5 kJ/mol and for CuSO4·5H2O(s) is +11.7 kJ/mol. Calculate heat of hydration of CuSO4(s).",
+          "options": [
+            "-78.2 kJ/mol",
+            "+78.2 kJ/mol",
+            "-54.8 kJ/mol",
+            "+54.8 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "ΔH_hydration = ΔH1 - ΔH2 = -66.5 - (+11.7) = -78.2 kJ/mol."
+        },
+        {
+          "question": "Resonance energy of Benzene is defined as the difference between:",
+          "options": [
+            "Experimental heat of hydrogenation and calculated theoretical heat of hydrogenation",
+            "Heat of formation and heat of combustion",
+            "Bond energy of C-C and C=C",
+            "Ionization energy and electron affinity"
+          ],
+          "answer": 0,
+          "explanation": "Resonance energy = ΔH_hydrogenation(actual experimental) - ΔH_hydrogenation(theoretical for cyclohexatriene)."
+        },
+        {
+          "question": "For endothermic reaction A -> B, activation energy for forward reaction is 80 kJ/mol and ΔH = +30 kJ/mol. Calculate activation energy for reverse reaction.",
+          "options": [
+            "50 kJ/mol",
+            "110 kJ/mol",
+            "30 kJ/mol",
+            "80 kJ/mol"
+          ],
+          "answer": 0,
+          "explanation": "ΔH = Ea(forward) - Ea(reverse) => 30 = 80 - Ea(rev) => Ea(rev) = 80 - 30 = 50 kJ/mol."
+        },
+        {
+          "question": "Heat of transition from graphite to diamond is +1.9 kJ/mol. Burning 12 g graphite produces -393.5 kJ. Burning 12 g diamond produces:",
+          "options": [
+            "-395.4 kJ",
+            "-391.6 kJ",
+            "-393.5 kJ",
+            "+395.4 kJ"
+          ],
+          "answer": 0,
+          "explanation": "C(graphite) -> C(diamond) ΔH = +1.9 kJ. Combustion C(diamond) = C(graphite) + (-1.9) = -393.5 - 1.9 = -395.4 kJ."
+        },
+        {
+          "question": "Born-Haber cycle is used to determine:",
+          "options": [
+            "Lattice energy of ionic solids",
+            "Bond order of covalent molecules",
+            "Resonance energy of aromatic compounds",
+            "Electronegativity of elements"
+          ],
+          "answer": 0,
+          "explanation": "Born-Haber cycle uses Hess's law to calculate the lattice energy of ionic crystalline solids."
+        }
+      ]
+    },
+    {
+      "set_name": "Freezing Point & Osmosis",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on colligative properties, van 't Hoff factor calculations, and abnormal molar masses.",
+      "questions": [
+        {
+          "question": "A 0.5% (w/v) solution of KCl (Molar mass = 74.5 g/mol) is 80% ionized. Calculate its van 't Hoff factor i.",
+          "options": [
+            "1.2",
+            "1.5",
+            "1.8",
+            "2.0"
+          ],
+          "answer": 2,
+          "explanation": "KCl -> K⁺ + Cl⁻ (n = 2). Degree of dissociation α = 0.80. i = 1 + (n - 1) α = 1 + (2 - 1) &times; 0.80 = 1.80."
+        },
+        {
+          "question": "Acetic acid dimerizes in benzene to extent of 80%. Calculate the van 't Hoff factor i for acetic acid solution.",
+          "options": [
+            "0.4",
+            "0.6",
+            "0.8",
+            "1.2"
+          ],
+          "answer": 1,
+          "explanation": "2 CH3COOH -> (CH3COOH)2. Association degree α = 0.80. i = 1 - α/2 = 1 - 0.40 = 0.60."
+        },
+        {
+          "question": "Calculate depression in freezing point for 0.1 m aqueous solution of NaCl assuming complete dissociation. (Kf water = 1.86 K kg/mol)",
+          "options": [
+            "0.186 K",
+            "0.372 K",
+            "0.558 K",
+            "0.744 K"
+          ],
+          "answer": 1,
+          "explanation": "For NaCl i = 2. ΔTf = i &times; Kf &times; m = 2 &times; 1.86 &times; 0.1 = 0.372 K."
+        },
+        {
+          "question": "Osmotic pressure of 0.1 M solution of non-electrolyte at 27°C (300 K) is: (R = 0.0821 L·atm/mol·K)",
+          "options": [
+            "1.23 atm",
+            "2.46 atm",
+            "4.92 atm",
+            "0.82 atm"
+          ],
+          "answer": 1,
+          "explanation": "π = C &times; R &times; T = 0.1 &times; 0.0821 &times; 300 = 2.463 atm."
+        },
+        {
+          "question": "Which of the following aqueous solutions will have the highest boiling point?",
+          "options": [
+            "0.1 M Glucose",
+            "0.1 M NaCl",
+            "0.1 M CaCl2",
+            "0.1 M FeCl3"
+          ],
+          "answer": 3,
+          "explanation": "FeCl3 dissociates into 4 ions (Fe³⁺ + 3Cl⁻), giving largest van 't Hoff factor i = 4 and highest ΔTb."
+        },
+        {
+          "question": "If experimental molar mass of Benzoic acid in benzene is 244 g/mol while theoretical mass is 122 g/mol, van 't Hoff factor i is:",
+          "options": [
+            "0.5",
+            "1.0",
+            "1.5",
+            "2.0"
+          ],
+          "answer": 0,
+          "explanation": "i = Normal Molar Mass / Observed Molar Mass = 122 / 244 = 0.5."
+        },
+        {
+          "question": "Calculate freezing point of solution containing 62 g ethylene glycol (C2H6O2, Molar mass = 62) in 250 g water. (Kf = 1.86)",
+          "options": [
+            "-1.86°C",
+            "-3.72°C",
+            "-7.44°C",
+            "-14.88°C"
+          ],
+          "answer": 2,
+          "explanation": "m = (62/62) / 0.25 kg = 4 m. ΔTf = 1.86 &times; 4 = 7.44°C. Freezing point = 0 - 7.44 = -7.44°C."
+        },
+        {
+          "question": "Hypertonic solution is one which has:",
+          "options": [
+            "Higher osmotic pressure than reference solution",
+            "Lower osmotic pressure than reference solution",
+            "Same osmotic pressure as reference solution",
+            "Zero osmotic pressure"
+          ],
+          "answer": 0,
+          "explanation": "Hypertonic solution has a higher osmotic pressure relative to another solution."
+        },
+        {
+          "question": "When red blood cells (RBCs) are placed in 0.9% (w/v) NaCl solution (isotonic), RBCs will:",
+          "options": [
+            "Shrink (crenation)",
+            "Swell and burst (hemolysis)",
+            "Remain unchanged",
+            "Dissolve completely"
+          ],
+          "answer": 2,
+          "explanation": "0.9% NaCl solution is isotonic with blood plasma, so no net water movement occurs."
+        },
+        {
+          "question": "Vapour pressure of solution containing 30 g non-volatile solute in 90 g water at 298 K is 2.8 kPa. VP of pure water is 3.0 kPa. Find molar mass of solute.",
+          "options": [
+            "34 g/mol",
+            "60 g/mol",
+            "180 g/mol",
+            "90 g/mol"
+          ],
+          "answer": 1,
+          "explanation": "(P0 - P)/P0 = (w2 M1)/(M2 w1) => (3.0 - 2.8)/3.0 = (30 &times; 18)/(M2 &times; 90) => 0.2 / 3.0 = 6 / M2 => 1/15 = 6 / M2 => M2 = 90 g/mol."
+        }
+      ]
+    },
+    {
+      "set_name": "Conductance & Kohlrausch Law",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on conductivity, molar conductivity, Kohlrausch law, cell constant, and degree of dissociation.",
+      "questions": [
+        {
+          "question": "Molar conductivity at infinite dilution (Λ°m) for NaCl, HCl, and CH3COONa are 126.4, 425.9, and 91.0 S cm<sup>2</sup>/mol. Calculate Λ°m for CH3COOH.",
+          "options": [
+            "390.5 S cm<sup>2</sup>/mol",
+            "290.5 S cm<sup>2</sup>/mol",
+            "490.5 S cm<sup>2</sup>/mol",
+            "643.3 S cm<sup>2</sup>/mol"
+          ],
+          "answer": 0,
+          "explanation": "By Kohlrausch Law: Λ°m(CH3COOH) = Λ°m(HCl) + Λ°m(CH3COONa) - Λ°m(NaCl) = 425.9 + 91.0 - 126.4 = 390.5 S cm<sup>2</sup>/mol."
+        },
+        {
+          "question": "Conductivity of 0.001 M acetic acid is 4.95 &times; 10<sup>-5</sup> S cm<sup>-1</sup>. If Λ°m = 390.5 S cm<sup>2</sup>/mol, calculate degree of dissociation α.",
+          "options": [
+            "0.05",
+            "0.127",
+            "0.25",
+            "0.50"
+          ],
+          "answer": 1,
+          "explanation": "Λm = (κ &times; 1000) / M = (4.95 &times; 10<sup>-5</sup> &times; 1000) / 0.001 = 49.5 S cm<sup>2</sup>/mol. α = Λm / Λ°m = 49.5 / 390.5 ≈ 0.1267."
+        },
+        {
+          "question": "Cell constant of a conductivity cell having electrode area A = 1.25 cm<sup>2</sup> separated by distance d = 0.5 cm is:",
+          "options": [
+            "0.4 cm<sup>-1</sup>",
+            "2.5 cm<sup>-1</sup>",
+            "0.625 cm<sup>-1</sup>",
+            "1.75 cm<sup>-1</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Cell constant G = l / A = 0.5 cm / 1.25 cm<sup>2</sup> = 0.4 cm<sup>-1</sup>."
+        },
+        {
+          "question": "SI unit of molar conductivity (Λm) is:",
+          "options": [
+            "S m<sup>2</sup> mol<sup>-1</sup>",
+            "S cm<sup>-1</sup>",
+            "S m<sup>-1</sup> mol",
+            "Ω m<sup>2</sup> mol<sup>-1</sup>"
+          ],
+          "answer": 0,
+          "explanation": "SI unit of molar conductivity is Siemens meter square per mole (S m<sup>2</sup> mol<sup>-1</sup>)."
+        },
+        {
+          "question": "Resistance of 0.05 M NaOH solution cell is 200 Ω. If cell constant is 0.5 cm<sup>-1</sup>, calculate molar conductivity.",
+          "options": [
+            "50 S cm<sup>2</sup>/mol",
+            "100 S cm<sup>2</sup>/mol",
+            "200 S cm<sup>2</sup>/mol",
+            "25 S cm<sup>2</sup>/mol"
+          ],
+          "answer": 0,
+          "explanation": "Conductivity κ = cell constant / R = 0.5 / 200 = 0.0025 S cm<sup>-1</sup>. Λm = (0.0025 &times; 1000) / 0.05 = 2.5 / 0.05 = 50 S cm<sup>2</sup>/mol."
+        },
+        {
+          "question": "Limiting molar conductivity of Mg<sup>2+</sup> is 106.0 S cm<sup>2</sup>/mol and for Cl<sup>-</sup> is 76.3 S cm<sup>2</sup>/mol. Calculate Λ°m for MgCl2.",
+          "options": [
+            "182.3 S cm<sup>2</sup>/mol",
+            "258.6 S cm<sup>2</sup>/mol",
+            "288.6 S cm<sup>2</sup>/mol",
+            "152.6 S cm<sup>2</sup>/mol"
+          ],
+          "answer": 1,
+          "explanation": "Λ°m(MgCl2) = λ°(Mg<sup>2+</sup>) + 2 &times; λ°(Cl<sup>-</sup>) = 106.0 + 2(76.3) = 106.0 + 152.6 = 258.6 S cm<sup>2</sup>/mol."
+        },
+        {
+          "question": "On dilution, molar conductivity (Λm) of a weak electrolyte solution:",
+          "options": [
+            "Increases sharply",
+            "Decreases sharply",
+            "Remains constant",
+            "First decreases then increases"
+          ],
+          "answer": 0,
+          "explanation": "On dilution degree of dissociation α increases rapidly towards 1, causing sharp increase in Λm."
+        },
+        {
+          "question": "On dilution, specific conductivity (κ) of a solution:",
+          "options": [
+            "Increases",
+            "Decreases",
+            "Remains unchanged",
+            "Becomes zero"
+          ],
+          "answer": 1,
+          "explanation": "Specific conductivity decreases on dilution because number of ions per cm<sup>3</sup> of solution decreases."
+        },
+        {
+          "question": "How much charge in Faradays is required to reduce 1 mole of Al<sup>3+</sup> to Al metal?",
+          "options": [
+            "1 F",
+            "2 F",
+            "3 F",
+            "6 F"
+          ],
+          "answer": 2,
+          "explanation": "Al<sup>3+</sup> + 3e<sup>-</sup> -> Al. 1 mole Al<sup>3+</sup> requires 3 moles of electrons = 3 Faraday."
+        },
+        {
+          "question": "Standard reduction potentials: E°(Zn<sup>2+</sup>/Zn) = -0.76 V, E°(Fe<sup>2+</sup>/Fe) = -0.44 V. Standard EMF for cell Fe + Zn<sup>2+</sup> -> Fe<sup>2+</sup> + Zn is:",
+          "options": [
+            "-0.32 V",
+            "+0.32 V",
+            "-1.20 V",
+            "+1.20 V"
+          ],
+          "answer": 0,
+          "explanation": "E°cell = E°cathode - E°anode = E°(Zn<sup>2+</sup>/Zn) - E°(Fe<sup>2+</sup>/Fe) = -0.76 - (-0.44) = -0.32 V (non-spontaneous)."
+        }
+      ]
+    },
+    {
+      "set_name": "Photoelectric & Bohr Spectrum",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on photoelectric effect work function, threshold wavelength, Bohr energy levels, and hydrogen spectrum series.",
+      "questions": [
+        {
+          "question": "Threshold frequency for photoelectric emission of a metal is 1 &times; 10<sup>15</sup> Hz. Calculate its work function in eV. (h = 6.63 &times; 10<sup>-34</sup> J·s, 1 eV = 1.6 &times; 10<sup>-19</sup> J)",
+          "options": [
+            "2.14 eV",
+            "4.14 eV",
+            "6.63 eV",
+            "1.60 eV"
+          ],
+          "answer": 1,
+          "explanation": "W = h &times; ν0 = 6.63 &times; 10<sup>-34</sup> &times; 10<sup>15</sup> = 6.63 &times; 10<sup>-19</sup> J = (6.63 &times; 10<sup>-19</sup>)/(1.6 &times; 10<sup>-19</sup>) ≈ 4.14 eV."
+        },
+        {
+          "question": "Calculate energy of photon having wavelength λ = 300 nm. (h c = 1240 eV·nm)",
+          "options": [
+            "2.07 eV",
+            "4.13 eV",
+            "6.20 eV",
+            "12.4 eV"
+          ],
+          "answer": 1,
+          "explanation": "E = h c / λ = 1240 eV·nm / 300 nm = 4.133 eV."
+        },
+        {
+          "question": "Radii of Bohr orbits in Hydrogen atom are proportional to:",
+          "options": [
+            "n",
+            "n<sup>2</sup>",
+            "1 / n",
+            "1 / n<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Bohr radius rn = 0.529 &times; n<sup>2</sup> Å ∝ n<sup>2</sup>."
+        },
+        {
+          "question": "Velocity of electron in n-th Bohr orbit of H-atom is proportional to:",
+          "options": [
+            "n",
+            "1 / n",
+            "n<sup>2</sup>",
+            "1 / n<sup>2</sup>"
+          ],
+          "answer": 1,
+          "explanation": "Velocity vn = (2.18 &times; 10<sup>6</sup> &times; Z) / n m/s ∝ 1 / n."
+        },
+        {
+          "question": "Wavelength of spectral line belonging to Balmer series of Hydrogen atom lies in which region?",
+          "options": [
+            "Ultraviolet",
+            "Visible",
+            "Infrared",
+            "X-ray"
+          ],
+          "answer": 1,
+          "explanation": "Balmer series transitions (n1 = 2) fall in the Visible light spectrum."
+        },
+        {
+          "question": "Wave number of first line of Balmer series (n1 = 2, n2 = 3) in H-spectrum is: (R = Rydberg constant)",
+          "options": [
+            "5/36 R",
+            "3/4 R",
+            "7/144 R",
+            "15/16 R"
+          ],
+          "answer": 0,
+          "explanation": "1/λ = R (1/2<sup>2</sup> - 1/3<sup>2</sup>) = R (1/4 - 1/9) = R (5/36) = 5/36 R."
+        },
+        {
+          "question": "Maximum number of emission lines obtained when electron in n = 4 level of H-atom drops to ground state (n = 1) is:",
+          "options": [
+            "3",
+            "6",
+            "10",
+            "12"
+          ],
+          "answer": 1,
+          "explanation": "Number of lines = n (n - 1) / 2 = 4 &times; (4 - 1) / 2 = 12 / 2 = 6."
+        },
+        {
+          "question": "De Broglie wavelength of an electron moving with 1% speed of light (3 &times; 10<sup>6</sup> m/s) is: (m = 9.1 &times; 10<sup>-31</sup> kg)",
+          "options": [
+            "0.242 nm",
+            "0.484 nm",
+            "1.21 nm",
+            "2.42 nm"
+          ],
+          "answer": 0,
+          "explanation": "λ = h / (m v) = (6.63 &times; 10<sup>-34</sup>) / (9.1 &times; 10<sup>-31</sup> &times; 3 &times; 10<sup>6</sup>) = 2.42 &times; 10<sup>-10</sup> m = 0.242 nm."
+        },
+        {
+          "question": "If photon energy is E, momentum p of photon is:",
+          "options": [
+            "E / c",
+            "E &times; c",
+            "E / c<sup>2</sup>",
+            "h / E"
+          ],
+          "answer": 0,
+          "explanation": "E = p &times; c => p = E / c."
+        },
+        {
+          "question": "Potential energy of electron in 1st orbit of H-atom is: (Total energy E1 = -13.6 eV)",
+          "options": [
+            "-13.6 eV",
+            "-27.2 eV",
+            "+13.6 eV",
+            "-6.8 eV"
+          ],
+          "answer": 1,
+          "explanation": "In Bohr atom PE = 2 &times; Total E = 2 &times; (-13.6) = -27.2 eV."
+        }
+      ]
+    },
+    {
+      "set_name": "Ideal vs Real Gas Behavior",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on real gas deviation, compressibility factor Z, liquefaction of gases, and inversion temperature.",
+      "questions": [
+        {
+          "question": "For a real gas at high pressure, van der Waals equation simplifies to (neglecting 'a'):",
+          "options": [
+            "P (V - b) = RT",
+            "(P + a/V<sup>2</sup>) V = RT",
+            "P V = RT",
+            "P (V + b) = RT"
+          ],
+          "answer": 0,
+          "explanation": "At high pressure P >> a/V<sup>2</sup>, so equation becomes P (V - b) = RT => Z = 1 + Pb/RT > 1."
+        },
+        {
+          "question": "At low pressure, van der Waals equation simplifies to (neglecting 'b'):",
+          "options": [
+            "Z = 1 - a/(V RT)",
+            "Z = 1 + Pb/RT",
+            "Z = 1",
+            "Z = a / (V RT)"
+          ],
+          "answer": 0,
+          "explanation": "(P + a/V<sup>2</sup>) V = RT => PV + a/V = RT => Z = PV/RT = 1 - a/(V RT) < 1."
+        },
+        {
+          "question": "Inversion temperature (T_i) of a gas is related to van der Waals constants by:",
+          "options": [
+            "2a / (R b)",
+            "a / (R b)",
+            "8a / (27 R b)",
+            "a / (27 R b)"
+          ],
+          "answer": 0,
+          "explanation": "Inversion temperature T_i = 2a / (R b) = 2 T_B."
+        },
+        {
+          "question": "Critical volume (V_c) of 1 mole of a van der Waals gas is equal to:",
+          "options": [
+            "b",
+            "2b",
+            "3b",
+            "4b"
+          ],
+          "answer": 2,
+          "explanation": "Critical volume V_c = 3b."
+        },
+        {
+          "question": "Critical pressure (P_c) of a van der Waals gas is given by:",
+          "options": [
+            "a / (27 b<sup>2</sup>)",
+            "a / b<sup>2</sup>",
+            "8a / (27 b<sup>2</sup>)",
+            "3a / b<sup>2</sup>"
+          ],
+          "answer": 0,
+          "explanation": "Critical pressure P_c = a / (27 b<sup>2</sup>)."
+        },
+        {
+          "question": "Ease of liquefaction of a gas increases with:",
+          "options": [
+            "Higher value of van der Waals constant 'a'",
+            "Lower value of van der Waals constant 'a'",
+            "Higher critical volume V_c",
+            "Lower critical temperature T_c"
+          ],
+          "answer": 0,
+          "explanation": "Larger 'a' value indicates stronger intermolecular attractive forces, making liquefaction easier."
+        },
+        {
+          "question": "Which of the following gases exhibits Z > 1 at all pressures at room temperature?",
+          "options": [
+            "H2 and He",
+            "CO2 and CH4",
+            "N2 and O2",
+            "NH3 and SO2"
+          ],
+          "answer": 0,
+          "explanation": "H2 and He have extremely weak attractive forces ('a' is negligible), so Z = 1 + Pb/RT > 1 at all pressures."
+        },
+        {
+          "question": "Ratio of critical temperature T_c to Boyle's temperature T_B for a gas is:",
+          "options": [
+            "8 / 27",
+            "27 / 8",
+            "2 / 27",
+            "1 / 2"
+          ],
+          "answer": 0,
+          "explanation": "T_c = 8a / (27 Rb) and T_B = a / (Rb). Ratio T_c / T_B = (8/27 Rb) / (1/Rb) = 8 / 27."
+        },
+        {
+          "question": "Density of gas X is twice that of gas Y at same T and P. Ratio of molar mass MX : MY is:",
+          "options": [
+            "2 : 1",
+            "1 : 2",
+            "4 : 1",
+            "1 : 4"
+          ],
+          "answer": 0,
+          "explanation": "P M = d R T => M ∝ d. Since dX = 2 dY, MX : MY = 2 : 1."
+        },
+        {
+          "question": "Root mean square velocity (v_rms), average velocity (v_avg), and most probable velocity (v_mp) are in ratio:",
+          "options": [
+            "1.225 : 1.128 : 1.000",
+            "1.000 : 1.128 : 1.225",
+            "1.128 : 1.000 : 1.225",
+            "1.000 : 1.000 : 1.000"
+          ],
+          "answer": 0,
+          "explanation": "v_mp : v_avg : v_rms = √2 : √(8/π) : √3 = 1.000 : 1.128 : 1.225. Reversed v_rms : v_avg : v_mp = 1.225 : 1.128 : 1.000."
+        }
+      ]
+    },
+    {
+      "set_name": "Buffer Action & Hydrolysis",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on buffer capacity, salt hydrolysis, solubility product, and common ion effect.",
+      "questions": [
+        {
+          "question": "Calculate pH of 0.1 M NH4Cl aqueous solution. (Kb of NH4OH = 1.8 &times; 10<sup>-5</sup>, Kw = 10<sup>-14</sup>)",
+          "options": [
+            "5.13",
+            "7.00",
+            "8.87",
+            "11.13"
+          ],
+          "answer": 0,
+          "explanation": "Salt of weak base + strong acid: pH = 0.5 [ pKw - pKb - log C ] = 0.5 [ 14 - 4.74 - (-1) ] = 0.5 [ 10.26 ] = 5.13."
+        },
+        {
+          "question": "Calculate pH of 0.1 M CH3COONa aqueous solution. (Ka of CH3COOH = 1.8 &times; 10<sup>-5</sup>)",
+          "options": [
+            "8.87",
+            "5.13",
+            "7.00",
+            "9.25"
+          ],
+          "answer": 0,
+          "explanation": "Salt of weak acid + strong base: pH = 0.5 [ pKw + pKa + log C ] = 0.5 [ 14 + 4.74 + (-1) ] = 0.5 [ 17.74 ] = 8.87."
+        },
+        {
+          "question": "Hydrolysis constant Kh for salt of weak acid and weak base (e.g. CH3COONH4) is given by:",
+          "options": [
+            "Kw / (Ka &times; Kb)",
+            "Kw / Ka",
+            "Kw / Kb",
+            "Ka &times; Kb / Kw"
+          ],
+          "answer": 0,
+          "explanation": "For salt of weak acid + weak base: Kh = Kw / (Ka &times; Kb)."
+        },
+        {
+          "question": "pH of salt of weak acid and weak base is independent of:",
+          "options": [
+            "Concentration of salt C",
+            "pKa of acid",
+            "pKb of base",
+            "Temperature"
+          ],
+          "answer": 0,
+          "explanation": "Formula: pH = 7 + 0.5 (pKa - pKb), which is completely independent of concentration C."
+        },
+        {
+          "question": "Calculate solubility of AgCl in 0.1 M NaCl solution. (Ksp AgCl = 1 &times; 10<sup>-10</sup>)",
+          "options": [
+            "1 &times; 10<sup>-9</sup> M",
+            "1 &times; 10<sup>-5</sup> M",
+            "1 &times; 10<sup>-10</sup> M",
+            "2 &times; 10<sup>-9</sup> M"
+          ],
+          "answer": 0,
+          "explanation": "Common ion [Cl⁻] = 0.1 M. Ksp = [Ag⁺] [Cl⁻] => 10<sup>-10</sup> = s &times; 0.1 => s = 10<sup>-9</sup> M."
+        },
+        {
+          "question": "Maximum buffer capacity of an acidic buffer occurs when ratio of [Salt] / [Acid] is:",
+          "options": [
+            "1 : 1",
+            "1 : 10",
+            "10 : 1",
+            "1 : 2"
+          ],
+          "answer": 0,
+          "explanation": "Buffer capacity is maximum when [Salt] = [Acid], i.e., pH = pKa."
+        },
+        {
+          "question": "Which of the following mixtures acts as a basic buffer solution?",
+          "options": [
+            "NH4OH + NH4Cl",
+            "CH3COOH + CH3COONa",
+            "HCl + NaCl",
+            "NaOH + NaCl"
+          ],
+          "answer": 0,
+          "explanation": "A basic buffer consists of a weak base (NH4OH) and its salt with a strong acid (NH4Cl)."
+        },
+        {
+          "question": "Solubility product of PbI2 is Ksp = 3.2 &times; 10<sup>-8</sup>. Calculate its molar solubility in pure water.",
+          "options": [
+            "2 &times; 10<sup>-3</sup> M",
+            "1 &times; 10<sup>-3</sup> M",
+            "4 &times; 10<sup>-3</sup> M",
+            "2 &times; 10<sup>-4</sup> M"
+          ],
+          "answer": 0,
+          "explanation": "PbI2 <=> Pb<sup>2+</sup> + 2 I<sup>-</sup>. Ksp = s &times; (2s)<sup>2</sup> = 4 s<sup>3</sup> => 4 s<sup>3</sup> = 3.2 &times; 10<sup>-8</sup> => s<sup>3</sup> = 8 &times; 10<sup>-9</sup> => s = 2 &times; 10<sup>-3</sup> M."
+        },
+        {
+          "question": "On adding 0.01 mole of NaOH to 1 Litre of buffer solution, its pH changes from 4.74 to 4.76. Buffer capacity is:",
+          "options": [
+            "0.5",
+            "0.02",
+            "50",
+            "2.0"
+          ],
+          "answer": 0,
+          "explanation": "Buffer capacity = moles of acid/base added / pH change = 0.01 / (4.76 - 4.74) = 0.01 / 0.02 = 0.5."
+        },
+        {
+          "question": "Precipitation of an ionic salt occurs when ionic product (Qsp) is:",
+          "options": [
+            "Greater than Ksp",
+            "Equal to Ksp",
+            "Less than Ksp",
+            "Zero"
+          ],
+          "answer": 0,
+          "explanation": "Precipitation occurs only when ionic product Qsp > Ksp (supersaturated solution)."
+        }
+      ]
+    },
+    {
+      "set_name": "Redox Titration & Equivalence",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on redox titrations, dichromate/permanganate titrations, and iodometry.",
+      "questions": [
+        {
+          "question": "How many moles of K2Cr2O7 are required to completely oxidize 6 moles of FeSO4 in acidic medium?",
+          "options": [
+            "1 mole",
+            "2 moles",
+            "3 moles",
+            "6 moles"
+          ],
+          "answer": 0,
+          "explanation": "Cr2O7<sup>2-</sup> + 14 H<sup>+</sup> + 6 Fe<sup>2+</sup> -> 2 Cr<sup>3+</sup> + 6 Fe<sup>3+</sup> + 7 H2O. 1 mole K2Cr2O7 oxidizes 6 moles Fe<sup>2+</sup>."
+        },
+        {
+          "question": "How many moles of KMnO4 are required to oxidize 5 moles of oxalic acid (H2C2O4) in acidic medium?",
+          "options": [
+            "1 mole",
+            "2 moles",
+            "3 moles",
+            "5 moles"
+          ],
+          "answer": 1,
+          "explanation": "2 MnO4<sup>-</sup> + 5 C2O4<sup>2-</sup> + 16 H<sup>+</sup> -> 2 Mn<sup>2+</sup> + 10 CO2 + 8 H2O. 2 moles KMnO4 oxidize 5 moles oxalic acid."
+        },
+        {
+          "question": "In iodometric titration, equivalent weight of Na2S2O3·5H2O (Molar mass = M) is:",
+          "options": [
+            "M / 1",
+            "M / 2",
+            "M / 4",
+            "M / 6"
+          ],
+          "answer": 0,
+          "explanation": "Reaction: 2 S2O3<sup>2-</sup> + I2 -> S4O6<sup>2-</sup> + 2 I<sup>-</sup>. Oxidation state change of S per mole of Na2S2O3 is 1. Eq mass = M / 1."
+        },
+        {
+          "question": "Find n-factor of FeSO4 in reaction: FeSO4 -> Fe2(SO4)3.",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ],
+          "answer": 0,
+          "explanation": "Fe changes from +2 to +3. Change in oxidation number per Fe atom = 1. So n-factor = 1."
+        },
+        {
+          "question": "Find n-factor of FeC2O4 (Ferrous Oxalate) when completely oxidized to Fe<sup>3+</sup> and CO2.",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ],
+          "answer": 2,
+          "explanation": "Fe<sup>2+</sup> -> Fe<sup>3+</sup> (1 e<sup>-</sup>) and C2O4<sup>2-</sup> -> 2 CO2 (2 e<sup>-</sup>). Total electrons lost per mole = 1 + 2 = 3."
+        },
+        {
+          "question": "What volume of 0.2 M KMnO4 is required to oxidize 50 mL of 0.5 M H2O2 in acidic medium?",
+          "options": [
+            "20 mL",
+            "50 mL",
+            "100 mL",
+            "125 mL"
+          ],
+          "answer": 0,
+          "explanation": "n-factor KMnO4 = 5, n-factor H2O2 = 2. N1 V1 = N2 V2 => (0.2 &times; 5) &times; V1 = (0.5 &times; 2) &times; 50 => 1.0 V1 = 1.0 &times; 50 => wait, 1.0 V1 = 20 mL."
+        },
+        {
+          "question": "Oxidation state of Nitrogen in NH4NO3 (Ammonium nitrate) is:",
+          "options": [
+            "-3 and +5",
+            "-3 and +3",
+            "+3 and +5",
+            "-5 and +5"
+          ],
+          "answer": 0,
+          "explanation": "In NH4<sup>+</sup> nitrogen is -3. In NO3<sup>-</sup> nitrogen is +5."
+        },
+        {
+          "question": "Oxidation number of Iron in Fe3O4 (Magnetite) is average oxidation state equal to:",
+          "options": [
+            "+2",
+            "+3",
+            "+8/3",
+            "+2.5"
+          ],
+          "answer": 2,
+          "explanation": "Fe3O4 is mixed oxide FeO·Fe2O3. Total charge 3x + 4(-2) = 0 => 3x = 8 => x = +8/3."
+        },
+        {
+          "question": "Oxidation state of Sulfur in Caro's acid (H2SO5) is:",
+          "options": [
+            "+6",
+            "+8",
+            "+10",
+            "+4"
+          ],
+          "answer": 0,
+          "explanation": "H2SO5 contains one peroxide linkage (-O-O-). H2 S O3(O2): 2(+1) + x + 3(-2) + 2(-1) = 0 => 2 + x - 6 - 2 = 0 => x = +6."
+        },
+        {
+          "question": "Disproportionation reaction is one in which:",
+          "options": [
+            "Same element is simultaneously oxidized and reduced",
+            "Two different elements are oxidized",
+            "Water is split",
+            "Precipitate is formed"
+          ],
+          "answer": 0,
+          "explanation": "In a disproportionation reaction, the same species undergoes both oxidation and reduction."
+        }
+      ]
+    },
+    {
+      "set_name": "Crystal Defects & Structure",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on Bragg's law, Schottky defect, Frenkel defect, and crystal lattice density.",
+      "questions": [
+        {
+          "question": "Bragg's law for X-ray diffraction from crystal planes is expressed as:",
+          "options": [
+            "n λ = 2 d sinθ",
+            "n λ = d sinθ",
+            "2 n λ = d sinθ",
+            "λ = 2 d sinθ"
+          ],
+          "answer": 0,
+          "explanation": "Bragg's Law: n λ = 2 d sinθ."
+        },
+        {
+          "question": "First order diffraction (n = 1) of X-rays of wavelength 1.54 Å from crystal plane occurs at angle θ = 30°. Find interplanar distance d.",
+          "options": [
+            "0.77 Å",
+            "1.54 Å",
+            "3.08 Å",
+            "0.50 Å"
+          ],
+          "answer": 1,
+          "explanation": "1 &times; 1.54 = 2 d sin 30° = 2 d (0.5) = d => d = 1.54 Å."
+        },
+        {
+          "question": "Schottky defect in ionic solids leads to:",
+          "options": [
+            "Decrease in density",
+            "Increase in density",
+            "No change in density",
+            "Electrical conductivity only"
+          ],
+          "answer": 0,
+          "explanation": "Schottky defect creates equal cation and anion vacancies, reducing total mass without changing volume, so density decreases."
+        },
+        {
+          "question": "Frenkel defect does not change the density of crystal because:",
+          "options": [
+            "Ions remain inside crystal lattice",
+            "Equal number of ions leave crystal",
+            "Electrons occupy vacancies",
+            "Volume increases"
+          ],
+          "answer": 0,
+          "explanation": "In Frenkel defect, ions simply displace to interstitial sites inside the crystal, so mass and volume remain constant."
+        },
+        {
+          "question": "F-centers in alkali halide crystals (e.g. NaCl yellow color) are:",
+          "options": [
+            "Anion vacancies occupied by unpaired electrons",
+            "Cation vacancies occupied by electrons",
+            "Interstitial cations",
+            "Impurity ions"
+          ],
+          "answer": 0,
+          "explanation": "F-centers (Farbezenter / color centers) are anionic vacancies trapped by unpaired electrons."
+        },
+        {
+          "question": "Radius ratio r+ / r- for CsCl (cubic structure, CN = 8) lies in range:",
+          "options": [
+            "0.732 - 1.000",
+            "0.414 - 0.732",
+            "0.225 - 0.414",
+            "0.155 - 0.225"
+          ],
+          "answer": 0,
+          "explanation": "For 8-coordinated cubic structure (like CsCl), radius ratio range is 0.732 to 1.000."
+        },
+        {
+          "question": "Edge length of face-centered cubic cell of ionic solid AB is 508 pm. If radius of anion B- is 144 pm, radius of cation A+ is:",
+          "options": [
+            "110 pm",
+            "220 pm",
+            "364 pm",
+            "70 pm"
+          ],
+          "answer": 0,
+          "explanation": "For NaCl-type FCC lattice: 2 (r+ + r-) = a => r+ + 144 = 508 / 2 = 254 => r+ = 254 - 144 = 110 pm."
+        },
+        {
+          "question": "Percentage of empty space in Body-Centered Cubic (BCC) unit cell is:",
+          "options": [
+            "32%",
+            "48%",
+            "26%",
+            "52%"
+          ],
+          "answer": 0,
+          "explanation": "Packing efficiency of BCC is 68%. Void space / empty space = 100 - 68 = 32%."
+        },
+        {
+          "question": "Ferromagnetic substance turns paramagnetic above temperature called:",
+          "options": [
+            "Curie temperature",
+            "Boyle temperature",
+            "Critical temperature",
+            "Neel temperature"
+          ],
+          "answer": 0,
+          "explanation": "At Curie temperature (Tc), domain structure breaks down and ferromagnetic substance becomes paramagnetic."
+        },
+        {
+          "question": "Doping of Silicon with Group 15 element (e.g. Phosphorus) produces:",
+          "options": [
+            "n-type semiconductor",
+            "p-type semiconductor",
+            "Intrinsic semiconductor",
+            "Insulator"
+          ],
+          "answer": 0,
+          "explanation": "Group 15 element introduces extra free electrons, creating an n-type (negative carrier) semiconductor."
+        }
+      ]
+    },
+    {
+      "set_name": "Nuclear & Radioactivity",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "10 Chapterwise numerical problems on radioactive decay series, binding energy, half-life, average life, and nuclear reaction energy.",
+      "questions": [
+        {
+          "question": "Calculate energy released in fission of 1 g of 235U if 200 MeV is released per fission. (N_A = 6.022 &times; 10<sup>23</sup>)",
+          "options": [
+            "8.21 &times; 10<sup>10</sup> J",
+            "5.12 &times; 10<sup>10</sup> J",
+            "2.56 &times; 10<sup>10</sup> J",
+            "1.64 &times; 10<sup>11</sup> J"
+          ],
+          "answer": 0,
+          "explanation": "Fissions = (1/235) &times; 6.022&times;10<sup>23</sup> = 2.56&times;10<sup>21</sup>. E = 2.56&times;10<sup>21</sup> &times; 200 &times; 1.6&times;10<sup>-13</sup> J ≈ 8.2 &times; 10<sup>10</sup> J."
+        },
+        {
+          "question": "Radioactive element has half-life of 1600 years. Calculate its decay constant λ.",
+          "options": [
+            "4.33 &times; 10<sup>-4</sup> yr<sup>-1</sup>",
+            "6.93 &times; 10<sup>-4</sup> yr<sup>-1</sup>",
+            "1.44 &times; 10<sup>-3</sup> yr<sup>-1</sup>",
+            "8.66 &times; 10<sup>-4</sup> yr<sup>-1</sup>"
+          ],
+          "answer": 0,
+          "explanation": "λ = 0.693 / t1/2 = 0.693 / 1600 ≈ 4.33 &times; 10<sup>-4</sup> yr<sup>-1</sup>."
+        },
+        {
+          "question": "Activity of a radioactive sample drops to 1/16 of its initial value in 80 minutes. Calculate half-life of sample.",
+          "options": [
+            "10 min",
+            "20 min",
+            "40 min",
+            "50 min"
+          ],
+          "answer": 1,
+          "explanation": "(1/2)<sup>n</sup> = 1/16 = (1/2)<sup>4</sup> => n = 4 half-lives. t1/2 = 80 / 4 = 20 minutes."
+        },
+        {
+          "question": "Unit of radioactivity 'Curie' (Ci) is defined as:",
+          "options": [
+            "3.7 &times; 10<sup>10</sup> disintegrations/sec",
+            "1 &times; 10<sup>6</sup> disintegrations/sec",
+            "1 disintegration/sec",
+            "3.7 &times; 10<sup>7</sup> disintegrations/sec"
+          ],
+          "answer": 0,
+          "explanation": "1 Curie (Ci) = 3.7 &times; 10<sup>10</sup> dps (disintegrations per second)."
+        },
+        {
+          "question": "1 Becquerel (Bq) is equal to:",
+          "options": [
+            "1 disintegration/sec",
+            "3.7 &times; 10<sup>10</sup> dps",
+            "10<sup>6</sup> dps",
+            "10<sup>3</sup> dps"
+          ],
+          "answer": 0,
+          "explanation": "1 Bq = 1 disintegration per second (SI unit of radioactivity)."
+        },
+        {
+          "question": "In nuclear fusion reaction 2H1 + 3H1 -> 4He2 + 1n0, energy released is due to:",
+          "options": [
+            "Mass defect converted into energy",
+            "Chemical bond energy",
+            "Coulomb repulsion",
+            "Gravitational energy"
+          ],
+          "answer": 0,
+          "explanation": "In nuclear fusion, total mass of products is less than reactants; mass defect Δm is converted to energy via E = Δm c<sup>2</sup>."
+        },
+        {
+          "question": "Alpha (α) decay of a nucleus reduces mass number A and atomic number Z respectively by:",
+          "options": [
+            "4 and 2",
+            "2 and 4",
+            "2 and 2",
+            "4 and 0"
+          ],
+          "answer": 0,
+          "explanation": "An alpha particle is 4He2 nucleus, so A decreases by 4 and Z decreases by 2."
+        },
+        {
+          "question": "Beta negative (β⁻) decay increases atomic number Z by:",
+          "options": [
+            "1",
+            "2",
+            "decreases by 1",
+            "unaffected"
+          ],
+          "answer": 0,
+          "explanation": "In β⁻ decay a neutron converts to a proton: n -> p + e⁻ + ν_bar, so Z increases by 1 while A remains unchanged."
+        },
+        {
+          "question": "Gamma (γ) radiation emitted by radioactive nucleus consists of:",
+          "options": [
+            "High energy electromagnetic photons",
+            "Fast moving electrons",
+            "Helium nuclei",
+            "Positrons"
+          ],
+          "answer": 0,
+          "explanation": "Gamma rays are high-energy, uncharged electromagnetic photons."
+        },
+        {
+          "question": "A radioactive sample has 10<sup>20</sup> active nuclei. If half-life is 100 s, find initial activity of sample.",
+          "options": [
+            "6.93 &times; 10<sup>17</sup> Bq",
+            "1.38 &times; 10<sup>18</sup> Bq",
+            "6.93 &times; 10<sup>18</sup> Bq",
+            "1.00 &times; 10<sup>18</sup> Bq"
+          ],
+          "answer": 0,
+          "explanation": "Activity A = λ &times; N = (0.693 / 100) &times; 10<sup>20</sup> = 6.93 &times; 10<sup>17</sup> Bq."
+        }
+      ]
+    }
+  ]
+}
