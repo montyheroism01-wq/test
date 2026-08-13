@@ -5408,8 +5408,6 @@ function showSubchaptersScreen(unitObj) {
     card.onclick = () => fetchSets(curSubject, unitObj, subName);
     list.appendChild(card);
   });
-  fetchAndRenderUploadedHTML(curSubject, unit, targetSubchapter, data);
-
 
   showScreen('subchapterScreen');
 }
