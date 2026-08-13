@@ -1,0 +1,124 @@
+{
+  "chapter_name": "Chemistry",
+  "chapter_index": 1,
+  "quiz_sets": [
+    {
+      "set_name": "DPP SET 1",
+      "chapter_name": null,
+      "subchapter": null,
+      "set_description": "Extracted from question dpp.pdf",
+      "questions": [
+        {
+          "question": "E∘ for the half cell Zn2+∣Zn is -0.76 e.m.f. of\nthe cell Zn ∣Zn2+(1M)∥2H+(1 M) ∣H (1 atm)\n2 is:",
+          "options": [
+            "−0.76 V",
+            "+0.76 V",
+            "−0.38 V",
+            "+0.38 V"
+          ],
+          "answer": 1,
+          "explanation": "The correct answer is option B."
+        },
+        {
+          "question": "The standard electrode potentials for the reactions:\nAg+(aq) +e−→Ag(s)\nSn2+(aq) + 2e−→Sn(s)\nat 25∘C The standard emf of the cell Sn ∣Sn2+ (1 M) ∥Ag+ (1 M) ∣Ag is:",
+          "options": [
+            "0.66 volt",
+            "0.80 volt",
+            "1.08 volt",
+            "0.94 volt"
+          ],
+          "answer": 3,
+          "explanation": "The correct answer is option D."
+        },
+        {
+          "question": "The standard oxidation potentials E∘ reaction are as:\nZn →Zn2++ 2e− E∘= +0.76 volt\nFe →Fe2++ 2e− E∘= +0.41 volt\nThe standard emf of the cell:\nFe2++ Zn →Zn2++ Fe is:",
+          "options": [
+            "0.35 volt",
+            "-0.35 volt",
+            "+1.17 volt",
+            "-1.17 volt"
+          ],
+          "answer": 0,
+          "explanation": "The correct answer is option A."
+        },
+        {
+          "question": "E∘(Ni2+/Ni) = −0.25 volt\nE∘(Au3+/Au) = 1.50 volt\nJEE DPP: 4 The emf of the voltaic cell.\nNi/Ni2+(1.0M)∥Au3+(1.0M) ∣Au is:",
+          "options": [
+            "1.25 volt",
+            "-1.75 volt",
+            "1.75 volt",
+            "4.0 volt"
+          ],
+          "answer": 2,
+          "explanation": "The correct answer is option C."
+        },
+        {
+          "question": "For the following E∘ values of half cells\n(i) A3−→A−2+ e; E∘= 1.5 V\n(ii) B++ e →B; E∘= 0.5 V\n(iii) C2++ e →C+; E∘= 0.5 V\n(iv) D →D2++ 2e; E∘= −1.15 V\nWhat combination of two half cells would result in a cell with the largest potential?",
+          "options": [
+            "(i) and (iii)",
+            "(i) and (iv)",
+            "(ii) and (iv)",
+            "(iii) and (iv)"
+          ],
+          "answer": 1,
+          "explanation": "The correct answer is option B."
+        },
+        {
+          "question": "Given electrode potentials:\nFe3++ e →Fe2+ E∘= 0.771 volts\nI + 2e →2I− E∘= 0.536 volts\n2 E∘ cell for the cell reaction 2Fe3++ 2I−\n→2Fe2++I\n2 is:",
+          "options": [
+            "(2 × 0.771 −0.836) = 1.006 volts",
+            "(0.771 −0.5 × 0.536) = 0.503 volts",
+            "0.771 −0.536 = 0.235 volts",
+            "0.536 −0.771 = −0.235 volts"
+          ],
+          "answer": 2,
+          "explanation": "The correct answer is option C."
+        },
+        {
+          "question": "The standard reduction electrode potentials of\nFe2+/Fe and Sn2+/Sn are −0.44 V and\n−0.14V respectively. What will be the standard JEE E.M.F. of the following cell reaction\nFe2++ Sn →Fe + Sn2+",
+          "options": [
+            "0.3 V",
+            "−0.58 V",
+            "+0.58 V",
+            "−0.30 V"
+          ],
+          "answer": 3,
+          "explanation": "The correct answer is option D."
+        },
+        {
+          "question": "The standard electrode potentials of the two-half cell are given below\nNi2++ 2e−→Ni; E∘= −0.25 V\nZn2++ 2e−→Zn; E∘= −0.77 V\nThe emf of cell formed by combining the two half cells would be",
+          "options": [
+            "-1.02 volt",
+            "+0.52 volt",
+            "+1.02 volt",
+            "-0.52 volt"
+          ],
+          "answer": 1,
+          "explanation": "The correct answer is option B."
+        },
+        {
+          "question": "The standard electrode potential value of the\nelements A, B and C are 0.68, −2.50 and\n0.50 V respectively. The order of their reducing power is:",
+          "options": [
+            "A > B > C",
+            "A > C > B",
+            "C > B > A",
+            "B > C > A"
+          ],
+          "answer": 3,
+          "explanation": "The correct answer is option D."
+        },
+        {
+          "question": "The reduction potential values are given below\nAl3+/Al = −1.67 volt, Mg2+/Mg =\n−2.34 volt\nCu2+/Cu = +0.34 volt, I/2I−=\n2 +0.53 volt Which one is the best reducing agent?",
+          "options": [
+            "Al",
+            "Mg",
+            "Cu",
+            "I 2 Master NCERT with PW Books APP JEE Master NCERT with PW Books APP"
+          ],
+          "answer": 1,
+          "explanation": "The correct answer is option B."
+        }
+      ]
+    }
+  ]
+}

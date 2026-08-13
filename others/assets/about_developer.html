@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Developer - Shoeb Ayyub</title>
+    <style>
+        :root {
+            --bg: #030712;
+            --accent: #00e5ff;
+            --card: rgba(17, 24, 39, 0.7);
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
+            --highlight: #00e5ff;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            margin: 0; background: var(--bg); color: var(--text-main);
+            font-family: 'Inter', system-ui, sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; overflow-x: hidden;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
+        }
+
+        .container {
+            width: 90%; max-width: 400px; padding: 40px 20px;
+            background: var(--card); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 40px; backdrop-filter: blur(24px);
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: slide-up 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        @keyframes slide-up { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        .profile-img {
+            width: 100px; height: 100px; border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%;
+            background: linear-gradient(45deg, var(--accent), #d946ef);
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 40px; border: 3px solid rgba(255,255,255,0.2);
+            animation: morph 8s ease-in-out infinite; box-shadow: 0 0 30px rgba(0,229,255,0.3);
+            overflow: hidden;
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 65% 35% 30% 70% / 70% 70% 30% 30%; }
+        }
+
+        h1 { margin: 0; font-size: 24px; font-weight: 900; letter-spacing: -0.5px; }
+        .tagline { font-size: 14px; color: var(--accent); font-weight: 700; margin-bottom: 20px; letter-spacing: 1px; }
+        
+        .description { font-size: 14.5px; color: var(--text-sub); line-height: 1.7; margin-bottom: 30px; text-align: center; }
+        .highlight { color: var(--highlight); font-weight: 700; }
+
+        .social-row { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .social-btn {
+            width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;
+            font-size: 20px; transition: 0.2s; cursor: pointer; text-decoration: none; color: white;
+        }
+        .social-btn:hover { background: var(--accent); color: black; transform: translateY(-5px); }
+
+        .back-btn {
+            background: var(--text-main); color: black; padding: 14px 40px; border-radius: 15px;
+            font-weight: 800; font-size: 14px; text-decoration: none; display: inline-block;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+        .back-btn:active { transform: scale(0.95); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="profile-img">
+            <img src="developer_profile.png" alt="Shoeb Ayyub" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <h1>Shoeb Ayyub</h1>
+        <div class="tagline">FULL-STACK DEVELOPER</div>
+        
+        <p class="description">
+            I am a passionate <span class="highlight">Biology Lecturer</span> and the founder of <span class="highlight">Knowledge Curiosity</span>.
+            <br><br>
+            My vision is to transform traditional learning into a <span class="highlight">smart, simple, and accessible</span> experience for every student. By combining my teaching expertise with technology, I design <span class="highlight">educational apps</span> that focus on clarity, efficiency, and real understanding.
+            <br><br>
+            At Knowledge Curiosity, I believe that learning should not be limited by internet access. That’s why all my apps are built to <span class="highlight">work seamlessly offline</span>, allowing students to study anytime, anywhere—without barriers.
+            <br><br>
+            Every app I create is driven by a <span class="highlight">single mission</span>: to make education easy, effective, and available to all, while helping students <span class="highlight">build confidence</span> and achieve their goals.
+        </p>
+
+        <div style="margin-top: 10px; margin-bottom: 25px; font-size: 14px; opacity: 0.8;">
+            Contact Me: <a href="mailto:myapk0093@gmail.com" style="color: var(--accent); text-decoration: none; font-weight: bold;">myapk0093@gmail.com</a>
+        </div>
+
+        <a href="Neethome.html" class="back-btn">Go Back</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>STUDIEDX | NEET 2027 Pro Engine</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+<style>
+  :root {
+    /* LIGHT THEME (DEFAULT) */
+    --bg-app: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-light: #f1f5f9;
+    --primary: #2563eb;
+    --primary-glow: rgba(37, 99, 235, 0.25);
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 8px 20px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.12);
+    
+    --bio-color: #059669;
+    --phy-color: #d97706;
+    --chem-color: #db2777;
+    --mix-color: #7c3aed;
+  }
+
+  [data-theme="dark"] {
+    /* DARK THEME */
+    --bg-app: #09090b;
+    --bg-surface: #18181b;
+    --bg-surface-light: #27272a;
+    --primary: #3b82f6;
+    --primary-glow: rgba(59, 130, 246, 0.4);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.7);
+
+    --bio-color: #10b981;
+    --phy-color: #f59e0b;
+    --chem-color: #ec4899;
+    --mix-color: #8b5cf6;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    user-select: none;
+    outline: none !important;
+    scrollbar-width: none !important;
+    touch-action: manipulation;
+    font-family: 'Inter', sans-serif;
+  }
+  input, textarea {
+    user-select: auto !important;
+    -webkit-user-select: auto !important;
+  }
+  ::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+  ::-webkit-scrollbar-button { display: none !important; }
+  ::selection { background: transparent; }
+  ::-moz-selection { background: transparent; }
+
+  body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .app-viewport {
+    width: 100vw;
+    height: 100dvh;
+    background: var(--bg-app);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inner-content {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .app-screen {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  /* Add padding ONLY to screens that show the bottom nav */
+  #homeScreen, #testsScreen, #bookmarksScreen, #profileScreen {
+    padding-bottom: 90px;
+  }
+
+  .app-screen.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* TOP BAR */
+  .top-bar {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .user-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--primary);
+  }
+  .user-info h2 { font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
+  .user-info p { font-size: 0.75rem; color: var(--primary); font-weight: 700; letter-spacing: 0.5px;}
+
+  /* HOME SUBJECTS */
+  .home-body { padding: 20px; flex: 1; }
+  .section-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); }
+  
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+  }
+  .subj-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .subj-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .subj-card:active { transform: scale(0.96); }
+  .subj-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .subj-bio::before { background: var(--bio-color); }
+  .subj-phy::before { background: var(--phy-color); }
+  .subj-chem::before { background: var(--chem-color); }
+  .subj-mix::before { background: var(--mix-color); }
+  
+  .subj-icon {
+    width: 64px; height: 64px; border-radius: var(--radius-full);
+    display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+  }
+  .subj-bio .subj-icon { background: rgba(5, 150, 105, 0.1); color: var(--bio-color); }
+  .subj-phy .subj-icon { background: rgba(217, 119, 6, 0.1); color: var(--phy-color); }
+  .subj-chem .subj-icon { background: rgba(219, 39, 119, 0.1); color: var(--chem-color); }
+  .subj-mix .subj-icon { background: rgba(124, 58, 237, 0.1); color: var(--mix-color); }
+  
+  .subj-name { font-weight: 800; font-size: 1.1rem; color: var(--text-main); }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 80px; padding-bottom: env(safe-area-inset-bottom);
+    background: var(--bg-surface);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: center; align-items: center; z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+  }
+  .bottom-nav-inner {
+    max-width: 800px; width: 100%; display: flex; justify-content: space-around;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px;
+    color: var(--text-muted); font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+  }
+  .nav-item.active { color: var(--primary); transform: translateY(-2px); }
+  .nav-icon { font-size: 1.5rem; }
+
+  /* MODALS */
+  .modal-backdrop {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: none; justify-content: center; align-items: center; z-index: 200; padding: 20px;
+  }
+  .modal-card {
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    width: 100%; max-width: 600px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; box-shadow: var(--shadow-lg);
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .modal-header {
+    padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border); background: var(--bg-surface-light);
+  }
+  .modal-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
+  .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 5px; }
+  .modal-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: var(--bg-surface); }
+  
+  textarea.fancy-input {
+    width: 100%; height: 220px; background: var(--bg-surface-light); border: 1px solid var(--border); border-radius: var(--radius-md);
+    color: var(--text-main); padding: 16px; font-size: 0.9rem; font-family: 'Inter', monospace;
+    transition: 0.2s; resize: none;
+  }
+  textarea.fancy-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+  
+  .btn-primary {
+    background: var(--primary); color: #ffffff; font-weight: 800; font-size: 1rem; border: none;
+    border-radius: var(--radius-full); padding: 16px 24px; cursor: pointer; transition: all 0.2s; text-align: center;
+    box-shadow: 0 4px 12px var(--primary-glow);
+  }
+  .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* SOLVER SCREEN */
+  #solverScreen {
+    background: var(--bg-app);
+  }
+  .solver-header {
+    padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-surface); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  }
+  .exit-btn {
+    width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--bg-surface-light);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); border:1px solid var(--border);
+    transition: 0.2s;
+  }
+  .exit-btn:hover { background: var(--border); }
+  .solver-title { font-weight: 800; font-size: 1rem; color: var(--text-main); }
+  
+  .q-pills-row {
+    display: flex; overflow-x: auto; padding: 12px 20px; gap: 10px; background: var(--bg-surface-light);
+    border-bottom: 1px solid var(--border); justify-content: center;
+  }
+  .q-pill {
+    min-width: 44px; height: 44px; border-radius: 12px; background: var(--bg-surface);
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem;
+    cursor: pointer; transition: 0.2s; color: var(--text-muted); border: 1px solid var(--border); flex-shrink:0;
+  }
+  .q-pill.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px var(--primary-glow); border-color: var(--primary); }
+  .q-pill.answered { border-color: var(--primary); color: var(--primary); }
+
+  .solver-body { padding: 24px 20px; flex: 1; overflow-y: auto; max-width: 800px; margin: 0 auto; width: 100%; background: var(--bg-app);}
+  .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .q-timer { font-family: monospace; font-weight: 800; font-size: 1.1rem; color: var(--primary); background: var(--primary-glow); padding: 6px 16px; border-radius: var(--radius-full); }
+  .bookmark-btn { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--text-muted); transition: 0.2s; }
+  .bookmark-btn.saved { color: #f59e0b; filter: drop-shadow(0 0 8px rgba(245,158,11,0.5)); }
+
+  .q-text { font-size: 1.1rem; font-weight: 600; line-height: 1.6; margin-bottom: 30px; color: var(--text-main); }
+  
+  .options-grid { display: flex; flex-direction: column; gap: 16px; }
+  .opt-card {
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+    padding: 20px; display: flex; align-items: flex-start; gap: 16px; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm);
+  }
+  .opt-card:hover { border-color: var(--primary); }
+  .opt-letter {
+    width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--bg-surface-light); color: var(--text-main);
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; border: 1px solid var(--border);
+  }
+  .opt-text { font-size: 1rem; font-weight: 500; line-height: 1.5; margin-top:4px; color: var(--text-main); }
+  .opt-card.selected { border-color: var(--primary); background: var(--primary-glow); }
+  .opt-card.selected .opt-letter { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  .solver-footer {
+    padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
+    display: flex; justify-content: center; background: var(--bg-surface); border-top: 1px solid var(--border); box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+  }
+  .solver-footer-inner {
+    max-width: 800px; width: 100%; display: flex; gap: 16px;
+  }
+  .btn-nav {
+    flex: 1; padding: 16px; border-radius: var(--radius-full); border: 1px solid var(--border); font-weight: 800; font-size: 1rem;
+    cursor: pointer; transition: 0.2s;
+  }
+  .btn-prev { background: var(--bg-surface-light); color: var(--text-main); }
+  .btn-prev:hover { background: var(--border); }
+  .btn-next { background: var(--primary); color: #ffffff; border: none; box-shadow: 0 4px 12px var(--primary-glow); }
+  .btn-next.submit { background: var(--bio-color); color: #fff; box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3); }
+
+  /* FORMATTING (AR Box, Statements) */
+  .ar-box { background: var(--bg-surface-light); padding:16px; margin:12px 0; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text-main); }
+  .ar-box.assertion { border-left:4px solid var(--primary); }
+  .ar-box.reason { border-left:4px solid var(--mix-color); }
+
+  /* TESTS SCREEN */
+  .test-list-card {
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 20px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm);
+  }
+  .test-list-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .test-list-card:active { transform: scale(0.98); }
+  .test-badge { font-size: 0.75rem; font-weight: 800; padding: 6px 10px; border-radius: 8px; margin-bottom: 8px; display: inline-block;}
+  .test-score { font-size: 1.6rem; font-weight: 900; color: var(--bio-color); }
+  
+  /* SLEEK BACK BUTTON */
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg-surface-light); border: 1px solid var(--border);
+    color: var(--text-main); font-weight: 700; font-size: 0.85rem;
+    padding: 8px 16px; border-radius: var(--radius-full); cursor: pointer; transition: 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-back:hover { background: var(--border); transform: translateX(-2px); }
+
+  /* 7-DAY BAR CHART */
+  .bar-chart-container {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    height: 120px; padding: 10px 0; gap: 8px; margin-bottom: 24px;
+  }
+  .bar-col {
+    flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; cursor: pointer;
+  }
+  .bar-fill {
+    width: 100%; max-width: 28px; background: var(--primary-glow); border: 1px solid var(--primary);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0; transition: height 0.4s ease; min-height: 4px;
+    position: relative;
+  }
+  .bar-col:hover .bar-fill { background: var(--primary); }
+  .bar-col.active .bar-fill { background: var(--bio-color); border-color: var(--bio-color); box-shadow: 0 0 10px rgba(5, 150, 105, 0.4); }
+  .bar-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; margin-top: 6px; }
+
+  /* TEST DETAIL SCREEN */
+  #testDetailScreen {
+    padding-bottom: 120px !important;
+  }
+
+  /* TEST DETAIL SCREEN STATS */
+  .td-stat { display: flex; flex-direction: column; align-items: center; }
+  .td-val { font-size: 1.4rem; font-weight: 900; color: var(--text-main); }
+  .td-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 6px; }
+  
+  .review-q-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm); }
+  .review-q-card:hover { border-color: var(--primary); }
+  .review-q-card:active { transform: scale(0.98); }
+  .review-header { display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 12px; color: var(--text-muted); font-size: 0.85rem;}
+  
+  .review-opt { padding: 16px; border-radius: var(--radius-sm); margin-bottom: 12px; border: 1px solid var(--border); font-size: 1rem; display: flex; align-items: center; gap: 12px; background: var(--bg-surface); color: var(--text-main); }
+  .review-opt.correct { background: rgba(5, 150, 105, 0.1); border-color: var(--bio-color); color: var(--bio-color); }
+  .review-opt.wrong { background: rgba(225, 29, 72, 0.1); border-color: #e11d48; color: #e11d48; }
+  .review-exp { margin-top: 16px; padding: 16px; background: var(--primary-glow); border-radius: var(--radius-sm); border: 1px solid var(--primary); font-size: 0.95rem; color: var(--text-main); line-height:1.5; }
+
+  /* MARKDOWN TABLES */
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; color: var(--text-main); }
+  th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+  th { background: var(--bg-surface-light); font-weight: 800; }
+
+  /* PROFILE SCREEN */
+  .profile-header { display: flex; align-items: center; gap: 20px; padding: 24px 20px; background: var(--bg-surface); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+  .profile-header img { width: 80px; height: 80px; border-radius: var(--radius-full); object-fit: cover; border: 3px solid var(--primary); }
+  .cal-row { display: flex; justify-content: space-between; margin-bottom: 24px; gap: 10px; overflow-x: auto; padding-bottom: 8px;}
+  .cal-day { flex: 1; min-width: 50px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 0; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm); }
+  .cal-day:hover { border-color: var(--primary); }
+  .cal-day:active { transform: scale(0.9); }
+  .cal-day.active { border-color: var(--primary); background: var(--primary-glow); }
+  .day-name { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; }
+  .day-num { font-size: 1.2rem; font-weight: 900; margin-top: 6px; color: var(--text-main); }
+  .day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); margin-top: 8px; }
+  .day-dot.has-data { background: var(--bio-color); box-shadow: 0 0 8px var(--bio-color); }
+
+  .analytics-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px 24px; box-shadow: var(--shadow-md); }
+  .chart-circle { width: 140px; height: 140px; border-radius: 50%; border: 10px solid var(--border); border-top-color: var(--primary); margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; flex-direction: column;}
+  
+  .theme-toggle-card {
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 16px 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center;
+    box-shadow: var(--shadow-sm); cursor: pointer; transition: 0.2s;
+  }
+  .theme-toggle-card:hover { border-color: var(--primary); }
+
+  /* FILTER PILLS */
+  .filter-pills-row {
+    display: flex; gap: 8px; overflow-x: auto; margin-bottom: 16px; padding-bottom: 4px;
+  }
+  .filter-pill {
+    background: var(--bg-surface); border: 1px solid var(--border); color: var(--text-muted);
+    font-weight: 700; font-size: 0.85rem; padding: 8px 16px; border-radius: var(--radius-full);
+    cursor: pointer; transition: 0.2s; white-space: nowrap; flex-shrink: 0; box-shadow: var(--shadow-sm);
+  }
+  .filter-pill:hover { border-color: var(--primary); }
+  .filter-pill.active {
+    background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 4px 12px var(--primary-glow);
+  }
+
+  /* TOAST */
+  .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--text-main); color: var(--bg-app); font-weight: 800; padding: 14px 28px; border-radius: var(--radius-full); box-shadow: var(--shadow-lg); z-index: 1000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="app-viewport">
+  
+  <!-- HOME SCREEN -->
+  <div id="homeScreen" class="app-screen active">
+    <div class="top-bar">
+      <div class="inner-content" style="flex-direction:row; justify-content:space-between; align-items:center;">
+        <div class="user-badge" onclick="switchTab('profile')" style="cursor:pointer;" title="Go to Profile">
+          <img src="https://i.postimg.cc/P59sp8pW/Screenshot-2026-07-22-153027.png" onerror="this.src='https://ui-avatars.com/api/?name=Anabrata&background=3b82f6&color=fff'" class="user-avatar" alt="Profile">
+          <div class="user-info">
+            <h2>Hey, Anabrata 👋</h2>
+            <p>TARGET NEET 2027</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="inner-content home-body">
+      <div class="section-title">
+        <span>Start Custom Test</span>
+      </div>
+      
+      <div class="subject-grid">
+        <div class="subj-card subj-bio" onclick="openPasteModal('Biology')">
+          <div class="subj-icon">🌱</div>
+          <span class="subj-name">Biology</span>
+        </div>
+        <div class="subj-card subj-phy" onclick="openPasteModal('Physics')">
+          <div class="subj-icon">⚛️</div>
+          <span class="subj-name">Physics</span>
+        </div>
+        <div class="subj-card subj-chem" onclick="openPasteModal('Chemistry')">
+          <div class="subj-icon">🧪</div>
+          <span class="subj-name">Chemistry</span>
+        </div>
+        <div class="subj-card subj-mix" onclick="openPasteModal('Mix')">
+          <div class="subj-icon">🔥</div>
+          <span class="subj-name">Mix Test</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTS SCREEN -->
+  <div id="testsScreen" class="app-screen">
+    <div class="top-bar">
+      <div class="inner-content"><h2>Test History</h2></div>
+    </div>
+    <div class="inner-content home-body">
+      <div class="filter-pills-row" id="testFilterRow">
+        <button class="filter-pill active" onclick="filterTests('All')">All</button>
+        <button class="filter-pill" onclick="filterTests('Biology')">Biology</button>
+        <button class="filter-pill" onclick="filterTests('Physics')">Physics</button>
+        <button class="filter-pill" onclick="filterTests('Chemistry')">Chemistry</button>
+        <button class="filter-pill" onclick="filterTests('Mix')">Mix</button>
+      </div>
+      <div id="testsContainer"></div>
+    </div>
+  </div>
+
+  <!-- TEST DETAIL SCREEN -->
+  <div id="testDetailScreen" class="app-screen">
+    <div class="solver-header">
+      <div class="inner-content" style="flex-direction:row; justify-content:space-between; align-items:center;">
+        <button class="btn-back" onclick="switchTab('tests')"><span>←</span> Back</button>
+        <span class="solver-title" id="tdTitle">Test Review</span>
+        <div style="width:70px;"></div>
+      </div>
+    </div>
+    <div class="inner-content home-body" id="tdBody">
+      <div class="td-stat-row">
+        <div class="td-stat"><span class="td-val" id="tdScore">0</span><span class="td-label">Score</span></div>
+        <div class="td-stat"><span class="td-val" id="tdAcc">0%</span><span class="td-label">Accuracy</span></div>
+        <div class="td-stat"><span class="td-val" id="tdTime">0s</span><span class="td-label">Time</span></div>
+      </div>
+      
+      <div class="section-title"><span>Questions Breakdown</span></div>
+      
+      <div class="filter-pills-row" id="tdFilterRow">
+        <button class="filter-pill active" onclick="filterTdQuestions('All')">All (<span id="tdCntAll">0</span>)</button>
+        <button class="filter-pill" onclick="filterTdQuestions('Correct')">Correct (<span id="tdCntCor">0</span>)</button>
+        <button class="filter-pill" onclick="filterTdQuestions('Wrong')">Wrong (<span id="tdCntWro">0</span>)</button>
+        <button class="filter-pill" onclick="filterTdQuestions('Unattempted')">Unattempted (<span id="tdCntUnatt">0</span>)</button>
+      </div>
+
+      <div id="tdQuestionsList"></div>
+    </div>
+  </div>
+
+  <!-- BOOKMARKS SCREEN -->
+  <div id="bookmarksScreen" class="app-screen">
+    <div class="top-bar">
+      <div class="inner-content"><h2>Saved Bookmarks</h2></div>
+    </div>
+    <div class="inner-content home-body">
+      <div class="filter-pills-row" id="bookmarkFilterRow">
+        <button class="filter-pill active" onclick="filterBookmarks('All')">All</button>
+        <button class="filter-pill" onclick="filterBookmarks('Biology')">Biology</button>
+        <button class="filter-pill" onclick="filterBookmarks('Physics')">Physics</button>
+        <button class="filter-pill" onclick="filterBookmarks('Chemistry')">Chemistry</button>
+        <button class="filter-pill" onclick="filterBookmarks('Mix')">Mix</button>
+      </div>
+      <div id="bookmarksContainer"></div>
+    </div>
+  </div>
+
+  <!-- PROFILE SCREEN -->
+  <div id="profileScreen" class="app-screen">
+    <div class="profile-header">
+      <div class="inner-content" style="flex-direction:row; align-items:center; gap:24px;">
+        <img src="https://i.postimg.cc/P59sp8pW/Screenshot-2026-07-22-153027.png" onerror="this.src='https://ui-avatars.com/api/?name=Anabrata&background=3b82f6&color=fff'">
+        <div class="user-info">
+          <h2 style="font-size: 1.6rem;">Anabrata</h2>
+          <p style="color: var(--primary); font-size: 0.9rem; font-weight: 700; margin-top:4px;">TARGET NEET 2027</p>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top:6px; max-width:300px;">"Success is not final, failure is not fatal: it is the courage to continue that counts."</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="inner-content home-body">
+      <div class="section-title">
+        <span>7-Day Performance Chart</span>
+        <button class="btn-primary" style="padding: 8px 16px; font-size:0.8rem; border-radius:8px;" onclick="openModal('calendarModal')">Full Calendar</button>
+      </div>
+      <div class="bar-chart-container" id="calendarRow"></div>
+      
+      <div class="analytics-card">
+        <div class="chart-circle">
+          <span style="font-size: 2.4rem; font-weight: 900;" id="profAcc">0%</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 800;">ACCURACY</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; text-align:center;">
+          <div>
+            <div style="font-size:1.5rem; font-weight:900;" id="profTotal">0</div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">TOTAL Qs</div>
+          </div>
+          <div>
+            <div style="font-size:1.5rem; font-weight:900; color:#f59e0b;" id="profUnattempted">0</div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">UNATTEMPTED</div>
+          </div>
+          <div>
+            <div style="font-size:1.5rem; font-weight:900; color:var(--bio-color);" id="profCorrect">0</div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">CORRECT</div>
+          </div>
+          <div>
+            <div style="font-size:1.5rem; font-weight:900; color:#ef4444;" id="profWrong">0</div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">WRONG</div>
+          </div>
+          <div>
+            <div style="font-size:1.5rem; font-weight:900; color:var(--primary);" id="profTime">0m</div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">TIME SPENT</div>
+          </div>
+          <div>
+            <div style="font-size:1.5rem; font-weight:900; color:var(--mix-color);" id="profTestsCount">0</div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">TESTS TAKEN</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-toggle-card" onclick="toggleTheme()">
+        <div>
+          <div style="font-weight: 800; font-size: 1rem; color: var(--text-main);">Theme Mode</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);" id="themeLabel">Current: Light Mode</div>
+        </div>
+        <button class="btn-primary" style="padding: 8px 18px; font-size:0.85rem;" id="themeToggleBtn">Switch Theme</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ SOLVER SCREEN -->
+  <div id="solverScreen" class="app-screen">
+    <div class="solver-header">
+      <div class="inner-content" style="flex-direction:row; justify-content:space-between; align-items:center;">
+        <button class="btn-back" onclick="exitTest()"><span>←</span> Exit</button>
+        <span class="solver-title" id="solverTitle">Test Session</span>
+        <button class="bookmark-btn" id="qBookmarkBtn" onclick="toggleBookmark()">★</button>
+      </div>
+    </div>
+    <div class="q-pills-row" id="qPillsRow"></div>
+    <div class="solver-body">
+      <div class="q-meta">
+        <span style="font-weight: 800; font-size:1.1rem;" id="qCounter">Q 1 / 15</span>
+        <span class="q-timer" id="qTimer">00:00</span>
+      </div>
+      <div class="q-text" id="qPrompt"></div>
+      <div class="options-grid" id="qOptionsGrid"></div>
+    </div>
+    <div class="solver-footer">
+      <div class="solver-footer-inner">
+        <button class="btn-nav btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+        <button class="btn-nav btn-next" id="btnNext" onclick="nextQ()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav" id="mainBottomNav">
+    <div class="bottom-nav-inner">
+      <div class="nav-item active" onclick="switchTab('home')" data-tab="home">
+        <span class="nav-icon">🏠</span><span>Home</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('tests')" data-tab="tests">
+        <span class="nav-icon">📝</span><span>Tests</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('bookmarks')" data-tab="bookmarks">
+        <span class="nav-icon">🔖</span><span>Saved</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('profile')" data-tab="profile">
+        <img src="https://i.postimg.cc/P59sp8pW/Screenshot-2026-07-22-153027.png" onerror="this.src='https://ui-avatars.com/api/?name=Anabrata&background=3b82f6&color=fff'" style="width:24px; height:24px; border-radius:50%; object-fit:cover; border: 1.5px solid var(--primary); margin-bottom:2px;"><span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+</div> <!-- end viewport -->
+
+<!-- MODALS -->
+<div class="modal-backdrop" id="pasteQsModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <span class="modal-title" id="pasteQsTitle">Paste Questions</span>
+      <button class="modal-close" onclick="closeModal('pasteQsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <textarea class="fancy-input" id="pasteQsText" placeholder="Paste your 15 questions here..."></textarea>
+      <button class="btn-primary" onclick="startTest()">START TEST</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="pasteAnsModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <span class="modal-title">Submit & Verify</span>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.5;">Test finished! Paste the answers block to grade your test.</p>
+      <textarea class="fancy-input" id="pasteAnsText" placeholder="Paste answers here..."></textarea>
+      <button class="btn-primary" style="background:var(--bio-color); color:#fff;" onclick="submitTestAnswers()">FINISH & GRADE TEST</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="bookmarkTagModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <span class="modal-title">Select Subject Tag</span>
+      <button class="modal-close" onclick="closeModal('bookmarkTagModal')">✕</button>
+    </div>
+    <div class="modal-body" style="gap: 12px;">
+      <button class="btn-primary" style="background:var(--bio-color); color:#fff;" onclick="confirmBookmark('Mix-Biology')">Mix - Biology</button>
+      <button class="btn-primary" style="background:var(--phy-color); color:#fff;" onclick="confirmBookmark('Mix-Physics')">Mix - Physics</button>
+      <button class="btn-primary" style="background:var(--chem-color); color:#fff;" onclick="confirmBookmark('Mix-Chemistry')">Mix - Chemistry</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="questionReviewModal">
+  <div class="modal-card" style="max-width:800px; height:80vh;">
+    <div class="modal-header">
+      <span class="modal-title" id="qrTitle">Question Review</span>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <button class="bookmark-btn" id="reviewBookmarkBtn" onclick="toggleReviewBookmark()">★</button>
+        <button class="modal-close" onclick="closeModal('questionReviewModal')">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="qrBody">
+      <!-- Q detail injected here -->
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="calendarModal">
+  <div class="modal-card" style="max-width:600px;">
+    <div class="modal-header">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <button class="exit-btn" style="width:32px; height:32px; font-size:1.2rem;" onclick="changeCalMonth(-1)">‹</button>
+        <span class="modal-title" id="calMonthYearTitle">July 2026</span>
+        <button class="exit-btn" style="width:32px; height:32px; font-size:1.2rem;" onclick="changeCalMonth(1)">›</button>
+      </div>
+      <button class="modal-close" onclick="closeModal('calendarModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:6px;" id="fullCalendarGrid">
+      </div>
+      <div id="calDetailPane" style="display:none; padding:16px; background:rgba(59,130,246,0.1); border-radius:12px; border:1px solid var(--primary); margin-top:16px;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="sysToast">Success!</div>
+
+<script>
+let CONFIG = { appsScriptUrl: localStorage.getItem('STUDIEDX_API') || 'https://script.google.com/macros/s/AKfycbz7pHUaCZa-GzFX93l1Qw3I7MV5uwtx6jma0syHlZhCioOhS18_AXY9tMH8AAEUuZrg0Q/exec' };
+
+// Initialize Theme
+function initTheme() {
+  const savedTheme = localStorage.getItem('STUDIEDX_THEME') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('STUDIEDX_THEME', next);
+  updateThemeUI(next);
+}
+
+function updateThemeUI(theme) {
+  const label = document.getElementById('themeLabel');
+  const btn = document.getElementById('themeToggleBtn');
+  if (label) label.textContent = `Current: ${theme === 'dark' ? 'Dark Mode 🌙' : 'Light Mode ☀️'}`;
+  if (btn) btn.textContent = theme === 'dark' ? 'Switch to Light' : 'Switch to Dark';
+}
+
+initTheme();
+
+const state = {
+  activeSubject: 'Biology',
+  questions: [], userAnswers: {}, qTimes: {}, currQ: 0, timerInt: null, totalTime: 0,
+  activeTestReview: null,
+  db: { tests: [], bookmarks: [], profile: {totalAttempted:0, correctCount:0, wrongCount:0, accuracy:0}, dailyAnalytics: {} }
+};
+
+function showToast(msg) {
+  const t = document.getElementById('sysToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(tabId + 'Screen').classList.add('active');
+  
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navBtn = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+  if(navBtn) navBtn.classList.add('active');
+  
+  document.getElementById('mainBottomNav').style.display = 'flex';
+  
+  if (tabId === 'tests') renderTestsList();
+  if (tabId === 'bookmarks') renderBookmarks();
+  if (tabId === 'profile') { renderProfile(); renderFullCalendarGrid(); }
+}
+
+function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+function openPasteModal(subj) {
+  state.activeSubject = subj;
+  document.getElementById('pasteQsTitle').textContent = `Paste ${subj} Questions`;
+  document.getElementById('pasteQsText').value = '';
+  openModal('pasteQsModal');
+}
+
+async function fetchInitialData() {
+  if(!CONFIG.appsScriptUrl) return;
+  try {
+    const res = await fetch(`${CONFIG.appsScriptUrl}?action=get_all_data`);
+    const data = await res.json();
+    if(data.status === 'success') {
+      state.db.profile = data.profile || state.db.profile;
+      state.db.tests = data.tests || [];
+      state.db.bookmarks = data.bookmarks || [];
+      state.db.dailyAnalytics = data.dailyAnalytics || {};
+      renderProfile();
+      renderFullCalendarGrid();
+      renderTestsList();
+      renderBookmarks();
+    }
+  } catch(e) { console.log(e); }
+}
+
+// Fetch data immediately on script load & window load
+fetchInitialData();
+window.onload = fetchInitialData;
+
+function parseQuestionsEngine(raw) {
+  if (!raw || !raw.trim()) return [];
+  const lines = raw.replace(/\r/g, '').split('\n');
+  const blocks = [];
+  let currentBlock = [];
+  let lastQNum = 0;
+  const headerRegex = /^\s*(?:Q(?:uestion)?\.?\s*)?(\d+)\s*[\.:\)]\s+/i;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const match = line.match(headerRegex);
+    if (match) {
+      const qNum = parseInt(match[1], 10);
+      let isNewQ = false;
+      if (blocks.length === 0) isNewQ = true;
+      else if (qNum > lastQNum && qNum <= lastQNum + 5) isNewQ = true;
+      if (isNewQ) {
+        if (currentBlock.length > 0) blocks.push(currentBlock.join('\n'));
+        currentBlock = [line];
+        lastQNum = qNum;
+        continue;
+      }
+    }
+    if (currentBlock.length > 0 || line.trim().length > 0) currentBlock.push(line);
+  }
+  if (currentBlock.length > 0) blocks.push(currentBlock.join('\n'));
+  return blocks.map((b, i) => parseSingleBlockEngine(b, i + 1)).filter(q => q && q.text);
+}
+
+function parseSingleBlockEngine(blockText, defaultNum) {
+  const headerMatch = blockText.match(/^\s*(?:Q(?:uestion)?\.?\s*)?(\d+)\s*[\.:\)]\s*/i);
+  const qNum = headerMatch ? parseInt(headerMatch[1], 10) : defaultNum;
+  let body = blockText.replace(/^\s*(?:Q(?:uestion)?\.?\s*)?\d+\s*[\.:\)]\s*/i, '').trim();
+  body = body.replace(/(?:\*\*|\*)?\[([^\]]+)\](?:\*\*|\*)?/g, '').trim();
+  let options = [];
+  let questionText = body;
+  const optionRegexes = [
+    /(?:^|\n|\s{2,})\(([A-D])\)\s*([\s\S]+?)(?=(?:^|\n|\s{2,})\([A-D]\)\s*|$)/gi,
+    /(?:^|\n|\s{2,})\(([1-4])\)\s*([\s\S]+?)(?=(?:^|\n|\s{2,})\([1-4]\)\s*|$)/gi,
+    /(?:^|\n|\s{2,})\(([a-d])\)\s*([\s\S]+?)(?=(?:^|\n|\s{2,})\([a-d]\)\s*|$)/gi,
+    /(?:^|\n|\s{2,})([A-D])\.\s*([\s\S]+?)(?=(?:^|\n|\s{2,})[A-D]\.\s*|$)/gi
+  ];
+  for (const regex of optionRegexes) {
+    const matches = [...body.matchAll(regex)];
+    if (matches.length >= 2) {
+      questionText = body.substring(0, matches[0].index).trim();
+      options = matches.map(m => m[2].trim());
+      break;
+    }
+  }
+  return { id: `Q_${Date.now()}_${Math.random().toString(36).substr(2,4)}`, text: questionText.trim(), options: options };
+}
+
+function renderFormattedBody(text) {
+  if (!text) return '';
+  let html = text;
+  
+  // Idempotence check: If text is already formatted HTML, return as-is
+  if (html.includes('class="ar-box"') || html.includes('Column I</strong>')) {
+    return html;
+  }
+  
+  // 1. Column I & Column II Matching Table Format
+  const colMatch = html.match(/(.*?)Column\s*(?:I|1)\s*:([\s\S]*?)Column\s*(?:II|2)\s*:([\s\S]*)/i);
+  if (colMatch) {
+    const intro = colMatch[1];
+    const col1Text = colMatch[2];
+    const col2Text = colMatch[3];
+    
+    const col1Items = col1Text.split(/(?=\([a-d]\)|[a-d]\.)/i).filter(x => x.trim());
+    const col2Items = col2Text.split(/(?=\([ivx]+\)|[ivx]+\.)/i).filter(x => x.trim());
+    
+    let tableHtml = intro + '<br><div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; background:var(--bg-surface-light); padding:16px; border-radius:var(--radius-md); border:1px solid var(--border);">';
+    tableHtml += '<div><strong style="color:var(--primary); display:block; margin-bottom:8px;">Column I</strong>';
+    col1Items.forEach(it => { if(it.trim()) tableHtml += `<div style="margin-bottom:6px; font-weight:600;">${it.trim()}</div>`; });
+    tableHtml += '</div>';
+    
+    tableHtml += '<div><strong style="color:var(--mix-color); display:block; margin-bottom:8px;">Column II</strong>';
+    col2Items.forEach(it => { if(it.trim()) tableHtml += `<div style="margin-bottom:6px; font-weight:600;">${it.trim()}</div>`; });
+    tableHtml += '</div></div><br>';
+    
+    html = tableHtml;
+  } else {
+    // 2. Statements list formatting: (i), (ii), (iii), (iv) or (a), (b), (c)
+    html = html.replace(/\s+\(([ivx]+|[a-d])\)\s+/gi, '<br><br><span style="background:var(--primary-glow); color:var(--primary); padding:2px 8px; border-radius:6px; font-weight:800; font-size:0.85rem; margin-right:8px; display:inline-block;">($1)</span> ');
+  }
+
+  // 3. Separate exactly "Which of the above statements are correct" onto a new line (NOT bolded)
+  html = html.replace(/(Which of the above statements are correct\??)/gi, '<br><br>$1');
+
+  // 4. AR Parsing (Clean HTML extraction with no marked.parse interference)
+  const arMatch = html.match(/(?:\*\*|\*)?Assertion\s*\(\s*A\s*\)(?:\*\*|\*)?[\s:\n]*([\s\S]*?)(?:\*\*|\*)?Reason\s*\(\s*R\s*\)(?:\*\*|\*)?[\s:\n]*([\s\S]*)/i);
+  if (arMatch) {
+    const prefix = html.substring(0, arMatch.index).replace(/<[^>]*>/g, '').trim();
+    let assertionText = arMatch[1].trim().replace(/<[^>]*>/g, '').trim();
+    let reasonText = arMatch[2].trim().replace(/<[^>]*>/g, '').trim();
+    
+    const arHtml = '<div class="ar-box assertion"><div style="color:var(--primary); font-weight:800; font-size:0.8rem; margin-bottom:6px;">ASSERTION (A)</div><div>' + assertionText + '</div></div><div class="ar-box reason"><div style="color:#8b5cf6; font-weight:800; font-size:0.8rem; margin-bottom:6px;">REASON (R)</div><div>' + reasonText + '</div></div>';
+    
+    return (prefix ? `<p>${prefix}</p>` : '') + arHtml;
+  }
+
+  // Format tables, bold, etc. using marked
+  if (typeof marked !== 'undefined') {
+    html = marked.parse(html);
+  } else {
+    html = html.replace(/\n/g, '<br>');
+  }
+  return html;
+}
+
+function startTest() {
+  const raw = document.getElementById('pasteQsText').value;
+  const parsed = parseQuestionsEngine(raw);
+  if(parsed.length === 0) { alert("Could not detect questions."); return; }
+  
+  state.questions = parsed.map(q => ({
+    id: q.id, question: q.text, optA: q.options[0]||'', optB: q.options[1]||'', optC: q.options[2]||'', optD: q.options[3]||'', correctAns: '', explanation: ''
+  }));
+  state.userAnswers = {}; state.qTimes = {}; state.currQ = 0; state.totalTime = 0;
+
+  closeModal('pasteQsModal');
+  document.getElementById('mainBottomNav').style.display = 'none';
+  document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('solverScreen').classList.add('active');
+  document.getElementById('solverTitle').textContent = `${state.activeSubject} Test`;
+  
+  renderPills(); renderQ(0); startTimer();
+}
+
+function startTimer() {
+  clearInterval(state.timerInt);
+  state.timerInt = setInterval(() => {
+    state.totalTime++;
+    const min = Math.floor(state.totalTime / 60).toString().padStart(2, '0');
+    const sec = (state.totalTime % 60).toString().padStart(2, '0');
+    document.getElementById('qTimer').textContent = `${min}:${sec}`;
+    state.qTimes[state.currQ] = (state.qTimes[state.currQ] || 0) + 1;
+  }, 1000);
+}
+
+function exitTest() { clearInterval(state.timerInt); switchTab('home'); }
+
+function renderPills() {
+  const row = document.getElementById('qPillsRow');
+  row.innerHTML = '';
+  state.questions.forEach((q, i) => {
+    const p = document.createElement('div');
+    p.className = 'q-pill';
+    p.textContent = i + 1;
+    if (state.userAnswers[i]) p.classList.add('answered');
+    p.onclick = () => renderQ(i);
+    row.appendChild(p);
+  });
+}
+
+function renderQ(idx) {
+  state.currQ = idx; const q = state.questions[idx];
+  document.getElementById('qCounter').textContent = `Q ${idx+1} / ${state.questions.length}`;
+  document.getElementById('qPrompt').innerHTML = q.question;
+  
+  const grid = document.getElementById('qOptionsGrid');
+  grid.innerHTML = '';
+  const opts = [ {k:'A', v:q.optA}, {k:'B', v:q.optB}, {k:'C', v:q.optC}, {k:'D', v:q.optD} ];
+  opts.forEach(opt => {
+    const card = document.createElement('div');
+    card.className = `opt-card ${state.userAnswers[idx] === opt.k ? 'selected' : ''}`;
+    card.innerHTML = `<div class="opt-letter">${opt.k}</div><div class="opt-text">${opt.v}</div>`;
+    card.onclick = () => { state.userAnswers[idx] = opt.k; renderQ(idx); renderPills(); };
+    grid.appendChild(card);
+  });
+
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  btnPrev.disabled = idx === 0;
+  if(idx === state.questions.length - 1) { btnNext.textContent = "Submit Test"; btnNext.classList.add('submit'); } 
+  else { btnNext.textContent = "Next"; btnNext.classList.remove('submit'); }
+
+  Array.from(document.getElementById('qPillsRow').children).forEach((c, i) => c.classList.toggle('active', i === idx));
+  
+  const isSaved = state.db.bookmarks.some(b => b.id === q.id);
+  const bmBtn = document.getElementById('qBookmarkBtn');
+  if(isSaved) bmBtn.classList.add('saved'); else bmBtn.classList.remove('saved');
+}
+
+function prevQ() { if(state.currQ > 0) renderQ(state.currQ - 1); }
+function nextQ() { if(state.currQ < state.questions.length - 1) renderQ(state.currQ + 1); else openModal('pasteAnsModal'); }
+
+function toggleBookmark() {
+  if(state.activeSubject === 'Mix') openModal('bookmarkTagModal');
+  else confirmBookmark(state.activeSubject);
+}
+
+function getQuestionOptions(obj) {
+  if (!obj) return [];
+  if (obj.optA || obj.optB || obj.optC || obj.optD) {
+    return [
+      {k: 'A', v: obj.optA || ''},
+      {k: 'B', v: obj.optB || ''},
+      {k: 'C', v: obj.optC || ''},
+      {k: 'D', v: obj.optD || ''}
+    ].filter(o => o.v && o.v.trim());
+  }
+  if (obj.options && Array.isArray(obj.options) && obj.options.length > 0) {
+    const letters = ['A', 'B', 'C', 'D'];
+    return obj.options.map((optStr, i) => ({ k: letters[i] || `Opt ${i+1}`, v: optStr })).filter(o => o.v && o.v.trim());
+  }
+  return [];
+}
+
+function findBookmarkMetadata(b) {
+  if (!b) return { opts: [], correctAns: '' };
+  let opts = getQuestionOptions(b);
+  let correctAns = b.correctAns || '';
+
+  // 1. Search active test questions
+  if (state.questions && state.questions.length > 0) {
+    const found = state.questions.find(q => (q.id && q.id === b.id) || (q.question && q.question === b.questionText));
+    if (found) {
+      if (opts.length === 0) opts = getQuestionOptions(found);
+      if (!correctAns) correctAns = found.correctAns || '';
+    }
+  }
+
+  // 2. Search all past test sessions in history
+  if (state.db.tests && state.db.tests.length > 0) {
+    for (const t of state.db.tests) {
+      if (t.questions && t.questions.length > 0) {
+        const found = t.questions.find(q => (q.id && q.id === b.id) || (q.question && q.question === b.questionText));
+        if (found) {
+          if (opts.length === 0) opts = getQuestionOptions(found);
+          if (!correctAns) correctAns = found.correctAns || '';
+        }
+      }
+    }
+  }
+
+  return { opts, correctAns };
+}
+
+function confirmBookmark(tag) {
+  closeModal('bookmarkTagModal');
+  const q = state.questions[state.currQ];
+  const isSaved = state.db.bookmarks.some(b => b.id === q.id);
+  if(!isSaved) {
+    const optsArr = getQuestionOptions(q);
+    const bmItem = {
+      id: q.id,
+      timestamp: new Date().toISOString(),
+      subjectTag: tag,
+      questionText: q.question,
+      optA: optsArr[0] ? optsArr[0].v : '',
+      optB: optsArr[1] ? optsArr[1].v : '',
+      optC: optsArr[2] ? optsArr[2].v : '',
+      optD: optsArr[3] ? optsArr[3].v : '',
+      correctAns: q.correctAns || '',
+      explanation: q.explanation || ''
+    };
+    state.db.bookmarks.push(bmItem);
+    document.getElementById('qBookmarkBtn').classList.add('saved');
+    if(CONFIG.appsScriptUrl) fetch(CONFIG.appsScriptUrl, { method: 'POST', body: JSON.stringify({ action: 'toggle_bookmark', questionId: q.id, subjectTag: tag, questionText: q.question, explanation: q.explanation || '', optA: bmItem.optA, optB: bmItem.optB, optC: bmItem.optC, optD: bmItem.optD, correctAns: q.correctAns || '', isBookmarked: true }) });
+    showToast("Bookmark Saved!");
+  } else {
+    state.db.bookmarks = state.db.bookmarks.filter(b => b.id !== q.id);
+    document.getElementById('qBookmarkBtn').classList.remove('saved');
+    if(CONFIG.appsScriptUrl) fetch(CONFIG.appsScriptUrl, { method: 'POST', body: JSON.stringify({ action: 'toggle_bookmark', questionId: q.id, subjectTag: tag, questionText: q.question, explanation: q.explanation || '', isBookmarked: false }) });
+    showToast("Bookmark Removed");
+  }
+}
+
+function submitTestAnswers() {
+  const text = document.getElementById('pasteAnsText').value;
+  if (!text || !text.trim()) {
+    clearInterval(state.timerInt);
+    closeModal('pasteAnsModal');
+    finalizeTest();
+    return;
+  }
+  
+  // Highly flexible answer regex matching formats like:
+  // 1. **(B)** Explanation...
+  // 2. (C) Explanation...
+  // Q3: A - Explanation...
+  const regex = /(?:^|\n)\s*(?:Q\.?\s*)?(\d+)[\.\)\:]\s*(?:\*\*)?\(?\s*([A-D1-4])\s*\)?(?:\*\*)?\s*[\:\-]?\s*([\s\S]*?)(?=(?:^|\n)\s*(?:Q\.?\s*)?\d+[\.\)\:]\s*(?:\*\*)?\(?\s*[A-D1-4]\s*\)?(?:\*\*)?|$)/gi;
+  
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const qNum = parseInt(match[1], 10);
+    let opt = match[2].toUpperCase();
+    if (opt === '1') opt = 'A';
+    if (opt === '2') opt = 'B';
+    if (opt === '3') opt = 'C';
+    if (opt === '4') opt = 'D';
+    const exp = match[3] ? match[3].trim() : '';
+    
+    const idx = qNum - 1;
+    if (state.questions[idx]) {
+      state.questions[idx].correctAns = opt;
+      state.questions[idx].explanation = exp;
+    }
+  }
+  
+  clearInterval(state.timerInt);
+  closeModal('pasteAnsModal');
+  finalizeTest();
+}
+
+function finalizeTest() {
+  let cor = 0, wro = 0, att = 0;
+  const analysisQs = state.questions.map((q, i) => {
+    const u = state.userAnswers[i] || 'Not Attempted';
+    const isCor = u === q.correctAns;
+    if(u !== 'Not Attempted') { att++; if(isCor) cor++; else wro++; }
+    return { question: q.question, userSelected: u, correctAns: q.correctAns, isCorrect: isCor, explanation: q.explanation, timeSec: state.qTimes[i] || 0, options: [q.optA, q.optB, q.optC, q.optD] };
+  });
+  
+  const score = (cor * 4) - (wro * 1);
+  const totalQs = state.questions.length;
+  const acc = totalQs > 0 ? Math.round((cor/totalQs)*100) : 0;
+  const testRec = { id: `TEST_${Date.now()}`, timestamp: new Date().toISOString(), subject: state.activeSubject, score, accuracy: acc, totalTimeSeconds: state.totalTime, attempted: att, correct: cor, wrong: wro, questions: analysisQs };
+  
+  state.db.tests.unshift(testRec);
+  if(CONFIG.appsScriptUrl) fetch(CONFIG.appsScriptUrl, { method: 'POST', body: JSON.stringify({ action: 'log_test_session', testRecord: testRec }) });
+  
+  fetchInitialData();
+  switchTab('tests');
+  viewTestDetail(testRec);
+}
+
+state.currentTestFilter = 'All';
+state.currentBookmarkFilter = 'All';
+
+function filterTests(subj) {
+  state.currentTestFilter = subj;
+  const row = document.getElementById('testFilterRow');
+  if (row) {
+    Array.from(row.children).forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === subj);
+    });
+  }
+  renderTestsList();
+}
+
+function filterBookmarks(subj) {
+  state.currentBookmarkFilter = subj;
+  const row = document.getElementById('bookmarkFilterRow');
+  if (row) {
+    Array.from(row.children).forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === subj);
+    });
+  }
+  renderBookmarks();
+}
+
+function renderTestsList() {
+  const c = document.getElementById('testsContainer');
+  if (!c) return;
+  c.innerHTML = '';
+  
+  const filtered = state.currentTestFilter === 'All' 
+    ? state.db.tests 
+    : state.db.tests.filter(t => t.subject && t.subject.toLowerCase() === state.currentTestFilter.toLowerCase());
+
+  if (filtered.length === 0) {
+    c.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:30px; font-weight:600;">No ${state.currentTestFilter} tests found.</div>`;
+    return;
+  }
+
+  filtered.forEach(t => {
+    let color = 'var(--text-main)';
+    if(t.subject==='Biology') color = 'var(--bio-color)';
+    if(t.subject==='Physics') color = 'var(--phy-color)';
+    if(t.subject==='Chemistry') color = 'var(--chem-color)';
+    if(t.subject==='Mix') color = 'var(--mix-color)';
+    
+    const d = new Date(t.timestamp).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+    const div = document.createElement('div');
+    div.className = 'test-list-card';
+    div.innerHTML = `
+      <div><span class="test-badge" style="background:rgba(255,255,255,0.1); color:${color};">${t.subject} Test</span>
+      <div style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">${d} • ${Math.floor(t.totalTimeSeconds/60)}m ${t.totalTimeSeconds%60}s</div></div>
+      <div class="test-score" style="color:${color};">${t.score} <span style="font-size:0.9rem; color:var(--text-muted);">/ ${t.questions.length*4}</span></div>
+    `;
+    div.onclick = () => viewTestDetail(t);
+    c.appendChild(div);
+  });
+}
+
+state.tdFilter = 'All';
+
+function filterTdQuestions(filter) {
+  state.tdFilter = filter;
+  const row = document.getElementById('tdFilterRow');
+  if (row) {
+    Array.from(row.children).forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.includes(filter));
+    });
+  }
+  renderTdQuestionsList();
+}
+
+function viewTestDetail(t) {
+  state.activeTestReview = t;
+  state.tdFilter = 'All';
+  document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('testDetailScreen').classList.add('active');
+  document.getElementById('tdTitle').textContent = `${t.subject} Review`;
+  document.getElementById('tdScore').textContent = t.score;
+  document.getElementById('tdAcc').textContent = t.accuracy + '%';
+  document.getElementById('tdTime').textContent = `${Math.floor(t.totalTimeSeconds/60)}m ${t.totalTimeSeconds%60}s`;
+  
+  // Update counts
+  let cCor = 0, cWro = 0, cUnatt = 0;
+  t.questions.forEach(q => {
+    if (q.userSelected === 'Not Attempted') cUnatt++;
+    else if (q.isCorrect) cCor++;
+    else cWro++;
+  });
+  
+  document.getElementById('tdCntAll').textContent = t.questions.length;
+  document.getElementById('tdCntCor').textContent = cCor;
+  document.getElementById('tdCntWro').textContent = cWro;
+  document.getElementById('tdCntUnatt').textContent = cUnatt;
+
+  renderTdQuestionsList();
+}
+
+function renderTdQuestionsList() {
+  const t = state.activeTestReview;
+  if (!t) return;
+  const list = document.getElementById('tdQuestionsList');
+  list.innerHTML = '';
+  
+  const filtered = t.questions.filter((q, idx) => {
+    const isCor = q.isCorrect;
+    const isUn = q.userSelected === 'Not Attempted';
+    if (state.tdFilter === 'Correct') return isCor && !isUn;
+    if (state.tdFilter === 'Wrong') return !isCor && !isUn;
+    if (state.tdFilter === 'Unattempted') return isUn;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:30px; font-weight:600;">No ${state.tdFilter} questions in this test.</div>`;
+    return;
+  }
+
+  filtered.forEach((q) => {
+    const origIndex = t.questions.findIndex(x => x === q);
+    const isCor = q.isCorrect;
+    const isUn = q.userSelected === 'Not Attempted';
+    
+    let statusHTML = isUn ? `<span style="color:#f59e0b;">Unattempted</span>` : (isCor ? `<span style="color:var(--bio-color);">Correct</span>` : `<span style="color:#ef4444;">Wrong</span>`);
+    
+    const card = document.createElement('div');
+    card.className = `review-q-card`;
+    card.onclick = () => openQuestionReviewModal(origIndex >= 0 ? origIndex : 0);
+    card.innerHTML = `
+      <div class="review-header"><span>Q ${origIndex+1}</span><span>Time: ${q.timeSec}s • ${statusHTML}</span></div>
+      <div style="font-size:1rem; margin-bottom:12px; line-height: 1.5;">${renderFormattedBody(q.question)}</div>
+      <div class="review-opt ${isCor ? 'correct' : (isUn ? '' : 'wrong')}">Your Answer: <strong>${q.userSelected}</strong></div>
+      ${!isCor && !isUn ? `<div class="review-opt correct">Correct Answer: <strong>${q.correctAns}</strong></div>` : ''}
+      ${isUn ? `<div class="review-opt correct">Correct Answer: <strong>${q.correctAns}</strong></div>` : ''}
+    `;
+    list.appendChild(card);
+  });
+}
+
+let currentReviewQuestion = null;
+
+function openQuestionReviewModal(idx) {
+  const q = state.activeTestReview.questions[idx];
+  currentReviewQuestion = q;
+  document.getElementById('qrTitle').textContent = `Question ${idx+1} Review`;
+  
+  const isSaved = state.db.bookmarks.some(b => b.id === q.id || b.questionText === q.question);
+  const bmBtn = document.getElementById('reviewBookmarkBtn');
+  if(bmBtn) {
+    if(isSaved) bmBtn.classList.add('saved');
+    else bmBtn.classList.remove('saved');
+  }
+
+  let optionsHtml = '';
+  const opts = q.options && q.options.length === 4 ? [
+    {k:'A', v:q.options[0]}, {k:'B', v:q.options[1]}, {k:'C', v:q.options[2]}, {k:'D', v:q.options[3]}
+  ] : [];
+  
+  if (opts.length > 0) {
+    opts.forEach(opt => {
+      let cssClass = '';
+      let badge = '';
+      if(opt.k === q.correctAns) {
+        cssClass = 'correct'; badge = '✓ Correct Answer';
+      } else if (opt.k === q.userSelected && q.userSelected !== q.correctAns) {
+        cssClass = 'wrong'; badge = '✕ Your Answer';
+      }
+      
+      optionsHtml += `
+        <div class="review-opt ${cssClass}" style="flex-direction:column; align-items:flex-start;">
+          <div style="font-weight:800; margin-bottom:4px; font-size:0.8rem; letter-spacing:0.5px;">${badge ? badge : `Option ${opt.k}`}</div>
+          <div style="font-size:1rem; color:var(--text-main);">${opt.v}</div>
+        </div>
+      `;
+    });
+  } else {
+    optionsHtml = `
+      <div class="review-opt ${q.isCorrect ? 'correct' : 'wrong'}">Your Answer: <strong>${q.userSelected}</strong></div>
+      ${!q.isCorrect ? `<div class="review-opt correct">Correct Answer: <strong>${q.correctAns}</strong></div>` : ''}
+    `;
+  }
+
+  const html = `
+    <div style="margin-bottom:24px; font-size:1.1rem; line-height:1.6;">${renderFormattedBody(q.question)}</div>
+    ${optionsHtml}
+    ${q.explanation ? `<div class="review-exp"><strong>Explanation:</strong><br>${q.explanation}</div>` : ''}
+  `;
+  document.getElementById('qrBody').innerHTML = html;
+  openModal('questionReviewModal');
+}
+
+function toggleReviewBookmark() {
+  if (!currentReviewQuestion) return;
+  const q = currentReviewQuestion;
+  const isSaved = state.db.bookmarks.some(b => b.id === q.id || b.questionText === (q.question || q.questionText));
+  const tag = state.activeTestReview ? state.activeTestReview.subject : (q.subjectTag || 'Review');
+  
+  if (!isSaved) {
+    const optsArr = getQuestionOptions(q);
+    const bmItem = {
+      id: q.id || `Q_${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      subjectTag: tag,
+      questionText: q.question || q.questionText || '',
+      optA: optsArr[0] ? optsArr[0].v : '',
+      optB: optsArr[1] ? optsArr[1].v : '',
+      optC: optsArr[2] ? optsArr[2].v : '',
+      optD: optsArr[3] ? optsArr[3].v : '',
+      correctAns: q.correctAns || '',
+      explanation: q.explanation || ''
+    };
+    state.db.bookmarks.push(bmItem);
+    document.getElementById('reviewBookmarkBtn').classList.add('saved');
+    if(CONFIG.appsScriptUrl) fetch(CONFIG.appsScriptUrl, { method: 'POST', body: JSON.stringify({ action: 'toggle_bookmark', questionId: bmItem.id, subjectTag: tag, questionText: bmItem.questionText, explanation: bmItem.explanation, optA: bmItem.optA, optB: bmItem.optB, optC: bmItem.optC, optD: bmItem.optD, correctAns: bmItem.correctAns, isBookmarked: true }) });
+    showToast("Bookmark Saved!");
+  } else {
+    state.db.bookmarks = state.db.bookmarks.filter(b => b.id !== q.id && b.questionText !== (q.question || q.questionText));
+    document.getElementById('reviewBookmarkBtn').classList.remove('saved');
+    if(CONFIG.appsScriptUrl) fetch(CONFIG.appsScriptUrl, { method: 'POST', body: JSON.stringify({ action: 'toggle_bookmark', questionId: q.id, subjectTag: tag, questionText: q.question || q.questionText, isBookmarked: false }) });
+    showToast("Bookmark Removed");
+  }
+}
+
+function renderBookmarks() {
+  const c = document.getElementById('bookmarksContainer');
+  if (!c) return;
+  c.innerHTML = '';
+  
+  const filtered = state.currentBookmarkFilter === 'All'
+    ? state.db.bookmarks
+    : state.db.bookmarks.filter(b => b.subjectTag && b.subjectTag.toLowerCase().includes(state.currentBookmarkFilter.toLowerCase()));
+
+  if (filtered.length === 0) {
+    c.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:30px; font-weight:600;">No ${state.currentBookmarkFilter} bookmarks saved.</div>`;
+    return;
+  }
+
+  filtered.forEach((b) => {
+    const origIndex = state.db.bookmarks.findIndex(x => x === b);
+    let color = 'var(--text-main)';
+    if(b.subjectTag && b.subjectTag.includes('Bio')) color = 'var(--bio-color)';
+    if(b.subjectTag && b.subjectTag.includes('Phy')) color = 'var(--phy-color)';
+    if(b.subjectTag && b.subjectTag.includes('Chem')) color = 'var(--chem-color)';
+    if(b.subjectTag && b.subjectTag.includes('Mix')) color = 'var(--mix-color)';
+    
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; margin-bottom:16px; cursor:pointer; box-shadow:var(--shadow-sm);';
+    card.onclick = () => openBookmarkReviewModal(origIndex >= 0 ? origIndex : 0);
+    card.innerHTML = `
+      <span class="test-badge" style="background:rgba(255,255,255,0.1); color:${color};">${b.subjectTag}</span>
+      <div style="font-size:1.05rem; margin-top:8px; line-height:1.5; color:var(--text-main);">${b.questionText}</div>
+    `;
+    c.appendChild(card);
+  });
+}
+
+function openBookmarkReviewModal(idx) {
+  const b = state.db.bookmarks[idx];
+  if (!b) return;
+  document.getElementById('qrTitle').textContent = `Bookmark Review`;
+  
+  const bmBtn = document.getElementById('reviewBookmarkBtn');
+  if(bmBtn) bmBtn.classList.add('saved');
+
+  currentReviewQuestion = b;
+  
+  const { opts, correctAns } = findBookmarkMetadata(b);
+  let optionsHtml = '';
+  
+  if (opts.length > 0) {
+    opts.forEach(opt => {
+      const isCorrect = correctAns && correctAns.trim().toUpperCase() === opt.k.toUpperCase();
+      optionsHtml += `
+        <div class="review-opt ${isCorrect ? 'correct' : ''}" style="flex-direction:column; align-items:flex-start;">
+          <div style="font-weight:800; margin-bottom:4px; font-size:0.8rem; letter-spacing:0.5px;">${isCorrect ? '✓ Correct Answer' : `Option ${opt.k}`}</div>
+          <div style="font-size:1rem; color:${isCorrect ? 'var(--bio-color)' : 'var(--text-main)'}; font-weight:${isCorrect ? '700' : '400'};">${opt.v}</div>
+        </div>
+      `;
+    });
+  } else {
+    optionsHtml = `<div style="font-size:0.85rem; color:var(--text-muted); font-style:italic; margin-bottom:16px;">Options unavailable for this legacy bookmark.</div>`;
+  }
+  
+  const html = `
+    <div style="margin-bottom:24px; font-size:1.1rem; line-height:1.6; color:var(--text-main);">${renderFormattedBody(b.questionText)}</div>
+    ${optionsHtml}
+    ${b.explanation ? `<div class="review-exp"><strong>Explanation:</strong><br>${b.explanation}</div>` : ''}
+  `;
+  document.getElementById('qrBody').innerHTML = html;
+  openModal('questionReviewModal');
+}
+
+function renderProfile() {
+  let totalQs = 0, totalAtt = 0, totalCor = 0, totalWro = 0, totalTimeSec = 0;
+  
+  // Best truth: iterate all tests to guarantee exact numbers
+  const testCount = state.db.tests ? state.db.tests.length : 0;
+  if (state.db.tests && state.db.tests.length > 0) {
+    state.db.tests.forEach(t => {
+      let qCount = 15; // default fallback
+      if (t.questions && t.questions.length > 0) {
+        qCount = t.questions.length;
+      } else {
+        const att = parseInt(t.attempted) || (parseInt(t.correct||0) + parseInt(t.wrong||0));
+        qCount = Math.max(15, att);
+      }
+      totalQs += qCount;
+      totalAtt += (parseInt(t.attempted) || 0);
+      totalCor += (parseInt(t.correct) || 0);
+      totalWro += (parseInt(t.wrong) || 0);
+      totalTimeSec += (parseInt(t.totalTimeSeconds) || 0);
+    });
+  } else {
+    // Ultimate Fallback: Legacy profile record
+    const p = state.db.profile || {};
+    totalQs = p.totalAttempted || 0;
+    totalCor = p.correctCount || 0;
+    totalWro = p.wrongCount || 0;
+    totalAtt = totalCor + totalWro;
+  }
+
+  // Sanity check: Total Qs must at least cover correct + wrong
+  if (totalQs < (totalCor + totalWro)) {
+    totalQs = totalCor + totalWro;
+  }
+
+  const totalUnatt = Math.max(0, totalQs - totalAtt);
+  const accuracy = totalQs > 0 ? Math.round((totalCor / totalQs) * 100) : 0;
+  const totalMin = Math.round(totalTimeSec / 60);
+  
+  document.getElementById('profAcc').textContent = accuracy + '%';
+  document.getElementById('profTotal').textContent = totalQs;
+  document.getElementById('profUnattempted').textContent = totalUnatt;
+  document.getElementById('profCorrect').textContent = totalCor;
+  document.getElementById('profWrong').textContent = totalWro;
+  document.getElementById('profTime').textContent = totalMin > 60 ? `${(totalMin/60).toFixed(1)}h` : `${totalMin}m`;
+  document.getElementById('profTestsCount').textContent = testCount;
+  
+  // Render 7-Day Bar Chart
+  const cRow = document.getElementById('calendarRow');
+  if (cRow) {
+    cRow.innerHTML = '';
+    let maxDayQs = 1;
+    const dayDataList = [];
+    
+    for(let i=6; i>=0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const dStr = d.toISOString().split('T')[0];
+      
+      const testsOnDay = state.db.tests.filter(t => t.timestamp && t.timestamp.startsWith(dStr));
+      let dayQs = 0;
+      testsOnDay.forEach(t => dayQs += (t.questions ? t.questions.length : 15));
+      if (dayQs > maxDayQs) maxDayQs = dayQs;
+      
+      dayDataList.push({ dStr, dayName: d.toLocaleDateString('en-US', {weekday:'short'}), dayQs, isToday: i===0 });
+    }
+    
+    dayDataList.forEach(item => {
+      const pct = Math.max(10, Math.round((item.dayQs / maxDayQs) * 100));
+      const col = document.createElement('div');
+      col.className = `bar-col ${item.isToday ? 'active' : ''}`;
+      col.onclick = () => showCalDetail(item.dStr);
+      col.innerHTML = `
+        <div class="bar-fill" style="height:${pct}%;" title="${item.dayQs} Qs"></div>
+        <span class="bar-label">${item.dayName}</span>
+      `;
+      cRow.appendChild(col);
+    });
+  }
+}
+
+state.calViewDate = new Date();
+
+function changeCalMonth(offset) {
+  state.calViewDate.setMonth(state.calViewDate.getMonth() + offset);
+  renderFullCalendarGrid();
+}
+
+function renderFullCalendarGrid() {
+  const year = state.calViewDate.getFullYear();
+  const month = state.calViewDate.getMonth();
+  
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const titleElem = document.getElementById('calMonthYearTitle');
+  if(titleElem) titleElem.textContent = `${monthNames[month]} ${year}`;
+  
+  const firstDayIndex = new Date(year, month, 1).getDay();
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  
+  const grid = document.getElementById('fullCalendarGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  
+  // Weekday Headers
+  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  weekDays.forEach(d => {
+    const head = document.createElement('div');
+    head.style.cssText = 'font-size:0.75rem; font-weight:800; color:var(--text-muted); text-align:center; padding:6px 0;';
+    head.textContent = d;
+    grid.appendChild(head);
+  });
+  
+  // Empty padding cells before Day 1
+  for (let i = 0; i < firstDayIndex; i++) {
+    const empty = document.createElement('div');
+    grid.appendChild(empty);
+  }
+  
+  // Days of month
+  const todayStr = new Date().toISOString().split('T')[0];
+  
+  for (let day = 1; day <= totalDays; day++) {
+    const mStr = String(month + 1).padStart(2, '0');
+    const dStrStr = String(day).padStart(2, '0');
+    const dStr = `${year}-${mStr}-${dStrStr}`;
+    
+    const hasData = !!state.db.dailyAnalytics[dStr] || state.db.tests.some(t => t.timestamp && t.timestamp.startsWith(dStr));
+    const isToday = dStr === todayStr;
+    
+    const btn = document.createElement('div');
+    btn.style.cssText = `background:var(--bg-surface); border:1px solid ${isToday ? 'var(--primary)' : 'var(--border)'}; border-radius:var(--radius-sm); padding:10px 0; display:flex; flex-direction:column; align-items:center; cursor:pointer; position:relative; ${isToday ? 'background:rgba(59,130,246,0.15);' : ''}`;
+    btn.innerHTML = `
+      <span style="font-size:0.85rem; font-weight:${isToday ? '900' : '700'}; color:${isToday ? 'var(--primary)' : 'var(--text-main)'};">${day}</span>
+      ${hasData ? `<div style="width:6px; height:6px; border-radius:50%; background:var(--bio-color); box-shadow:0 0 6px var(--bio-color); margin-top:4px;"></div>` : ''}
+    `;
+    btn.onclick = () => showCalDetail(dStr);
+    grid.appendChild(btn);
+  }
+}
+
+function showCalDetail(dStr) {
+  const testsOnDay = state.db.tests.filter(t => t.timestamp && t.timestamp.startsWith(dStr));
+  const dailyData = state.db.dailyAnalytics[dStr];
+  
+  let totalQs = 0, att = 0, cor = 0, wro = 0, unatt = 0, accuracy = 0;
+  
+  if (testsOnDay.length > 0) {
+    testsOnDay.forEach(t => {
+      totalQs += (t.questions ? t.questions.length : 15);
+      att += (t.attempted || 0);
+      cor += (t.correct || 0);
+      wro += (t.wrong || 0);
+    });
+    unatt = totalQs - att;
+    accuracy = totalQs > 0 ? Math.round((cor / totalQs) * 100) : 0;
+  } else if (dailyData) {
+    totalQs = dailyData.totalQuestions || dailyData.attempted || 0;
+    att = dailyData.attempted || 0;
+    cor = dailyData.correct || 0;
+    wro = dailyData.wrong || 0;
+    unatt = dailyData.unattempted || Math.max(0, totalQs - att);
+    accuracy = dailyData.accuracy !== undefined ? dailyData.accuracy : (totalQs > 0 ? Math.round((cor / totalQs) * 100) : 0);
+  }
+
+  const dateHeadingStr = `Analytics for ${new Date(dStr).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}`;
+  
+  // Render Stats
+  let statsHtml = `
+    <div style="display:flex; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; text-align:center;">
+      <div><div style="font-size:1.2rem; font-weight:800;">${totalQs}</div><div style="font-size:0.75rem; color:var(--text-muted);">Total Qs</div></div>
+      <div><div style="font-size:1.2rem; font-weight:800;">${att}</div><div style="font-size:0.75rem; color:var(--text-muted);">Attempted</div></div>
+      <div><div style="font-size:1.2rem; font-weight:800; color:#f59e0b;">${unatt}</div><div style="font-size:0.75rem; color:var(--text-muted);">Unattempted</div></div>
+      <div><div style="font-size:1.2rem; font-weight:800; color:var(--bio-color);">${cor}</div><div style="font-size:0.75rem; color:var(--text-muted);">Correct</div></div>
+      <div><div style="font-size:1.2rem; font-weight:800; color:#ef4444;">${wro}</div><div style="font-size:0.75rem; color:var(--text-muted);">Wrong</div></div>
+      <div><div style="font-size:1.2rem; font-weight:800; color:var(--primary);">${accuracy}%</div><div style="font-size:0.75rem; color:var(--text-muted);">Accuracy</div></div>
+    </div>
+  `;
+  
+  // Render Tests List
+  if (testsOnDay.length > 0) {
+    statsHtml += `<h4 style="margin:16px 0 8px; font-size:0.9rem; color:var(--text-muted);">Tests Taken</h4><div style="display:flex; flex-direction:column; gap:8px;">`;
+    testsOnDay.forEach((t) => {
+      let color = 'var(--text-main)';
+      if(t.subject==='Biology') color = 'var(--bio-color)';
+      if(t.subject==='Physics') color = 'var(--phy-color)';
+      if(t.subject==='Chemistry') color = 'var(--chem-color)';
+      if(t.subject==='Mix') color = 'var(--mix-color)';
+      
+      statsHtml += `
+        <div onclick="openTestFromCalendar('${t.id}')" style="background:var(--bg-surface); padding:12px; border-radius:8px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+          <span style="font-weight:700; color:${color};">${t.subject} Test</span>
+          <span style="font-weight:900;">${t.score} <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Score (${t.accuracy}%)</span></span>
+        </div>
+      `;
+    });
+    statsHtml += `</div>`;
+  } else {
+    statsHtml += `<p style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">No tests taken on this day.</p>`;
+  }
+  
+  const pane = document.getElementById('calDetailPane');
+  pane.innerHTML = `<h3 style="margin-bottom:12px; font-size:1.1rem; color:var(--text-main);">${dateHeadingStr}</h3>` + statsHtml;
+  pane.style.display = 'block';
+
+  if(document.getElementById('calendarModal').style.display !== 'flex') {
+    openModal('calendarModal');
+  }
+}
+
+function openTestFromCalendar(testId) {
+  const t = state.db.tests.find(x => x.id === testId);
+  if (t) {
+    closeModal('calendarModal');
+    viewTestDetail(t);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,968 @@
+{
+  "version": 2,
+  "auto_generated": true,
+  "summary": {
+    "total_folders": 106,
+    "active_sets": 1,
+    "total_questions": 10
+  },
+  "uploads": [
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Cell Structure and Functions",
+      "subchapter": "Biomolecules",
+      "path": "upload/Biology/Class 11/Cell Structure and Functions/Biomolecules/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Cell Structure and Functions",
+      "subchapter": "Cell Cycle and Cell Division",
+      "path": "upload/Biology/Class 11/Cell Structure and Functions/Cell Cycle and Cell Division/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Cell Structure and Functions",
+      "subchapter": "Cell The Unit of Life",
+      "path": "upload/Biology/Class 11/Cell Structure and Functions/Cell The Unit of Life/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Diversity in the Living World",
+      "subchapter": "Animal Kingdom",
+      "path": "upload/Biology/Class 11/Diversity in the Living World/Animal Kingdom/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Diversity in the Living World",
+      "subchapter": "Biological Classification",
+      "path": "upload/Biology/Class 11/Diversity in the Living World/Biological Classification/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Diversity in the Living World",
+      "subchapter": "Plant Kingdom",
+      "path": "upload/Biology/Class 11/Diversity in the Living World/Plant Kingdom/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Diversity in the Living World",
+      "subchapter": "The Living World",
+      "path": "upload/Biology/Class 11/Diversity in the Living World/The Living World/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Human Physiology",
+      "subchapter": "Body Fluids and Circulation",
+      "path": "upload/Biology/Class 11/Human Physiology/Body Fluids and Circulation/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Human Physiology",
+      "subchapter": "Breathing and Exchange of Gases",
+      "path": "upload/Biology/Class 11/Human Physiology/Breathing and Exchange of Gases/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Human Physiology",
+      "subchapter": "Chemical Coordination and Integration",
+      "path": "upload/Biology/Class 11/Human Physiology/Chemical Coordination and Integration/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Human Physiology",
+      "subchapter": "Excretory Products and Their Elimination",
+      "path": "upload/Biology/Class 11/Human Physiology/Excretory Products and Their Elimination/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Human Physiology",
+      "subchapter": "Locomotion and Movement",
+      "path": "upload/Biology/Class 11/Human Physiology/Locomotion and Movement/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Human Physiology",
+      "subchapter": "Neural Control and Coordination",
+      "path": "upload/Biology/Class 11/Human Physiology/Neural Control and Coordination/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Plant Physiology",
+      "subchapter": "Photosynthesis in Higher Plants",
+      "path": "upload/Biology/Class 11/Plant Physiology/Photosynthesis in Higher Plants/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Plant Physiology",
+      "subchapter": "Plant Growth and Development",
+      "path": "upload/Biology/Class 11/Plant Physiology/Plant Growth and Development/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Plant Physiology",
+      "subchapter": "Respiration in Plants",
+      "path": "upload/Biology/Class 11/Plant Physiology/Respiration in Plants/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Structural Organisation in Animals and Plants",
+      "subchapter": "Anatomy of Flowering Plants",
+      "path": "upload/Biology/Class 11/Structural Organisation in Animals and Plants/Anatomy of Flowering Plants/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Structural Organisation in Animals and Plants",
+      "subchapter": "Morphology of Flowering Plants",
+      "path": "upload/Biology/Class 11/Structural Organisation in Animals and Plants/Morphology of Flowering Plants/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 11",
+      "chapter": "Structural Organisation in Animals and Plants",
+      "subchapter": "Structural Organisation in Animals",
+      "path": "upload/Biology/Class 11/Structural Organisation in Animals and Plants/Structural Organisation in Animals/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Biology and Human Welfare",
+      "subchapter": "Human Health and Disease",
+      "path": "upload/Biology/Class 12/Biology and Human Welfare/Human Health and Disease/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Biology and Human Welfare",
+      "subchapter": "Microbes in Human Welfare",
+      "path": "upload/Biology/Class 12/Biology and Human Welfare/Microbes in Human Welfare/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Biotechnology",
+      "subchapter": "Biotechnology Principles and Processes",
+      "path": "upload/Biology/Class 12/Biotechnology/Biotechnology Principles and Processes/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Biotechnology",
+      "subchapter": "Biotechnology and its Applications",
+      "path": "upload/Biology/Class 12/Biotechnology/Biotechnology and its Applications/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Ecology and Environment",
+      "subchapter": "Biodiversity and Conservation",
+      "path": "upload/Biology/Class 12/Ecology and Environment/Biodiversity and Conservation/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Ecology and Environment",
+      "subchapter": "Ecosystem",
+      "path": "upload/Biology/Class 12/Ecology and Environment/Ecosystem/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Ecology and Environment",
+      "subchapter": "Organisms and Populations",
+      "path": "upload/Biology/Class 12/Ecology and Environment/Organisms and Populations/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Genetics and Evolution",
+      "subchapter": "Evolution",
+      "path": "upload/Biology/Class 12/Genetics and Evolution/Evolution/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Genetics and Evolution",
+      "subchapter": "Molecular Basis of Inheritance",
+      "path": "upload/Biology/Class 12/Genetics and Evolution/Molecular Basis of Inheritance/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Genetics and Evolution",
+      "subchapter": "Principles of Inheritance and Variation",
+      "path": "upload/Biology/Class 12/Genetics and Evolution/Principles of Inheritance and Variation/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Reproduction",
+      "subchapter": "Human Reproduction",
+      "path": "upload/Biology/Class 12/Reproduction/Human Reproduction/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Reproduction",
+      "subchapter": "Reproductive Health",
+      "path": "upload/Biology/Class 12/Reproduction/Reproductive Health/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "biology",
+      "cls": "Class 12",
+      "chapter": "Reproduction",
+      "subchapter": "Sexual Reproduction in Flowering Plants",
+      "path": "upload/Biology/Class 12/Reproduction/Sexual Reproduction in Flowering Plants/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Inorganic Chemistry",
+      "subchapter": "Chemical Bonding and Molecular Structure",
+      "path": "upload/Chemistry/Class 11/Inorganic Chemistry/Chemical Bonding and Molecular Structure/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Inorganic Chemistry",
+      "subchapter": "Classification of Elements",
+      "path": "upload/Chemistry/Class 11/Inorganic Chemistry/Classification of Elements/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Inorganic Chemistry",
+      "subchapter": "p-Block Elements",
+      "path": "upload/Chemistry/Class 11/Inorganic Chemistry/p-Block Elements/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Organic Chemistry",
+      "subchapter": "Basic Principles of Organic Chemistry",
+      "path": "upload/Chemistry/Class 11/Organic Chemistry/Basic Principles of Organic Chemistry/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Organic Chemistry",
+      "subchapter": "Hydrocarbons",
+      "path": "upload/Chemistry/Class 11/Organic Chemistry/Hydrocarbons/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Organic Chemistry",
+      "subchapter": "Purification and Characterisation",
+      "path": "upload/Chemistry/Class 11/Organic Chemistry/Purification and Characterisation/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Physical Chemistry",
+      "subchapter": "Atomic Structure",
+      "path": "upload/Chemistry/Class 11/Physical Chemistry/Atomic Structure/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Physical Chemistry",
+      "subchapter": "Chemical Thermodynamics",
+      "path": "upload/Chemistry/Class 11/Physical Chemistry/Chemical Thermodynamics/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Physical Chemistry",
+      "subchapter": "Equilibrium",
+      "path": "upload/Chemistry/Class 11/Physical Chemistry/Equilibrium/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Physical Chemistry",
+      "subchapter": "Redox Reactions",
+      "path": "upload/Chemistry/Class 11/Physical Chemistry/Redox Reactions/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 11",
+      "chapter": "Physical Chemistry",
+      "subchapter": "Some Basic Concepts in Chemistry",
+      "path": "upload/Chemistry/Class 11/Physical Chemistry/Some Basic Concepts in Chemistry/set.json",
+      "active": true,
+      "question_count": 10,
+      "set_names": [
+        "aa6b15ba f70f 40e0 a5eb dda7eb222e47"
+      ]
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Inorganic Chemistry (Class 12)",
+      "subchapter": "Coordination Compounds",
+      "path": "upload/Chemistry/Class 12/Inorganic Chemistry (Class 12)/Coordination Compounds/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Inorganic Chemistry (Class 12)",
+      "subchapter": "d and f Block Elements",
+      "path": "upload/Chemistry/Class 12/Inorganic Chemistry (Class 12)/d and f Block Elements/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Organic Chemistry (Class 12)",
+      "subchapter": "Alcohols Phenols and Ethers",
+      "path": "upload/Chemistry/Class 12/Organic Chemistry (Class 12)/Alcohols Phenols and Ethers/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Organic Chemistry (Class 12)",
+      "subchapter": "Aldehydes Ketones and Carboxylic Acids",
+      "path": "upload/Chemistry/Class 12/Organic Chemistry (Class 12)/Aldehydes Ketones and Carboxylic Acids/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Organic Chemistry (Class 12)",
+      "subchapter": "Amines and Diazonium Salts",
+      "path": "upload/Chemistry/Class 12/Organic Chemistry (Class 12)/Amines and Diazonium Salts/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Organic Chemistry (Class 12)",
+      "subchapter": "Biomolecules",
+      "path": "upload/Chemistry/Class 12/Organic Chemistry (Class 12)/Biomolecules/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Organic Chemistry (Class 12)",
+      "subchapter": "Organic Compounds Containing Halogens",
+      "path": "upload/Chemistry/Class 12/Organic Chemistry (Class 12)/Organic Compounds Containing Halogens/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Physical Chemistry (Class 12)",
+      "subchapter": "Chemical Kinetics",
+      "path": "upload/Chemistry/Class 12/Physical Chemistry (Class 12)/Chemical Kinetics/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Physical Chemistry (Class 12)",
+      "subchapter": "Electrochemistry",
+      "path": "upload/Chemistry/Class 12/Physical Chemistry (Class 12)/Electrochemistry/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "chemistry",
+      "cls": "Class 12",
+      "chapter": "Physical Chemistry (Class 12)",
+      "subchapter": "Solutions",
+      "path": "upload/Chemistry/Class 12/Physical Chemistry (Class 12)/Solutions/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Gravitation",
+      "subchapter": "Escape Velocity",
+      "path": "upload/Physics/Class 11/Gravitation/Escape Velocity/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Gravitation",
+      "subchapter": "Gravitational Potential",
+      "path": "upload/Physics/Class 11/Gravitation/Gravitational Potential/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Gravitation",
+      "subchapter": "Keplers Laws",
+      "path": "upload/Physics/Class 11/Gravitation/Keplers Laws/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Kinematics",
+      "subchapter": "Motion in a Plane",
+      "path": "upload/Physics/Class 11/Kinematics/Motion in a Plane/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Kinematics",
+      "subchapter": "Motion in a Straight Line",
+      "path": "upload/Physics/Class 11/Kinematics/Motion in a Straight Line/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Kinetic Theory of Gases",
+      "subchapter": "Ideal Gas Laws",
+      "path": "upload/Physics/Class 11/Kinetic Theory of Gases/Ideal Gas Laws/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Kinetic Theory of Gases",
+      "subchapter": "Specific Heat Capacity",
+      "path": "upload/Physics/Class 11/Kinetic Theory of Gases/Specific Heat Capacity/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Laws of Motion",
+      "subchapter": "Force and Inertia",
+      "path": "upload/Physics/Class 11/Laws of Motion/Force and Inertia/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Laws of Motion",
+      "subchapter": "Friction",
+      "path": "upload/Physics/Class 11/Laws of Motion/Friction/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Laws of Motion",
+      "subchapter": "Newtons Laws",
+      "path": "upload/Physics/Class 11/Laws of Motion/Newtons Laws/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Oscillations and Waves",
+      "subchapter": "Doppler Effect",
+      "path": "upload/Physics/Class 11/Oscillations and Waves/Doppler Effect/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Oscillations and Waves",
+      "subchapter": "Simple Harmonic Motion",
+      "path": "upload/Physics/Class 11/Oscillations and Waves/Simple Harmonic Motion/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Oscillations and Waves",
+      "subchapter": "Wave Motion",
+      "path": "upload/Physics/Class 11/Oscillations and Waves/Wave Motion/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Physics and Measurement",
+      "subchapter": "Errors in Measurement",
+      "path": "upload/Physics/Class 11/Physics and Measurement/Errors in Measurement/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Physics and Measurement",
+      "subchapter": "Units and Measurements",
+      "path": "upload/Physics/Class 11/Physics and Measurement/Units and Measurements/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Properties of Solids and Liquids",
+      "subchapter": "Elasticity",
+      "path": "upload/Physics/Class 11/Properties of Solids and Liquids/Elasticity/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Properties of Solids and Liquids",
+      "subchapter": "Fluid Pressure",
+      "path": "upload/Physics/Class 11/Properties of Solids and Liquids/Fluid Pressure/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Properties of Solids and Liquids",
+      "subchapter": "Surface Tension",
+      "path": "upload/Physics/Class 11/Properties of Solids and Liquids/Surface Tension/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Properties of Solids and Liquids",
+      "subchapter": "Viscosity",
+      "path": "upload/Physics/Class 11/Properties of Solids and Liquids/Viscosity/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Rotational Motion",
+      "subchapter": "Angular Momentum",
+      "path": "upload/Physics/Class 11/Rotational Motion/Angular Momentum/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Rotational Motion",
+      "subchapter": "Center of Mass",
+      "path": "upload/Physics/Class 11/Rotational Motion/Center of Mass/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Rotational Motion",
+      "subchapter": "Moment of Inertia",
+      "path": "upload/Physics/Class 11/Rotational Motion/Moment of Inertia/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Rotational Motion",
+      "subchapter": "Torque",
+      "path": "upload/Physics/Class 11/Rotational Motion/Torque/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Thermodynamics",
+      "subchapter": "First and Second Laws",
+      "path": "upload/Physics/Class 11/Thermodynamics/First and Second Laws/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Thermodynamics",
+      "subchapter": "Heat Engines",
+      "path": "upload/Physics/Class 11/Thermodynamics/Heat Engines/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Work Energy and Power",
+      "subchapter": "Collisions",
+      "path": "upload/Physics/Class 11/Work Energy and Power/Collisions/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Work Energy and Power",
+      "subchapter": "Power",
+      "path": "upload/Physics/Class 11/Work Energy and Power/Power/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 11",
+      "chapter": "Work Energy and Power",
+      "subchapter": "Work-Energy Theorem",
+      "path": "upload/Physics/Class 11/Work Energy and Power/Work-Energy Theorem/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Atoms and Nuclei",
+      "subchapter": "Bohr Model",
+      "path": "upload/Physics/Class 12/Atoms and Nuclei/Bohr Model/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Atoms and Nuclei",
+      "subchapter": "Nuclear Fission and Fusion",
+      "path": "upload/Physics/Class 12/Atoms and Nuclei/Nuclear Fission and Fusion/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Atoms and Nuclei",
+      "subchapter": "Radioactivity",
+      "path": "upload/Physics/Class 12/Atoms and Nuclei/Radioactivity/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Current Electricity",
+      "subchapter": "Kirchhoffs Rules",
+      "path": "upload/Physics/Class 12/Current Electricity/Kirchhoffs Rules/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Current Electricity",
+      "subchapter": "Ohms Law",
+      "path": "upload/Physics/Class 12/Current Electricity/Ohms Law/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Current Electricity",
+      "subchapter": "Wheatstone Bridge",
+      "path": "upload/Physics/Class 12/Current Electricity/Wheatstone Bridge/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Dual Nature of Matter and Radiation",
+      "subchapter": "Matter Waves",
+      "path": "upload/Physics/Class 12/Dual Nature of Matter and Radiation/Matter Waves/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Dual Nature of Matter and Radiation",
+      "subchapter": "Photoelectric Effect",
+      "path": "upload/Physics/Class 12/Dual Nature of Matter and Radiation/Photoelectric Effect/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electromagnetic Induction and Alternating Currents",
+      "subchapter": "AC Circuits",
+      "path": "upload/Physics/Class 12/Electromagnetic Induction and Alternating Currents/AC Circuits/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electromagnetic Induction and Alternating Currents",
+      "subchapter": "Faradays Law",
+      "path": "upload/Physics/Class 12/Electromagnetic Induction and Alternating Currents/Faradays Law/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electromagnetic Induction and Alternating Currents",
+      "subchapter": "Lenzs Law",
+      "path": "upload/Physics/Class 12/Electromagnetic Induction and Alternating Currents/Lenzs Law/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electromagnetic Induction and Alternating Currents",
+      "subchapter": "Transformers",
+      "path": "upload/Physics/Class 12/Electromagnetic Induction and Alternating Currents/Transformers/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electromagnetic Waves",
+      "subchapter": "Displacement Current",
+      "path": "upload/Physics/Class 12/Electromagnetic Waves/Displacement Current/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electromagnetic Waves",
+      "subchapter": "EM Spectrum",
+      "path": "upload/Physics/Class 12/Electromagnetic Waves/EM Spectrum/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electronic Devices",
+      "subchapter": "Logic Gates",
+      "path": "upload/Physics/Class 12/Electronic Devices/Logic Gates/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electronic Devices",
+      "subchapter": "Semiconductors",
+      "path": "upload/Physics/Class 12/Electronic Devices/Semiconductors/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electronic Devices",
+      "subchapter": "p-n Junction Diodes",
+      "path": "upload/Physics/Class 12/Electronic Devices/p-n Junction Diodes/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electrostatics",
+      "subchapter": "Electric Charges and Fields",
+      "path": "upload/Physics/Class 12/Electrostatics/Electric Charges and Fields/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Electrostatics",
+      "subchapter": "Electrostatic Potential and Capacitance",
+      "path": "upload/Physics/Class 12/Electrostatics/Electrostatic Potential and Capacitance/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Magnetic Effects of Current and Magnetism",
+      "subchapter": "Amperes Law",
+      "path": "upload/Physics/Class 12/Magnetic Effects of Current and Magnetism/Amperes Law/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Magnetic Effects of Current and Magnetism",
+      "subchapter": "Biot-Savart Law",
+      "path": "upload/Physics/Class 12/Magnetic Effects of Current and Magnetism/Biot-Savart Law/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Magnetic Effects of Current and Magnetism",
+      "subchapter": "Cyclotron",
+      "path": "upload/Physics/Class 12/Magnetic Effects of Current and Magnetism/Cyclotron/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Magnetic Effects of Current and Magnetism",
+      "subchapter": "Earths Magnetism",
+      "path": "upload/Physics/Class 12/Magnetic Effects of Current and Magnetism/Earths Magnetism/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Optics",
+      "subchapter": "Ray Optics and Optical Instruments",
+      "path": "upload/Physics/Class 12/Optics/Ray Optics and Optical Instruments/set.json",
+      "active": false,
+      "question_count": 0
+    },
+    {
+      "subject": "physics",
+      "cls": "Class 12",
+      "chapter": "Optics",
+      "subchapter": "Wave Optics",
+      "path": "upload/Physics/Class 12/Optics/Wave Optics/set.json",
+      "active": false,
+      "question_count": 0
+    }
+  ]
+}

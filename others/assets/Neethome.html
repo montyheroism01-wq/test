@@ -1,0 +1,3462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bio Neuron Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030510;
+            --card: rgba(10, 15, 30, 0.7);
+            --card-border: #1e293b;
+            --neon-blue: #00e5ff;
+            --neon-purple: #b388ff;
+            --neon-pink: #ec4899;
+            --neon-green: #10b981;
+            --neon-yellow: #f59e0b;
+            --neon-red: #ef4444;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --shadow: 0 4px 15px rgba(0,0,0,0.5);
+            --tier-none: #cbd5e1;
+            --tier-red: #ef4444;
+            --tier-orange: #f97316;
+            --tier-yellow: #facc15;
+            --tier-purple: #a855f7;
+            --tier-green: #22c55e;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh; height: 100vh;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── ANIMATED BACKGROUND ── */
+        #neuronCanvas {
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 0;
+            opacity: 0.25;
+        }
+
+        /* ── SCREENS ── */
+        .screen {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: flex-start;
+            z-index: 10;
+            padding: 24px 20px 100px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .screen::-webkit-scrollbar { display: none; }
+        .screen.hidden {
+            opacity: 0; pointer-events: none; visibility: hidden;
+            transform: scale(0.93) translateY(20px);
+        }
+
+        /* ── START SCREEN HEADER ── */
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%; max-width: 400px;
+            margin-bottom: 24px;
+        }
+
+        .logo-title-group {
+            display: flex; align-items: center; gap: 15px;
+            position: relative; padding: 5px;
+        }
+        .logo-title-group::after {
+            content: ''; position: absolute; inset: -20px;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 229, 255, 0.1), transparent 70%);
+            z-index: -1; animation: headerBacklight 4s ease-in-out infinite alternate;
+        }
+        @keyframes headerBacklight {
+            from { opacity: 0.3; transform: scale(0.9) translateX(-10px); }
+            to { opacity: 0.7; transform: scale(1.1) translateX(10px); }
+        }
+
+        .logo-wrap {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #0a0d1d, #030510);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0,229,255,0.5), inset 0 0 15px rgba(0,229,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            animation: logoPulse 3s infinite ease-in-out;
+            position: relative;
+        }
+        @keyframes logoPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,229,255,0.5), inset 0 0 15px rgba(0,229,255,0.3); transform: scale(1); }
+            50% { box-shadow: 0 0 40px rgba(0,229,255,0.8), inset 0 0 200px rgba(0,229,255,0.1); transform: scale(1.03); }
+        }
+
+        .title-group {
+            display: flex; flex-direction: column;
+        }
+        .title-line1 {
+            font-size: 28px; font-weight: 950; line-height: 1;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0,229,255,0.4);
+            animation: textGlowBlue 3s infinite ease-in-out;
+        }
+        .title-line2 {
+            font-size: 22px; font-weight: 900; line-height: 1; margin-top: 2px;
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px rgba(168,85,247,0.4);
+            animation: textGlowPurple 3s infinite ease-in-out 0.5s;
+        }
+        .title-line3 {
+            font-size: 22px; font-weight: 950; line-height: 1; margin-top: 2px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0,229,255,0.4);
+            animation: textGlowBlue 3s infinite ease-in-out 1s;
+        }
+        @keyframes textGlowBlue {
+            0%, 100% { text-shadow: 0 0 10px rgba(0,229,255,0.4); filter: brightness(1); }
+            50% { text-shadow: 0 0 20px rgba(0,229,255,0.8); filter: brightness(1.2); }
+        }
+        @keyframes textGlowPurple {
+            0%, 100% { text-shadow: 0 0 10px rgba(168,85,247,0.4); filter: brightness(1); }
+            50% { text-shadow: 0 0 20px rgba(168,85,247,0.8); filter: brightness(1.2); }
+        }
+        .subtitle {
+            font-size: 11px; font-weight: 500; color: var(--text-sub);
+            margin-top: 6px; letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .menu-icon {
+            font-size: 24px; color: var(--text-main);
+            padding: 8px; cursor: pointer;
+            position: relative;
+        }
+
+        /* ── DROPDOWN MENU ── */
+        .dropdown {
+            position: absolute; top: 30px; right: 0;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            width: 200px;
+            display: none; flex-direction: column;
+            padding: 8px 0;
+            z-index: 100; backdrop-filter: blur(10px);
+        }
+        .dropdown.show { display: flex; animation: slideDown 0.2s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .dropdown-item {
+            padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            color: var(--text-main); font-size: 13px; font-weight: 500;
+            cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:active { background: rgba(var(--neon-blue-rgb), 0.1); }
+        .dropdown-icon { font-size: 16px; margin-right: 12px; opacity: 0.8; }
+        .dropdown-item.dev .dropdown-icon { color: var(--neon-yellow); }
+
+        /* ── THEME SELECTOR ── */
+        .theme-section {
+            width: 100%; max-width: 400px; margin-bottom: 24px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .theme-strip {
+            display: flex; gap: 12px; overflow-x: auto; padding: 4px;
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .theme-strip::-webkit-scrollbar { display: none; }
+        
+        .theme-chip {
+            flex-shrink: 0; padding: 8px 16px; border-radius: 20px;
+            background: var(--card); border: 1.5px solid var(--card-border);
+            color: var(--text-main); font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; gap: 8px; cursor: pointer;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .theme-chip.active {
+            border-color: var(--neon-blue); background: rgba(0,229,255,0.1);
+            box-shadow: 0 0 10px rgba(0,229,255,0.2);
+        }
+        .theme-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+        /* ── DIVIDERS ── */
+        .divider {
+            width: 100%; max-width: 400px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent);
+            margin: 0 0 20px 0;
+        }
+
+        /* ── SECTION TITLES ── */
+        .section-title {
+            width: 100%; max-width: 400px; text-align: left;
+            font-size: 16px; font-weight: 700; color: var(--neon-blue);
+            margin-bottom: 12px; letter-spacing: 0.5px;
+        }
+
+        /* ── SUBJECT GRID ── */
+        .subject-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; width: 100%; max-width: 400px;
+            margin-bottom: 24px;
+        }
+        .subject-btn {
+            background: var(--card);
+            border: 1.5px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex; align-items: center; gap: 12px;
+            color: var(--text-main); font-family: inherit;
+            font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
+            box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        
+        /* Subject specific styling */
+        .subject-btn[data-cat="botany"] { border-color: rgba(16,185,129,0.4); }
+        .subject-btn[data-cat="botany"].active { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(16,185,129,0.3); background: rgba(16,185,129,0.1); }
+        
+        .subject-btn[data-cat="zoology"] { border-color: rgba(124,58,237,0.4); }
+        .subject-btn[data-cat="zoology"].active { border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(124,58,237,0.3); background: rgba(124,58,237,0.1); }
+        
+        .subject-btn[data-cat="physics"] { border-color: rgba(0,229,255,0.4); }
+        .subject-btn[data-cat="physics"].active { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0,229,255,0.3); background: rgba(0,229,255,0.1); }
+        
+        .subject-btn[data-cat="chemistry"] { border-color: rgba(245,158,11,0.4); }
+        .subject-btn[data-cat="chemistry"].active { border-color: var(--neon-yellow); box-shadow: 0 0 15px rgba(245,158,11,0.3); background: rgba(245,158,11,0.1); }
+
+        .subject-btn[data-cat="physics_numericals"] { border-color: rgba(14,165,233,0.4); }
+        .subject-btn[data-cat="physics_numericals"].active { border-color: #0ea5e9; box-shadow: 0 0 15px rgba(14,165,233,0.3); background: rgba(14,165,233,0.1); }
+
+        .subject-btn[data-cat="chemistry_numericals"] { border-color: rgba(236,72,153,0.4); }
+        .subject-btn[data-cat="chemistry_numericals"].active { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(236,72,153,0.3); background: rgba(236,72,153,0.1); }
+
+        .subject-icon { font-size: 24px; }
+
+        /* ── FEATURE CARDS GRID ── */
+        .feature-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; 
+            width: 100%; max-width: 400px; margin-bottom: 24px;
+        }
+        
+        .rgb-card {
+            position: relative; border-radius: 20px; padding: 2px; /* Border thickness */
+            background: rgba(255,255,255,0.05); overflow: hidden;
+            cursor: pointer; transition: transform 0.2s;
+            box-shadow: var(--shadow);
+        }
+        .rgb-card:active { transform: scale(0.98); }
+        
+        /* The Moving RGB Border Logic */
+        .rgb-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(
+                transparent, #ff0000, #ff7f00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff, #ff0000, transparent
+            );
+            animation: rotateRGB 4s linear infinite;
+        }
+        @keyframes rotateRGB { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .rgb-card-inner {
+            position: relative; background: var(--bg); border-radius: 18px;
+            padding: 16px 8px; display: flex; flex-direction: column; align-items: center; 
+            text-align: center; gap: 8px; z-index: 1; height: 100%;
+        }
+        .rgb-card-inner::after {
+            content: ''; position: absolute; inset: 0; background: var(--card); border-radius: 18px; z-index: -1;
+        }
+
+        .feat-icon-box {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+        }
+        .feat-info { display: flex; flex-direction: column; gap: 2px; align-items: center; }
+        .feat-title { font-size: 11px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
+        .feat-sub { display: none; }
+        .feat-chevron { display: none; }
+
+        /* ── DIFFICULTY ROW ── */
+        .diff-row {
+            display: flex; gap: 12px; width: 100%; max-width: 400px;
+            margin-bottom: 30px;
+        }
+        .diff-btn {
+            flex: 1; padding: 12px;
+            border-radius: 12px;
+            border: 1.5px solid var(--card-border);
+            background: var(--card);
+            color: var(--text-main); font-family: inherit;
+            font-size: 14px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+        .diff-btn small { font-size: 10px; font-weight: 500; color: var(--text-sub); }
+
+        .diff-title-wrap { display: flex; align-items: center; gap: 6px; }
+        .diff-dot { width: 10px; height: 10px; border-radius: 50%; }
+        
+        .diff-btn[data-diff="easy"] .diff-dot { background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
+        .diff-btn[data-diff="medium"] .diff-dot { background: var(--neon-yellow); box-shadow: 0 0 8px var(--neon-yellow); }
+        .diff-btn[data-diff="hard"] .diff-dot { background: var(--neon-red); box-shadow: 0 0 8px var(--neon-red); }
+
+        .diff-btn[data-diff="easy"].active { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(16,185,129,0.2); }
+        .diff-btn[data-diff="medium"].active { border-color: var(--neon-yellow); box-shadow: 0 0 15px rgba(245,158,11,0.2); }
+        .diff-btn[data-diff="hard"].active { border-color: var(--neon-red); box-shadow: 0 0 15px rgba(239,68,68,0.2); }
+
+        /* ── START BUTTON ── */
+        .btn-start {
+            width: 100%; max-width: 320px;
+            padding: 18px;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            background: linear-gradient(var(--card), var(--card)) padding-box,
+                        linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-blue)) border-box;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 20px; font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(124,58,237,0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            margin-top: auto; margin-bottom: 20px;
+        }
+        .btn-start:active { transform: translateY(3px); box-shadow: 0 5px 15px rgba(124,58,237,0.2); }
+
+        /* ── SETS & LIST SCREENS SCROLLING FIX ── */
+        #setsScreen, #pyqListScreen, #mockTestListScreen, #revisionScreen, #bookmarkSetsScreen, #notesListScreen, #bookmarksScreen {
+            padding: 0 !important;
+            justify-content: flex-start !important;
+            overflow: hidden !important;
+            height: 100% !important;
+            max-height: 100% !important;
+        }
+        .sets-header {
+            width: 100%; padding: 16px 20px;
+            display: flex; align-items: center; gap: 16px;
+            background: var(--card); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border); z-index: 20;
+            position: sticky; top: 0; flex-shrink: 0;
+        }
+        .btn-back {
+            background: var(--card-border); color: var(--text-main);
+            border: none; border-radius: 50%; width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-back:active { transform: scale(0.9); }
+        .sets-title { font-size: 18px; font-weight: 800; color: var(--neon-blue); }
+        
+        .sets-list, .bookmarks-list {
+            flex: 1 1 auto; width: 100%; max-width: 600px; margin: 0 auto;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+            padding: 16px 16px 160px 16px !important;
+            display: flex; flex-direction: column; gap: 16px;
+            box-sizing: border-box;
+            background: radial-gradient(circle at top right, rgba(124,58,237,0.05), transparent),
+                        radial-gradient(circle at bottom left, rgba(0,229,255,0.05), transparent);
+        }
+        #mockTestSetsList, #pyqSetsList, #notesListContainer, #revisionList { padding-bottom: 160px !important; }
+
+        .set-card {
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            overflow: visible;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 180px;
+            --accent: var(--tier-none);
+        }
+
+        /* Tier Specific Colors & Glows */
+        .set-card.tier-red { --accent: var(--tier-red); }
+        .set-card.tier-orange { --accent: var(--tier-orange); }
+        .set-card.tier-yellow { --accent: var(--tier-yellow); }
+        .set-card.tier-purple { --accent: var(--tier-purple); }
+        .set-card.tier-green { --accent: var(--tier-green); }
+
+        .set-card::before {
+            background: var(--accent); border-radius: 4px;
+            box-shadow: 0 0 15px var(--accent);
+            opacity: 0.8;
+        }
+
+        .set-card:active { transform: scale(0.97); background: rgba(15, 23, 42, 0.8); }
+
+        .premium-mock-card {
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.7), rgba(8, 12, 21, 0.9)) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(0, 229, 255, 0.05);
+            min-height: auto !important;
+            padding: 22px !important;
+        }
+        .premium-mock-card .set-title {
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 22px; margin-top: 4px;
+        }
+
+        .set-card-content { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+        .set-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+        .set-label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+        .set-tag { font-size: 14px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .q-total { font-size: 10px; font-weight: 600; color: var(--text-sub); background: var(--card-border); padding: 4px 10px; border-radius: 20px; }
+
+        .set-title { font-size: 18px; font-weight: 700; color: var(--text-main); line-height: 1.2; }
+        .set-description { 
+            font-size: 11px; color: var(--text-sub); line-height: 1.5; margin: 4px 0; 
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+            line-clamp: 2; overflow: hidden; height: auto; opacity: 0.9;
+        }
+
+        /* Progress Bar in Card */
+        .set-progress-row { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+        .progress-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; }
+        .progress-score { color: var(--accent); }
+        .retry-text { color: var(--text-sub); font-size: 10px; opacity: 0.8; }
+
+        .mini-progress-track { width: 100%; height: 6px; background: var(--card-border); border-radius: 10px; overflow: hidden; opacity: 0.5; }
+        .mini-progress-fill { height: 100%; background: var(--accent); border-radius: 10px; box-shadow: 0 0 10px var(--accent); transition: width 1s ease-out; }
+
+        /* Circular Chart (Pie Chart) */
+        .set-chart-box { position: relative; width: 90px; height: 90px; flex-shrink: 0; }
+        .circular-chart {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: conic-gradient(var(--accent) calc(var(--p) * 1%), var(--card-border) 0);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: all 0.5s;
+        }
+        /* Outer Ring Glow */
+        .circular-chart::before {
+            content: ''; position: absolute; inset: -4px; border-radius: 50%;
+            border: 2px solid var(--accent); opacity: 0.15;
+            filter: blur(2px);
+        }
+        /* Inner Circle to make it a ring */
+        .circular-chart::after {
+            content: ''; position: absolute; width: 70px; height: 70px;
+            background: var(--bg); border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+        .percent-val { font-size: 20px; font-weight: 900; color: var(--text-main); z-index: 2; position: relative; }
+        .chart-badge {
+            position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: #fff; font-size: 9px; font-weight: 800;
+            padding: 3px 10px; border-radius: 10px; white-space: nowrap; z-index: 3;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+        }
+
+        .loading-text { font-size: 14px; color: var(--neon-blue); font-weight: 600; text-align: center; margin-top: 40px; }
+
+        /* ── NEW PREMIUM HUD ── */
+        .top-hud {
+            width: 100%; padding: 12px 12px 0;
+            background: rgba(var(--neon-blue-rgb), 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; gap: 8px;
+            z-index: 100; position: sticky; top: 0;
+        }
+        .hud-main-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        
+        .hud-q-info { 
+            display: flex; align-items: center; gap: 8px;
+            font-size: 14px; font-weight: 800; color: var(--text-main);
+        }
+        .hud-sep { opacity: 0.3; font-weight: 300; }
+        #qCategory { font-size: 11px; color: var(--neon-blue); background: rgba(var(--neon-blue-rgb), 0.1); padding: 2px 8px; border-radius: 6px; }
+
+        .hud-right { display: flex; align-items: center; gap: 12px; }
+        .mini-stats { display: flex; align-items: center; gap: 10px; }
+        .stat-item { 
+            display: flex; align-items: center; gap: 4px; font-size: 16px; font-weight: 900; color: var(--text-main);
+        }
+        .stat-icon { font-size: 14px; opacity: 0.8; }
+        
+        .combo-box {
+            background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 2px 8px; border-radius: 8px; color: var(--neon-yellow); font-size: 13px;
+        }
+        .combo-box.hot { background: rgba(239, 68, 68, 0.1); border-color: var(--neon-red); color: var(--neon-red); animation: pulseHUD 0.5s infinite alternate; }
+        @keyframes pulseHUD { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+        .hud-timer-compact {
+            position: relative; width: 38px; height: 38px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+        .timer-svg { position: absolute; inset: 0; transform: rotate(-90deg); width: 100%; height: 100%; }
+        .timer-bg { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 3.5; }
+        .timer-fg { fill: none; stroke: var(--neon-green); stroke-width: 3.5; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.4s; }
+        #timerText { font-size: 13px; font-weight: 900; color: var(--neon-green); z-index: 10; transition: all 0.3s; }
+
+        /* ── MAX REACH TIMER GAME ANIMATION ── */
+        .hud-timer-compact.timer-max-active {
+            animation: maxTimerPulse 1.2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes maxTimerPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 0, 127, 0.7), 0 0 20px rgba(0, 223, 216, 0.5);
+            }
+            100% {
+                transform: scale(1.22);
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.95), 0 0 40px rgba(255, 0, 127, 0.9);
+            }
+        }
+
+        .timer-fg.timer-max-ring {
+            animation: rainbowRing 1.5s infinite linear !important;
+            stroke-width: 4.5 !important;
+        }
+        @keyframes rainbowRing {
+            0% { stroke: #ff007f; filter: drop-shadow(0 0 6px #ff007f); }
+            25% { stroke: #7928ca; filter: drop-shadow(0 0 8px #7928ca); }
+            50% { stroke: #00dfd8; filter: drop-shadow(0 0 10px #00dfd8); }
+            75% { stroke: #ffd700; filter: drop-shadow(0 0 8px #ffd700); }
+            100% { stroke: #ff007f; filter: drop-shadow(0 0 6px #ff007f); }
+        }
+
+        #timerText.timer-max-text {
+            font-size: 11px !important;
+            font-weight: 950 !important;
+            color: #ffd700 !important;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 0, 127, 0.8);
+            animation: maxTextGlow 0.8s infinite alternate ease-in-out;
+        }
+        @keyframes maxTextGlow {
+            from { transform: scale(1); filter: brightness(1); }
+            to { transform: scale(1.15); filter: brightness(1.4); }
+        }
+
+        .hud-progress-wrap { width: 100%; height: 3px; background: rgba(255,255,255,0.03); border-radius: 10px; overflow: hidden; margin-bottom: 4px; }
+        .hud-progress-bar { height: 100%; background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue)); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--neon-blue); }
+
+        /* ── BACKGROUND ANIMATIONS ── */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, var(--card), var(--bg));
+            transition: background 1s ease;
+        }
+
+        body[data-theme="cyber"]::before {
+            background: radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.05), transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(179, 136, 255, 0.05), transparent 40%);
+        }
+        body[data-theme="emerald"]::before {
+            background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.08), transparent 50%),
+                        linear-gradient(rgba(1, 10, 8, 1), rgba(0, 0, 0, 1));
+        }
+        body[data-theme="sunset"]::before {
+            background: radial-gradient(circle at 50% 100%, rgba(249, 115, 22, 0.1), transparent 60%),
+                        linear-gradient(rgba(10, 5, 1, 1), rgba(0,0,0,1));
+        }
+        body[data-theme="amethyst"]::before {
+            background: radial-gradient(circle at 10% 10%, rgba(168, 85, 247, 0.08), transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(232, 121, 249, 0.08), transparent 40%);
+        }
+        body[data-theme="light"]::before {
+            background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.04), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(219, 39, 119, 0.04), transparent 50%),
+                        #f1f5f9;
+        }
+        body[data-theme="light"] .top-hud {
+            background: rgba(var(--neon-blue-rgb), 0.08);
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+        }
+        body[data-theme="light"] #qCategory { background: rgba(0,0,0,0.05); color: #000; }
+        body[data-theme="oled"]::before { background: #000000; }
+
+        .question-wrap { width: 100%; display: flex; flex-direction: column; padding: 10px 8px 8px; }
+        .q-meta { display: none; }
+        .q-number { font-size: 11px; font-weight: 700; color: var(--text-sub); letter-spacing: 1px; }
+        .q-category-badge {
+            font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+            background: rgba(0,229,255,0.1); color: var(--neon-blue); border: 1px solid rgba(0,229,255,0.3);
+        }
+        .q-card {
+            background: var(--card); border: 1.5px solid var(--card-border); border-radius: 20px;
+            padding: 18px 18px 16px; margin-bottom: 14px; position: relative; overflow: hidden; min-height: 90px;
+            display: flex; align-items: center; box-shadow: var(--shadow);
+        }
+        .q-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue)); }
+        .q-card-accent { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.2), transparent); }
+        .q-text { font-size: 16px; font-weight: 700; line-height: 1.45; color: var(--text-main); position: relative; z-index: 1; white-space: pre-wrap; }
+
+        .options-grid { display: flex; flex-direction: column; gap: 9px; }
+        .opt-btn {
+            width: 100%; padding: 14px 18px; border-radius: 14px; border: 1.5px solid var(--card-border);
+            background: var(--card); color: var(--text-main); font-family: inherit; font-size: 14px; font-weight: 600;
+            text-align: left; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.15s; position: relative; overflow: hidden;
+        }
+        .opt-btn:active::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.06); }
+        .opt-letter { width: 28px; height: 28px; border-radius: 8px; background: var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--text-sub); flex-shrink: 0; transition: all 0.15s; }
+        
+        .opt-btn.correct { border-color: var(--neon-green); background: rgba(16,185,129,0.12); animation: correctFlash 0.5s; }
+        .opt-btn.correct .opt-letter { background: var(--neon-green); color: white; }
+        .opt-btn.wrong { border-color: var(--neon-red); background: rgba(239,68,68,0.12); animation: wrongShake 0.4s; }
+        .opt-btn.wrong .opt-letter { background: var(--neon-red); color: white; }
+        .opt-btn.reveal { border-color: var(--neon-green); background: rgba(16,185,129,0.06); }
+        .opt-btn.reveal .opt-letter { background: rgba(16,185,129,0.3); color: var(--neon-green); }
+        
+        .fact-bar { margin: 12px 0 0; padding: 12px 14px; border-radius: 12px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); font-size: 12px; font-weight: 600; color: #6ee7b7; display: none; line-height: 1.4; }
+        .fact-bar.show { display: block; }
+        .fact-bar.wrong-fact { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); color: #fca5a5; }
+
+        .btn-next {
+            margin: 12px 0 0; padding: 16px; border: none; border-radius: 14px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue)); color: white; font-family: inherit; font-size: 15px; font-weight: 800;
+            cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.15s;
+        }
+        .btn-next.show { opacity: 1; pointer-events: auto; }
+        .btn-next:active { transform: scale(0.97); }
+
+        /* ══════════════════════════════════════════
+           RESULT SCREEN — ULTRA PREMIUM REDESIGN
+        ══════════════════════════════════════════ */
+        #resultScreen {
+            padding: 0;
+            overflow-y: auto; overflow-x: hidden;
+            justify-content: flex-start;
+            background: var(--bg);
+        }
+
+        /* ── Confetti particle ── */
+        .confetti-piece {
+            position: fixed; width: 10px; height: 10px; border-radius: 2px;
+            pointer-events: none; z-index: 999;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ── Result header bar ── */
+        .res-header {
+            width: 100%; padding: 16px 20px;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(24px);
+            display: flex; align-items: center; justify-content: center;
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .res-header .btn-back {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+        }
+        .res-header-title {
+            font-size: 16px; font-weight: 900; letter-spacing: 1.5px;
+            text-transform: uppercase; color: transparent;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text; background-clip: text;
+        }
+
+        /* ── Scroll wrapper ── */
+        .res-scroll-content {
+            width: 100%; padding: 20px 14px 40px;
+            display: flex; flex-direction: column; gap: 20px;
+            max-width: 500px; margin: 0 auto;
+        }
+
+        /* ── HERO CARD (radial ring + grade badge) ── */
+        .res-hero-card {
+            width: 100%; padding: 28px 20px 24px; border-radius: 30px;
+            background: linear-gradient(145deg, rgba(20,28,55,0.7) 0%, rgba(8,12,30,0.8) 100%);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(255,255,255,0.07);
+            display: flex; flex-direction: column; align-items: center; gap: 14px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .res-hero-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% -20%, rgba(var(--neon-blue-rgb),0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Radial progress ring */
+        .res-ring-wrap {
+            position: relative; width: 160px; height: 160px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .res-ring-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+        .res-ring-bg  { fill: none; stroke: rgba(255,255,255,0.04); stroke-width: 8; }
+        .res-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round;
+            stroke-dasharray: 0 440; transition: stroke-dasharray 1.6s cubic-bezier(0.4,0,0.2,1); }
+        .res-ring-inner {
+            position: relative; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 2px; z-index: 2;
+        }
+        .res-grade-badge {
+            font-size: 42px; font-weight: 950; line-height: 1;
+            background: linear-gradient(135deg, #fff 30%, var(--neon-blue) 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .res-grade-sub { font-size: 11px; font-weight: 700; color: var(--text-sub); letter-spacing: 1px; text-transform: uppercase; }
+
+        .res-subject-name {
+            font-size: 12px; font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--neon-blue);
+            background: rgba(var(--neon-blue-rgb),0.1); padding: 4px 14px;
+            border-radius: 20px; border: 1px solid rgba(var(--neon-blue-rgb),0.2);
+        }
+        .res-main-score {
+            font-size: 48px; font-weight: 950; line-height: 1;
+            background: linear-gradient(135deg, #fff 40%, var(--text-sub));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+        .res-accuracy-row {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .res-acc-pill {
+            padding: 5px 16px; border-radius: 20px; font-size: 14px; font-weight: 900;
+            animation: pillPop 0.6s 0.8s cubic-bezier(0.18,0.89,0.32,1.28) both;
+        }
+        @keyframes pillPop { from { opacity:0; transform:scale(0.6); } to { opacity:1; transform:scale(1); } }
+
+        .res-feedback {
+            font-size: 14px; font-weight: 600; color: var(--text-sub);
+            line-height: 1.5; max-width: 85%; margin-top: 2px;
+        }
+
+        /* ── STAT CARDS 2×2 ── */
+        .stat-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;
+        }
+        .stat-card {
+            background: var(--card); border-radius: 18px;
+            border: 1px solid var(--card-border);
+            padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+            position: relative; overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--sc-accent, rgba(255,255,255,0.1)); border-radius: 2px 2px 0 0;
+        }
+        .sc-icon { font-size: 20px; margin-bottom: 2px; }
+        .sc-label { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; }
+        .sc-val { font-size: 22px; font-weight: 950; color: var(--text-main); }
+        .sc-val.green { color: var(--neon-green); }
+        .sc-val.red   { color: var(--neon-red); }
+        .sc-val.yellow{ color: var(--neon-yellow); }
+        .sc-val.blue  { color: var(--neon-blue); }
+
+        /* ── SECTION HEADER ── */
+        .res-section-hdr {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 15px; font-weight: 800; color: var(--text-main);
+            margin-bottom: -4px;
+        }
+        .res-section-hdr .hdr-bar {
+            width: 4px; height: 18px; border-radius: 3px;
+            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+            flex-shrink: 0;
+        }
+        .res-section-hdr .hdr-count {
+            margin-left: auto; font-size: 11px; font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        /* ── DONUT CHART CARD ── */
+        .donut-card {
+            background: var(--card); border-radius: 24px;
+            border: 1px solid var(--card-border); padding: 20px;
+            display: flex; align-items: center; gap: 20px;
+        }
+        .donut-wrap { width: 130px; height: 130px; position: relative; flex-shrink: 0; }
+        .donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .donut-center {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 1px;
+        }
+        .donut-pct  { font-size: 24px; font-weight: 950; color: var(--text-main); }
+        .donut-lbl  { font-size: 9px; font-weight: 700; color: var(--text-sub); letter-spacing: 1px; text-transform: uppercase; }
+        .donut-legend { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .dleg-row { display: flex; align-items: center; gap: 8px; }
+        .dleg-dot  { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+        .dleg-info { flex: 1; }
+        .dleg-name { font-size: 12px; font-weight: 600; color: var(--text-sub); }
+        .dleg-num  { font-size: 18px; font-weight: 900; color: var(--text-main); line-height: 1; }
+        .dleg-pct  { font-size: 10px; color: var(--text-sub); }
+
+        /* ── HEATMAP GRID ── */
+        .heatmap-card {
+            background: var(--card); border-radius: 24px;
+            border: 1px solid var(--card-border); padding: 18px;
+        }
+        .heatmap-grid {
+            display: flex; flex-wrap: wrap; gap: 5px;
+            margin-top: 14px;
+        }
+        .hmap-cell {
+            width: 28px; height: 28px; border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 9px; font-weight: 800; color: rgba(255,255,255,0.8);
+            transition: transform 0.15s;
+            position: relative; cursor: default;
+        }
+        .hmap-cell.correct  { background: rgba(16,185,129,0.25); border: 1px solid rgba(16,185,129,0.4); color: #6ee7b7; box-shadow: 0 0 8px rgba(16,185,129,0.2); }
+        .hmap-cell.wrong    { background: rgba(239,68,68,0.2);  border: 1px solid rgba(239,68,68,0.4);  color: #fca5a5;  box-shadow: 0 0 8px rgba(239,68,68,0.2);  }
+        .hmap-cell.skipped  { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d;  }
+        .hmap-cell.timeout  { background: rgba(100,116,139,0.15); border: 1px solid rgba(100,116,139,0.3); color: var(--text-sub); }
+        .heatmap-legend { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+        .hleg { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: var(--text-sub); }
+        .hleg-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+        /* ── TIME BAR CHART ── */
+        .time-chart-card {
+            background: var(--card); border-radius: 24px;
+            border: 1px solid var(--card-border); padding: 18px;
+        }
+        .time-bars { width: 100%; height: 100px; display: flex; align-items: flex-end; gap: 4px; margin-top: 14px; }
+        .tbar {
+            flex: 1; border-radius: 4px 4px 2px 2px; min-height: 3px;
+            transition: height 0.8s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+        }
+        .tbar-fast    { background: linear-gradient(180deg, #10b981, rgba(16,185,129,0.4)); box-shadow: 0 0 6px rgba(16,185,129,0.3); }
+        .tbar-medium  { background: linear-gradient(180deg, #f59e0b, rgba(245,158,11,0.4)); }
+        .tbar-slow    { background: linear-gradient(180deg, #ef4444, rgba(239,68,68,0.4)); box-shadow: 0 0 6px rgba(239,68,68,0.3); }
+        .tbar-skip    { background: linear-gradient(180deg, #64748b, rgba(100,116,139,0.4)); }
+        .time-xaxis { display: flex; justify-content: space-between; font-size: 9px; color: var(--text-sub); margin-top: 6px; }
+        .time-legend { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+        .tleg { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: var(--text-sub); }
+        .tleg-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+        /* ── SMART SUMMARY ── */
+        .smart-card {
+            border-radius: 20px; padding: 18px;
+            background: linear-gradient(135deg, rgba(var(--neon-blue-rgb),0.05), rgba(168,85,247,0.05));
+            border: 1.5px dashed rgba(var(--neon-blue-rgb),0.25);
+            position: relative; overflow: hidden;
+        }
+        .smart-card::before {
+            content: '🤖'; position: absolute; top: 12px; right: 14px;
+            font-size: 22px; opacity: 0.15;
+        }
+        .smart-card p { font-size: 13px; line-height: 1.7; color: var(--text-main); }
+        .smart-card strong { color: var(--neon-blue); }
+
+        /* ── ACHIEVEMENT BADGES ── */
+        .badges-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 6px 2px 10px; scrollbar-width: none; }
+        .badge-card {
+            flex-shrink: 0; width: 76px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            opacity: 0.25; filter: grayscale(1) brightness(0.6);
+            transition: all 0.5s cubic-bezier(0.18,0.89,0.32,1.28);
+        }
+        .badge-card.unlocked {
+            opacity: 1; filter: grayscale(0) brightness(1);
+            animation: badgeUnlock 0.7s cubic-bezier(0.18,0.89,0.32,1.28) forwards;
+        }
+        @keyframes badgeUnlock {
+            0%  { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            70% { transform: scale(1.15) rotate(3deg); }
+            100%{ transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .badge-ring {
+            width: 56px; height: 56px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; position: relative;
+            background: var(--badge-bg, rgba(255,255,255,0.04));
+            border: 2px solid var(--badge-color, rgba(255,255,255,0.1));
+            box-shadow: 0 0 0 rgba(255,255,255,0);
+            transition: box-shadow 0.5s;
+        }
+        .badge-card.unlocked .badge-ring {
+            box-shadow: 0 0 16px var(--badge-color);
+        }
+        .badge-name { font-size: 9.5px; font-weight: 800; color: var(--text-sub);
+            text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+        .badge-card.unlocked .badge-name { color: var(--badge-color); }
+
+        /* ── REVIEW CARDS ── */
+        .review-list { display: flex; flex-direction: column; gap: 12px; }
+        .rev-card {
+            background: var(--card); border-radius: 20px;
+            border: 1.5px solid var(--card-border);
+            overflow: hidden; transition: transform 0.2s;
+        }
+        .rev-card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px 0;
+        }
+        .rev-qnum { font-size: 11px; font-weight: 800; color: var(--text-sub); letter-spacing: 1px; text-transform: uppercase; }
+        .rev-status-chip {
+            padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .chip-correct { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+        .chip-wrong   { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+        .chip-skipped { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+
+        .rev-question {
+            font-size: 14px; font-weight: 700; color: var(--text-main);
+            line-height: 1.45; padding: 10px 16px;
+        }
+        .rev-divider { height: 1px; background: rgba(255,255,255,0.04); margin: 0; }
+
+        .rev-ans-block { padding: 10px 16px; display: flex; flex-direction: column; gap: 6px; }
+        .rev-ans-row {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 9px 12px; border-radius: 10px; font-size: 12px; font-weight: 700;
+        }
+        .rev-ans-row.cr { background: rgba(16,185,129,0.1); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+        .rev-ans-row.wr { background: rgba(239,68,68,0.09); color: #fca5a5;  border: 1px solid rgba(239,68,68,0.2); }
+        .rev-ans-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+
+        .rev-exp {
+            background: rgba(var(--neon-blue-rgb),0.04);
+            border-top: 1px solid rgba(var(--neon-blue-rgb),0.08);
+            padding: 10px 16px 14px;
+            font-size: 12px; color: var(--text-sub); line-height: 1.55;
+        }
+        .rev-exp strong { color: var(--neon-blue); font-weight: 700; }
+
+        .fact-bar {
+            background: var(--card-alt); border-radius: 16px; padding: 16px; margin-top: 15px;
+            font-size: 13px; font-weight: 600; color: var(--text-main);
+            display: none; border: 1px solid var(--card-border); line-height: 1.5; white-space: pre-wrap;
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        /* ── RESULT ACTION BUTTONS ── */
+        .res-buttons {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;
+        }
+        .btn-res {
+            padding: 15px 12px; border-radius: 16px; border: none;
+            font-size: 13px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.5px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .btn-res-primary {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: white; box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+            grid-column: span 2;
+        }
+        .btn-res-secondary {
+            background: rgba(255,255,255,0.06); color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(8px);
+        }
+        .btn-res:active { transform: scale(0.95); box-shadow: none; }
+
+        /* Legacy compat */
+        .insights-grid { display: none; }
+        .section-title-alt { display: none; }
+        .chart-box { display: none !important; }
+        .summary-card { display: none; }
+        .badges-row { display: none; }
+        .review-card { display: none; }
+
+        @keyframes fillSvg { from { stroke-dasharray: 0 100; } to { stroke-dasharray: var(--p) 100; } }
+                
+        /* Colorful & Animated Cards for Mock Tests & PYQs */
+        .colorful-list-card {
+            position: relative;
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            border-radius: 18px;
+            padding: 18px 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            cursor: pointer;
+            overflow: visible;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: cardEntrance 0.35s ease-out forwards;
+            opacity: 1 !important;
+        }
+
+        @keyframes cardEntrance {
+            0% { transform: translateY(15px); }
+            100% { transform: translateY(0); }
+        }
+
+        .colorful-list-card:hover, .colorful-list-card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px var(--glow-color, rgba(0, 229, 255, 0.3));
+            border-color: var(--border-glow, rgba(0, 229, 255, 0.6));
+        }
+
+        .colorful-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .colorful-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .colorful-card-badge {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .colorful-card-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.35;
+            margin: 4px 0 2px 0;
+            letter-spacing: -0.2px;
+            word-break: break-word;
+        }
+
+        .colorful-card-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .colorful-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding-top: 10px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .colorful-card-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-sub);
+        }
+
+        .btn-colorful-action {
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .btn-colorful-action:active {
+            transform: scale(0.95);
+        }
+
+        .list-banner {
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 4px;
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .list-banner-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .list-banner-text h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0 0 3px 0;
+            word-break: break-word;
+        }
+
+        .list-banner-text p {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin: 0;
+            word-break: break-word;
+        }
+
+.bonus-time-toast {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 6px 16px;
+            border-radius: 30px;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            z-index: 9999;
+            animation: toastPop 1.8s ease-in-out forwards;
+            pointer-events: none;
+            letter-spacing: 0.5px;
+        }
+        @keyframes toastPop {
+            0% { opacity: 0; transform: translate(-50%, -20px) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+            30% { transform: translate(-50%, 0) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -15px) scale(0.9); }
+        }
+
+        .float-score { position: fixed; font-size: 22px; font-weight: 900; pointer-events: none; z-index: 200; animation: floatUp 0.9s ease-out forwards; }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-70px) scale(1.3); } }
+
+        /* ── MAX TIME REACHED GAME ANIMATION BANNER ── */
+        .max-reach-banner {
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ff007f, #7928ca, #00dfd8);
+            background-size: 200% 200%;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 900;
+            padding: 14px 28px;
+            border-radius: 40px;
+            box-shadow: 0 0 35px rgba(0, 223, 216, 0.8), 0 0 20px rgba(255, 0, 127, 0.8);
+            border: 2px solid #ffffff;
+            z-index: 99999;
+            pointer-events: none;
+            text-align: center;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            animation: maxReachAnim 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes maxReachAnim {
+            0% { opacity: 0; transform: translate(-50%, -80px) scale(0.3) rotate(-5deg); }
+            20% { opacity: 1; transform: translate(-50%, 0) scale(1.2) rotate(2deg); }
+            30% { transform: translate(-50%, 0) scale(1) rotate(0deg); }
+            75% { opacity: 1; transform: translate(-50%, 0) scale(1.05); }
+            100% { opacity: 0; transform: translate(-50%, -40px) scale(0.8) rotate(5deg); }
+        }
+
+        /* Bookmark and Skip (Old ones - removing soon) */
+        .q-actions { display: none; }
+        .skip-row { display: none; }
+
+        /* ── NEW GAME ACTIONS ROW ── */
+        .game-actions-row {
+            display: flex; gap: 8px; padding: 0 8px 24px; width: 100%;
+            margin-top: 10px;
+        }
+        .game-btn {
+            flex: 0.5; height: 50px; border-radius: 16px; border: 1.5px solid var(--card-border);
+            background: var(--card); color: var(--text-main); font-family: inherit;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .game-btn:active { transform: scale(0.95); }
+        .game-btn .btn-icon { font-size: 16px; }
+
+        .game-btn-bm.active {
+            border-color: var(--neon-yellow); color: var(--neon-yellow);
+            background: rgba(245, 158, 11, 0.1);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+        
+        .game-btn-skip { border-color: rgba(239, 68, 68, 0.3); color: var(--text-sub); }
+        .game-btn-skip:not(.disabled):active { border-color: var(--neon-red); color: var(--neon-red); background: rgba(239, 68, 68, 0.1); }
+        .game-btn-skip.disabled { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+
+        .game-btn-next {
+            flex: 1.5; background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: white; border: none; font-size: 15px; font-weight: 800;
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
+            opacity: 0; transform: translateY(10px); pointer-events: none;
+        }
+        .game-btn-next.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .game-btn-next:active { box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2); }
+
+        /* ── LIGHT THEME SPECIFIC OVERRIDES ── */
+        body[data-theme="light"] .fact-bar {
+            color: #000000 !important;
+            font-size: 14px;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        body[data-theme="light"] .fact-bar.wrong-fact {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Bookmarks Screen */
+        .bookmarks-list { width: 100%; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+        .bookmark-card {
+            background: var(--card); border: 1.5px solid var(--card-border); border-radius: 20px;
+            padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .bookmark-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--neon-yellow); }
+        .bm-q-text { font-size: 15px; font-weight: 700; color: var(--text-main); line-height: 1.5; }
+        .bm-meta { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--text-sub); font-weight: 600; }
+        .bm-tag { padding: 3px 8px; border-radius: 6px; background: rgba(0,229,255,0.1); color: var(--neon-blue); }
+        .bm-actions { display: flex; gap: 12px; margin-top: 6px; }
+        .btn-bm { flex: 1; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer; border: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-bm-view { background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue)); color: white; }
+        .btn-bm-del { background: rgba(239,68,68,0.1); color: var(--neon-red); border: 1px solid rgba(239,68,68,0.2); }
+        .btn-bm:active { transform: scale(0.96); }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-sub); }
+        .empty-icon { font-size: 48px; margin-bottom: 20px; opacity: 0.5; }
+        .empty-text { font-size: 16px; font-weight: 600; }
+
+        /* ── SPLASH SCREEN ── */
+        #splashScreen {
+            position: fixed; inset: 0; background: var(--bg);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 1000; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s ease;
+        }
+        #splashScreen.fade-out { opacity: 0; transform: scale(1.1); pointer-events: none; }
+        
+        .splash-content { position: relative; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        
+        .splash-logo {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: radial-gradient(circle at center, #0a0d1d, #030510);
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0,229,255,0.4), inset 0 0 20px rgba(0,229,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 50px; position: relative;
+            animation: splashPulse 2s infinite ease-in-out;
+        }
+        @keyframes splashPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(0,229,255,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(0,229,255,0.6); }
+        }
+        
+        .splash-title {
+            text-align: center; display: flex; flex-direction: column; gap: 4px;
+        }
+        .splash-l1 { font-size: 32px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 10px rgba(0,229,255,0.5); letter-spacing: 2px; }
+        .splash-l2 { font-size: 18px; font-weight: 700; color: var(--neon-purple); letter-spacing: 4px; text-transform: uppercase; }
+        
+        .splash-loader {
+            width: 200px; height: 4px; background: rgba(255,255,255,0.05);
+            border-radius: 10px; margin-top: 30px; position: relative; overflow: hidden;
+        }
+        .splash-loader-fill {
+            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            box-shadow: 0 0 15px var(--neon-blue);
+            animation: loaderFill 2.2s ease-in-out forwards;
+        }
+        @keyframes loaderFill { 0% { width: 0; } 100% { width: 100%; } }
+        
+        .scan-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            box-shadow: 0 0 10px var(--neon-blue);
+            opacity: 0.3; z-index: 1001;
+            animation: scanMove 3s infinite linear;
+        }
+        @keyframes scanMove { 0% { top: 0; } 100% { top: 100%; } }
+        
+        .splash-footer {
+            margin-top: 40px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(148, 163, 184, 0.8);
+            letter-spacing: 0.5px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splashScreen">
+    <div class="scan-line"></div>
+    <div class="splash-content">
+        <div class="splash-logo">🧬</div>
+        <div class="splash-title">
+            <div class="splash-l1">NEET</div>
+            <div class="splash-l2">Practice MCQ</div>
+        </div>
+        <div class="splash-loader">
+            <div class="splash-loader-fill"></div>
+        </div>
+        <div class="splash-footer">Developed by Shoeb Ayyub</div>
+    </div>
+</div>
+
+<canvas id="neuronCanvas"></canvas>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+    
+    <!-- Header Row -->
+    <div class="header-row">
+        <div class="logo-title-group">
+            <div class="logo-wrap">🧬</div>
+            <div class="title-group">
+                <div class="title-line1">NEET</div>
+                <div class="title-line2">Practice</div>
+                <div class="title-line3">MCQ</div>
+                <div class="subtitle">Biology • Physics • Chemistry MCQs</div>
+            </div>
+        </div>
+        
+        <div class="menu-icon" onclick="toggleMenu(event)">
+            ⋮
+            <div class="dropdown" id="dropdownMenu">
+                <div class="dropdown-item" onclick="openPrivacy()">
+                    <span><span class="dropdown-icon">🔒</span> Privacy Policy</span> <span>›</span>
+                </div>
+                <div class="dropdown-item" onclick="shareApp()">
+                    <span><span class="dropdown-icon">🔗</span> Share App</span> <span>›</span>
+                </div>
+                <div class="dropdown-item" onclick="rateApp()">
+                    <span><span class="dropdown-icon">⭐</span> Rate App</span> <span>›</span>
+                </div>
+                <div class="dropdown-item" onclick="checkUpdates()">
+                    <span><span class="dropdown-icon">🔄</span> Check Updates</span> <span>›</span>
+                </div>
+                <div class="dropdown-item" onclick="moreApps()">
+                    <span><span class="dropdown-icon">📱</span> More Apps</span> <span>›</span>
+                </div>
+                <div class="dropdown-item dev" onclick="location.href='about_developer.html'">
+                    <span><span class="dropdown-icon">ℹ️</span> About Developer</span> <span>›</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Subject Selection -->
+    <div class="section-title">Choose Subject</div>
+    <div class="subject-grid" id="catGrid">
+        <button class="subject-btn active" data-cat="botany" onclick="selectCat(this)">
+            <span class="subject-icon">🌿</span> Botany
+        </button>
+        <button class="subject-btn" data-cat="zoology" onclick="selectCat(this)">
+            <span class="subject-icon">🧬</span> Zoology
+        </button>
+        <button class="subject-btn" data-cat="physics" onclick="selectCat(this)">
+            <span class="subject-icon">⚛️</span> Physics
+        </button>
+        <button class="subject-btn" data-cat="chemistry" onclick="selectCat(this)">
+            <span class="subject-icon">🧪</span> Chemistry
+        </button>
+        <button class="subject-btn" data-cat="physics_numericals" onclick="selectCat(this)">
+            <span class="subject-icon">📐</span> Physics Numericals
+        </button>
+        <button class="subject-btn" data-cat="chemistry_numericals" onclick="selectCat(this)">
+            <span class="subject-icon">⚗️</span> Chemistry Numericals
+        </button>
+    </div>
+
+    <!-- Theme Selection -->
+    <div class="section-title">Visual Interface</div>
+    <div class="theme-section">
+        <div class="theme-strip" id="themeStrip">
+            <div class="theme-chip active" onclick="setTheme('cyber')" data-theme="cyber">
+                <div class="theme-dot" style="background: #00e5ff; box-shadow: 0 0 8px #00e5ff;"></div>
+                Cyber Blue
+            </div>
+            <div class="theme-chip" onclick="setTheme('emerald')" data-theme="emerald">
+                <div class="theme-dot" style="background: #10b981; box-shadow: 0 0 8px #10b981;"></div>
+                Bio Emerald
+            </div>
+            <div class="theme-chip" onclick="setTheme('sunset')" data-theme="sunset">
+                <div class="theme-dot" style="background: #f97316; box-shadow: 0 0 8px #f97316;"></div>
+                Neon Sunset
+            </div>
+            <div class="theme-chip" onclick="setTheme('amethyst')" data-theme="amethyst">
+                <div class="theme-dot" style="background: #a855f7; box-shadow: 0 0 8px #a855f7;"></div>
+                Royal Space
+            </div>
+            <div class="theme-chip" onclick="setTheme('light')" data-theme="light">
+                <div class="theme-dot" style="background: #ffffff; border: 1px solid #ddd;"></div>
+                Pure Light
+            </div>
+            <div class="theme-chip" onclick="setTheme('oled')" data-theme="oled">
+                <div class="theme-dot" style="background: #000000; border: 1px solid #333;"></div>
+                Midnight OLED
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Cards Section -->
+    <div class="feature-grid">
+        <!-- Mock Test -->
+        <div class="rgb-card" onclick="showMockTests()">
+            <div class="rgb-card-inner">
+                <div class="feat-icon-box" style="color:var(--neon-blue)">📊</div>
+                <div class="feat-info">
+                    <div class="feat-title">Mock<br>Tests</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PYQs -->
+        <div class="rgb-card" onclick="showPYQs()">
+            <div class="rgb-card-inner">
+                <div class="feat-icon-box" style="color:var(--neon-purple)">📜</div>
+                <div class="feat-info">
+                    <div class="feat-title">Original<br>PYQs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookmarks -->
+        <div class="rgb-card" onclick="showBookmarks()">
+            <div class="rgb-card-inner">
+                <div class="feat-icon-box" style="color:var(--neon-yellow)">🔖</div>
+                <div class="feat-info">
+                    <div class="feat-title">Saved<br>MCQs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Revision Notes -->
+        <div class="rgb-card" onclick="showRevisionNotes()">
+            <div class="rgb-card-inner">
+                <div class="feat-icon-box" style="color:var(--neon-green)">📝</div>
+                <div class="feat-info">
+                    <div class="feat-title">Quick<br>Revision</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Difficulty -->
+    <div class="section-title">Choose Difficulty</div>
+    <div class="diff-row" id="diffRow">
+        <button class="diff-btn active" data-diff="easy" onclick="selectDiff(this)">
+            <div class="diff-title-wrap">
+                <div class="diff-dot"></div> Easy
+            </div>
+            <small>20s / Q</small>
+        </button>
+        <button class="diff-btn" data-diff="medium" onclick="selectDiff(this)">
+            <div class="diff-title-wrap">
+                <div class="diff-dot" style="background:var(--neon-yellow);box-shadow:0 0 8px var(--neon-yellow)"></div> Medium
+            </div>
+            <small>12s / Q</small>
+        </button>
+        <button class="diff-btn" data-diff="hard" onclick="selectDiff(this)">
+            <div class="diff-title-wrap">
+                <div class="diff-dot"></div> Hard
+            </div>
+            <small>7s / Q</small>
+        </button>
+    </div>
+
+    <!-- Footer Links -->
+    <div style="margin-top: 30px; padding: 20px; text-align: center; opacity: 0.6; font-size: 11px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; justify-content: center; gap: 15px;">
+            <span onclick="rateApp()" style="cursor:pointer">Rate App</span>
+            <span>•</span>
+            <span onclick="checkUpdates()" style="cursor:pointer">Check Updates</span>
+        </div>
+        <div id="appVersionDisplay" style="opacity: 0.4">Version 1.0.0 • Made with ❤️ for NEET Aspirants</div>
+    </div>
+
+</div>
+
+<!-- SETS SCREEN -->
+<div class="screen hidden" id="setsScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showStart()">‹</button>
+        <div class="sets-title" id="setsTitle">Choose Set</div>
+    </div>
+    <div class="sets-list" id="setsList">
+        <!-- Sets will be populated here via JS -->
+    </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div class="screen hidden" id="gameScreen">
+    <div class="top-hud">
+        <div class="hud-main-row">
+            <div class="hud-left">
+                <div class="hud-q-info">
+                    <span id="qNumber">Q 1/15</span>
+                    <span class="hud-sep">|</span>
+                    <span id="qCategory">Botany</span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="mini-stats">
+                    <div class="stat-item" style="display: none;">
+                        <span class="stat-icon">🎯</span>
+                        <span id="scoreDisplay">0</span>
+                    </div>
+                    <div class="stat-item combo-box" id="comboDisplay">
+                        <span class="stat-icon">⚡</span>
+                        <span id="comboIndicator">x1</span>
+                    </div>
+                </div>
+                <div class="hud-timer-compact">
+                    <svg class="timer-svg" viewBox="0 0 36 36">
+                        <path class="timer-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="timer-fg" id="timerRing" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <span id="timerText">20</span>
+                </div>
+            </div>
+        </div>
+        <div class="hud-progress-wrap">
+            <div class="hud-progress-bar" id="progressBar" style="width:0%"></div>
+        </div>
+    </div>
+
+    <div class="question-wrap">
+        <div class="q-meta">
+            <div class="q-number" id="qNumber">Q 1 / 15</div>
+            <div class="q-category-badge" id="qCategory">Cell Biology</div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-accent"></div>
+            <div class="q-text" id="qText">Loading...</div>
+        </div>
+        <div class="options-grid" id="optionsGrid"></div>
+        <div class="fact-bar" id="factBar"></div>
+        
+        <div class="game-actions-row">
+            <button class="game-btn game-btn-bm" id="btnBookmarkGame" onclick="toggleBookmark()">
+                <span class="btn-icon">🔖</span>
+            </button>
+            <button class="game-btn game-btn-skip" id="btnSkipGame" onclick="skipQuestion()">
+                <span class="btn-icon">⏩</span>
+            </button>
+            <button class="game-btn game-btn-next" id="btnNextGame" onclick="nextQuestion()">
+                <span>Next</span> <span class="btn-icon">›</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- BOOKMARKS SCREEN (Subject Selection) -->
+<div class="screen hidden" id="bookmarksScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showStart()">‹</button>
+        <div class="sets-title">Bookmarked MCQs</div>
+    </div>
+    <div class="bookmarks-list" id="bookmarksList">
+        <!-- Subject cards will be populated here via JS -->
+    </div>
+</div>
+
+<!-- QUICK REVISION SCREEN -->
+<div class="screen hidden" id="revisionScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showStart()">‹</button>
+        <div class="sets-title">Quick Revision Notes</div>
+    </div>
+    <div class="bookmarks-list" id="revisionList">
+        <!-- Subject cards will be populated here via JS -->
+    </div>
+</div>
+
+<!-- NOTES LIST SCREEN -->
+<div class="screen hidden" id="notesListScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showScreen('revisionScreen')">‹</button>
+        <div class="sets-title" id="notesListTitle">Notes</div>
+    </div>
+    <div class="sets-list" id="notesListContainer">
+        <!-- Notes will be populated here via JS -->
+    </div>
+</div>
+
+<!-- BOOKMARK SETS SCREEN -->
+<div class="screen hidden" id="bookmarkSetsScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showBookmarks()">‹</button>
+        <div class="sets-title" id="bookmarkSetsTitle">Subject Sets</div>
+    </div>
+    <div class="sets-list" id="bookmarkSetsList">
+        <!-- Bookmark sets will be populated here via JS -->
+    </div>
+</div>
+
+<!-- MOCK TEST LIST SCREEN -->
+<div class="screen hidden" id="mockTestListScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showStart()">‹</button>
+        <div class="sets-title">Simulation Mock Tests</div>
+    </div>
+    <div class="sets-list" id="mockTestSetsList">
+        <!-- Mock test sets will be populated here via JS -->
+    </div>
+</div>
+
+<!-- PYQ LIST SCREEN -->
+<div class="screen hidden" id="pyqListScreen">
+    <div class="sets-header">
+        <button class="btn-back" onclick="showStart()">‹</button>
+        <div class="sets-title">Previous Year Papers</div>
+    </div>
+    <div class="sets-list" id="pyqSetsList">
+        <!-- PYQ sets will be populated here via JS -->
+    </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen hidden" id="resultScreen">
+    <div class="res-header">
+        <button class="btn-back" onclick="showStart()">🏠</button>
+        <div class="res-header-title">Performance Analysis</div>
+    </div>
+
+    <div class="res-scroll-content">
+        <!-- Hero Score Card -->
+        <div class="res-hero-card">
+            <div class="res-subject-name" id="resSubject">Biology</div>
+            <div class="res-ring-wrap">
+                <svg class="res-ring-svg" viewBox="0 0 160 160">
+                    <circle class="res-ring-bg" cx="80" cy="80" r="68"/>
+                    <circle class="res-ring-fill" id="resRingFill" cx="80" cy="80" r="68" stroke="var(--neon-blue)"/>
+                </svg>
+                <div class="res-ring-inner">
+                    <div class="res-grade-badge" id="resGrade">-</div>
+                    <div class="res-grade-sub">Grade</div>
+                </div>
+            </div>
+            <div class="res-main-score" id="resScoreText">0/0</div>
+            <div class="res-accuracy-row">
+                <div class="res-acc-pill" id="resAccPill">0% Accuracy</div>
+            </div>
+            <div class="res-feedback" id="resFeedback">Analyzing your performance...</div>
+        </div>
+
+        <!-- Key Stats Grid -->
+        <div class="stat-grid">
+            <div class="stat-card" style="--sc-accent:var(--neon-blue)">
+                <div class="sc-icon">&#127919;</div>
+                <div class="sc-label">NEET Score</div>
+                <div class="sc-val blue" id="statNeetScore">0</div>
+            </div>
+            <div class="stat-card" style="--sc-accent:var(--neon-yellow)">
+                <div class="sc-icon">&#9889;</div>
+                <div class="sc-label">Avg. Speed</div>
+                <div class="sc-val yellow" id="statAvgSpeed">0s/Q</div>
+            </div>
+            <div class="stat-card" style="--sc-accent:var(--neon-green)">
+                <div class="sc-icon">&#9989;</div>
+                <div class="sc-label">Correct</div>
+                <div class="sc-val green" id="statCorrectCount">0</div>
+            </div>
+            <div class="stat-card" style="--sc-accent:var(--neon-red)">
+                <div class="sc-icon">&#10060;</div>
+                <div class="sc-label">Incorrect</div>
+                <div class="sc-val red" id="statWrongCount">0</div>
+            </div>
+        </div>
+
+        <div class="res-section-hdr"><div class="hdr-bar"></div>Accuracy Breakdown</div>
+        <div class="donut-card">
+            <div class="donut-wrap">
+                <svg class="donut-svg" viewBox="0 0 120 120">
+                    <circle r="48" cx="60" cy="60" fill="transparent" stroke="rgba(255,255,255,0.04)" stroke-width="14"/>
+                    <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--neon-green)" stroke-width="14"
+                        id="donutCorrect" stroke-dasharray="0 302" style="transition:stroke-dasharray 1.2s ease-out"/>
+                    <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--neon-red)" stroke-width="14"
+                        id="donutWrong" stroke-dasharray="0 302" style="transition:stroke-dasharray 1.2s 0.2s ease-out"/>
+                    <circle r="48" cx="60" cy="60" fill="transparent" stroke="var(--neon-yellow)" stroke-width="14"
+                        id="donutSkipped" stroke-dasharray="0 302" style="transition:stroke-dasharray 1.2s 0.4s ease-out"/>
+                </svg>
+                <div class="donut-center">
+                    <div class="donut-pct" id="donutPct">0%</div>
+                    <div class="donut-lbl">Correct</div>
+                </div>
+            </div>
+            <div class="donut-legend">
+                <div class="dleg-row"><div class="dleg-dot" style="background:var(--neon-green)"></div>
+                    <div class="dleg-info"><div class="dleg-name">Correct</div><div class="dleg-num" id="legCorrect">0</div></div></div>
+                <div class="dleg-row"><div class="dleg-dot" style="background:var(--neon-red)"></div>
+                    <div class="dleg-info"><div class="dleg-name">Wrong</div><div class="dleg-num" id="legWrong">0</div></div></div>
+                <div class="dleg-row"><div class="dleg-dot" style="background:var(--neon-yellow)"></div>
+                    <div class="dleg-info"><div class="dleg-name">Skipped</div><div class="dleg-num" id="legUn">0</div></div></div>
+            </div>
+        </div>
+
+        <div class="res-section-hdr"><div class="hdr-bar"></div>Question Heatmap<span class="hdr-count" id="heatmapCount"></span></div>
+        <div class="heatmap-card">
+            <div class="heatmap-grid" id="heatmapGrid"></div>
+            <div class="heatmap-legend">
+                <div class="hleg"><div class="hleg-dot" style="background:rgba(16,185,129,0.5)"></div>Correct</div>
+                <div class="hleg"><div class="hleg-dot" style="background:rgba(239,68,68,0.4)"></div>Wrong</div>
+                <div class="hleg"><div class="hleg-dot" style="background:rgba(245,158,11,0.3)"></div>Skipped</div>
+                <div class="hleg"><div class="hleg-dot" style="background:rgba(100,116,139,0.2)"></div>Timeout</div>
+            </div>
+        </div>
+
+        <div class="res-section-hdr"><div class="hdr-bar"></div>Time Per Question</div>
+        <div class="time-chart-card">
+            <div class="time-bars" id="timeBars"></div>
+            <div class="time-xaxis"><span>Q1</span><span id="timeXMid"></span><span id="timeXEnd">Last Q</span></div>
+            <div class="time-legend">
+                <div class="tleg"><div class="tleg-dot" style="background:#10b981"></div>Fast</div>
+                <div class="tleg"><div class="tleg-dot" style="background:#f59e0b"></div>Med</div>
+                <div class="tleg"><div class="tleg-dot" style="background:#ef4444"></div>Slow</div>
+                <div class="tleg"><div class="tleg-dot" style="background:#64748b"></div>Skip</div>
+            </div>
+        </div>
+
+        <div class="res-section-hdr"><div class="hdr-bar"></div>AI Study Recommendation</div>
+        <div class="smart-card"><p id="smartSummary">Analyzing your session...</p></div>
+
+        <div class="res-section-hdr"><div class="hdr-bar"></div>Achievements</div>
+        <div class="badges-scroll" id="badgesRow">
+            <div class="badge-card" id="badge-perfect" style="--badge-color:#fbbf24;--badge-bg:rgba(251,191,36,0.08)">
+                <div class="badge-ring">&#127919;</div><div class="badge-name">Perfectionist</div>
+            </div>
+            <div class="badge-card" id="badge-speed" style="--badge-color:#00e5ff;--badge-bg:rgba(0,229,255,0.08)">
+                <div class="badge-ring">&#9889;</div><div class="badge-name">Lightning</div>
+            </div>
+            <div class="badge-card" id="badge-consistent" style="--badge-color:#a855f7;--badge-bg:rgba(168,85,247,0.08)">
+                <div class="badge-ring">&#128737;</div><div class="badge-name">Consistent</div>
+            </div>
+            <div class="badge-card" id="badge-first" style="--badge-color:#10b981;--badge-bg:rgba(16,185,129,0.08)">
+                <div class="badge-ring">&#11088;</div><div class="badge-name">First Win</div>
+            </div>
+            <div class="badge-card" id="badge-survivor" style="--badge-color:#ef4444;--badge-bg:rgba(239,68,68,0.08)">
+                <div class="badge-ring">&#128293;</div><div class="badge-name">Survivor</div>
+            </div>
+            <div class="badge-card" id="badge-noskip" style="--badge-color:#f97316;--badge-bg:rgba(249,115,22,0.08)">
+                <div class="badge-ring">&#128170;</div><div class="badge-name">No Skip</div>
+            </div>
+        </div>
+
+        <div class="res-section-hdr"><div class="hdr-bar"></div>Detailed Review<span class="hdr-count" id="reviewCount"></span></div>
+        <div class="review-list" id="reviewList"></div>
+
+        <div class="res-buttons">
+            <button class="btn-res btn-res-primary" onclick="retryQuiz()">&#128260; Retry Session</button>
+            <button class="btn-res btn-res-secondary" onclick="showSets()">&#128218; Next Set</button>
+            <button class="btn-res btn-res-secondary" onclick="showStart()">&#127968; Home</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// AUDIO ENGINE
+// ─────────────────────────────────────────────────────────────
+let audioCtx = null;
+function tone(freq, type, dur, vol=0.12) {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = type; o.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        g.gain.setValueAtTime(vol, audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+        o.connect(g); g.connect(audioCtx.destination);
+        o.start(); o.stop(audioCtx.currentTime + dur);
+    } catch(e){}
+}
+const sfx = {
+    correct: () => { tone(520,'sine',0.12); setTimeout(()=>tone(660,'sine',0.18),120); },
+    wrong:   () => { tone(180,'sawtooth',0.25,0.08); },
+    combo:   () => { [400,500,700].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.15),i*80)); },
+    tick:    () => tone(300,'triangle',0.05,0.04),
+    start:   () => { [300,400,500,700].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.12),i*100)); },
+    end:     () => { [700,500,400,300].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.18),i*120)); }
+};
+
+// ─────────────────────────────────────────────────────────────
+// SPLASH LOGIC
+// ─────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+    const splash = document.getElementById('splashScreen');
+    if (sessionStorage.getItem('splashShown')) {
+        splash.style.display = 'none';
+        return;
+    }
+    sessionStorage.setItem('splashShown', 'true');
+    setTimeout(() => {
+        splash.classList.add('fade-out');
+        setTimeout(() => {
+            splash.style.display = 'none';
+        }, 800);
+    }, 2500);
+});
+
+// ─────────────────────────────────────────────────────────────
+// THEME ENGINE
+// ─────────────────────────────────────────────────────────────
+const THEMES = {
+    cyber: {
+        blue: '#00e5ff', rgb: '0,229,255', purple: '#b388ff', pink: '#ec4899', 
+        bg: '#030510', card: 'rgba(10, 15, 30, 0.7)', border: '#1e293b',
+        text: '#ffffff', sub: '#94a3b8', shadow: '0 10px 30px rgba(0,0,0,0.5)'
+    },
+    emerald: {
+        blue: '#10b981', rgb: '16,185,129', purple: '#34d399', pink: '#059669', 
+        bg: '#010a08', card: 'rgba(5, 20, 15, 0.7)', border: '#064e3b',
+        text: '#ecfdf5', sub: '#6ee7b7', shadow: '0 10px 30px rgba(0,0,0,0.5)'
+    },
+    sunset: {
+        blue: '#f97316', rgb: '249,115,22', purple: '#f59e0b', pink: '#fb923c', 
+        bg: '#0a0501', card: 'rgba(25, 10, 5, 0.7)', border: '#431407',
+        text: '#fff7ed', sub: '#fdba74', shadow: '0 10px 30px rgba(0,0,0,0.5)'
+    },
+    amethyst: {
+        blue: '#a855f7', rgb: '168,85,247', purple: '#c084fc', pink: '#e879f9', 
+        bg: '#05020a', card: 'rgba(15, 5, 25, 0.7)', border: '#2e1065',
+        text: '#faf5ff', sub: '#d8b4fe', shadow: '0 10px 30px rgba(0,0,0,0.5)'
+    },
+    light: {
+        blue: '#2563eb', rgb: '37,99,235', purple: '#7c3aed', pink: '#db2777', 
+        bg: '#f1f5f9', card: '#ffffff', border: '#e2e8f0',
+        text: '#0f172a', sub: '#475569', shadow: '0 4px 20px rgba(0,30,60,0.1)'
+    },
+    oled: {
+        blue: '#00e5ff', rgb: '0,229,255', purple: '#b388ff', pink: '#ec4899', 
+        bg: '#000000', card: '#0a0a0a', border: '#1e293b',
+        text: '#ffffff', sub: '#64748b', shadow: '0 0 20px rgba(0,229,255,0.1)'
+    }
+};
+
+let currentThemeRGB = '0,229,255';
+
+function setTheme(themeId) {
+    const t = THEMES[themeId] || THEMES.cyber;
+    const root = document.documentElement;
+    root.style.setProperty('--neon-blue', t.blue);
+    root.style.setProperty('--neon-purple', t.purple);
+    root.style.setProperty('--neon-pink', t.pink);
+    root.style.setProperty('--bg', t.bg);
+    root.style.setProperty('--card', t.card);
+    root.style.setProperty('--card-border', t.border);
+    root.style.setProperty('--text-main', t.text);
+    root.style.setProperty('--text-sub', t.sub);
+    root.style.setProperty('--shadow', t.shadow);
+    root.style.setProperty('--neon-blue-rgb', t.rgb);
+    
+    currentThemeRGB = t.rgb;
+    document.body.dataset.theme = themeId;
+    
+    // Update neurons immediately on color change
+    if(window.neurons) neurons.forEach(n => n.color = `rgba(${t.rgb}, 0.5)`);
+    
+    // Adjust neuron opacity for light theme
+    const canvas = document.getElementById('neuronCanvas');
+    if (canvas) canvas.style.opacity = (themeId === 'light') ? '0.1' : '0.25';
+    
+    document.querySelectorAll('.theme-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.theme === themeId);
+    });
+    localStorage.setItem('neet_app_theme', themeId);
+}
+
+// Initialize theme
+(function() {
+    const saved = localStorage.getItem('neet_app_theme') || 'cyber';
+    setTimeout(() => setTheme(saved), 10);
+})();
+
+// ─────────────────────────────────────────────────────────────
+// UI FUNCTIONS
+// ─────────────────────────────────────────────────────────────
+function toggleMenu(e) {
+    const menu = document.getElementById('dropdownMenu');
+    menu.classList.toggle('show');
+    e.stopPropagation();
+}
+document.addEventListener('click', () => {
+    const menu = document.getElementById('dropdownMenu');
+    if(menu && menu.classList.contains('show')) menu.classList.remove('show');
+});
+
+// ─────────────────────────────────────────────────────────────
+// QUESTION BANK (FALLBACK / MOCKS)
+// ─────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // BOTANY
+  { cat:'botany', q:'What is the primary site of photosynthesis in a typical leaf?', opts:['Palisade mesophyll','Spongy mesophyll','Epidermis','Xylem'], ans:0, fact:'Palisade mesophyll cells are packed with chloroplasts and positioned near the top of the leaf to maximize light absorption.' },
+  { cat:'botany', q:'Which plant hormone is primarily responsible for apical dominance?', opts:['Auxin','Cytokinin','Gibberellin','Ethylene'], ans:0, fact:'Auxin produced in the shoot apex inhibits the growth of lateral buds.' },
+  { cat:'botany', q:'What is the fluid-filled space within the chloroplast called?', opts:['Stroma','Thylakoid','Granum','Lumen'], ans:0, fact:'The stroma is where the light-independent reactions (Calvin cycle) of photosynthesis take place.' },
+  { cat:'botany', q:'Which mineral deficiency typically causes interveinal chlorosis in older leaves?', opts:['Magnesium','Iron','Calcium','Nitrogen'], ans:0, fact:'Magnesium is a central component of the chlorophyll molecule.' },
+  { cat:'botany', q:'In C4 plants, initial carbon fixation occurs in which cells?', opts:['Bundle-sheath cells','Mesophyll cells','Epidermal cells','Guard cells'], ans:1, fact:'Mesophyll cells fix CO2 into an organic acid, which is then transported to bundle-sheath cells.' },
+  
+  // ZOOLOGY
+  { cat:'zoology', q:'Which part of the human brain controls involuntary actions like breathing?', opts:['Medulla oblongata','Cerebellum','Cerebrum','Hypothalamus'], ans:0, fact:'The medulla oblongata controls vital autonomic functions such as heart rate, breathing, and blood pressure.' },
+  { cat:'zoology', q:'What is the functional unit of the human kidney?', opts:['Nephron','Alveolus','Villus','Neuron'], ans:0, fact:'Each kidney contains roughly 1 million nephrons, which filter blood to form urine.' },
+  { cat:'zoology', q:'Which enzyme starts the digestion of proteins in the stomach?', opts:['Pepsin','Amylase','Lipase','Trypsin'], ans:0, fact:'Pepsin works best in the highly acidic environment of the stomach to break down proteins into smaller peptides.' },
+  { cat:'zoology', q:'What type of joint is the shoulder joint?', opts:['Ball and socket','Hinge','Pivot','Gliding'], ans:0, fact:'The ball and socket joint allows for the greatest range of motion in all directions.' },
+  { cat:'zoology', q:'Which human blood type contains anti-A and anti-B antibodies?', opts:['Type O','Type AB','Type A','Type B'], ans:0, fact:'Individuals with Type O blood have neither A nor B antigens on their red blood cells, thus they possess both antibodies.' },
+
+  // PHYSICS
+  { cat:'physics', q:'What is the SI unit of electrical resistance?', opts:['Ohm','Ampere','Volt','Watt'], ans:0, fact:'The ohm is defined as a resistance between two points of a conductor when a constant potential difference of 1 volt produces a current of 1 ampere.' },
+  { cat:'physics', q:'According to Newton\'s Second Law of Motion, Force equals:', opts:['Mass × Acceleration','Mass × Velocity','Work / Time','Mass / Volume'], ans:0, fact:'F = ma is the fundamental equation relating force, mass, and acceleration.' },
+  { cat:'physics', q:'What type of lens is used to correct myopia (nearsightedness)?', opts:['Concave lens','Convex lens','Cylindrical lens','Bifocal lens'], ans:0, fact:'A concave lens diverges incoming light rays so that they focus perfectly on the retina instead of in front of it.' },
+  { cat:'physics', q:'Which radioactive decay emits a Helium nucleus?', opts:['Alpha decay','Beta decay','Gamma decay','Positron emission'], ans:0, fact:'An alpha particle is essentially a helium-4 nucleus, consisting of 2 protons and 2 neutrons.' },
+  { cat:'physics', q:'The speed of light in a vacuum is approximately:', opts:['3 × 10^8 m/s','3 × 10^5 m/s','3 × 10^6 m/s','3 × 10^10 m/s'], ans:0, fact:'The exact speed of light in a vacuum is 299,792,458 meters per second.' },
+
+  // CHEMISTRY
+  { cat:'chemistry', q:'What is the chemical formula for sulfuric acid?', opts:['H2SO4','HCl','HNO3','H2CO3'], ans:0, fact:'Sulfuric acid is widely used in car batteries and fertilizer production.' },
+  { cat:'chemistry', q:'Which gas is most abundant in the Earth\'s atmosphere?', opts:['Nitrogen','Oxygen','Carbon Dioxide','Argon'], ans:0, fact:'Nitrogen makes up approximately 78% of the Earth\'s atmosphere by volume.' },
+  { cat:'chemistry', q:'What is the pH of a neutral solution at 25°C?', opts:['7','0','14','1'], ans:0, fact:'Pure water has a pH of exactly 7 at standard room temperature.' },
+  { cat:'chemistry', q:'Which element is known as the building block of organic life?', opts:['Carbon','Oxygen','Hydrogen','Nitrogen'], ans:0, fact:'Carbon\'s unique ability to form four stable covalent bonds makes it the foundation of all organic molecules.' },
+  { cat:'chemistry', q:'In a redox reaction, the substance that loses electrons undergoes:', opts:['Oxidation','Reduction','Precipitation','Condensation'], ans:0, fact:'"LEO the lion says GER" - Loss of Electrons is Oxidation; Gain of Electrons is Reduction.' }
+];
+
+// ─────────────────────────────────────────────────────────────
+// GAME STATE
+// ─────────────────────────────────────────────────────────────
+let selectedCat  = 'all';
+let selectedDiff = 'easy';
+let timePerQ     = 20;
+let gameQuestions = [];
+let qIndex = 0;
+let score  = 0;
+let combo  = 1;
+let correct = 0;
+let wrong   = 0;
+let timer   = null;
+let timeLeft = 20;
+let extraTimeNext = 0;
+let answered = false;
+let currentSetData = null;
+let activeSetIndex = -1;
+let activeSubject  = '';
+let userResponses  = []; // Stores { qIdx, pickedIdx, isCorrect }
+let startTime      = 0;
+let qStartTime      = 0;
+
+let currentTotalQ = 15;
+const CIRCLE_CIRCUM = 138.2; // 2πr, r=22
+
+// Difficulty settings
+const DIFF = { easy:20, medium:12, hard:7 };
+
+function selectCat(el) {
+    document.querySelectorAll('.subject-btn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    selectedCat = el.dataset.cat;
+
+    // Map categories to JSON filenames
+    const fileMap = {
+        'botany': 'Botany.json',
+        'zoology': 'Zoology.json',
+        'physics': 'Physics.json',
+        'chemistry': 'Chemistry.json',
+        'physics_numericals': 'physics_numericals.json',
+        'chemistry_numericals': 'chemistry_numericals.json'
+    };
+
+    if (fileMap[selectedCat]) {
+        fetchSets(fileMap[selectedCat]);
+    }
+}
+
+function fetchSets(filename) {
+    const list = document.getElementById('setsList');
+    list.innerHTML = `<div class="loading-text">Loading Sets...</div>`;
+    showScreen('setsScreen');
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', filename, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 || (xhr.status === 0 && xhr.responseText)) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    currentSetData = data;
+                    renderSets(data);
+                } catch (e) {
+                    list.innerHTML = `<div class="loading-text" style="color:var(--neon-red)">Error parsing JSON: ${e.message}</div>`;
+                }
+            } else {
+                list.innerHTML = `<div class="loading-text" style="color:var(--neon-red)">Error loading sets (Status ${xhr.status}). Ensure file access is enabled.</div>`;
+            }
+        }
+    };
+    xhr.onerror = function(e) {
+        list.innerHTML = `<div class="loading-text" style="color:var(--neon-red)">XHR Error: Connection failed. Check file access.</div>`;
+    };
+    xhr.send();
+}
+
+function renderSets(data) {
+    const list = document.getElementById('setsList');
+    const chapterName = data.chapter_name || 'Sets';
+    document.getElementById('setsTitle').innerText = chapterName;
+    list.innerHTML = '';
+
+    const subject = selectedCat.toLowerCase();
+
+    if (data.quiz_sets && data.quiz_sets.length > 0) {
+        data.quiz_sets.forEach((set, index) => {
+            const qCount = set.questions ? set.questions.length : 0;
+            const recordKey = `neet_comp_${subject}_${index}`;
+            const recordRaw = localStorage.getItem(recordKey);
+            const record = recordRaw ? JSON.parse(recordRaw) : null;
+            const accuracy = (record && record.completed) ? record.accuracy : 0;
+            const correctCount = (record && record.correct !== undefined) ? record.correct : 0;
+            const totalCount = (record && record.total !== undefined) ? record.total : qCount;
+
+            // Determine Tier
+            let tierClass = 'tier-none';
+            let tierLabel = 'New';
+            if (accuracy > 0) {
+                if (accuracy <= 20) { tierClass = 'tier-red'; tierLabel = 'Poor'; }
+                else if (accuracy <= 40) { tierClass = 'tier-orange'; tierLabel = 'Fair'; }
+                else if (accuracy <= 60) { tierClass = 'tier-yellow'; tierLabel = 'OK'; }
+                else if (accuracy <= 80) { tierClass = 'tier-purple'; tierLabel = 'Good'; }
+                else { tierClass = 'tier-green'; tierLabel = 'Excellent'; }
+            }
+
+            const card = document.createElement('div');
+            card.className = `set-card ${tierClass}`;
+            card.onclick = () => startSetGame(set, index); 
+            
+            const descText = set.set_description || 'Master ' + chapterName + ' with these Hand-picked NEET objective questions.';
+
+            card.innerHTML = `
+                <div class="set-card-content">
+                    <div class="set-info">
+                        <div class="set-label-row">
+                            <span class="set-tag">Set ${index + 1}</span>
+                            <span class="q-total">${qCount} Questions</span>
+                        </div>
+                        <h3 class="set-title">${set.set_name || 'NEET Practice Set'}</h3>
+                        <p class="set-description">${descText}</p>
+                        
+                        <div class="set-progress-row">
+                            <div class="progress-meta">
+                                <span class="progress-score">${accuracy > 0 ? `${correctCount}/${totalCount} (${accuracy}%) Correct` : 'Not Attempted'}</span>
+                                <span class="retry-text">Practice Now ›</span>
+                            </div>
+                            <div class="mini-progress-track">
+                                <div class="mini-progress-fill" style="width: ${accuracy}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="set-chart-box">
+                        <div class="circular-chart" style="--p: ${accuracy}">
+                            <span class="percent-val">${accuracy}%</span>
+                            <div class="chart-badge">${tierLabel}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    } else {
+        list.innerHTML = `<div class="loading-text">No sets found for this subject.</div>`;
+    }
+}
+
+function selectDiff(el) {
+    document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    selectedDiff = el.dataset.diff;
+}
+
+// ─────────────────────────────────────────────────────────────
+// APP CONFIGURATION (FROM ANDROID STRINGS.XML)
+// ─────────────────────────────────────────────────────────────
+let appConfig = {
+    packageId: "com.neet.practice",
+    devId: "Knowledge+Curiosity",
+    privacyUrl: "https://knowledgecuriosity7.blogspot.com/p/blog-page.html",
+    shareText: "Check out this amazing NEET Practice App!",
+    rateUrl: "https://play.google.com/store/apps/details?id=com.neet.practice",
+    moreAppsUrl: "https://play.google.com/store/apps/developer?id=Knowledge+Curiosity"
+};
+
+function initAppConfig() {
+    try {
+        if (window.Android && typeof Android.getAppConfig === 'function') {
+            appConfig = JSON.parse(Android.getAppConfig());
+            console.log("App Config loaded from Native:", appConfig);
+            
+            // Update version display if element exists
+            const vDisp = document.getElementById('appVersionDisplay');
+            if (vDisp && appConfig.version) {
+                vDisp.innerHTML = `Version ${appConfig.version} • Made with ❤️ for NEET Aspirants`;
+            }
+        }
+    } catch(e) { console.error("Config Load Error:", e); }
+}
+initAppConfig();
+
+// ─────────────────────────────────────────────────────────────
+// NEURON CANVAS ANIMATION
+// ─────────────────────────────────────────────────────────────
+const canvas = document.getElementById('neuronCanvas');
+const ctx2d  = canvas.getContext('2d');
+const nodes  = [];
+const NCOUNT = 25;
+
+function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+function initNodes() {
+    nodes.length = 0;
+    for (let i = 0; i < NCOUNT; i++) {
+        nodes.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random()-0.5)*0.5,
+            vy: (Math.random()-0.5)*0.5,
+            r: 2 + Math.random()*2,
+            pulse: Math.random()*Math.PI*2
+        });
+    }
+}
+function drawNeurons(ts) {
+    ctx2d.clearRect(0,0,canvas.width,canvas.height);
+    // Update
+    nodes.forEach(n => {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > canvas.width)  { n.vx *= -1; n.x = Math.max(0,Math.min(n.x,canvas.width)); }
+        if (n.y < 0 || n.y > canvas.height) { n.vy *= -1; n.y = Math.max(0,Math.min(n.y,canvas.height)); }
+        n.pulse += 0.02;
+    });
+    // Draw connections
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = i+1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const d  = Math.sqrt(dx*dx + dy*dy);
+            if (d < 160) {
+                ctx2d.beginPath();
+                ctx2d.strokeStyle = `rgba(${currentThemeRGB},${0.25*(1-d/160)})`;
+                ctx2d.lineWidth = 0.8;
+                ctx2d.moveTo(nodes[i].x, nodes[i].y);
+                ctx2d.lineTo(nodes[j].x, nodes[j].y);
+                ctx2d.stroke();
+            }
+        }
+    }
+    // Draw nodes
+    nodes.forEach(n => {
+        const glowAlpha = 0.5 + 0.4*Math.sin(n.pulse);
+        ctx2d.beginPath();
+        ctx2d.arc(n.x, n.y, n.r, 0, Math.PI*2);
+        ctx2d.fillStyle = `rgba(${currentThemeRGB},${glowAlpha})`;
+        ctx2d.fill();
+    });
+    requestAnimationFrame(drawNeurons);
+}
+resizeCanvas(); initNodes(); requestAnimationFrame(drawNeurons);
+window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
+
+// ─────────────────────────────────────────────────────────────
+// BOOKMARK SYSTEM (RE-DESIGNED FOR SUBJECT-WISE SETS)
+// ─────────────────────────────────────────────────────────────
+function getBookmarks() {
+    const raw = localStorage.getItem('neet_bookmarks');
+    return raw ? JSON.parse(raw) : [];
+}
+
+function saveBookmarks(bms) {
+    localStorage.setItem('neet_bookmarks', JSON.stringify(bms));
+}
+
+function toggleBookmark() {
+    if (!gameQuestions[qIndex]) return;
+    const q = gameQuestions[qIndex];
+    let bms = getBookmarks();
+    // Unique check based on question text
+    const idx = bms.findIndex(b => b.q === q.q);
+    
+    if (idx > -1) {
+        bms.splice(idx, 1);
+        tone(400, 'sine', 0.1, 0.05);
+    } else {
+        bms.push(q);
+        tone(600, 'sine', 0.15, 0.1);
+    }
+    
+    saveBookmarks(bms);
+    updateBookmarkUI();
+}
+
+function updateBookmarkUI() {
+    const btn = document.getElementById('btnBookmarkGame');
+    if (!btn || !gameQuestions[qIndex]) return;
+    const bms = getBookmarks();
+    const isBookmarked = bms.some(b => b.q === gameQuestions[qIndex].q);
+    btn.classList.toggle('active', isBookmarked);
+}
+
+function showBookmarks() {
+    renderBookmarkSubjects();
+    showScreen('bookmarksScreen');
+}
+
+function renderBookmarkSubjects() {
+    const list = document.getElementById('bookmarksList');
+    const bms = getBookmarks();
+    const subjects = [
+        { id: 'botany', name: 'Botany', icon: '🌿' },
+        { id: 'zoology', name: 'Zoology', icon: '🧬' },
+        { id: 'physics', name: 'Physics', icon: '⚛️' },
+        { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+        { id: 'physics_numericals', name: 'Physics Numericals', icon: '📐' },
+        { id: 'chemistry_numericals', name: 'Chemistry Numericals', icon: '⚗️' }
+    ];
+
+    list.innerHTML = `<div class="section-title">Select Subject</div>
+                      <div class="subject-grid"></div>`;
+    const grid = list.querySelector('.subject-grid');
+
+    subjects.forEach(sub => {
+        const count = bms.filter(q => q.cat === sub.id).length;
+        const btn = document.createElement('button');
+        btn.className = `subject-btn`;
+        btn.dataset.cat = sub.id;
+        btn.onclick = () => showBookmarkSets(sub.id);
+        btn.innerHTML = `
+            <span class="subject-icon">${sub.icon}</span>
+            <div style="display:flex; flex-direction:column; gap:2px; text-align:left">
+                <span>${sub.name}</span>
+                <span style="font-size:10px; color:var(--text-sub)">${count} Bookmarks</span>
+            </div>
+        `;
+        grid.appendChild(btn);
+    });
+}
+
+function showRevisionNotes() {
+    renderRevisionSubjects();
+    showScreen('revisionScreen');
+}
+
+function renderRevisionSubjects() {
+    const list = document.getElementById('revisionList');
+    const subjects = [
+        { id: 'botany', name: 'Botany', icon: '🌿', desc: 'Plant Physiology, Anatomy & Ecology Notes' },
+        { id: 'zoology', name: 'Zoology', icon: '🧬', desc: 'Human Physiology, Evolution & Genetics' },
+        { id: 'physics', name: 'Physics', icon: '⚛️', desc: 'Mechanics, Optics & Modern Physics' },
+        { id: 'chemistry', name: 'Chemistry', icon: '🧪', desc: 'Organic, Inorganic & Physical Chemistry' }
+    ];
+
+    list.innerHTML = `
+        <div class="list-banner">
+            <div class="list-banner-icon">⚡</div>
+            <div class="list-banner-text">
+                <h3>Quick Revision Notes</h3>
+                <p>Select a Subject for High-Yield Chapter Notes & Bullet Points</p>
+            </div>
+        </div>
+    `;
+
+    const palettes = [
+        { grad: 'linear-gradient(135deg, #10b981, #059669)', glow: 'rgba(16, 185, 129, 0.4)', iconBg: 'rgba(16, 185, 129, 0.2)' },
+        { grad: 'linear-gradient(135deg, #ec4899, #d946ef)', glow: 'rgba(236, 72, 153, 0.4)', iconBg: 'rgba(236, 72, 153, 0.2)' },
+        { grad: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', glow: 'rgba(59, 130, 246, 0.4)', iconBg: 'rgba(59, 130, 246, 0.2)' },
+        { grad: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245, 158, 11, 0.4)', iconBg: 'rgba(245, 158, 11, 0.2)' }
+    ];
+
+    subjects.forEach((sub, index) => {
+        const palette = palettes[index % palettes.length];
+        const card = document.createElement('div');
+        card.className = 'colorful-list-card';
+        card.style.animationDelay = `${index * 0.06}s`;
+        card.style.setProperty('--glow-color', palette.glow);
+        card.style.setProperty('--border-glow', palette.glow);
+        card.onclick = () => showNotesList(sub.id, sub.name);
+
+        card.innerHTML = `
+            <div class="colorful-card-header">
+                <div class="colorful-card-icon" style="background:${palette.iconBg}">
+                    ${sub.icon}
+                </div>
+                <span class="colorful-card-badge" style="background:${palette.iconBg}; color:#fff; border-color:${palette.glow}">
+                    ${sub.name.toUpperCase()} REVISION
+                </span>
+            </div>
+            <div>
+                <div class="colorful-card-title">${sub.name} Revision Notes</div>
+                <div class="colorful-card-desc">${sub.desc}</div>
+            </div>
+            <div class="colorful-card-footer">
+                <div class="colorful-card-tag">
+                    <span>${sub.icon} ${sub.name}</span> • <span>NCERT High Yield</span>
+                </div>
+                <button class="btn-colorful-action" style="background:${palette.grad}">
+                    <span>OPEN ${sub.name.toUpperCase()}</span> ➔
+                </button>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function showNotesList(subjectId, subjectName, push = true) {
+    sessionStorage.setItem('currentNotesSubjectId', subjectId);
+    sessionStorage.setItem('currentNotesSubjectName', subjectName);
+    showScreen('notesListScreen', push);
+    document.getElementById('notesListTitle').innerText = subjectName + ' Notes';
+    const list = document.getElementById('notesListContainer');
+    list.scrollTop = 0;
+    list.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-sub); font-size:13px">Scanning notes...</div>';
+    
+    let files = [];
+    try {
+        if (window.Android && typeof Android.getNotes === 'function') {
+            const raw = Android.getNotes(subjectId);
+            files = JSON.parse(raw);
+        } else {
+            console.warn("Android bridge (Notes) not detected.");
+            files = []; 
+        }
+    } catch(e) { 
+        console.error("Discovery Error:", e);
+        files = [];
+    }
+
+    const subIcons = { botany: '🌿', zoology: '🧬', physics: '⚛️', chemistry: '🧪' };
+    const icon = subIcons[subjectId.toLowerCase()] || '📝';
+
+    list.innerHTML = `
+        <div class="list-banner">
+            <div class="list-banner-icon">${icon}</div>
+            <div class="list-banner-text">
+                <h3>${subjectName.toUpperCase()} REVISION NOTES</h3>
+                <p>Complete Chapter-wise NCERT Summaries & Key Points</p>
+            </div>
+        </div>
+    `;
+
+    if (files.length === 0) {
+        list.innerHTML += '<div style="text-align:center; padding:40px; color:var(--text-sub)">No notes found for ' + subjectName + '.</div>';
+    } else {
+        files.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+
+        const notePalettes = [
+            { grad: 'linear-gradient(135deg, #a855f7, #6366f1)', glow: 'rgba(168, 85, 247, 0.4)', iconBg: 'rgba(168, 85, 247, 0.2)' },
+            { grad: 'linear-gradient(135deg, #00c6ff, #0072ff)', glow: 'rgba(0, 198, 255, 0.4)', iconBg: 'rgba(0, 198, 255, 0.2)' },
+            { grad: 'linear-gradient(135deg, #10b981, #059669)', glow: 'rgba(16, 185, 129, 0.4)', iconBg: 'rgba(16, 185, 129, 0.2)' },
+            { grad: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245, 158, 11, 0.4)', iconBg: 'rgba(245, 158, 11, 0.2)' }
+        ];
+
+        files.forEach((file, index) => {
+            const title = file.replace('.html', '').replace(/_/g, ' ').toUpperCase();
+            const palette = notePalettes[index % notePalettes.length];
+            const card = document.createElement('div');
+            card.className = 'colorful-list-card';
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.style.setProperty('--glow-color', palette.glow);
+            card.style.setProperty('--border-glow', palette.glow);
+            card.onclick = () => loadNote(subjectId, file);
+            card.innerHTML = `
+                <div class="colorful-card-header">
+                    <div class="colorful-card-icon" style="background:${palette.iconBg}">
+                        ${icon}
+                    </div>
+                    <span class="colorful-card-badge" style="background:${palette.iconBg}; color:#fff; border-color:${palette.glow}">
+                        ${subjectName.toUpperCase()} NOTE
+                    </span>
+                </div>
+                <div>
+                    <div class="colorful-card-title">${title}</div>
+                    <div class="colorful-card-desc">Comprehensive NCERT Bullet Summary & Important Diagrams</div>
+                </div>
+                <div class="colorful-card-footer">
+                    <div class="colorful-card-tag">
+                        <span>${icon} ${subjectName}</span> • <span>🔥 High Yield</span>
+                    </div>
+                    <button class="btn-colorful-action" style="background:${palette.grad}">
+                        <span>READ NOTE</span> ➔
+                    </button>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+}
+
+function loadNote(subjectId, file) {
+    window.location.href = 'notes/' + subjectId + '/' + file;
+}
+
+function showBookmarkSets(subject) {
+    activeSubject = subject;
+    renderBookmarkSets(subject);
+    showScreen('bookmarkSetsScreen');
+}
+
+function renderBookmarkSets(subject) {
+    const bms = getBookmarks().filter(q => q.cat === subject);
+    const list = document.getElementById('bookmarkSetsList');
+    const titleText = document.getElementById('bookmarkSetsTitle');
+    const labels = { botany: 'Botany', zoology: 'Zoology', physics: 'Physics', chemistry: 'Chemistry', physics_numericals: 'Physics Numericals', chemistry_numericals: 'Chemistry Numericals' };
+    
+    titleText.innerText = (labels[subject] || subject) + " Sets";
+    list.innerHTML = '';
+    
+    if (bms.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">🔖</div>
+                <div class="empty-text">No ${labels[subject] || subject} Bookmarks</div>
+                <p style="font-size:12px; margin-top:10px; opacity:0.7">Questions you bookmark will appear here as sets.</p>
+            </div>`;
+    } else {
+        // Divide bookmarks into sets of 10
+        for (let i = 0; i < bms.length; i += 10) {
+            const setIndex = Math.floor(i / 10);
+            const chunk = bms.slice(i, i + 10);
+            
+            // Fetch progress for this bookmark set
+            const recordKey = `neet_comp_${subject.toLowerCase()}_bm_${setIndex}`;
+            const recordRaw = localStorage.getItem(recordKey);
+            const record = recordRaw ? JSON.parse(recordRaw) : null;
+            const accuracy = (record && record.completed) ? record.accuracy : 0;
+            const correctCount = (record && record.correct !== undefined) ? record.correct : 0;
+            const totalCount = (record && record.total !== undefined) ? record.total : chunk.length;
+
+            // Determine Tier
+            let tierClass = 'tier-none';
+            let tierLabel = 'New';
+            if (accuracy > 0) {
+                if (accuracy <= 20) { tierClass = 'tier-red'; tierLabel = 'Poor'; }
+                else if (accuracy <= 40) { tierClass = 'tier-orange'; tierLabel = 'Fair'; }
+                else if (accuracy <= 60) { tierClass = 'tier-yellow'; tierLabel = 'OK'; }
+                else if (accuracy <= 80) { tierClass = 'tier-purple'; tierLabel = 'Good'; }
+                else { tierClass = 'tier-green'; tierLabel = 'Excellent'; }
+            }
+
+            const card = document.createElement('div');
+            card.className = `set-card ${tierClass}`;
+            card.onclick = () => startBookmarkSet(subject, setIndex);
+            
+            card.innerHTML = `
+                <div class="set-card-content">
+                    <div class="set-info">
+                        <div class="set-label-row">
+                            <span class="set-tag">Set ${setIndex + 1}</span>
+                            <span class="q-total">${chunk.length} MCQs</span>
+                        </div>
+                        <h3 class="set-title">${labels[subject]} Bookmarks</h3>
+                        <p class="set-description">Collection of your bookmarked questions in ${labels[subject]}.</p>
+                        
+                        <div class="set-progress-row">
+                            <div class="progress-meta">
+                                <span class="progress-score">${accuracy > 0 ? `${correctCount}/${totalCount} (${accuracy}%) Correct` : 'Not Attempted'}</span>
+                                <span class="retry-text">Practice Now ›</span>
+                            </div>
+                            <div class="mini-progress-track">
+                                <div class="mini-progress-fill" style="width: ${accuracy}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="set-chart-box">
+                        <div class="circular-chart" style="--p: ${accuracy}">
+                            <span class="percent-val">${accuracy > 0 ? accuracy + '%' : chunk.length}</span>
+                            <div class="chart-badge">${accuracy > 0 ? tierLabel : 'SET'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            list.appendChild(card);
+        }
+    }
+}
+
+function startBookmarkSet(subject, setIndex) {
+    const bms = getBookmarks().filter(q => q.cat === subject);
+    const chunk = bms.slice(setIndex * 10, (setIndex * 10) + 10);
+    
+    gameQuestions = chunk;
+    currentTotalQ = gameQuestions.length;
+    activeSubject = subject;
+    activeSetIndex = 'bm_' + setIndex; 
+    
+    qIndex = 0; score = 0; combo = 1; correct = 0; wrong = 0; skipped = 0; extraTimeNext = 0;
+    userResponses = []; startTime = Date.now();
+    
+    updateScoreDisplay(); updateComboDisplay();
+    showScreen('gameScreen');
+    sfx.start();
+    loadQuestion();
+}
+
+// ─────────────────────────────────────────────────────────────
+// SKIP SYSTEM
+// ─────────────────────────────────────────────────────────────
+let skipped = 0;
+
+function skipQuestion() {
+    if (answered) return;
+    answered = true;
+    clearInterval(timer);
+    skipped++;
+    
+    const qDuration = Math.round((Date.now() - qStartTime) / 1000);
+    userResponses.push({ qIndex: qIndex, picked: -1, isCorrect: false, isSkipped: true, duration: qDuration });
+    
+    sfx.tick();
+    const q = gameQuestions[qIndex];
+    document.querySelectorAll('.opt-btn').forEach(b => {
+        if (b.dataset.isCorrect === 'true') b.classList.add('reveal');
+    });
+    showFact(`⏩ Question Skipped. Correct: ${q.opts[q.ans]}`, false);
+    document.getElementById('btnNextGame').classList.add('show');
+    document.getElementById('btnSkipGame').classList.add('disabled');
+}
+
+// ─────────────────────────────────────────────────────────────
+// GAME FUNCTIONS
+// ─────────────────────────────────────────────────────────────
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length-1; i > 0; i--) {
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+}
+
+function startGame() {
+    // Filter questions
+    let pool = selectedCat === 'all' ? QUESTIONS : QUESTIONS.filter(q => q.cat === selectedCat);
+    if (pool.length < 5) pool = QUESTIONS; // fallback
+    
+    // Only randomize the fallback pool
+    pool = shuffle(pool);
+    
+    currentTotalQ = pool.length; // use full length (or limit to a max if you prefer, but user wants all)
+    gameQuestions = pool; 
+    timePerQ = DIFF[selectedDiff];
+
+    qIndex  = 0;
+    score   = 0;
+    combo   = 1;
+    correct = 0;
+    wrong   = 0;
+    skipped = 0;
+    extraTimeNext = 0;
+
+    updateScoreDisplay();
+    updateComboDisplay();
+    showScreen('gameScreen');
+    sfx.start();
+    loadQuestion();
+}
+
+function startSetGame(set, index) {
+    activeSetIndex = index;
+    activeSubject  = selectedCat;
+    userResponses  = [];
+    startTime      = Date.now();
+
+    // Map the external JSON set to our internal question format
+    let mappedQuestions = set.questions.map(q => {
+        return {
+            cat: activeSubject,
+            q: q.question,
+            opts: q.options,
+            ans: q.answer,
+            fact: q.explanation
+        };
+    });
+
+    gameQuestions = shuffle(mappedQuestions); // Shuffle within the set
+    currentTotalQ = gameQuestions.length; 
+    timePerQ = DIFF[selectedDiff];
+
+    qIndex  = 0;
+    score   = 0;
+    combo   = 1;
+    correct = 0;
+    wrong   = 0;
+    skipped = 0;
+    extraTimeNext = 0;
+
+    updateScoreDisplay();
+    updateComboDisplay();
+    showScreen('gameScreen');
+    sfx.start();
+    loadQuestion();
+}
+
+// ─────────────────────────────────────────────────────────────
+// NAVIGATION ENGINE — Professional Back-Stack Management
+// ─────────────────────────────────────────────────────────────
+
+const ALL_SCREENS = ['startScreen','setsScreen','gameScreen','resultScreen',
+                     'bookmarksScreen','bookmarkSetsScreen','mockTestListScreen','pyqListScreen',
+                     'revisionScreen','notesListScreen'];
+
+// Per-screen refresh callbacks — called whenever a screen becomes visible
+const screenRefresh = {
+    setsScreen: () => {
+        // Re-render the sets list so localStorage completion data is always fresh
+        if (typeof currentSetData !== 'undefined' && currentSetData) {
+            renderSets(currentSetData);
+        }
+    },
+    bookmarkSetsScreen: () => {
+        // Re-render bookmark sets to show updated progress/accuracy instantly
+        if (typeof activeSubject !== 'undefined' && activeSubject) {
+            renderBookmarkSets(activeSubject);
+        }
+    },
+    startScreen: () => {
+        // Stop any running timer when returning home
+        clearInterval(timer);
+    },
+    resultScreen: () => {
+        // Scroll to top whenever result is shown
+        const rs = document.getElementById('resultScreen');
+        if (rs) rs.scrollTop = 0;
+    }
+};
+
+let adCounter = 0;
+function showScreen(id, push = true) {
+    if (id === 'resultScreen') {
+        adCounter++;
+        if (adCounter % 2 === 0) {
+            try {
+                if (window.Android && typeof window.Android.showInterstitial === 'function') {
+                    window.Android.showInterstitial();
+                }
+            } catch (e) { console.error(e); }
+        }
+    }
+    if (push) {
+        history.pushState({ screenId: id }, '');
+    }
+    ALL_SCREENS.forEach(s => {
+        document.getElementById(s).classList.toggle('hidden', s !== id);
+    });
+    // Fire refresh callback for this screen
+    if (screenRefresh[id]) screenRefresh[id]();
+}
+
+// Initial history entry
+if (!history.state || !history.state.screenId) {
+    history.replaceState({ screenId: 'startScreen' }, '');
+} else {
+    // Restore the screen based on saved history state
+    const id = history.state.screenId;
+    if (id === 'notesListScreen') {
+        const sId = sessionStorage.getItem('currentNotesSubjectId');
+        const sName = sessionStorage.getItem('currentNotesSubjectName');
+        if (sId && sName) {
+            showNotesList(sId, sName, false);
+        } else {
+            showScreen('startScreen', false);
+        }
+    } else if (id === 'revisionScreen') {
+        renderRevisionSubjects();
+        showScreen('revisionScreen', false);
+    } else {
+        showScreen(id, false);
+    }
+}
+
+window.onpopstate = function(event) {
+    if (event.state && event.state.screenId) {
+        const id = event.state.screenId;
+        
+        // State Guard: If attempting to go back to Game/Result without active session
+        // This prevents "ghost" results/games from appearing on Back button after going home
+        if ((id === 'gameScreen' || id === 'resultScreen') && activeSetIndex === -1) {
+            showScreen('startScreen', false);
+            return;
+        }
+
+        const currentlyVisible = ALL_SCREENS.find(s =>
+            !document.getElementById(s).classList.contains('hidden'));
+        if (currentlyVisible === 'gameScreen') {
+            clearInterval(timer);
+        }
+        showScreen(id, false);
+    } else {
+        showScreen('startScreen', false);
+    }
+};
+
+
+function loadQuestion() {
+    clearInterval(timer);
+    answered = false;
+
+    const q = gameQuestions[qIndex];
+    const CAT_LABELS = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry', physics_numericals:'Physics Numericals', chemistry_numericals:'Chemistry Numericals' };
+
+    document.getElementById('qNumber').textContent    = `Q ${qIndex+1} / ${currentTotalQ}`;
+    document.getElementById('qCategory').textContent  = CAT_LABELS[q.cat] || q.cat;
+    document.getElementById('qText').innerHTML        = q.q;
+    document.getElementById('progressBar').style.width = `${((qIndex)/currentTotalQ)*100}%`;
+    document.getElementById('factBar').className      = 'fact-bar';
+    document.getElementById('btnNextGame').classList.remove('show');
+    document.getElementById('btnSkipGame').classList.remove('disabled');
+    updateBookmarkUI();
+
+    // Build options (shuffle display order)
+    const optGrid = document.getElementById('optionsGrid');
+    optGrid.innerHTML = '';
+    const letters = ['A','B','C','D'];
+
+    // Shuffle the options along with their index
+    const indices = shuffle([0,1,2,3]);
+    const corrDisplayIdx = indices.indexOf(q.ans); // display position of correct answer
+
+    indices.forEach((origIdx, dispIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.dataset.orig = origIdx;
+        btn.dataset.isCorrect = (origIdx === q.ans);
+        btn.innerHTML = `<div class="opt-letter">${letters[dispIdx]}</div> ${q.opts[origIdx]}`;
+        btn.onclick = () => handleAnswer(btn, origIdx === q.ans, q);
+        optGrid.appendChild(btn);
+    });
+
+    // Start timer with extra time bonus if earned (capped at 360s maximum)
+    const MAX_TIME_CAP = 360;
+    const maxQTime = Math.min(timePerQ + extraTimeNext, MAX_TIME_CAP);
+    timeLeft = maxQTime;
+    qStartTime = Date.now(); // Record when question was shown
+
+    updateTimer(timeLeft, maxQTime);
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimer(timeLeft, maxQTime);
+        if (timeLeft <= 3) sfx.tick();
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            handleTimeout(q);
+        }
+    }, 1000);
+}
+
+function updateTimer(t, max) {
+    const timerText = document.getElementById('timerText');
+    const ring = document.getElementById('timerRing');
+    const container = document.querySelector('.hud-timer-compact');
+
+    timerText.textContent = t;
+    const progress = (t / max) * 100;
+    
+    // SVG circular progress calculation: 2 * PI * R (R=15.9155) ≈ 100
+    ring.style.strokeDasharray = `${progress}, 100`;
+
+    // MAX REACH GAME ANIMATION CONDITION (When max capacity is 360s or time is >= 360s)
+    if (max >= 360 || t >= 360) {
+        if (container) container.classList.add('timer-max-active');
+        ring.classList.add('timer-max-ring');
+        timerText.classList.add('timer-max-text');
+        ring.style.stroke = '';
+        timerText.style.color = '';
+        return;
+    } else {
+        if (container) container.classList.remove('timer-max-active');
+        ring.classList.remove('timer-max-ring');
+        timerText.classList.remove('timer-max-text');
+    }
+
+    const ratio = t/max;
+    if (ratio > 0.5) {
+        ring.style.stroke = '#10b981';
+        timerText.style.color = '#10b981';
+    } else if (ratio > 0.25) {
+        ring.style.stroke = '#f59e0b';
+        timerText.style.color = '#f59e0b';
+    } else {
+        ring.style.stroke = '#ef4444';
+        timerText.style.color = '#ef4444';
+    }
+}
+
+function handleAnswer(btn, isCorrect, q) {
+    if (answered) return;
+    answered = true;
+    clearInterval(timer);
+
+    const pickedIdx = parseInt(btn.dataset.orig);
+    const qDuration = Math.round((Date.now() - qStartTime) / 1000);
+    userResponses.push({ qIndex: qIndex, picked: pickedIdx, isCorrect: isCorrect, duration: qDuration });
+
+    if (isCorrect) {
+        sfx.correct();
+        btn.classList.add('correct');
+        combo = Math.min(combo + 1, 5);
+        correct++;
+
+        // Extra time for next question (capped at MAX_TIME_CAP = 360s)
+        const MAX_TIME_CAP = 360;
+        const maxExtraAllowed = Math.max(0, MAX_TIME_CAP - timePerQ);
+        const baseBonus = Math.max(3, Math.round(timeLeft * combo * 0.5));
+        extraTimeNext = Math.min(extraTimeNext + baseBonus, maxExtraAllowed);
+
+        showFloatScore(`+${baseBonus}s ⏱️`, btn);
+        showFact(`✔ Correct! (+${baseBonus}s Extra Time added)\n${q.fact}`, false);
+    } else {
+        sfx.wrong();
+        btn.classList.add('wrong');
+        combo = 1;
+        wrong++;
+        // Reveal correct
+        document.querySelectorAll('.opt-btn').forEach(b => {
+            if (b.dataset.isCorrect === 'true') b.classList.add('reveal');
+        });
+        showFact(`✗ Correct: ${q.opts[q.ans]}\n${q.fact}`, true);
+    }
+
+    updateScoreDisplay();
+    updateComboDisplay();
+    document.getElementById('btnNextGame').classList.add('show');
+    document.getElementById('btnSkipGame').classList.add('disabled');
+}
+
+function handleTimeout(q) {
+    if (answered) return;
+    answered = true;
+    sfx.wrong();
+    const qDuration = timePerQ; // Timed out
+    userResponses.push({ qIndex: qIndex, picked: -1, isCorrect: false, duration: qDuration });
+    combo = 1;
+    wrong++;
+    // Reveal correct
+    document.querySelectorAll('.opt-btn').forEach(b => {
+        if (b.dataset.isCorrect === 'true') b.classList.add('reveal');
+    });
+    showFact(`⏰ Time's up! Correct: ${q.opts[q.ans]}. ${q.fact}`, true);
+    updateComboDisplay();
+    document.getElementById('btnNextGame').classList.add('show');
+    document.getElementById('btnSkipGame').classList.add('disabled');
+}
+
+
+function showMaxReachToast() {
+    const banner = document.createElement('div');
+    banner.className = 'max-reach-banner';
+    banner.innerHTML = `🔥 MAX TIME REACHED! 🔥<br><span style="font-size:12px; font-weight:800; opacity:0.95;">360s TIMER CAP UNLOCKED ⚡</span>`;
+    document.body.appendChild(banner);
+    
+    try { if (typeof spawnConfetti === 'function') spawnConfetti(); } catch(e) {}
+    try { sfx.start(); } catch(e) {}
+    
+    setTimeout(() => banner.remove(), 2200);
+}
+
+function showBonusTimeToast(sec) {
+    const toast = document.createElement('div');
+    toast.className = 'bonus-time-toast';
+    toast.innerHTML = typeof sec === 'string' ? sec : `⚡ +${sec}s Extra Time Added!`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 1800);
+}
+
+function showFact(text, isWrong) {
+    const fb = document.getElementById('factBar');
+    fb.innerHTML = text.replace(/\n/g, '<br>');
+    fb.className = 'fact-bar show' + (isWrong ? ' wrong-fact' : '');
+}
+
+function nextQuestion() {
+    qIndex++;
+    if (qIndex >= gameQuestions.length) {
+        endGame();
+    } else {
+        loadQuestion();
+    }
+}
+
+function endGame() {
+    clearInterval(timer);
+    sfx.end();
+    
+    const timeTakenSec = Math.round((Date.now() - startTime) / 1000);
+    const skippedCount = typeof skipped !== 'undefined' ? skipped : 0;
+    const un = currentTotalQ - correct - wrong - skippedCount;
+    const neetScore = (correct * 4) - (wrong * 1);
+    const acc = Math.round((correct / currentTotalQ) * 100);
+    const avgSpeed = (timeTakenSec / currentTotalQ).toFixed(1);
+
+    // Save completion to localStorage
+    if (activeSetIndex !== -1 && activeSubject !== '') {
+        const recordKey = `neet_comp_${activeSubject.toLowerCase()}_${activeSetIndex}`;
+        localStorage.setItem(recordKey, JSON.stringify({ 
+            completed: true, 
+            accuracy: acc, 
+            correct: correct, 
+            total: currentTotalQ 
+        }));
+    }
+
+    // Grade Tier
+    const CAT_LABELS = { botany:'Botany', zoology:'Zoology', physics:'Physics', chemistry:'Chemistry' };
+    let grade, gradeColor, feedbackMsg;
+    if      (acc >= 95) { grade = 'S'; gradeColor = '#fbbf24'; feedbackMsg = 'Legendary! You are NEET-ready!'; }
+    else if (acc >= 80) { grade = 'A'; gradeColor = '#10b981'; feedbackMsg = 'Excellent! Outstanding accuracy!'; }
+    else if (acc >= 65) { grade = 'B'; gradeColor = '#00e5ff'; feedbackMsg = 'Good job! Keep polishing!'; }
+    else if (acc >= 50) { grade = 'C'; gradeColor = '#f59e0b'; feedbackMsg = 'Fair attempt. More practice needed!'; }
+    else if (acc >= 30) { grade = 'D'; gradeColor = '#f97316'; feedbackMsg = 'Keep going! Review concepts.'; }
+    else                { grade = 'F'; gradeColor = '#ef4444'; feedbackMsg = "Don't give up! Start fresh!"; }
+
+    // Basic text
+    document.getElementById('resSubject').textContent = CAT_LABELS[activeSubject.toLowerCase()] || activeSubject || 'Practice';
+    document.getElementById('resScoreText').textContent = `${correct}/${currentTotalQ}`;
+    document.getElementById('statNeetScore').textContent = neetScore > 0 ? '+' + neetScore : neetScore;
+    document.getElementById('statAvgSpeed').textContent = `${avgSpeed}s`;
+    document.getElementById('statCorrectCount').textContent = correct;
+    document.getElementById('statWrongCount').textContent = wrong;
+    document.getElementById('legCorrect').textContent = correct;
+    document.getElementById('legWrong').textContent = wrong;
+    document.getElementById('legUn').textContent = skippedCount + un;
+    document.getElementById('heatmapCount').textContent = `${currentTotalQ} Questions`;
+    document.getElementById('reviewCount').textContent = `${userResponses.length} Items`;
+
+    // Grade badge
+    const gradeEl = document.getElementById('resGrade');
+    gradeEl.textContent = grade;
+    gradeEl.style.cssText = `background:linear-gradient(135deg,#fff 30%,${gradeColor} 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:42px;font-weight:950;line-height:1;`;
+
+    // Accuracy pill
+    const accPill = document.getElementById('resAccPill');
+    accPill.textContent = `${acc}% Accuracy`;
+    accPill.style.cssText = `background:${gradeColor}26;color:${gradeColor};border:1px solid ${gradeColor}40;padding:5px 16px;border-radius:20px;font-size:14px;font-weight:900;`;
+    document.getElementById('resFeedback').textContent = feedbackMsg;
+
+    // Radial ring
+    const ringFill = document.getElementById('resRingFill');
+    const ringCircum = 427.3;
+    ringFill.style.stroke = gradeColor;
+    ringFill.setAttribute('filter', `drop-shadow(0 0 6px ${gradeColor})`);
+    ringFill.style.strokeDasharray = `0 ${ringCircum}`;
+    setTimeout(() => {
+        ringFill.style.transition = 'stroke-dasharray 1.6s cubic-bezier(0.4,0,0.2,1)';
+        ringFill.style.strokeDasharray = `${(acc / 100) * ringCircum} ${ringCircum}`;
+    }, 200);
+
+    // Donut chart (circumference = 2 * PI * 48 ~= 301.6)
+    const C = 301.6;
+    const dashC = (correct / currentTotalQ) * C;
+    const dashW = (wrong / currentTotalQ) * C;
+    const dashU = C - dashC - dashW;
+    document.getElementById('donutPct').textContent = acc + '%';
+    setTimeout(() => {
+        const dc = document.getElementById('donutCorrect');
+        const dw = document.getElementById('donutWrong');
+        const du = document.getElementById('donutSkipped');
+        if (dc) { dc.setAttribute('stroke-dasharray', `${dashC} ${C}`); dc.setAttribute('stroke-dashoffset','0'); }
+        setTimeout(() => {
+            if (dw) { dw.setAttribute('stroke-dasharray', `${dashW} ${C}`); dw.setAttribute('stroke-dashoffset', `-${dashC}`); }
+            setTimeout(() => {
+                if (du) { du.setAttribute('stroke-dasharray', `${dashU} ${C}`); du.setAttribute('stroke-dashoffset', `-${dashC + dashW}`); }
+            }, 200);
+        }, 200);
+    }, 300);
+
+    // Question Heatmap
+    const heatmapGrid = document.getElementById('heatmapGrid');
+    heatmapGrid.innerHTML = '';
+    userResponses.forEach((res, i) => {
+        const cell = document.createElement('div');
+        let cls = 'hmap-cell ';
+        if (res.isCorrect) cls += 'correct';
+        else if (res.isSkipped) cls += 'skipped';
+        else if (res.picked === -1) cls += 'timeout';
+        else cls += 'wrong';
+        cell.className = cls;
+        cell.textContent = i + 1;
+        cell.title = `Q${i+1}: ${res.isCorrect?'Correct':res.isSkipped?'Skipped':'Wrong'} (${res.duration}s)`;
+        heatmapGrid.appendChild(cell);
+    });
+
+    // Time Bars
+    const timeBars = document.getElementById('timeBars');
+    timeBars.innerHTML = '';
+    const midQ = Math.ceil(userResponses.length / 2);
+    const midEl = document.getElementById('timeXMid'); if (midEl) midEl.textContent = midQ > 0 ? `Q${midQ}` : '';
+    const endEl = document.getElementById('timeXEnd'); if (endEl) endEl.textContent = `Q${userResponses.length}`;
+    userResponses.forEach((res, i) => {
+        const bar = document.createElement('div');
+        const pct = Math.min(100, Math.max(4, (res.duration / timePerQ) * 100));
+        let barClass = 'tbar ';
+        if (res.isSkipped || res.picked === -1) barClass += 'tbar-skip';
+        else if (res.duration <= timePerQ * 0.4) barClass += 'tbar-fast';
+        else if (res.duration <= timePerQ * 0.75) barClass += 'tbar-medium';
+        else barClass += 'tbar-slow';
+        bar.className = barClass;
+        bar.style.height = '0%';
+        bar.title = `Q${i+1}: ${res.duration}s`;
+        setTimeout(() => { bar.style.height = pct + '%'; bar.style.transition = 'height 0.7s cubic-bezier(0.4,0,0.2,1)'; }, 400 + i * 35);
+        timeBars.appendChild(bar);
+    });
+
+    // Smart Summary
+    const fastCorrect = userResponses.filter(r => r.isCorrect && r.duration < timePerQ * 0.4).length;
+    const subName = CAT_LABELS[activeSubject.toLowerCase()] || activeSubject || 'this subject';
+    let summary = '';
+    if (acc >= 95) {
+        summary = `<strong>Legendary Performance!</strong> You dominated <strong>${subName}</strong> with near-perfect precision. `;
+        if (fastCorrect > currentTotalQ * 0.5) summary += `Your average speed of <strong>${avgSpeed}s/Q</strong> is remarkable. You are NEET-exam ready!`;
+        else summary += `Consistency is your biggest strength. Keep maintaining this accuracy!`;
+    } else if (acc >= 80) {
+        summary = `<strong>Excellent Work!</strong> Strong command over the subject with <strong>${acc}%</strong> accuracy. `;
+        summary += `Focus on the <strong>${wrong}</strong> missed question${wrong!==1?'s':''} — review their explanations carefully.`;
+    } else if (acc >= 65) {
+        summary = `<strong>Good Performance!</strong> You are on the right track in <strong>${subName}</strong>. `;
+        summary += `Revisit concepts behind the wrong answers. Time management can be improved (current: <strong>${avgSpeed}s/Q</strong>).`;
+    } else if (acc >= 50) {
+        summary = `<strong>Keep Practicing!</strong> You scored <strong>${acc}%</strong> — more concept clarity is needed. `;
+        summary += `Read the explanation for every wrong answer. Focus on accuracy before speed.`;
+    } else {
+        summary = `<strong>Don't Give Up!</strong> This set was challenging. Revisit your <strong>${subName}</strong> textbook. `;
+        summary += `Start with the basics and attempt this set again. Consistent practice leads to improvement!`;
+    }
+    document.getElementById('smartSummary').innerHTML = summary;
+
+    // Badges
+    ['badge-perfect','badge-speed','badge-consistent','badge-first','badge-survivor','badge-noskip'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('unlocked');
+    });
+    const unlock = (id, delay) => { const el = document.getElementById(id); if (el) setTimeout(() => el.classList.add('unlocked'), delay); };
+    if (acc === 100)                              unlock('badge-perfect', 600);
+    if (parseFloat(avgSpeed) < 7 && acc > 80)    unlock('badge-speed', 800);
+    if (correct >= currentTotalQ * 0.8)          unlock('badge-consistent', 1000);
+    if (acc >= 60)                                unlock('badge-first', 1200);
+    if (timeTakenSec > 10)                        unlock('badge-survivor', 1400);
+    if (skippedCount === 0 && currentTotalQ > 0)  unlock('badge-noskip', 1600);
+
+    // Detailed Review Cards
+    const reviewList = document.getElementById('reviewList');
+    reviewList.innerHTML = '';
+    userResponses.forEach((res, i) => {
+        const q = gameQuestions[res.qIndex];
+        if (!q) return;
+        const isCorr = res.isCorrect;
+        const isSkip = res.isSkipped || (res.picked === -1 && !res.isCorrect);
+        const chipClass = isCorr ? 'chip-correct' : isSkip ? 'chip-skipped' : 'chip-wrong';
+        const chipText  = isCorr ? '&#10003; Correct' : isSkip ? '&#9193; Skipped' : '&#10005; Wrong';
+        const card = document.createElement('div');
+        card.className = 'rev-card';
+        card.style.borderColor = isCorr ? 'rgba(16,185,129,0.2)' : isSkip ? 'rgba(245,158,11,0.15)' : 'rgba(239,68,68,0.2)';
+        card.innerHTML = `
+            <div class="rev-card-header">
+                <span class="rev-qnum">Q ${i+1} &bull; ${res.duration}s</span>
+                <span class="rev-status-chip ${chipClass}">${chipText}</span>
+            </div>
+            <div class="rev-question">${q.q}</div>
+            <div class="rev-divider"></div>
+            <div class="rev-ans-block">
+                <div class="rev-ans-row cr"><span class="rev-ans-icon">&#10003;</span>&nbsp;${q.opts[q.ans]}</div>
+                ${(!isCorr && !isSkip && res.picked !== -1) ? `<div class="rev-ans-row wr"><span class="rev-ans-icon">&#10005;</span>&nbsp;${q.opts[res.picked]}</div>` : ''}
+            </div>
+            <div class="rev-exp"><strong>Concept:</strong> ${q.fact || 'Standard NEET concept application.'}</div>
+        `;
+        reviewList.appendChild(card);
+    });
+
+    // Confetti for high scores
+    if (acc >= 80) spawnConfetti();
+
+    // Back-stack fix: replace gameScreen entry with setsScreen so back returns to sets not game
+    history.replaceState({ screenId: 'setsScreen' }, '');
+    showScreen('resultScreen');
+    setTimeout(() => { const rs = document.getElementById('resultScreen'); if (rs) rs.scrollTop = 0; }, 100);
+}
+
+function spawnConfetti() {
+    const colors = ['#00e5ff','#b388ff','#10b981','#fbbf24','#f97316','#ec4899'];
+    for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = 'confetti-piece';
+            p.style.cssText = `
+                left:${Math.random()*100}%;top:-10px;
+                background:${colors[Math.floor(Math.random()*colors.length)]};
+                transform:rotate(${Math.random()*360}deg);
+                animation-duration:${1.2+Math.random()*1.8}s;
+                width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+                border-radius:${Math.random()>0.5?'50%':'2px'};
+            `;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 3200);
+        }, i * 50);
+    }
+}
+
+function retryQuiz() {
+    if (activeSetIndex === -1 && activeSubject === '') {
+        startGame();
+    } else {
+        // Find the set object from currentSetData
+        if (currentSetData && currentSetData.quiz_sets[activeSetIndex]) {
+            startSetGame(currentSetData.quiz_sets[activeSetIndex], activeSetIndex);
+        } else {
+            showStart();
+        }
+    }
+}
+
+function showSets() {
+    showScreen('setsScreen');
+}
+
+function showStart() {
+    clearInterval(timer);
+    // Deep Reset: Clear all quiz session data to prevent navigation bugs
+    activeSetIndex = -1;
+    activeSubject = '';
+    gameQuestions = [];
+    qIndex = 0;
+    answered = false;
+    userResponses = [];
+    score = 0;
+    combo = 1;
+    correct = 0;
+    wrong = 0;
+    skipped = 0;
+    
+    showScreen('startScreen');
+}
+
+function updateScoreDisplay() {
+    document.getElementById('scoreDisplay').textContent = score;
+}
+
+function updateComboDisplay() {
+    const el = document.getElementById('comboDisplay');
+    el.textContent = `x${combo}`;
+    el.classList.remove('hot');
+    if (combo >= 3) {
+        void el.offsetWidth; // reflow for animation
+        el.classList.add('hot');
+        if (combo === 3 || combo === 5) sfx.combo();
+    }
+}
+
+function showMockTests() {
+    showScreen('mockTestListScreen');
+    const list = document.getElementById('mockTestSetsList');
+    list.scrollTop = 0;
+    list.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8; font-size:13px">✨ Loading CBT Mock Tests...</div>';
+
+    let files = [];
+    try {
+        if (window.Android && typeof Android.getMockTests === 'function') {
+            const raw = Android.getMockTests();
+            files = JSON.parse(raw);
+        } else {
+            files = ['mock_test_1.html', 'mock_test-2.html', 'mock_test_3_premium.html'];
+        }
+    } catch(e) {
+        files = ['mock_test_1.html', 'mock_test-2.html', 'mock_test_3_premium.html'];
+    }
+
+    // Sort files naturally by test number
+    files.sort((a, b) => {
+        const numA = parseInt((a.match(/\d+/) || [0])[0]);
+        const numB = parseInt((b.match(/\d+/) || [0])[0]);
+        return numA - numB;
+    });
+
+    const colorPalettes = [
+        { grad: 'linear-gradient(135deg, #00c6ff, #0072ff)', glow: 'rgba(0, 198, 255, 0.4)', iconBg: 'rgba(0, 198, 255, 0.2)', icon: '📊', badge: 'FULL CBT MOCK' },
+        { grad: 'linear-gradient(135deg, #a855f7, #6366f1)', glow: 'rgba(168, 85, 247, 0.4)', iconBg: 'rgba(168, 85, 247, 0.2)', icon: '⚡', badge: 'HIGH YIELD' },
+        { grad: 'linear-gradient(135deg, #10b981, #059669)', glow: 'rgba(16, 185, 129, 0.4)', iconBg: 'rgba(16, 185, 129, 0.2)', icon: '🎯', badge: 'NEET PATTERN' },
+        { grad: 'linear-gradient(135deg, #f43f5e, #e11d48)', glow: 'rgba(244, 63, 94, 0.4)', iconBg: 'rgba(244, 63, 94, 0.2)', icon: '🔥', badge: 'SCORE BOOSTER' },
+        { grad: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245, 158, 11, 0.4)', iconBg: 'rgba(245, 158, 11, 0.2)', icon: '🏆', badge: 'RANK BUILDER' }
+    ];
+
+    list.innerHTML = `
+        <div class="list-banner">
+            <div class="list-banner-icon">🎯</div>
+            <div class="list-banner-text">
+                <h3>Full NEET CBT Mock Tests</h3>
+                <p>3 Hour 20 Min Real Exam Simulation • 720 Marks</p>
+            </div>
+        </div>
+    `;
+
+    if (files.length === 0) {
+        list.innerHTML += '<div style="text-align:center; padding:40px; color:#94a3b8">No HTML files found in mock_test folder.</div>';
+    } else {
+        files.forEach((file, index) => {
+            let cleanTitle = file.replace('.html', '').replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
+            const matchNum = file.match(/\d+/);
+            if (matchNum) {
+                cleanTitle = `NEET CBT MOCK TEST ${matchNum[0]}`;
+                if (file.toLowerCase().includes('premium')) cleanTitle += ' (PREMIUM)';
+            }
+
+            const palette = colorPalettes[index % colorPalettes.length];
+            const card = document.createElement('div');
+            card.className = 'colorful-list-card';
+            card.style.animationDelay = `${index * 0.06}s`;
+            card.style.setProperty('--glow-color', palette.glow);
+            card.style.setProperty('--border-glow', palette.glow);
+            card.onclick = () => loadMockTest(file);
+
+            card.innerHTML = `
+                <div class="colorful-card-header">
+                    <div class="colorful-card-icon" style="background:${palette.iconBg}">
+                        ${palette.icon}
+                    </div>
+                    <span class="colorful-card-badge" style="background:${palette.iconBg}; color:#fff; border-color:${palette.glow}">
+                        ${palette.badge}
+                    </span>
+                </div>
+                <div>
+                    <div class="colorful-card-title">${cleanTitle}</div>
+                    <div class="colorful-card-desc">Complete 180 Questions • Physics, Chemistry, Botany & Zoology</div>
+                </div>
+                <div class="colorful-card-footer">
+                    <div class="colorful-card-tag">
+                        <span>⏱️ 200 Mins</span> • <span>720 Marks</span>
+                    </div>
+                    <button class="btn-colorful-action" style="background:${palette.grad}">
+                        <span>ENTER EXAM</span> ➔
+                    </button>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+}
+
+function loadMockTest(file) {
+    window.location.href = 'mock_test/' + file;
+}
+
+function showPYQs() {
+    showScreen('pyqListScreen');
+    const list = document.getElementById('pyqSetsList');
+    list.scrollTop = 0;
+    list.innerHTML = '<div style="text-align:center; padding:30px; color:#94a3b8; font-size:13px">✨ Loading Original PYQ Papers...</div>';
+
+    let files = [];
+    try {
+        if (window.Android && typeof Android.getPYQs === 'function') {
+            const raw = Android.getPYQs();
+            files = JSON.parse(raw);
+        } else {
+            mode = "Preview";
+            files = ['neet_2024_paper.html', 'neet_2023_paper.html', 'neet_2022_paper.html'];
+        }
+    } catch(e) {
+        files = ['neet_2024_paper.html', 'neet_2023_paper.html', 'neet_2022_paper.html'];
+    }
+
+    const pyqPalettes = [
+        { grad: 'linear-gradient(135deg, #a855f7, #7c3aed)', glow: 'rgba(168, 85, 247, 0.4)', iconBg: 'rgba(168, 85, 247, 0.2)', icon: '📜', badge: 'OFFICIAL PYQ' },
+        { grad: 'linear-gradient(135deg, #ec4899, #d946ef)', glow: 'rgba(236, 72, 153, 0.4)', iconBg: 'rgba(236, 72, 153, 0.2)', icon: '📝', badge: 'SOLVED PAPER' },
+        { grad: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', glow: 'rgba(59, 130, 246, 0.4)', iconBg: 'rgba(59, 130, 246, 0.2)', icon: '📖', badge: 'PREVIOUS YEAR' },
+        { grad: 'linear-gradient(135deg, #10b981, #047857)', glow: 'rgba(16, 185, 129, 0.4)', iconBg: 'rgba(16, 185, 129, 0.2)', icon: '🏅', badge: 'AUTHENTIC' },
+        { grad: 'linear-gradient(135deg, #f59e0b, #b45309)', glow: 'rgba(245, 158, 11, 0.4)', iconBg: 'rgba(245, 158, 11, 0.2)', icon: '⭐', badge: 'NEET ARCHIVE' }
+    ];
+
+    list.innerHTML = `
+        <div class="list-banner">
+            <div class="list-banner-icon">📜</div>
+            <div class="list-banner-text">
+                <h3>Original NEET PYQ Papers</h3>
+                <p>Authentic Past Exam Papers with Complete Explanations</p>
+            </div>
+        </div>
+    `;
+
+    if (files.length === 0) {
+        list.innerHTML += '<div style="text-align:center; padding:40px; color:#94a3b8">No PYQ files found in pyqs folder.</div>';
+    } else {
+        files.forEach((file, index) => {
+            const title = file.replace('.html', '').replace(/_/g, ' ').toUpperCase();
+            const palette = pyqPalettes[index % pyqPalettes.length];
+            const card = document.createElement('div');
+            card.className = 'colorful-list-card';
+            card.style.animationDelay = `${index * 0.08}s`;
+            card.style.setProperty('--glow-color', palette.glow);
+            card.style.setProperty('--border-glow', palette.glow);
+            card.onclick = () => loadPYQ(file);
+
+            card.innerHTML = `
+                <div class="colorful-card-header">
+                    <div class="colorful-card-icon" style="background:${palette.iconBg}">
+                        ${palette.icon}
+                    </div>
+                    <span class="colorful-card-badge" style="background:${palette.iconBg}; color:#fff; border-color:${palette.glow}">
+                        ${palette.badge}
+                    </span>
+                </div>
+                <div>
+                    <div class="colorful-card-title">${title}</div>
+                    <div class="colorful-card-desc">Official NTA NEET Question Paper with Detailed Step-by-Step Solutions</div>
+                </div>
+                <div class="colorful-card-footer">
+                    <div class="colorful-card-tag">
+                        <span>📚 Full Paper</span> • <span>720 Marks</span>
+                    </div>
+                    <button class="btn-colorful-action" style="background:${palette.grad}">
+                        <span>OPEN PAPER</span> ➔
+                    </button>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+}
+
+function loadPYQ(file) {
+    window.location.href = 'pyqs/' + file;
+}
+
+function checkUpdates() {
+    const pkg = appConfig.packageId; 
+    const url = `market://details?id=${pkg}`;
+    const fallbackUrl = `https://play.google.com/store/apps/details?id=${pkg}`;
+    
+    showToast("Redirecting to Play Store...");
+    setTimeout(() => {
+        window.open(url, '_blank') || window.open(fallbackUrl, '_blank');
+    }, 1000);
+}
+
+function rateApp() {
+    // Replace with your actual Play Store package name
+    const pkg = "com.neet.practice"; 
+    window.open(`market://details?id=${pkg}`, '_blank') || window.open(`https://play.google.com/store/apps/details?id=${pkg}`, '_blank');
+}
+
+function showToast(msg) {
+    const t = document.createElement('div');
+    t.style = `
+        position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+        background: rgba(0,0,0,0.85); color: white; padding: 12px 24px;
+        border-radius: 50px; font-size: 13px; font-weight: 700; z-index: 10000;
+        border: 1px solid var(--neon-blue); box-shadow: 0 0 20px rgba(0,229,255,0.2);
+        animation: toast-in 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    `;
+    t.innerHTML = msg;
+    document.body.appendChild(t);
+    setTimeout(() => {
+        t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)';
+        t.style.transition = '0.4s';
+        setTimeout(() => t.remove(), 400);
+    }, 3000);
+}
+
+// Add animation for toast
+const style = document.createElement('style');
+style.innerHTML = `@keyframes toast-in { from { opacity: 0; transform: translateX(-50%) translateY(40px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }`;
+document.head.appendChild(style);
+
+function moreApps() {
+    window.open(`https://play.google.com/store/apps/developer?id=${appConfig.devId}`, '_blank');
+}
+
+function shareApp() {
+    const url = `https://play.google.com/store/apps/details?id=${appConfig.packageId}`;
+    const fullText = appConfig.shareText + " " + url;
+    
+    if (window.Android && typeof Android.shareApp === 'function') {
+        Android.shareApp(fullText);
+    } else if (navigator.share) {
+        navigator.share({
+            title: 'NEET Practice MCQ',
+            text: appConfig.shareText,
+            url: url
+        }).catch(console.error);
+    } else {
+        const shareUrl = `whatsapp://send?text=${encodeURIComponent(fullText)}`;
+        window.open(shareUrl, '_blank') || showToast("Sharing not supported.");
+    }
+}
+
+function rateApp() {
+    const pkg = appConfig.packageId; 
+    window.open(`market://details?id=${pkg}`, '_blank') || window.open(`https://play.google.com/store/apps/details?id=${pkg}`, '_blank');
+}
+
+function openPrivacy() {
+    window.open(appConfig.privacyUrl, '_blank');
+}
+
+function showFloatScore(text, sourceEl) {
+    const rect = sourceEl.getBoundingClientRect();
+    const fs = document.createElement('div');
+    fs.className = 'float-score';
+    fs.textContent = text;
+    fs.style.left = rect.left + rect.width/2 - 30 + 'px';
+    fs.style.top  = rect.top + 'px';
+    fs.style.color = combo >= 4 ? '#f59e0b' : '#10b981';
+    document.body.appendChild(fs);
+    setTimeout(() => fs.remove(), 900);
+}
+</script>
+
+</body>
+</html>

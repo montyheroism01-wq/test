@@ -1,24 +1,26 @@
 @echo off
+title STUDIEDX GITHUB BULK UPLOADER
+color 0A
 echo ========================================================
-echo   STUDIEDX - BULK UPLOAD TO GITHUB
+echo   STUDIEDX - BULK UPLOADING PRACTICE SETS TO GITHUB
 echo ========================================================
 echo.
-
 cd /d "C:\Users\123\Desktop\New folder (2)"
 
-echo 1. Adding all 825 uploaded practice set files...
-git add assets/upload/ assets/index.html assets/Physics.json assets/Chemistry.json
+echo 1. Adding all files to git staging...
+"C:\Program Files\Git\cmd\git.exe" add assets/ upload/ index.html Physics.json Chemistry.json push_to_github.bat
 
 echo.
-echo 2. Creating commit...
-git commit -m "Bulk upload 825 practice sets across Botany, Zoology, Physics, and Chemistry"
+echo 2. Committing changes...
+"C:\Program Files\Git\cmd\git.exe" commit -m "Bulk upload practice sets"
 
 echo.
-echo 3. Pushing to GitHub...
-git push
+echo 3. Pushing directly to main branch...
+"C:\Program Files\Git\cmd\git.exe" push origin master:main
+"C:\Program Files\Git\cmd\git.exe" push origin master
 
 echo.
 echo ========================================================
-echo   SUCCESS! All 825 practice sets pushed to GitHub!
+echo   SUCCESS! Pushed directly to main branch on GitHub!
 echo ========================================================
 pause
