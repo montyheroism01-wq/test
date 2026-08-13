@@ -5421,40 +5421,24 @@ function fetchSets(sub, unit = null, targetSubchapter = null) {
   const list = document.getElementById('setsList');
   if (list) list.innerHTML = `<div class="loading-text">Loading ${targetSubchapter || (unit ? unit.u : (SUB_LABELS[sub] || sub))} practice sets...</div>`;
   
-  const tryPaths = [
-    fileName,
-    'assets/' + fileName,
-    'https://raw.githubusercontent.com/montyheroism01-wq/test/main/assets/' + fileName,
-    'https://raw.githubusercontent.com/montyheroism01-wq/test/main/' + fileName
-  ];
-  
-  function tryFetch(idx) {
-    if (idx >= tryPaths.length) {
-      if (list) list.innerHTML = `<div class="loading-text" style="color:var(--accent-danger);">Failed to load practice sets. Please check internet connection.</div>`;
-      return;
-    }
-    
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', tryPaths[idx] + '?v=' + Date.now(), true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200 || (xhr.status === 0 && xhr.responseText)) {
-          try {
-            const data = JSON.parse(xhr.responseText);
-            window.curSubjectData = data;
-            renderSets(data, unit, targetSubchapter);
-          } catch(e) {
-            tryFetch(idx + 1);
-          }
-        } else {
-          tryFetch(idx + 1);
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', fileName + '?v=' + Date.now(), true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200 || xhr.status === 0) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          window.curSubjectData = data;
+          renderSets(data, unit, targetSubchapter);
+        } catch(e) {
+          if (list) list.innerHTML = `<div class="loading-text" style="color:var(--accent-danger);">Error parsing practice sets data.</div>`;
         }
+      } else {
+        if (list) list.innerHTML = `<div class="loading-text" style="color:var(--accent-danger);">Failed to load practice sets. Please check connection.</div>`;
       }
-    };
-    xhr.send();
-  }
-  
-  tryFetch(0);
+    }
+  };
+  xhr.send();
 }
 
 

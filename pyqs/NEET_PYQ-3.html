@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEET Mock Test-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* DARK THEME (Cyber) */
+            --bg: #030712;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --card: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --marked: #8b5cf6;
+            --border: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00e5ff;
+            --neon-purple: #b388ff;
+        }
+
+        body.light {
+            /* LIGHT THEME (Professional) */
+            --bg: #f8fafc;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --neon-blue: #2563eb;
+            --neon-purple: #7c3aed;
+            --marked: #7c3aed;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); 
+            height: 100vh; height: 100dvh; display: flex; flex-direction: column; 
+            overflow: hidden; line-height: 1.5; 
+            transition: background 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 8px 16px; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 100; flex-shrink: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        body.light header { background: #fff; color: #000; border-bottom: 1.5px solid var(--border); }
+
+        .btn-theme { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 4px 8px; border-radius: 8px; color: #fff; font-size: 11px; cursor: pointer; }
+        body.light .btn-theme { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .btn-back { background: rgba(255,255,255,0.05); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: 1px solid var(--card-border); color: white; }
+        body.light .btn-back { background: #f1f5f9; color: #000; border-color: #cbd5e1; }
+        
+        .title { 
+            font-size: 14px; font-weight: 800; 
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        body.light .title { background: none; -webkit-text-fill-color: var(--primary); color: var(--primary); }
+        
+        .timer-box { 
+            background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 10px; 
+            font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--neon-blue);
+        }
+        body.light .timer-box { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; box-shadow: none; }
+
+        /* MAIN COLUMNAR LAYOUT */
+        main { 
+            flex: 1; display: flex; flex-direction: column; overflow: hidden; 
+            padding: 8px; gap: 8px; max-width: 600px; margin: 0 auto; width: 100%;
+        }
+
+        /* Progress Card - THIN */
+        .progress-card { 
+            background: var(--card); backdrop-filter: blur(10px);
+            padding: 8px 12px; border-radius: 12px; border: 1px solid var(--card-border); flex-shrink:0; 
+        }
+        .progress-container { 
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1); 
+            border-radius: 10px; margin: 4px 0; overflow: hidden; 
+        }
+        body.light .progress-container { background: #cbd5e1; }
+        .progress-fill { 
+            height: 100%; width: 0%; 
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: width 0.4s ease-out;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Question Section - Scrollable */
+        .q-section {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .q-card { 
+            background: var(--card); border-radius: 16px; padding: 16px; 
+            border: 1px solid var(--card-border); 
+            animation: fadeIn 0.4s ease-out;
+        }
+        body.light .q-card { box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .q-meta { font-size: 11px; font-weight: 800; color: var(--neon-blue); margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .q-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; }
+        
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .opt-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: all 0.2s;
+            text-align: left; font-size: 14px; font-weight: 500; color: var(--text-main);
+        }
+        body.light .opt-btn { background: #fff; }
+        .opt-btn.selected { 
+            border-color: var(--primary); background: rgba(99, 102, 241, 0.1); 
+            color: var(--text-main);
+        }
+        body.light .opt-btn.selected { background: #eff6ff; }
+        
+        .opt-letter { 
+            width: 24px; height: 24px; min-width: 24px; border-radius: 6px; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 12px; border: 1px solid var(--card-border);
+        }
+        body.light .opt-letter { background: #f1f5f9; }
+
+        /* PALETTE - COMPACT */
+        .palette-card { 
+            background: var(--card); border-radius: 16px; padding: 10px; 
+            border: 1px solid var(--card-border); flex-shrink: 0; 
+        }
+        .palette-head { font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; display: flex; justify-content: space-between; letter-spacing: 0.5px; }
+        
+        .sub-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 10px; scrollbar-width: none; }
+        .s-tab { 
+            white-space: nowrap; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); cursor: pointer; border: 1px solid transparent;
+        }
+        body.light .s-tab { background: #f1f5f9; }
+        .s-tab.active { background: rgba(99, 102, 241, 0.1); color: var(--neon-blue); border-color: var(--primary); }
+
+        .palette-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+        .p-btn { 
+            min-width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+            cursor: pointer; background: rgba(255,255,255,0.03); color: var(--text-sub);
+            transition: all 0.2s;
+        }
+        body.light .p-btn { background: #fff; border-color: #cbd5e1; }
+        
+        .p-btn.active { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0,229,255,0.05) !important; z-index: 10; transform: scale(1.1); }
+        .p-btn.answered { background: var(--success) !important; border-color: var(--success) !important; color: white !important; }
+        .p-btn.not-answered { background: var(--danger) !important; border-color: var(--danger) !important; color: white !important; }
+        .p-btn.marked { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; }
+        .p-btn.marked-answered { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; position: relative; }
+        .p-btn.marked-answered::after { 
+            content: '✓'; position: absolute; bottom: -2px; right: -2px; font-size: 8px; 
+            background: var(--success); width: 12px; height: 12px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--bg); 
+        }
+
+        /* LEGEND - Dots */
+        .legend { display: flex; justify-content: space-between; gap: 4px; border-top: 1px solid var(--card-border); padding-top: 8px; margin-top: 4px; }
+        .leg-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--text-sub); }
+        .leg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); }
+        body.light .leg-dot { border-color: rgba(0,0,0,0.1); }
+
+        /* ACTIONS FOOTER - COMPACT */
+        .actions {
+            background: var(--card); padding: 8px 16px; border-top: 1px solid var(--card-border);
+            display: flex; gap: 8px; flex-shrink: 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        .btn { flex: 1; padding: 10px 4px; border-radius: 12px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; }
+        .btn-outline { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--card-border); }
+        body.light .btn-outline { background: #fff; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+
+        /* RESULT VIEW stays full screen */
+        #resultView {
+            position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto;
+            padding: 20px 16px; display: none;
+        }
+        .res-hero { 
+            background: var(--card); border-radius: 24px; padding: 30px 20px; text-align: center; 
+            border: 1px solid var(--card-border); margin-bottom: 20px; 
+        }
+        body.light .res-hero { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+        .res-score { font-size: 48px; font-weight: 950; color: var(--text-main); }
+        .res-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+        .rs-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px; border: 1px solid var(--card-border); }
+        body.light .rs-item { background: #fff; }
+
+        .rs-val { font-size: 18px; font-weight: 800; display: block; color: var(--text-main); }
+        .rs-lbl { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-top: 2px; }
+
+        .rev-item { 
+            background: rgba(255,255,255,0.03); border-radius: 18px; padding: 16px; 
+            border: 1px solid var(--card-border); margin-bottom: 12px; 
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        body.light .rev-item { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+
+        .rev-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-main); line-height: 1.5; }
+        .rev-ans { padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 10px; border: 1px solid transparent; }
+        .rev-ans.correct { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.2); }
+        body.light .rev-ans.correct { background: #ecfdf5; color: #065f46; }
+
+        .rev-ans.wrong { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.2); }
+        body.light .rev-ans.wrong { background: #fef2f2; color: #991b1b; }
+
+        .rev-exp { font-size: 13px; color: var(--text-sub); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); }
+        body.light .rev-exp { background: #f8fafc; }
+
+        .hidden { display: none !important; }
+    </style>
+
+    <script>
+    // Auto theme sync from main app
+    (function(){
+      var th = localStorage.getItem('_th');
+      if(th === 'light'){
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+        // try data-theme too
+        document.body.dataset.theme = 'light';
+      } else {
+        document.body.dataset.theme = 'dark';
+      }
+    })();
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <button class="btn-back" onclick="handleExit()">✕</button>
+        <div class="title">NEET PYQ Paper</div>
+    </div>
+    <div class="timer-box">
+        <span id="timerText">200:00</span>
+    </div>
+</header>
+
+<main id="examView">
+    <!-- Progress Section -->
+    <div class="progress-card" style="display:flex; align-items:center; gap:12px">
+        <div style="flex:1">
+            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--text-sub); margin-bottom:2px">
+                <span>PROGRESS</span>
+                <span id="progressText">0/180</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        <button class="btn-theme" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
+    </div>
+
+    <!-- Scrollable Question Area -->
+    <div class="q-section">
+        <div class="q-card">
+            <div class="q-meta">
+                <span id="qSubject" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:10px">Subject</span>
+                <span id="qCounter" style="color:var(--text-sub)">Question 1/180</span>
+            </div>
+            <div class="q-text" id="qText">Loading question...</div>
+            <div class="options-list" id="optionsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Fixed Status Area -->
+    <div class="palette-card">
+        <div class="palette-head">
+            Quick Palette
+            <span style="font-size:10px; color:var(--primary)">Slide to browse </span>
+        </div>
+        
+        <div class="sub-tabs">
+            <div class="s-tab active" onclick="jumpToSubject('Botany')">Botany</div>
+            <div class="s-tab" onclick="jumpToSubject('Zoology')">Zoology</div>
+            <div class="s-tab" onclick="jumpToSubject('Physics')">Physics</div>
+            <div class="s-tab" onclick="jumpToSubject('Chemistry')">Chemistry</div>
+        </div>
+
+        <div class="palette-scroll" id="paletteGrid"></div>
+        
+        <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,0.03); border:1px solid #555"></div> Not Visited</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div> Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--danger)"></div> Not Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--marked)"></div> Marked</div>
+        </div>
+    </div>
+</main>
+
+<footer class="actions" id="actionButtons">
+    <button class="btn btn-outline" style="flex:0.6" onclick="handleClear()">Clear</button>
+    <button class="btn btn-warning" onclick="handleMark()">Mark</button>
+    <button class="btn btn-primary" onclick="handleNext()">Save & Next</button>
+    <button class="btn btn-outline" id="btnSubmit" style="background:#1e293b; color:white; flex:0.4; display:none;" onclick="confirmSubmit()">Submit</button>
+</footer>
+
+<!-- RESULT VIEW -->
+<div id="resultView">
+    <div class="res-hero">
+        <div class="res-score" id="resScore">00</div>
+        <div class="res-lbl">Final NEET Score</div>
+        <div class="res-stats">
+            <div class="rs-item"><span class="rs-val" style="color:var(--success)" id="resCorrect">0</span><span class="rs-lbl">Correct</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--danger)" id="resWrong">0</span><span class="rs-lbl">Wrong</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--text-sub)" id="resSkipped">0</span><span class="rs-lbl">Skipped</span></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px; width:100%" onclick="window.close() || alert('Please use back button to exit.')">Close Result</button>
+    </div>
+    
+    <div id="reviewContainer">
+        <h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+    </div>
+</div>
+
+<script>
+    let QUESTIONS = [];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let status = new Array(QUESTIONS.length).fill('not-visited');
+            answers = new Array(QUESTIONS.length).fill(null); 
+    let timeLeft = 200 * 60; // 3 Hours
+    let timerInterval;
+
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        const isLight = document.body.classList.contains('light');
+        document.getElementById('themeToggleBtn').textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        localStorage.setItem('_th', isLight ? 'light' : 'dark');
+    }
+
+    async function init() {
+        const savedTheme = localStorage.getItem('_th');
+        if (savedTheme === 'light') toggleTheme();
+        
+        // Show loading screen
+        const examView = document.getElementById('examView');
+        const origHtml = examView.innerHTML;
+        examView.innerHTML = '<div style="text-align:center; padding:40px; font-weight:600; color:var(--neon-blue); font-size:18px;">Loading 200 Real NEET Questions...<br>Please wait...</div>';
+
+        try {
+            const questions = {
+
+botany: [
+{ id:'E1', year:'2023', q:'Which of the following represents the correct equation for Verhulst-Pearl logistic growth?', opts:['dN/dt = rN(K-N)/K','dN/dt = rN','dN/dt = rN(N-K)/N','dN/dt = K(N-r)/r'], ans:0, sol:'The logistic growth equation is dN/dt = rN[(K-N)/K], where N is population density at time t, r is intrinsic rate of natural increase, and K is the carrying capacity.' },
+{ id:'E2', year:'2022', q:'According to Allen\'s Rule, mammals from colder climates generally have:', opts:['Longer ears and longer limbs','Shorter ears and shorter limbs','Longer ears and shorter limbs','Shorter ears and longer limbs'], ans:1, sol:'Allen\'s rule states that mammals from colder climates generally have shorter ears and limbs to minimize heat loss from their bodies.' },
+{ id:'E3', year:'NEET Mock', q:'Match the Population Interactions: (I) Mutualism (II) Commensalism (III) Amensalism -> (P) One is harmed, other is unaffected (Q) Both benefit (R) One benefits, other is unaffected', opts:['I-Q, II-R, III-P','I-P, II-Q, III-R','I-Q, II-P, III-R','I-R, II-Q, III-P'], ans:0, sol:'In Mutualism (+,+), both species benefit. In Commensalism (+,0), one benefits and the other is unaffected. In Amensalism (-,0), one is harmed and the other is unaffected.' },
+{ id:'E4', year:'2021', q:'The principle of competitive exclusion was stated by:', opts:['MacArthur','Verhulst and Pearl','G.F. Gause','Charles Darwin'], ans:2, sol:'Gause\'s competitive exclusion principle states that two closely related species competing for the same limiting resources cannot co-exist indefinitely.' },
+{ id:'E5', year:'2020', q:'If \'+ \' sign is assigned to beneficial interaction, \'- \' sign to detrimental and \'0\' sign to neutral interaction, then the population interaction represented by \'+ \' \'- \' refers to:', opts:['Commensalism','Parasitism','Amensalism','Mutualism'], ans:1, sol:'The \'+ \' and \'- \' interaction represents Parasitism or Predation, where one species (parasite/predator) benefits and the other (host/prey) is harmed.' },
+{ id:'E6', year:'NEET Mock', q:'Assertion (A): Altitude sickness is experienced at high altitudes. Reason (R): Due to low atmospheric pressure at high altitudes, the body does not get enough oxygen.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'At high altitudes (>3500m), low atmospheric pressure leads to a decrease in oxygen availability, causing symptoms like nausea and fatigue (altitude sickness).' },
+{ id:'E7', year:'2019', q:'The thick layer of fat called blubber is found in:', opts:['Desert lizards','Polar seals','Kangaroo rats','Camels'], ans:1, sol:'In polar seas, aquatic mammals like seals have a thick layer of fat (blubber) below their skin that acts as an insulator and reduces loss of body heat.' },
+{ id:'E8', year:'2023', q:'Which of the following is an example of an ectoparasite?', opts:['Plasmodium in human RBCs','Tapeworm in human intestine','Cuscuta on hedge plants','Liver fluke in sheep'], ans:2, sol:'Cuscuta, a parasitic plant that is commonly found growing on hedge plants, is an ectoparasite. It has lost its chlorophyll and leaves during evolution.' },
+{ id:'E9', year:'2022', q:'Statement I: Predators maintain species diversity in a community. Statement II: Predators reduce the intensity of competition among competing prey species.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Predators act as "prudent" managers of the ecosystem. By keeping the prey population under control, they reduce competition among prey species, maintaining diversity (e.g., Pisaster starfish).' },
+{ id:'E10', year:'2021', q:'Mycorrhizae are an example of:', opts:['Amensalism','Antibiosis','Mutualism','Fungistasis'], ans:2, sol:'Mycorrhizae show mutualism between fungi and roots of higher plants. The fungi help the plant absorb nutrients, while the plant provides carbohydrates.' },
+{ id:'E11', year:'NEET Mock', q:'The formula for exponential population growth is:', opts:['dN/dt = rN','dt/dN = rN','dN/rN = dt','r/N = dN/dt'], ans:0, sol:'When resources in the habitat are unlimited, each species has the ability to realize fully its innate potential to grow in number, following the exponential equation dN/dt = rN.' },
+{ id:'E12', year:'2020', q:'A population with a broader base in its age pyramid indicates:', opts:['Declining population','Stable population','Expanding population','Zero population growth'], ans:2, sol:'An age pyramid with a broad base implies a high percentage of pre-reproductive individuals, which means the population is growing or expanding.' },
+{ id:'E13', year:'2019', q:'Some organisms are able to maintain homeostasis by physiological means which ensures constant body temperature and constant osmotic concentration. They are called:', opts:['Conformers','Regulators','Partial regulators','Migrants'], ans:1, sol:'Regulators (e.g., all birds and mammals) maintain a constant internal environment (homeostasis) through thermoregulation and osmoregulation.' },
+{ id:'E14', year:'2023', q:'The orchid Epiphyte growing on a mango tree branch is an example of:', opts:['Parasitism','Commensalism','Mutualism','Amensalism'], ans:1, sol:'The orchid gets a place to grow and access to sunlight (+), while the mango tree is neither harmed nor benefited (0). This is commensalism.' },
+{ id:'E15', year:'2022', q:'Under unfavorable conditions, many zooplankton species in lakes and ponds are known to enter a stage of suspended development called:', opts:['Hibernation','Aestivation','Diapause','Dormancy'], ans:2, sol:'Diapause is a stage of suspended development seen in zooplanktons to avoid unfavorable environmental conditions.' },
+{ id:'E16', year:'2021', q:'The rate of biomass production by consumers is called:', opts:['Gross primary productivity','Net primary productivity','Secondary productivity','Net community productivity'], ans:2, sol:'Secondary productivity is defined as the rate of formation of new organic matter by consumers (herbivores/carnivores).' },
+{ id:'E17', year:'NEET Mock', q:'Match the steps of Decomposition: (I) Fragmentation (II) Leaching (III) Catabolism -> (P) Bacterial/fungal enzymes degrade detritus (Q) Water-soluble nutrients go down into soil (R) Detritivores break down detritus', opts:['I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-P, III-Q'], ans:0, sol:'Fragmentation: Earthworms break down detritus. Leaching: Soluble inorganic nutrients seep into the soil. Catabolism: Enzymes degrade complex organics into simple inorganics.' },
+{ id:'E18', year:'2020', q:'Which of the following ecological pyramids is generally inverted?', opts:['Pyramid of energy','Pyramid of numbers in a grassland','Pyramid of biomass in a sea','Pyramid of numbers in a forest'], ans:2, sol:'The pyramid of biomass in sea/aquatic ecosystems is generally inverted because the biomass of fishes (consumers) far exceeds that of phytoplankton (producers).' },
+{ id:'E19', year:'2019', q:'About how much of the photosynthetically active radiation (PAR) is captured by plants?', opts:['1-5%','2-10%','10-20%','50%'], ans:1, sol:'Of the incident solar radiation, less than 50% is PAR. Plants capture only 2-10% of this PAR, which sustains the entire living world.' },
+{ id:'E20', year:'2023', q:'Statement I: The flow of energy in an ecosystem is always unidirectional. Statement II: The 10% law of energy transfer was given by Lindeman.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Energy flows unidirectionally from sun to producers to consumers. Lindeman gave the 10% law, stating only 10% of energy is transferred to the next trophic level.' },
+{ id:'E21', year:'2022', q:'The amount of nutrients, such as carbon, nitrogen, phosphorus, and calcium present in the soil at any given time is referred to as:', opts:['Standing crop','Standing state','Climax community','Primary productivity'], ans:1, sol:'Standing state refers to the total amount of inorganic nutrients present in the soil at a given time. Standing crop refers to the mass of living material (biomass).' },
+{ id:'E22', year:'2021', q:'Which of the following is considered a gaseous cycle?', opts:['Phosphorus cycle','Sulphur cycle','Carbon cycle','Both Phosphorus and Sulphur'], ans:2, sol:'Nutrient cycles are of two types: Gaseous (e.g., Nitrogen, Carbon) where the reservoir is the atmosphere/ocean, and Sedimentary (e.g., Phosphorus, Sulphur) where the reservoir is the Earth\'s crust.' },
+{ id:'E23', year:'NEET Mock', q:'Assertion (A): Humus is highly resistant to microbial action and undergoes decomposition at an extremely slow rate. Reason (R): Humus is dark-colored, amorphous, and colloidal in nature.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:1, sol:'Both statements are true. Humus is colloidal and dark-colored, and its resistance to microbial action makes its decomposition very slow. However, R is not the direct reason for A.' },
+{ id:'E24', year:'2020', q:'The pioneer species in primary succession on a bare rock are usually:', opts:['Mosses','Lichens','Ferns','Annual grasses'], ans:1, sol:'Lichens are the pioneer colonizers on bare rock. They secrete acids to dissolve rock, helping in weathering and soil formation, making way for bryophytes (mosses).' },
+{ id:'E25', year:'2019', q:'Gross primary productivity (GPP) minus respiration losses (R) is equal to:', opts:['Net primary productivity (NPP)','Secondary productivity','Net community productivity','Gross secondary productivity'], ans:0, sol:'NPP = GPP - R. Net primary productivity is the available biomass for the consumption to heterotrophs (herbivores and decomposers).' },
+{ id:'E26', year:'2023', q:'Which of the following ecosystems has the highest net primary productivity?', opts:['Tropical rain forests','Oceans','Deserts','Temperate forests'], ans:0, sol:'Tropical rain forests have optimal conditions (abundant sunlight, high temperature, and rainfall) year-round, leading to the highest primary productivity.' },
+{ id:'E27', year:'2022', q:'The natural reservoir of phosphorus is:', opts:['Atmosphere','Rock','Sea water','Fossils'], ans:1, sol:'Phosphorus is a major constituent of biological membranes, nucleic acids, and bones. Its natural reservoir is rock, which contains phosphorus in the form of phosphates.' },
+{ id:'E28', year:'NEET Mock', q:'In an ecological succession, the entire sequence of communities that successively change in a given area are called:', opts:['Climax','Sere','Pioneer','Benthos'], ans:1, sol:'The entire sequence of communities that successively change in a given area are called sere(s). The individual transitional communities are termed seral stages or seral communities.' },
+{ id:'E29', year:'2021', q:'Which one of the following is not a functional unit of an ecosystem?', opts:['Energy flow','Decomposition','Productivity','Stratification'], ans:3, sol:'Stratification is a structural feature (vertical distribution of different species). The functional aspects are Productivity, Decomposition, Energy flow, and Nutrient cycling.' },
+{ id:'E30', year:'2020', q:'The breakdown of detritus into smaller particles by earthworm is a process called:', opts:['Humification','Fragmentation','Mineralisation','Catabolism'], ans:1, sol:'Detritivores (e.g., earthworm) break down detritus into smaller particles. This step in the decomposition process is called fragmentation.' },
+{ id:'E31', year:'2023', q:'According to Alexander von Humboldt, within a region, species richness increases with increasing explored area, but only:', opts:['Up to a limit','Linearly indefinitely','Exponentially','Inversely'], ans:0, sol:'Alexander von Humboldt observed that within a region, species richness increases with increasing explored area, but only up to a limit. This is the species-area relationship.' },
+{ id:'E32', year:'2022', q:'Which of the following is considered the "evil quartet" for biodiversity loss? (Select the most critical factor)', opts:['Over-exploitation','Alien species invasions','Habitat loss and fragmentation','Co-extinctions'], ans:2, sol:'While all four are part of the "Evil Quartet," Habitat loss and fragmentation is the most important and primary cause driving animals and plants to extinction.' },
+{ id:'E33', year:'NEET Mock', q:'Match the Conservation strategy: (I) National Park (II) Seed Bank (III) Sacred Grove -> (P) Ex situ conservation (Q) In situ conservation (highly protected) (R) In situ conservation (religious/cultural)', opts:['I-Q, II-P, III-R','I-P, II-Q, III-R','I-R, II-Q, III-P','I-Q, II-R, III-P'], ans:0, sol:'National Parks are In situ (Q). Seed banks preserve genetic material outside their natural habitat, hence Ex situ (P). Sacred groves are protected due to religious beliefs, In situ (R).' },
+{ id:'E34', year:'2021', q:'The \'Rivet Popper Hypothesis\' used to explain the role of species in ecosystem stability was proposed by:', opts:['Robert May','Paul Ehrlich','David Tilman','Alexander von Humboldt'], ans:1, sol:'Stanford ecologist Paul Ehrlich proposed the Rivet Popper Hypothesis, comparing an ecosystem to an airplane and species to the rivets holding it together.' },
+{ id:'E35', year:'2020', q:'Which one of the following is an example of Ex situ conservation?', opts:['Wildlife sanctuary','Biosphere reserve','Cryopreservation','Sacred groves'], ans:2, sol:'Cryopreservation (preservation of gametes or embryos at -196°C in liquid nitrogen) is an advanced ex situ conservation method.' },
+{ id:'E36', year:'2019', q:'Statement I: India has only 2.4% of the world\'s land area. Statement II: India contributes 8.1% to the global species diversity.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both facts are correct. Despite having a small land area (2.4%), India is one of the 12 mega diversity countries of the world with an impressive 8.1% global species diversity.' },
+{ id:'E37', year:'2023', q:'The historic Earth Summit (United Nations Conference on Environment and Development) held in 1992 was in:', opts:['Johannesburg, South Africa','Rio de Janeiro, Brazil','Kyoto, Japan','Montreal, Canada'], ans:1, sol:'The Earth Summit was held in Rio de Janeiro in 1992. It called upon all nations to take appropriate measures for conservation of biodiversity and sustainable utilization of its benefits.' },
+{ id:'E38', year:'2022', q:'Endemism refers to:', opts:['Species confined to a particular region and not found anywhere else','Species which are on the verge of extinction','Species introducing alien genes into native populations','Species found globally in diverse habitats'], ans:0, sol:'Endemic species are those that are unique to a defined geographic location, such as an island, nation, country or other defined zone, and are not found anywhere else naturally.' },
+{ id:'E39', year:'NEET Mock', q:'Assertion (A): Tropical latitudes have greater biological diversity than temperate regions. Reason (R): Tropical regions have remained relatively undisturbed for millions of years.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Tropical environments, unlike temperate ones, were less subjected to frequent glaciations in the past. This allowed a long evolutionary time for species diversification.' },
+{ id:'E40', year:'2021', q:'The introduction of Nile Perch into Lake Victoria in East Africa led to the extinction of an ecologically unique assemblage of more than 200 species of:', opts:['Catfish','Cichlid fish','Tilapia','Salmon'], ans:1, sol:'The introduction of the alien predator Nile Perch into Lake Victoria led to the extinction of more than 200 species of native cichlid fish. This is an example of Alien species invasion.' },
+{ id:'E41', year:'2020', q:'The value of \'Z\' (regression coefficient) in the species-area relationship line for very large areas like entire continents is in the range of:', opts:['0.1 to 0.2','0.6 to 1.2','0.01 to 0.1','1.5 to 2.0'], ans:1, sol:'For small areas, the Z value lies between 0.1 to 0.2. But for very large areas like entire continents, the slope of the line is much steeper, with Z values between 0.6 and 1.2.' },
+{ id:'E42', year:'2019', q:'Which of the following groups of plants has the highest number of species among the given options?', opts:['Algae','Fungi','Bryophytes','Ferns'], ans:1, sol:'Among the given options and overall in global biodiversity estimates, fungi have a very high species richness, exceeding the combined total of fishes, amphibians, reptiles, and mammals.' },
+{ id:'E43', year:'2023', q:'An example of co-extinction is:', opts:['Introduction of Water Hyacinth','Extinction of Steller\'s sea cow','Plant-pollinator mutualism','Overharvesting of passenger pigeon'], ans:2, sol:'Co-extinction occurs when the extinction of one species leads to the extinction of another species that depends on it, such as tightly linked plant-pollinator mutualistic species.' },
+{ id:'E44', year:'2022', q:'Sacred groves are especially useful in:', opts:['Generating environmental awareness','Preventing soil erosion','Conserving rare and threatened species','Creating botanical gardens'], ans:2, sol:'Sacred groves are tracts of forest set aside, and all the trees and wildlife within are venerated and given total protection. They are a refuge for many rare and threatened species.' },
+{ id:'E45', year:'NEET Mock', q:'Match the organism with its reason for extinction: (I) Dodo (II) Passenger Pigeon (III) Thylacine -> (P) Australia (Q) Mauritius (R) Over-exploitation', opts:['I-Q, II-R, III-P','I-R, II-P, III-Q','I-P, II-Q, III-R','I-Q, II-P, III-R'], ans:0, sol:'The Dodo became extinct in Mauritius (Q). The Passenger Pigeon went extinct due to over-exploitation by humans (R). Thylacine (Tasmanian wolf) was from Australia (P).' }
+],
+
+zoology: [
+{ id:'Z1', year:'2023', q:'The testes in humans are situated outside the abdominal cavity inside a pouch called scrotum. The purpose served is for:', opts:['Maintaining the scrotal temperature lower than the internal body temperature','Escaping any possible compression by the visceral organs','Providing more space for the growth of epididymis','Providing a secondary sexual feature for exhibiting the male sex'], ans:0, sol:'The scrotum helps in maintaining the low temperature of the testes (2–2.5 °C lower than the normal internal body temperature) necessary for spermatogenesis.' },
+{ id:'Z2', year:'2022', q:'Which of the following depicts the correct pathway of transport of sperms?', opts:['Rete testis -> Efferent ductules -> Epididymis -> Vas deferens','Rete testis -> Epididymis -> Efferent ductules -> Vas deferens','Rete testis -> Vas deferens -> Efferent ductules -> Epididymis','Efferent ductules -> Rete testis -> Vas deferens -> Epididymis'], ans:0, sol:'The correct pathway is: Seminiferous tubules -> Rete testis -> Vasa efferentia (Efferent ductules) -> Epididymis -> Vas deferens.' },
+{ id:'Z3', year:'2021', q:'Match the following male accessory glands with their functions: (I) Seminal Vesicle (II) Prostate Gland (III) Bulbourethral Gland -> (P) Lubrication of penis (Q) Secretes slightly acidic/milky fluid with citrate (R) Secretes alkaline fluid with fructose and prostaglandins', opts:['I-R, II-Q, III-P','I-P, II-R, III-Q','I-Q, II-P, III-R','I-R, II-P, III-Q'], ans:0, sol:'Seminal vesicles (R) provide fructose for energy. Prostate gland (Q) secretions activate sperms. Bulbourethral or Cowper\'s gland (P) helps in lubrication.' },
+{ id:'Z4', year:'2020', q:'The shared terminal duct of the reproductive and urinary system in the human male is:', opts:['Urethra','Ureter','Vas deferens','Vasa efferentia'], ans:0, sol:'In human males, the urethra originates from the urinary bladder and extends through the penis to its external opening called urethral meatus, serving as a common passage for both urine and semen.' },
+{ id:'Z5', year:'2019', q:'Meiotic division of the secondary oocyte is completed:', opts:['Prior to ovulation','At the time of copulation','After zygote formation','At the time of fusion of a sperm with an ovum'], ans:3, sol:'The secondary oocyte is arrested in metaphase-II of meiosis. The entry of the sperm into the ovum induces the completion of the meiotic division.' },
+{ id:'Z6', year:'NEET Mock', q:'Assertion (A): The middle piece of sperm is called the powerhouse of the sperm. Reason (R): It contains numerous mitochondria which produce energy for the movement of the tail.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'The middle piece possesses numerous mitochondria, which produce energy for the movement of the tail that facilitates sperm motility essential for fertilization.' },
+{ id:'Z7', year:'2023', q:'Which of the following hormones is responsible for both the milk ejection reflex and the foetal ejection reflex?', opts:['Estrogen','Prolactin','Oxytocin','Relaxin'], ans:2, sol:'Oxytocin, synthesized by the hypothalamus and released by the posterior pituitary, causes strong uterine contractions during parturition and milk ejection during lactation.' },
+{ id:'Z8', year:'2022', q:'The main function of mammalian corpus luteum is to produce:', opts:['Estrogen only','Progesterone','Human chorionic gonadotropin','Relaxin only'], ans:1, sol:'After ovulation, the ruptured Graafian follicle transforms into the corpus luteum, which secretes large amounts of progesterone essential for maintaining the endometrium.' },
+{ id:'Z9', year:'2021', q:'Capacitation refers to changes in the:', opts:['Ovum before fertilization','Sperm after fertilization','Sperm before fertilization','Ovum after fertilization'], ans:2, sol:'Capacitation is the physiological maturation of sperms in the female reproductive tract, making them capable of fertilizing the ovum. It involves removal of cholesterol and glycoproteins from the acrosome.' },
+{ id:'Z10', year:'2020', q:'In human females, menstruation can be deferred by the administration of:', opts:['Combination of FSH and LH','Combination of estrogen and progesterone','FSH only','LH only'], ans:1, sol:'Menstruation occurs due to the sudden withdrawal of progesterone and estrogen. Administering a combination of estrogen and progesterone maintains the uterine lining and defers menstruation.' },
+{ id:'Z11', year:'NEET Mock', q:'Which of the following layers in an antral follicle is acellular?', opts:['Stroma','Zona pellucida','Granulosa','Theca interna'], ans:1, sol:'The zona pellucida is a non-cellular (acellular), glycoprotein layer secreted by the secondary oocyte around itself.' },
+{ id:'Z12', year:'2019', q:'Extrusion of second polar body from egg nucleus occurs:', opts:['After entry of sperm but before fertilization','After fertilization','Before entry of sperm into ovum','Simultaneously with first cleavage'], ans:0, sol:'The entry of sperm induces the completion of meiosis-II in the secondary oocyte, resulting in the formation of a second polar body and an ootid, just before the fusion of their pronuclei.' },
+{ id:'Z13', year:'2023', q:'Statement I: The first sign of growing foetus may be noticed by listening to the heart sound carefully through the stethoscope. Statement II: By the end of the second month of pregnancy, the foetus develops limbs and digits.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both statements are correct. The heart is formed after 1 month, and limbs/digits appear by the end of the second month (8 weeks).' },
+{ id:'Z14', year:'2022', q:'Match the stages of development with their characteristics: (I) Cleavage (II) Morula (III) Blastocyst -> (P) Hollow ball of cells with inner cell mass (Q) Solid ball of 8-16 cells (R) Rapid mitotic divisions without growth', opts:['I-R, II-Q, III-P','I-Q, II-R, III-P','I-P, II-Q, III-R','I-R, II-P, III-Q'], ans:0, sol:'Cleavage is rapid mitotic divisions (R). Morula is an 8-16 cell solid stage (Q). Blastocyst has a trophoblast layer and inner cell mass with a cavity (P).' },
+{ id:'Z15', year:'2021', q:'Which of the following is NOT a function of the placenta?', opts:['Facilitates supply of oxygen and nutrients to embryo','Secretes estrogen','Facilitates removal of carbon dioxide and waste material from embryo','Secretes oxytocin during parturition'], ans:3, sol:'Oxytocin is secreted by the maternal posterior pituitary gland, not by the placenta. The placenta acts as an endocrine tissue producing hCG, hPL, estrogens, and progestogens.' },
+{ id:'Z16', year:'2020', q:'Which of the following contraceptive methods involves a role of hormone?', opts:['Pills, Emergency contraceptives, Barrier methods','Lactational amenorrhea, Pills, Emergency contraceptives','Barrier method, Lactational amenorrhea, Pills','CuT, Pills, Emergency contraceptives'], ans:1, sol:'Lactational amenorrhea is due to high prolactin suppressing GnRH. Pills and emergency contraceptives contain progestogens or progestogen-estrogen combinations.' },
+{ id:'Z17', year:'NEET Mock', q:'Select the hormone-releasing Intra Uterine Devices (IUDs).', opts:['Lippes loop, Multiload 375','Vaults, LNG-20','Multiload 375, Progestasert','Progestasert, LNG-20'], ans:3, sol:'Progestasert and LNG-20 are hormone-releasing IUDs. They make the uterus unsuitable for implantation and the cervix hostile to sperms.' },
+{ id:'Z18', year:'2019', q:'In context of amniocentesis, which of the following statements is incorrect?', opts:['It can be used for detection of Down syndrome','It can be used for detection of cleft palate','It is usually done when a woman is between 14-16 weeks pregnant','It is used for prenatal sex determination'], ans:1, sol:'Amniocentesis is a chromosomal analysis of amniotic fluid cells. It detects genetic abnormalities (like Down syndrome) and sex, but not structural defects like cleft palate.' },
+{ id:'Z19', year:'2023', q:'Which of the following sexually transmitted diseases is NOT completely curable?', opts:['Chlamydiasis','Gonorrhoea','Genital warts','Genital herpes'], ans:3, sol:'Hepatitis-B, Genital herpes, and HIV infections are not completely curable. Other STIs are completely curable if detected early and treated properly.' },
+{ id:'Z20', year:'2022', q:'Assertion (A): Saheli is an oral contraceptive for females. Reason (R): It is a steroidal preparation with a very low side effect profile.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:2, sol:'Saheli is an oral contraceptive pill, but it is a NON-STEROIDAL preparation. Therefore, Reason is false.' },
+{ id:'Z21', year:'2021', q:'Match the ART (Assisted Reproductive Technology) with its procedure: (I) ZIFT (II) IUT (III) GIFT -> (P) Transfer of ovum to fallopian tube (Q) Embryo with >8 blastomeres transferred to uterus (R) Zygote or early embryo (up to 8 blastomeres) transferred to fallopian tube', opts:['I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-P, III-Q'], ans:0, sol:'ZIFT: Zygote Intra Fallopian Transfer (R). IUT: Intra Uterine Transfer (Q). GIFT: Gamete Intra Fallopian Transfer (P).' },
+{ id:'Z22', year:'2020', q:'Medical Termination of Pregnancy (MTP) is considered safe up to how many weeks of pregnancy?', opts:['8 weeks','12 weeks','18 weeks','24 weeks'], ans:1, sol:'MTPs are considered relatively safe during the first trimester, i.e., up to 12 weeks of pregnancy. Second-trimester abortions are much riskier.' },
+{ id:'Z23', year:'NEET Mock', q:'The contraceptive "Saheli" was developed by scientists at:', opts:['ICMR, New Delhi','CDRI, Lucknow','IARI, New Delhi','NIV, Pune'], ans:1, sol:'Saheli, a new oral contraceptive for females containing a non-steroidal preparation (centchroman), was developed by scientists at Central Drug Research Institute (CDRI) in Lucknow, India.' },
+{ id:'Z24', year:'2019', q:'Which of the following is an example of a copper-releasing IUD?', opts:['Cu7','LNG-20','Progestasert','Lippes loop'], ans:0, sol:'CuT, Cu7, and Multiload 375 are copper-releasing IUDs. The Cu ions released suppress sperm motility and their fertilizing capacity.' },
+{ id:'Z25', year:'2023', q:'Statement I: Lactational amenorrhea is effective only up to a maximum period of six months following parturition. Statement II: Chances of conception are nil as long as the mother breastfeeds the child fully.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both statements are true. Intense lactation suppresses gonadotropin secretion, causing amenorrhea, but this natural method is only highly effective for about 6 months.' },
+{ id:'Z26', year:'2022', q:'In a normal pregnant woman, the amount of total gonadotropin activity was assessed. The result expected was:', opts:['High level of FSH and LH in uterus to stimulate endometrial thickening','High level of circulating hCG to stimulate estrogen and progesterone synthesis','High level of circulating FSH and LH in the uterus to stimulate implantation','High level of circulating hCG to stimulate endometrial thickening'], ans:1, sol:'During pregnancy, the placenta secretes human chorionic gonadotropin (hCG), which is analogous to LH and maintains the corpus luteum, stimulating it to continuously secrete estrogen and progesterone.' },
+{ id:'Z27', year:'2021', q:'Which part of the ovary in mammals acts as an endocrine gland after ovulation?', opts:['Stroma','Germinal epithelium','Vitelline membrane','Graafian follicle'], ans:3, sol:'After ovulation, the ruptured Graafian follicle transforms into the corpus luteum, which acts as a temporary endocrine gland secreting progesterone.' },
+{ id:'Z28', year:'2020', q:'Vasa efferentia are the ductules leading from:', opts:['Testicular lobules to rete testis','Rete testis to vas deferens','Vas deferens to epididymis','Epididymis to urethra'], ans:1, sol:'The vasa efferentia leave the testis (originating from rete testis) and open into the epididymis located along the posterior surface of each testis.' },
+{ id:'Z29', year:'NEET Mock', q:'The first movements of the foetus and appearance of hair on its head are usually observed during which month of pregnancy?', opts:['Third month','Fourth month','Fifth month','Sixth month'], ans:2, sol:'According to embryonic development milestones, the first movements of the foetus and appearance of hair on the head are usually observed during the fifth month.' },
+{ id:'Z30', year:'2019', q:'Assertion (A): Periodic abstinence is a natural method of contraception. Reason (R): Couples avoid coitus from day 10 to 17 of the menstrual cycle when ovulation is expected.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Periodic abstinence requires avoiding coitus during the fertile period (day 10-17) when ovulation could occur, thus preventing the chances of fertilization.' },
+{ id:'Z31', year:'2023', q:'What is the correct surgical method of contraception in human males?', opts:['Tubectomy','Vasectomy','Castration','Ovariectomy'], ans:1, sol:'Vasectomy is the sterilization procedure in males where a small part of the vas deferens is removed or tied up through a small incision on the scrotum.' },
+{ id:'Z32', year:'2022', q:'Match the pathogen with the Sexually Transmitted Infection (STI): (I) Treponema pallidum (II) Neisseria gonorrhoeae (III) Human Papilloma Virus -> (P) Genital Warts (Q) Syphilis (R) Gonorrhoea', opts:['I-Q, II-R, III-P','I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-P, III-R'], ans:0, sol:'Treponema pallidum causes Syphilis (Q). Neisseria gonorrhoeae causes Gonorrhoea (R). HPV causes Genital Warts (P).' },
+{ id:'Z33', year:'2021', q:'Which of the following approaches does NOT give the defined action of contraceptive?', opts:['Hormonal contraceptives - Prevent/retard entry of sperms, prevent ovulation and fertilization','Vasectomy - Prevents spermatogenesis','Barrier methods - Prevent fertilization','Intra uterine devices - Increase phagocytosis of sperms, suppress sperm motility'], ans:1, sol:'Vasectomy prevents the transport of sperms (semen will not contain sperms), but it DOES NOT affect or prevent spermatogenesis (sperm production in testes).' },
+{ id:'Z34', year:'2020', q:'The amnion of mammalian embryo is derived from:', opts:['Ectoderm and mesoderm','Endoderm and mesoderm','Mesoderm and trophoblast','Ectoderm and endoderm'], ans:0, sol:'The amnion is an extra-embryonic membrane formed by the extra-embryonic ectoderm and the somatic mesoderm. It encloses the amniotic fluid.' },
+{ id:'Z35', year:'NEET Mock', q:'Artificial Insemination (AI) refers to:', opts:['Artificial introduction of sperms of a healthy donor into the vagina','Introduction of sperms of a healthy donor directly into the ovary','Transfer of sperms of husband to a test tube containing ova','Transfer of sperms of a healthy donor directly into the fallopian tube'], ans:0, sol:'In Artificial Insemination (AI), the semen collected from the husband or a healthy donor is artificially introduced into the vagina or into the uterus (IUI) of the female.' },
+{ id:'Z36', year:'2019', q:'Ectopic pregnancies are referred to as:', opts:['Pregnancies terminated due to hormonal imbalance','Pregnancies with genetic abnormality','Implantation of embryo at site other than uterus','Implantation of defective embryo in the uterus'], ans:2, sol:'Implantation of the blastocyst at any site other than the normal uterine cavity (most commonly in the fallopian tube) is known as an ectopic pregnancy.' },
+{ id:'Z37', year:'2023', q:'Which of these is an in-vivo method of assisted reproduction?', opts:['ZIFT','GIFT','ICSI','IVF'], ans:1, sol:'GIFT (Gamete Intra Fallopian Transfer) is an in-vivo method because the fertilization takes place inside the female\'s body (fallopian tube) after transferring the gametes.' },
+{ id:'Z38', year:'2022', q:'The inner glandular layer of the uterus is:', opts:['Perimetrium','Myometrium','Endometrium','Mesometrium'], ans:2, sol:'The wall of the uterus has three layers: external thin perimetrium, middle thick muscular myometrium, and inner glandular layer called endometrium.' },
+{ id:'Z39', year:'2021', q:'Secretions from which of the following are rich in fructose, calcium and some enzymes?', opts:['Male accessory glands','Liver','Pancreas','Salivary glands'], ans:0, sol:'The secretions of the male accessory glands (seminal vesicles, prostate, and bulbourethral glands) constitute the seminal plasma, which is rich in fructose, calcium, and certain enzymes.' },
+{ id:'Z40', year:'2020', q:'Statement I: The primary oocyte within the tertiary follicle grows in size and completes its first meiotic division. Statement II: It is an equal division resulting in the formation of two similar sized secondary oocytes.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Statement I is correct. Statement II is incorrect because the first meiotic division is UNEQUAL, resulting in a large secondary oocyte and a tiny first polar body.' },
+{ id:'Z41', year:'NEET Mock', q:'Which layer of the blastocyst gets attached to the endometrium during implantation?', opts:['Trophoblast','Inner cell mass','Corona radiata','Zona pellucida'], ans:0, sol:'The blastocyst consists of an outer layer called trophoblast (which attaches to the endometrium) and an inner group of cells called the inner cell mass (which differentiates into the embryo).' },
+{ id:'Z42', year:'2019', q:'A childless couple can be assisted to have a child through a technique called ICSI. The full form of this technique is:', opts:['Intra Cytoplasmic Sperm Injection','Inter Cytoplasmic Sperm Injection','Intra Cervical Sperm Injection','Inter Cervical Sperm Injection'], ans:0, sol:'ICSI stands for Intra Cytoplasmic Sperm Injection. In this specialized procedure, a sperm is directly injected into the ovum to form an embryo in the laboratory.' },
+{ id:'Z43', year:'2023', q:'Assertion (A): Prolactin is responsible for milk production. Reason (R): Oxytocin is responsible for the ejection of milk from mammary glands.', opts:['Both A and R are true, and they are independent of each other','Both A and R are true, R is the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Prolactin (from anterior pituitary) synthesizes milk, while oxytocin (from posterior pituitary) causes milk ejection. Both statements are true but they refer to two different hormonal functions.' },
+{ id:'Z44', year:'2022', q:'Match the terms with their definitions: (I) Menarche (II) Menopause (III) Parturition -> (P) Delivery of the foetus (Q) First menstruation begins at puberty (R) Menstrual cycles cease around 50 years of age', opts:['I-Q, II-R, III-P','I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-P, III-R'], ans:0, sol:'Menarche is the onset of menstruation (Q). Menopause is the cessation of menstruation (R). Parturition is the process of childbirth (P).' },
+{ id:'Z45', year:'2021', q:'Which of the following cannot be detected in a developing foetus by amniocentesis?', opts:['Down syndrome','Jaundice','Klinefelter syndrome','Sex of the foetus'], ans:1, sol:'Amniocentesis is a test based on the chromosomal pattern in the amniotic fluid cells. It detects chromosomal/genetic abnormalities (Down/Klinefelter) and sex. Jaundice cannot be detected by it.' }
+],
+
+physics: [
+{ id:'P1', year:'2023', q:'The dimensional formula of electric permittivity of free space (ε₀) is:', opts:['[M⁻¹ L⁻³ T⁴ A²]','[M L³ T⁻⁴ A⁻²]','[M⁻¹ L⁻² T³ A]','[M L² T⁻² A⁻²]'], ans:0, sol:'From Coulomb\'s law, F = (1/4πε₀) * (q₁q₂/r²). Therefore, ε₀ = (q₁q₂) / (4πFr²). Dimensions = [AT][AT] / ([MLT⁻²][L²]) = [M⁻¹ L⁻³ T⁴ A²].' },
+{ id:'P2', year:'2022', q:'Two point charges placed in a medium of dielectric constant 5 are at a distance r. If they are moved to free space, what should be the distance between them so that they experience the same force?', opts:['r√5','r/5','r/√5','5r'], ans:0, sol:'Force in medium = Force in vacuum. (1/4πε₀K) * (q₁q₂/r²) = (1/4πε₀) * (q₁q₂/r\'²). Solving this, r\'² = K * r². So, r\' = r√K = r√5.' },
+{ id:'P3', year:'2021', q:'Assertion (A): Electric lines of force never cross each other. Reason (R): The electric field at a point superposition of all fields and has a unique direction.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'If two field lines intersect, there would be two tangents at the point of intersection, meaning two different directions of the electric field at the same point, which is impossible.' },
+{ id:'P4', year:'2020', q:'The electric dipole moment is a vector quantity. Its direction is:', opts:['From positive to negative charge','From negative to positive charge','Perpendicular to the axis of the dipole','Along the equatorial line'], ans:1, sol:'By convention, the direction of the electric dipole moment vector (p) is from the negative charge (-q) to the positive charge (+q).' },
+{ id:'P5', year:'2019', q:'An electric dipole of moment p is placed in a uniform electric field E. The maximum torque experienced by the dipole is:', opts:['pE','pE/2','Zero','2pE'], ans:0, sol:'Torque τ = pE sin(θ). It is maximum when θ = 90°, so sin(90°) = 1. Maximum torque = pE.' },
+{ id:'P6', year:'NEET Mock', q:'The total electric flux emanating from a closed surface enclosing an alpha particle is:', opts:['e/ε₀','2e/ε₀','4e/ε₀','Zero'], ans:1, sol:'An alpha particle is a helium nucleus, which has a charge of +2e. According to Gauss\'s Law, Total flux = q_enclosed / ε₀ = 2e / ε₀.' },
+{ id:'P7', year:'2023', q:'A hollow metal sphere of radius R is uniformly charged. The electric field due to the sphere at a distance r from the centre:', opts:['Decreases as r increases for r < R and for r > R','Zero as r increases for r < R, decreases as r increases for r > R','Zero as r increases for r < R, increases as r increases for r > R','Increases as r increases for r < R and for r > R'], ans:1, sol:'Inside a hollow conducting sphere (r < R), the electric field is zero. Outside (r > R), it behaves like a point charge, E ∝ 1/r², so it decreases as r increases.' },
+{ id:'P8', year:'2022', q:'Match the following applications of Gauss\'s Law: (I) Line charge (II) Infinite plane sheet (III) Outside a spherical shell -> (P) E = σ / 2ε₀ (Q) E = λ / 2πε₀r (R) E = q / 4πε₀r²', opts:['I-Q, II-P, III-R','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-R, III-P'], ans:0, sol:'Line charge E ∝ 1/r (Q). Plane sheet E is independent of distance (P). Outside a spherical shell, E ∝ 1/r² (R).' },
+{ id:'P9', year:'2021', q:'Statement I: The electric potential at any point on the equatorial line of an electric dipole is zero. Statement II: The electric field at any point on the equatorial line of an electric dipole is zero.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Statement I is true; potential is zero because distances from +q and -q are equal. Statement II is false; electric field is not zero, it is directed opposite to the dipole moment.' },
+{ id:'P10', year:'2020', q:'The work done in moving a charge of 5 C across an equipotential surface of 10 V is:', opts:['50 J','2 J','0 J','5 J'], ans:2, sol:'On an equipotential surface, the potential difference (ΔV) between any two points is zero. Work done W = q * ΔV = 5 * 0 = 0 J.' },
+{ id:'P11', year:'NEET Mock', q:'Three charges +q, +q, and -q are placed at the corners of an equilateral triangle of side \'a\'. The potential energy of the system is:', opts:['(1/4πε₀) * (q²/a)','-(1/4πε₀) * (q²/a)','(1/4πε₀) * (3q²/a)','Zero'], ans:1, sol:'U = (1/4πε₀) * [ (q*q)/a + (q*-q)/a + (q*-q)/a ] = (1/4πε₀) * [q²/a - q²/a - q²/a] = -(1/4πε₀) * (q²/a).' },
+{ id:'P12', year:'2023', q:'The relation between electric field (E) and electric potential (V) is:', opts:['E = dV/dx','E = -dV/dx','E = V/x²','E = -dx/dV'], ans:1, sol:'Electric field is the negative gradient of electric potential. E = -dV/dx. The negative sign indicates that E points in the direction of decreasing potential.' },
+{ id:'P13', year:'2022', q:'A charge Q is enclosed by a Gaussian spherical surface of radius R. If the radius is doubled, then the outward electric flux will:', opts:['Be reduced to half','Be doubled','Increase four times','Remain the same'], ans:3, sol:'According to Gauss\'s Law, the total electric flux depends only on the net charge enclosed (Φ = Q/ε₀). It is independent of the shape or size of the Gaussian surface.' },
+{ id:'P14', year:'2021', q:'Assertion (A): The capacity of a parallel plate capacitor increases when a dielectric slab is introduced between the plates. Reason (R): The dielectric material reduces the effective electric field between the plates.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'When a dielectric is inserted, polarization creates an opposing internal field, reducing the net electric field. Since V = E*d, V decreases. Thus, Capacitance (C = Q/V) increases.' },
+{ id:'P15', year:'2020', q:'The equivalent capacitance of two capacitors of 3 μF and 6 μF connected in series is:', opts:['9 μF','2 μF','4.5 μF','18 μF'], ans:1, sol:'For series connection: 1/C_eq = 1/C₁ + 1/C₂ = 1/3 + 1/6 = 3/6 = 1/2. Therefore, C_eq = 2 μF.' },
+{ id:'P16', year:'NEET Mock', q:'Energy stored in a capacitor of capacitance C having a charge Q and potential V is NOT given by:', opts:['(1/2)CV²','(1/2)QV','Q²/(2C)','(1/2)C²V'], ans:3, sol:'The energy stored in a capacitor is U = (1/2)CV² = (1/2)QV = Q²/(2C). The expression (1/2)C²V is dimensionally incorrect.' },
+{ id:'P17', year:'2023', q:'An electric dipole is placed at an angle of 30° with an electric field of 2 × 10⁵ N/C. It experiences a torque equal to 4 Nm. The charge on the dipole if the dipole length is 2 cm is:', opts:['2 mC','8 mC','4 mC','1 mC'], ans:0, sol:'τ = pE sinθ = (q * 2a)E sinθ. Here, 4 = q * (0.02) * (2 × 10⁵) * sin(30°). 4 = q * 4000 * 0.5 = 2000 * q. q = 4/2000 = 2 × 10⁻³ C = 2 mC.' },
+{ id:'P18', year:'2022', q:'The equipotential surfaces associated with a point charge are:', opts:['Concentric spheres','Parallel planes','Coaxial cylinders','Straight lines'], ans:0, sol:'For an isolated point charge, the potential V = kq/r depends only on the distance r. Thus, points with the same r lie on a sphere. The equipotential surfaces are concentric spheres.' },
+{ id:'P19', year:'2021', q:'A hollow metal sphere of radius 10 cm is charged such that the potential on its surface is 80 V. The potential at the centre of the sphere is:', opts:['Zero','8 V','80 V','800 V'], ans:2, sol:'Inside a hollow conductor, the electric field is zero, which means the potential is constant throughout the volume and is equal to the potential on its surface. So, V = 80 V.' },
+{ id:'P20', year:'2020', q:'Statement I: Two equipotential surfaces can intersect each other. Statement II: The electric field lines are always perpendicular to the equipotential surface.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:3, sol:'Statement I is false because if they intersect, there will be two different values of potential at the same point, which is impossible. Statement II is a true property of equipotential surfaces.' },
+{ id:'P21', year:'NEET Mock', q:'If a dielectric slab of thickness t (t < d) is introduced between the plates of a parallel plate capacitor, the capacitance:', opts:['Decreases','Increases','Remains same','Becomes zero'], ans:1, sol:'The capacitance with a dielectric slab is C = (ε₀A) / (d - t + t/K). Since the denominator becomes smaller than d, the overall capacitance increases.' },
+{ id:'P22', year:'2023', q:'Electric flux is a:', opts:['Vector quantity','Scalar quantity','Dimensionless quantity','Tensor quantity'], ans:1, sol:'Electric flux is the dot product of the electric field vector and the area vector (Φ = E • A). The dot product of two vectors is always a scalar.' },
+{ id:'P23', year:'2022', q:'A charge q is placed at the centre of a cube. What is the electric flux passing through one of its faces?', opts:['q/ε₀','q/6ε₀','q/8ε₀','q/24ε₀'], ans:1, sol:'According to Gauss\'s Law, the total flux through the entire cube is q/ε₀. Since the cube has 6 identical symmetrical faces, the flux through one face is (1/6) * (q/ε₀).' },
+{ id:'P24', year:'2021', q:'Match the Physical Quantity with its SI Unit: (I) Electric Field (II) Electric Flux (III) Electric Potential -> (P) Volt (Q) V-m (R) N/C', opts:['I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-P, III-Q'], ans:0, sol:'Electric Field is Force/Charge -> N/C (R). Electric Flux is E * Area -> (N/C)*m² or V-m (Q). Electric Potential is Work/Charge -> Joules/Coulomb or Volt (P).' },
+{ id:'P25', year:'2020', q:'The ratio of electric fields due to an electric dipole at a point on its equatorial line and at a point on its axial line at the same distance r (where r >> a) is:', opts:['1 : 1','2 : 1','1 : 2','1 : 4'], ans:2, sol:'E_axial = (1/4πε₀) * (2p/r³) and E_equatorial = (1/4πε₀) * (p/r³). Therefore, E_equatorial / E_axial = 1 / 2.' },
+{ id:'P26', year:'NEET Mock', q:'When three capacitors of equal capacities are connected in parallel, their equivalent capacity is 90 μF. If they are connected in series, the equivalent capacity will be:', opts:['10 μF','30 μF','270 μF','90 μF'], ans:0, sol:'In parallel: C + C + C = 3C = 90 μF, so C = 30 μF. In series: 1/C_eq = 1/30 + 1/30 + 1/30 = 3/30 = 1/10. So, C_eq = 10 μF.' },
+{ id:'P27', year:'2023', q:'Assertion (A): A bird can safely sit on a high-power transmission line. Reason (R): There is no potential difference between the bird\'s feet.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Since the bird sits on a single wire, both its feet are at the same high potential. Current requires a potential difference to flow, so no current passes through the bird\'s body.' },
+{ id:'P28', year:'2022', q:'A positively charged particle is released from rest in a uniform electric field. The kinetic energy of the charge after time t will be proportional to:', opts:['t','t²','t³','√t'], ans:1, sol:'Force F = qE, so acceleration a = qE/m. Velocity v = at = (qE/m)t. Kinetic Energy = 1/2 mv² = 1/2 m (qE/m)² t². Thus, KE ∝ t².' },
+{ id:'P29', year:'2021', q:'Which of the following molecules has a permanent electric dipole moment?', opts:['CO₂','CH₄','H₂O','O₂'], ans:2, sol:'H₂O has a bent shape (V-shape), meaning the bond dipoles do not cancel each other out, resulting in a permanent net dipole moment. CO₂, CH₄, and O₂ are symmetric and non-polar.' },
+{ id:'P30', year:'2020', q:'Two identical conducting spheres A and B have charges +q and -q respectively. A third identical uncharged sphere C is first touched with A, then with B, and then removed. The final charge on B is:', opts:['-q/2','-q/4','+q/4','Zero'], ans:1, sol:'C touches A: charge on A and C becomes (+q + 0)/2 = +q/2. C touches B: charge on B and C becomes (-q + q/2)/2 = (-q/2)/2 = -q/4. Final charge on B is -q/4.' },
+{ id:'P31', year:'NEET Mock', q:'An electron is accelerated through a potential difference of 1 Volt. The energy gained by the electron is called:', opts:['1 Joule','1 erg','1 electron-volt (eV)','1 Watt'], ans:2, sol:'By definition, 1 electron-volt (eV) is the kinetic energy gained by an electron when it is accelerated through a potential difference of 1 Volt.' },
+{ id:'P32', year:'2023', q:'The capacitance of a spherical conductor of radius R is:', opts:['4πε₀/R','R/4πε₀','4πε₀R','ε₀R'], ans:2, sol:'For an isolated spherical conductor, the potential V = Q / (4πε₀R). Since C = Q/V, substituting V gives C = 4πε₀R.' },
+{ id:'P33', year:'2022', q:'Statement I: Dielectric constant of metals is infinity. Statement II: The electric field inside a solid metallic conductor is zero under electrostatic conditions.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Metals have completely free electrons, which redistribute to completely cancel any external electric field inside the conductor (E_in = 0). This corresponds to K = infinity.' },
+{ id:'P34', year:'2021', q:'A drop of water has a potential of 10 V. If 8 such identical drops combine to form a single large drop, the potential of the large drop will be:', opts:['80 V','40 V','20 V','10 V'], ans:1, sol:'Volume of large drop = 8 * volume of small drop. (4/3)πR³ = 8 * (4/3)πr³, so R = 2r. Total charge Q = 8q. V_large = k(8q)/(2r) = 4 * (kq/r) = 4 * 10V = 40 V.' },
+{ id:'P35', year:'2020', q:'Assertion (A): Coulomb force and gravitational force follow the same inverse-square law. Reason (R): Both forces are always attractive in nature.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:2, sol:'Coulomb force obeys the inverse-square law (F ∝ 1/r²), just like gravity. However, Coulomb force can be attractive or repulsive, whereas gravity is always attractive. So, R is false.' },
+{ id:'P36', year:'NEET Mock', q:'Match the behavior of the dielectric: (I) Polar dielectric (II) Non-polar dielectric -> (P) Centers of positive and negative charge coincide (Q) Centers of positive and negative charge do not coincide', opts:['I-Q, II-P','I-P, II-Q','I-P, II-P','I-Q, II-Q'], ans:0, sol:'In polar dielectrics (like H₂O, HCl), the centers do not coincide, giving a permanent dipole moment (Q). In non-polar dielectrics (like O₂, N₂), they coincide (P).' },
+{ id:'P37', year:'2023', q:'If the distance between the plates of a parallel plate capacitor is halved and a dielectric of constant K=2 is inserted, its new capacitance becomes:', opts:['2 times the original','4 times the original','Half the original','Remains unchanged'], ans:1, sol:'Original C = ε₀A/d. New C\' = (Kε₀A)/(d/2) = (2 * 2 * ε₀A)/d = 4 * (ε₀A/d) = 4C.' },
+{ id:'P38', year:'2022', q:'What happens to the energy stored in a parallel plate capacitor if the battery remains connected and the distance between the plates is doubled?', opts:['Halved','Doubled','Becomes one-fourth','Remains same'], ans:0, sol:'If battery is connected, V is constant. C = ε₀A/d. If d is doubled, C becomes C/2. Energy U = 1/2 CV². Since C is halved, U is also halved.' },
+{ id:'P39', year:'2021', q:'Electric lines of force about a negative point charge are:', opts:['Circular, anticlockwise','Circular, clockwise','Radial, outward','Radial, inward'], ans:3, sol:'By convention, electric field lines originate from positive charges and terminate at negative charges. For an isolated negative charge, the lines are radial and point inward.' },
+{ id:'P40', year:'2020', q:'The ratio of the forces between two small spheres with constant charge in air to that in a medium of dielectric constant K is:', opts:['1 : K','K : 1','1 : K²','K² : 1'], ans:1, sol:'Force in air F_air = (1/4πε₀) * (q₁q₂/r²). Force in medium F_medium = (1/4πε₀K) * (q₁q₂/r²). F_air / F_medium = K. So, the ratio is K : 1.' },
+{ id:'P41', year:'NEET Mock', q:'A metallic sphere is placed in a uniform electric field. The electric lines of force follow the path(s) shown in standard diagrams because:', opts:['Electric field lines do not enter conductors and are perpendicular to the surface','Electric field lines can easily pass through conductors','Electric field inside a conductor is maximum','The sphere acts as a dielectric'], ans:0, sol:'Under electrostatic conditions, the electric field inside a conductor is zero, so field lines do not enter it. Additionally, field lines must meet the conductor surface at 90° (perpendicular).' },
+{ id:'P42', year:'2023', q:'The net dipole moment of a system of three charges +2q, -q, and -q placed at the vertices of an equilateral triangle is:', opts:['Zero','√3 q a','2 q a','q a'], ans:1, sol:'The +2q charge can be split into two +q charges. This forms two dipoles each of moment p = q*a at an angle of 60°. The resultant dipole moment is √(p² + p² + 2p*p*cos60°) = √3 p = √3 q a.' },
+{ id:'P43', year:'2022', q:'If a unit positive charge is taken from one point to another over an equipotential surface, then:', opts:['Work is done on the charge','Work is done by the charge','Work done is constant but non-zero','No work is done'], ans:3, sol:'Work done W = q(V_B - V_A). On an equipotential surface, V_A = V_B, so the potential difference is zero. Hence, no work is done.' },
+{ id:'P44', year:'2021', q:'When a soap bubble is given a charge, its radius:', opts:['Increases','Decreases','Remains the same','May increase or decrease depending on the sign of charge'], ans:0, sol:'Whether given a positive or negative charge, the charges deposited on the surface of the bubble repel each other uniformly. This outward electrostatic pressure causes the radius to increase.' },
+{ id:'P45', year:'2020', q:'Match the correct formula for Capacitance: (I) Parallel Plate Capacitor (II) Spherical Capacitor (III) Cylindrical Capacitor -> (P) 4πε₀(ab / b-a) (Q) 2πε₀L / ln(b/a) (R) ε₀A / d', opts:['I-R, II-P, III-Q','I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-P, III-R'], ans:0, sol:'Parallel Plate: ε₀A/d (R). Spherical Capacitor with radii a and b: 4πε₀(ab / b-a) (P). Cylindrical Capacitor: 2πε₀L / ln(b/a) (Q).' }
+],
+
+chemistry: [
+{ id:'BM1', year:'2023', q:'Which of the following is a non-reducing carbohydrate?', opts:['Maltose','Lactose','Sucrose','Glucose'], ans:2, sol:'Sucrose is a non-reducing sugar because the reducing groups of glucose and fructose are involved in glycosidic bond formation (C1 of alpha-D-glucose and C2 of beta-D-fructose).' },
+{ id:'BM2', year:'2022', q:'When D-glucose is treated with HI and red phosphorus for a prolonged period, it yields:', opts:['n-Hexane','Gluconic acid','Saccharic acid','Sorbitol'], ans:0, sol:'Prolonged heating of glucose with HI produces n-hexane, which confirms that all six carbon atoms are linked in a straight chain.' },
+{ id:'BM3', year:'2021', q:'The two cyclic hemiacetal forms of D-glucose (alpha and beta) are called:', opts:['Epimers','Enantiomers','Anomers','Diastereomers'], ans:2, sol:'Alpha-D-glucose and Beta-D-glucose differ only in the configuration of the hydroxyl group at C-1, which is the anomeric carbon. Hence, they are anomers.' },
+{ id:'BM4', year:'2020', q:'Which of the following amino acids is optically inactive?', opts:['Valine','Leucine','Alanine','Glycine'], ans:3, sol:'Glycine is the simplest amino acid (NH₂-CH₂-COOH). Since the alpha-carbon is attached to two identical hydrogen atoms, it lacks a chiral center and is optically inactive.' },
+{ id:'BM5', year:'NEET Mock', q:'Which linkage connects the monosaccharide units in a polysaccharide?', opts:['Peptide linkage','Glycosidic linkage','Phosphodiester linkage','Amide linkage'], ans:1, sol:'Monosaccharides are joined together by an oxide linkage formed by the loss of a water molecule. This linkage between two monosaccharide units is called a glycosidic linkage.' },
+{ id:'BM6', year:'2019', q:'In aqueous solution, amino acids mostly exist as:', opts:['Cations','Anions','Zwitterions','Neutral molecules'], ans:2, sol:'In aqueous solution, the carboxyl group can lose a proton and the amino group can accept a proton, forming a dipolar ion known as a zwitterion.' },
+{ id:'BM7', year:'2023', q:'Assertion (A): Denaturation of protein does not change its primary structure. Reason (R): Denaturation causes unfolding of the protein chain and loss of secondary and tertiary structure.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'During denaturation, secondary and tertiary structures are destroyed but the primary structure (sequence of amino acids) remains intact due to strong peptide bonds.' },
+{ id:'BM8', year:'2022', q:'Which of the following bases is NOT present in DNA?', opts:['Adenine','Cytosine','Uracil','Thymine'], ans:2, sol:'DNA contains Adenine, Guanine, Cytosine, and Thymine. Uracil is present in RNA in place of Thymine.' },
+{ id:'BM9', year:'2021', q:'Deficiency of Vitamin B12 causes:', opts:['Scurvy','Night blindness','Pernicious anaemia','Beri-beri'], ans:2, sol:'Vitamin B12 (Cyanocobalamin) deficiency leads to pernicious anaemia (RBCs deficient in haemoglobin).' },
+{ id:'BM10', year:'2020', q:'The secondary structure of proteins is mainly stabilized by:', opts:['Disulfide bonds','Peptide bonds','Hydrogen bonds','Hydrophobic interactions'], ans:2, sol:'The secondary structures (alpha-helix and beta-pleated sheet) are stabilized by hydrogen bonding between the -NH and -C=O groups of the peptide bonds.' },
+{ id:'BM11', year:'NEET Mock', q:'Match the following: (I) Vitamin C (II) Vitamin A (III) Vitamin D -> (P) Rickets (Q) Scurvy (R) Night Blindness', opts:['I-Q, II-R, III-P','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-P, III-R'], ans:0, sol:'Vitamin C deficiency causes Scurvy, Vitamin A deficiency causes Night Blindness, and Vitamin D deficiency causes Rickets/Osteomalacia.' },
+{ id:'BM12', year:'2019', q:'Nucleotides are joined together by:', opts:['Phosphodiester linkage between 5\' and 3\' carbon atoms','Glycosidic linkage between 1\' and 5\' carbon atoms','Peptide linkage','Hydrogen bonds'], ans:0, sol:'Nucleotides are linked by phosphodiester linkages between the 5\'-hydroxyl group of one pentose sugar and the 3\'-hydroxyl group of the next.' },
+{ id:'BM13', year:'2023', q:'Which of the following is a fibrous protein?', opts:['Insulin','Albumin','Keratin','Haemoglobin'], ans:2, sol:'Keratin (present in hair, wool, silk) and Myosin (in muscles) are fibrous proteins. They are generally insoluble in water.' },
+{ id:'BM14', year:'2022', q:'Statement I: All naturally occurring alpha-amino acids except glycine are optically active. Statement II: Most naturally occurring amino acids have D-configuration.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Statement I is true. Statement II is false because naturally occurring alpha-amino acids mostly belong to the L-series (L-configuration), not D.' },
+{ id:'BM15', year:'2021', q:'The structural difference between amylose and amylopectin is:', opts:['Amylose is a branched polymer while amylopectin is linear','Amylose is linear with alpha(1->4) links, amylopectin is branched with alpha(1->4) and alpha(1->6) links','Amylose contains beta-links, amylopectin contains alpha-links','None of the above'], ans:1, sol:'Amylose is a linear polymer of alpha-D-glucose linked by C1-C4 glycosidic bonds. Amylopectin is branched, with C1-C4 forming the chain and C1-C6 forming branches.' },
+{ id:'BM16', year:'NEET Mock', q:'Oxidation of glucose with Bromine water yields:', opts:['Saccharic acid','Gluconic acid','Glucuronic acid','Sorbitol'], ans:1, sol:'Bromine water is a mild oxidizing agent. It oxidizes only the aldehyde group of glucose to a carboxyl group, forming gluconic acid. This proves the presence of an aldehyde group.' },
+{ id:'BM17', year:'2020', q:'The correct corresponding order of names of four aldopentoses with the same molecular formula is based on:', opts:['Number of carbon atoms','Position of double bonds','Spatial arrangement of -OH groups (Epimers)','Molecular weight'], ans:2, sol:'Stereoisomers of sugars that differ in configuration at a single chiral center are called epimers (spatial arrangement of -OH groups).' },
+{ id:'BM18', year:'2019', q:'In DNA, the complementary base pairings are:', opts:['A with C, and G with T','A with T, and G with C','A with G, and C with T','A with U, and G with C'], ans:1, sol:'According to Watson and Crick\'s model and Chargaff\'s rule, Adenine pairs with Thymine (2 H-bonds) and Guanine pairs with Cytosine (3 H-bonds).' },
+{ id:'BM19', year:'2023', q:'Which statement about enzymes is incorrect?', opts:['They are highly specific in nature','They lower the activation energy of a reaction','Almost all enzymes are globular proteins','They are effective at any pH and temperature'], ans:3, sol:'Enzymes are biocatalysts that are highly sensitive to temperature and pH. They show maximum activity at an optimum temperature and optimum pH.' },
+{ id:'BM20', year:'2022', q:'Which of the following vitamins is water-soluble and must be supplied regularly in the diet?', opts:['Vitamin A','Vitamin D','Vitamin C','Vitamin E'], ans:2, sol:'B group vitamins and Vitamin C are water-soluble. They cannot be stored in the body (except B12) and are excreted in urine, hence needed regularly.' },
+{ id:'BM21', year:'2021', q:'A nucleotide consists of:', opts:['Base + Sugar','Base + Phosphate','Base + Sugar + Phosphate','Sugar + Phosphate'], ans:2, sol:'A nucleoside consists of a nitrogenous base and a pentose sugar. When a phosphate group is attached to the nucleoside, it becomes a nucleotide.' },
+{ id:'BM22', year:'NEET Mock', q:'The disease \'scurvy\' is caused by the deficiency of:', opts:['Ascorbic acid','Retinol','Calciferol','Thiamine'], ans:0, sol:'Scurvy (bleeding gums) is caused by the deficiency of Vitamin C, which is chemically known as Ascorbic acid.' },
+{ id:'BM23', year:'2020', q:'Which of the following is an essential amino acid?', opts:['Alanine','Aspartic acid','Valine','Serine'], ans:2, sol:'Essential amino acids cannot be synthesized by the human body and must be obtained from the diet. Valine, Leucine, Isoleucine, etc., are essential.' },
+{ id:'BM24', year:'2019', q:'Complete hydrolysis of cellulose yields:', opts:['D-Fructose','D-Ribose','D-Glucose','L-Glucose'], ans:2, sol:'Cellulose is a straight-chain polysaccharide composed only of beta-D-glucose units. Complete hydrolysis yields only D-glucose.' },
+{ id:'BM25', year:'2023', q:'At its isoelectric point, a protein has:', opts:['Maximum solubility','Minimum net charge (zero)','Maximum viscosity','Highest reactivity'], ans:1, sol:'At the isoelectric point, the zwitterion form dominates, meaning the net electrical charge on the amino acid/protein is zero. It does not migrate under an electric field.' },
+{ id:'BM26', year:'2022', q:'The pentose sugar present in RNA is:', opts:['D-Deoxyribose','D-Ribose','D-Fructose','D-Arabinose'], ans:1, sol:'RNA contains beta-D-ribose sugar, whereas DNA contains beta-D-2-deoxyribose (which lacks an oxygen atom at the 2\' carbon compared to ribose).' },
+{ id:'BM27', year:'2021', q:'Assertion (A): Vitamin D cannot be stored in our body. Reason (R): Vitamin D is a fat-soluble vitamin and is excreted out of the body in urine.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','Both A and R are false'], ans:3, sol:'Both statements are false. Vitamin D is fat-soluble, so it CAN be stored in the body (in liver and adipose tissues), and it is NOT excreted in urine.' },
+{ id:'BM28', year:'NEET Mock', q:'Which enzyme converts glucose into ethanol and carbon dioxide?', opts:['Invertase','Diastase','Maltase','Zymase'], ans:3, sol:'Zymase, an enzyme complex found in yeast, catalyzes the fermentation of sugar (glucose/fructose) into ethanol and carbon dioxide.' },
+{ id:'BM29', year:'2020', q:'Which of the following terms refers to the spatial arrangement of two different monosaccharides differing at only one specific asymmetric carbon?', opts:['Enantiomers','Epimers','Anomers','Isotopes'], ans:1, sol:'Epimers are diastereomers that differ in configuration at only one chiral center. For example, D-glucose and D-galactose are C-4 epimers.' },
+{ id:'BM30', year:'2019', q:'The structural feature that gives a protein its specific biological function is mainly its:', opts:['Primary structure','Secondary structure','Tertiary structure','Monomeric unit'], ans:2, sol:'The tertiary structure represents the overall folding of the polypeptide chain into a specific 3D shape, which is directly responsible for its biological activity and function.' },
+{ id:'BM31', year:'2023', q:'Aqueous solution of carbohydrate with 2 drops of alcoholic solution of alpha-naphthol and conc. H₂SO₄ gives a violet ring. This test is known as:', opts:['Molisch test','Fehling test','Tollens test','Biuret test'], ans:0, sol:'Molisch test is a general test for carbohydrates. Alpha-naphthol and conc. H2SO4 react with carbohydrates to form a purple/violet ring at the junction.' },
+{ id:'BM32', year:'2022', q:'The metal ion present in Vitamin B12 is:', opts:['Iron','Cobalt','Magnesium','Zinc'], ans:1, sol:'Vitamin B12 is also called Cyanocobalamin, and it contains Cobalt as the central metal ion.' },
+{ id:'BM33', year:'2021', q:'Which of the following is an example of an aldohexose?', opts:['Fructose','Ribose','Glucose','Erythrose'], ans:2, sol:'Glucose is an aldohexose (contains an aldehyde group and 6 carbons). Fructose is a ketohexose. Ribose is an aldopentose.' },
+{ id:'BM34', year:'NEET Mock', q:'Which carbon atoms are involved in the glycosidic linkage of maltose?', opts:['C1 of alpha-D-glucose and C4 of alpha-D-glucose','C1 of alpha-D-glucose and C2 of beta-D-fructose','C1 of beta-D-galactose and C4 of beta-D-glucose','C1 of alpha-D-glucose and C6 of alpha-D-glucose'], ans:0, sol:'Maltose is a disaccharide composed of two alpha-D-glucose units connected by an alpha-1,4-glycosidic linkage.' },
+{ id:'BM35', year:'2020', q:'Proteins that act as biological catalysts are called:', opts:['Hormones','Enzymes','Vitamins','Antibodies'], ans:1, sol:'Enzymes are specialized biological catalysts, almost all of which are globular proteins, that speed up biochemical reactions in living organisms.' },
+{ id:'BM36', year:'2019', q:'Which of the following statements about RNA is incorrect?', opts:['It has a single-stranded helix structure','It contains the base uracil instead of thymine','It controls the synthesis of proteins','It is the genetic material in all eukaryotic cells'], ans:3, sol:'DNA is the primary genetic material in eukaryotic cells, while RNA primarily functions in protein synthesis (transcription and translation). Some viruses have RNA as genetic material.' },
+{ id:'BM37', year:'2023', q:'The reaction of glucose with hydroxylamine (NH₂OH) produces:', opts:['Glucose cyanohydrin','Gluconic acid','Glucose oxime','Saccharic acid'], ans:2, sol:'Glucose reacts with hydroxylamine to form an oxime. This reaction confirms the presence of a carbonyl group (>C=O) in glucose.' },
+{ id:'BM38', year:'2022', q:'Animal starch is the common name for:', opts:['Cellulose','Amylopectin','Glycogen','Inulin'], ans:2, sol:'Glycogen is structurally similar to amylopectin but more highly branched. It is the storage form of carbohydrates in animals, hence called animal starch.' },
+{ id:'BM39', year:'2021', q:'Assertion (A): All naturally occurring monosaccharides are optically active. Reason (R): They all contain one or more chiral carbon atoms.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Every naturally occurring monosaccharide (like glyceraldehyde, glucose, etc.) has at least one chiral center, making them optically active.' },
+{ id:'BM40', year:'NEET Mock', q:'Which of the following bonds is NOT involved in stabilizing the tertiary structure of proteins?', opts:['Hydrogen bonds','Disulphide linkages','Phosphodiester bonds','Van der Waals forces'], ans:2, sol:'Phosphodiester bonds are found in nucleic acids (DNA/RNA) connecting nucleotides. Protein tertiary structure is stabilized by H-bonds, disulphide bonds, ionic bonds, and hydrophobic interactions.' },
+{ id:'BM41', year:'2020', q:'The correct name for the bond linking amino acids in a polypeptide chain is:', opts:['Amide bond','Ester bond','Ether bond','Glycosidic bond'], ans:0, sol:'A peptide bond is chemically an amide bond (-CONH-) formed between the carboxyl group of one amino acid and the amino group of another with the loss of water.' },
+{ id:'BM42', year:'2019', q:'Heating of DNA disrupts its double helix structure. This process is called:', opts:['Renaturation','Denaturation','Replication','Transcription'], ans:1, sol:'Heating DNA causes the hydrogen bonds between base pairs to break, leading to the unwinding and separation of the two strands. This is called denaturation or melting of DNA.' },
+{ id:'BM43', year:'2023', q:'Which class of carbohydrates cannot be further hydrolyzed to give simpler units of polyhydroxy aldehyde or ketone?', opts:['Oligosaccharides','Polysaccharides','Disaccharides','Monosaccharides'], ans:3, sol:'Monosaccharides (like glucose, fructose, ribose) are the simplest carbohydrates and cannot be hydrolyzed into smaller carbohydrate molecules.' },
+{ id:'BM44', year:'2022', q:'Coagulation of blood requires which of the following vitamins?', opts:['Vitamin A','Vitamin C','Vitamin K','Vitamin E'], ans:2, sol:'Vitamin K is a fat-soluble vitamin that is essential for the synthesis of prothrombin and other clotting factors, thus playing a key role in blood coagulation.' },
+{ id:'BM45', year:'2021', q:'Match the hormone with its function: (I) Insulin (II) Thyroxine (III) Adrenaline -> (P) Prepares body for emergency (Q) Controls metabolism (R) Regulates blood sugar', opts:['I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-P, III-Q'], ans:0, sol:'Insulin regulates blood glucose levels. Thyroxine controls general metabolism. Adrenaline (epinephrine) is the "fight or flight" hormone that prepares the body for emergencies.' }
+],
+
+};
+            
+            let collectedAll = [];
+            const subjects = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
+            for (let sub of subjects) {
+                const key = sub.toLowerCase();
+                const qList = questions[key] || [];
+                const mapped = qList.map(q => ({
+                    sub: sub,
+                    q: q.q,
+                    opts: q.opts,
+                    ans: q.ans !== undefined ? q.ans : -1,
+                    exp: q.sol || "No detailed explanation provided for this question."
+                }));
+                collectedAll = collectedAll.concat(mapped);
+            }
+            
+            QUESTIONS = collectedAll;
+            status = new Array(QUESTIONS.length).fill('not-visited');
+            answers = new Array(QUESTIONS.length).fill(null);
+            examView.innerHTML = origHtml;
+            
+            renderPalette();
+            loadQuestion(0);
+            startTimer();
+        } catch(e) {
+            examView.innerHTML = '<div style="text-align:center; padding:40px; color:red;">Failed to load PYQ data.</div>';
+            console.error(e);
+        }
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const h = Math.floor(timeLeft / 3600);
+            const m = Math.floor((timeLeft % 3600) / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerText').textContent = `${h > 0 ? h + ':' : ''}${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (timeLeft < 600) document.getElementById('timerText').style.color = '#ef4444';
+        }, 1000);
+    }
+
+    function renderPalette() {
+        const grid = document.getElementById('paletteGrid');
+        grid.innerHTML = '';
+        QUESTIONS.forEach((q, i) => {
+            const btn = document.createElement('div');
+            btn.className = `p-btn ${status[i]} ${i === currentIdx ? 'active' : ''}`;
+            btn.textContent = (i + 1).toString();
+            btn.id = `palBtn-${i}`;
+            btn.onclick = () => loadQuestion(i);
+            grid.appendChild(btn);
+        });
+        scrollPaletteToActive();
+        updateProgressBar();
+    }
+
+    function scrollPaletteToActive() {
+        const activeBtn = document.getElementById(`palBtn-${currentIdx}`);
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+
+    function updateProgressBar() {
+        const ans = status.filter(s => s === 'answered' || s === 'marked-answered').length;
+        const mark = status.filter(s => s === 'marked' || s === 'marked-answered').length;
+        const total = QUESTIONS.length;
+        const perc = (ans / total) * 100;
+        document.getElementById('progressBar').style.width = perc + '%';
+        document.getElementById('progressText').innerHTML = `<span>ANS: <b>${ans}</b></span> <span>MARKED: <b>${mark}</b></span> <span>TOTAL: <b>${total}</b></span>`;
+    }
+
+    function jumpToSubject(sub) {
+        const idx = QUESTIONS.findIndex(q => q.sub === sub);
+        if (idx !== -1) loadQuestion(idx);
+    }
+
+    function updateTabs() {
+        const sub = QUESTIONS[currentIdx].sub;
+        document.querySelectorAll('.s-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === sub);
+        });
+    }
+
+    function loadQuestion(idx) {
+        if (status[currentIdx] === 'not-visited') status[currentIdx] = 'not-answered';
+        currentIdx = idx;
+        const q = QUESTIONS[idx];
+        
+        document.getElementById('qSubject').textContent = q.sub;
+        document.getElementById('qCounter').textContent = `Question ${idx + 1}/${QUESTIONS.length}`;
+        document.getElementById('qText').innerHTML = q.q;
+        document.querySelector('.q-section').scrollTop = 0;
+
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        const letters = ['A','B','C','D'];
+        
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = `opt-btn ${userAnswers[idx] === i ? 'selected' : ''}`;
+            btn.innerHTML = `<div class="opt-letter">${letters[i]}</div> <span>${opt}</span>`;
+            btn.onclick = () => selectOption(i);
+            grid.appendChild(btn);
+        });
+
+        if (idx === QUESTIONS.length - 1) {
+            document.getElementById('btnSubmit').style.display = 'block';
+        }
+
+        updateTabs();
+        renderPalette();
+    }
+
+    function selectOption(optIdx) {
+        userAnswers[currentIdx] = optIdx;
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach((b, i) => b.classList.toggle('selected', i === optIdx));
+        
+        // Auto update status if marked, keep marked-answered
+        if (status[currentIdx] === 'marked' || status[currentIdx] === 'marked-answered') {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'answered';
+        }
+        renderPalette();
+    }
+
+    function handleClear() {
+        userAnswers[currentIdx] = null;
+        // If it was marked-answered, revert to marked. Otherwise not-answered.
+        status[currentIdx] = (status[currentIdx] === 'marked-answered') ? 'marked' : 'not-answered';
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach(b => b.classList.remove('selected'));
+        renderPalette();
+    }
+
+    function handleMark() {
+        if (userAnswers[currentIdx] !== null) {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'marked';
+        }
+        renderPalette();
+        if (currentIdx < QUESTIONS.length - 1) loadQuestion(currentIdx + 1);
+    }
+
+    function handleNext() {
+        if (userAnswers[currentIdx] === null && status[currentIdx] !== 'marked' && status[currentIdx] !== 'marked-answered') {
+            status[currentIdx] = 'not-answered';
+        }
+        if (currentIdx < QUESTIONS.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmSubmit();
+        }
+    }
+
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to submit the exam?")) {
+            submitExam();
+        }
+    }
+
+    function submitExam() {
+        clearInterval(timerInterval);
+        document.getElementById('examView').classList.add('hidden');
+        document.getElementById('actionButtons').classList.add('hidden');
+        document.getElementById('resultView').style.display = 'block';
+        renderResults();
+    }
+
+    function renderResults(filter = 'all') {
+        const container = document.getElementById('reviewContainer');
+        container.innerHTML = `<h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+            <div class="sub-tabs" style="margin-bottom:20px">
+                <div class="s-tab ${filter === 'all' ? 'active' : ''}" onclick="renderResults('all')">All</div>
+                <div class="s-tab ${filter === 'wrong' ? 'active' : ''}" onclick="renderResults('wrong')">Incorrect</div>
+                <div class="s-tab ${filter === 'correct' ? 'active' : ''}" onclick="renderResults('correct')">Correct</div>
+                <div class="s-tab ${filter === 'skipped' ? 'active' : ''}" onclick="renderResults('skipped')">Skipped</div>
+            </div>`;
+
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+
+        QUESTIONS.forEach((q, i) => {
+            if (userAnswers[i] === null) skipped++;
+            else if (userAnswers[i] === q.ans) correct++;
+            else wrong++;
+        });
+
+        const score = (correct * 4) - (wrong * 1);
+        document.getElementById('resScore').textContent = score;
+        document.getElementById('resCorrect').textContent = correct;
+        document.getElementById('resWrong').textContent = wrong;
+        document.getElementById('resSkipped').textContent = skipped;
+
+        QUESTIONS.forEach((q, i) => {
+            const isCorrect = userAnswers[i] === q.ans;
+            const isSkipped = userAnswers[i] === null;
+            
+            if (filter === 'wrong' && (isCorrect || isSkipped)) return;
+            if (filter === 'correct' && (!isCorrect || isSkipped)) return;
+            if (filter === 'skipped' && !isSkipped) return;
+
+            const item = document.createElement('div');
+            item.className = 'rev-item';
+            
+            let userAnsText = isSkipped ? 'Not Answered' : q.opts[userAnswers[i]];
+            let statusColor = isCorrect ? 'correct' : (isSkipped ? '' : 'wrong');
+            
+            item.innerHTML = `
+                <div class="rev-q"><span style="color:var(--text-sub)">#${i+1}</span> ${q.q}</div>
+                <div class="rev-ans ${statusColor}">
+                    <b>Your Answer:</b> ${userAnsText} ${isCorrect ? '✓' : ''}
+                </div>
+                ${!isCorrect ? `
+                <div class="rev-ans correct">
+                    <b>Correct Answer:</b> ${q.opts[q.ans]}
+                </div>` : ''}
+                <div class="rev-exp">
+                    <b>Explanation:</b> ${q.exp}
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function handleExit() {
+        if (confirm("Do you want to exit the mock test? Your progress will be lost.")) {
+            window.history.back();
+        }
+    }
+
+    init();
+</script>
+
+</body>
+</html>

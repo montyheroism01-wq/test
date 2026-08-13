@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEET Mock Test-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* DARK THEME (Cyber) */
+            --bg: #030712;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --card: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --marked: #8b5cf6;
+            --border: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00e5ff;
+            --neon-purple: #b388ff;
+        }
+
+        body.light {
+            /* LIGHT THEME (Professional) */
+            --bg: #f8fafc;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --neon-blue: #2563eb;
+            --neon-purple: #7c3aed;
+            --marked: #7c3aed;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); 
+            height: 100vh; height: 100dvh; display: flex; flex-direction: column; 
+            overflow: hidden; line-height: 1.5; 
+            transition: background 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 8px 16px; color: white;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 100; flex-shrink: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        body.light header { background: #fff; color: #000; border-bottom: 1.5px solid var(--border); }
+
+        .btn-theme { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 4px 8px; border-radius: 8px; color: #fff; font-size: 11px; cursor: pointer; }
+        body.light .btn-theme { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .btn-back { background: rgba(255,255,255,0.05); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: 1px solid var(--card-border); color: white; }
+        body.light .btn-back { background: #f1f5f9; color: #000; border-color: #cbd5e1; }
+        
+        .title { 
+            font-size: 14px; font-weight: 800; 
+            background: linear-gradient(90deg, #fff, var(--neon-blue));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        body.light .title { background: none; -webkit-text-fill-color: var(--primary); color: var(--primary); }
+        
+        .timer-box { 
+            background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 10px; 
+            font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--neon-blue);
+        }
+        body.light .timer-box { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; box-shadow: none; }
+
+        /* MAIN COLUMNAR LAYOUT */
+        main { 
+            flex: 1; display: flex; flex-direction: column; overflow: hidden; 
+            padding: 8px; gap: 8px; max-width: 600px; margin: 0 auto; width: 100%;
+        }
+
+        /* Progress Card - THIN */
+        .progress-card { 
+            background: var(--card); backdrop-filter: blur(10px);
+            padding: 8px 12px; border-radius: 12px; border: 1px solid var(--card-border); flex-shrink:0; 
+        }
+        .progress-container { 
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1); 
+            border-radius: 10px; margin: 4px 0; overflow: hidden; 
+        }
+        body.light .progress-container { background: #cbd5e1; }
+        .progress-fill { 
+            height: 100%; width: 0%; 
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: width 0.4s ease-out;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Question Section - Scrollable */
+        .q-section {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .q-card { 
+            background: var(--card); border-radius: 16px; padding: 16px; 
+            border: 1px solid var(--card-border); 
+            animation: fadeIn 0.4s ease-out;
+        }
+        body.light .q-card { box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .q-meta { font-size: 11px; font-weight: 800; color: var(--neon-blue); margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .q-text { font-size: 16px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; }
+        
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .opt-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: all 0.2s;
+            text-align: left; font-size: 14px; font-weight: 500; color: var(--text-main);
+        }
+        body.light .opt-btn { background: #fff; }
+        .opt-btn.selected { 
+            border-color: var(--primary); background: rgba(99, 102, 241, 0.1); 
+            color: var(--text-main);
+        }
+        body.light .opt-btn.selected { background: #eff6ff; }
+        
+        .opt-letter { 
+            width: 24px; height: 24px; min-width: 24px; border-radius: 6px; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 12px; border: 1px solid var(--card-border);
+        }
+        body.light .opt-letter { background: #f1f5f9; }
+
+        /* PALETTE - COMPACT */
+        .palette-card { 
+            background: var(--card); border-radius: 16px; padding: 10px; 
+            border: 1px solid var(--card-border); flex-shrink: 0; 
+        }
+        .palette-head { font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; display: flex; justify-content: space-between; letter-spacing: 0.5px; }
+        
+        .sub-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 10px; scrollbar-width: none; }
+        .s-tab { 
+            white-space: nowrap; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 800; 
+            background: rgba(255,255,255,0.05); color: var(--text-sub); cursor: pointer; border: 1px solid transparent;
+        }
+        body.light .s-tab { background: #f1f5f9; }
+        .s-tab.active { background: rgba(99, 102, 241, 0.1); color: var(--neon-blue); border-color: var(--primary); }
+
+        .palette-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; }
+        .p-btn { 
+            min-width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+            cursor: pointer; background: rgba(255,255,255,0.03); color: var(--text-sub);
+            transition: all 0.2s;
+        }
+        body.light .p-btn { background: #fff; border-color: #cbd5e1; }
+        
+        .p-btn.active { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0,229,255,0.05) !important; z-index: 10; transform: scale(1.1); }
+        .p-btn.answered { background: var(--success) !important; border-color: var(--success) !important; color: white !important; }
+        .p-btn.not-answered { background: var(--danger) !important; border-color: var(--danger) !important; color: white !important; }
+        .p-btn.marked { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; }
+        .p-btn.marked-answered { background: var(--marked) !important; border-color: var(--marked) !important; color: white !important; position: relative; }
+        .p-btn.marked-answered::after { 
+            content: '✓'; position: absolute; bottom: -2px; right: -2px; font-size: 8px; 
+            background: var(--success); width: 12px; height: 12px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--bg); 
+        }
+
+        /* LEGEND - Dots */
+        .legend { display: flex; justify-content: space-between; gap: 4px; border-top: 1px solid var(--card-border); padding-top: 8px; margin-top: 4px; }
+        .leg-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--text-sub); }
+        .leg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); }
+        body.light .leg-dot { border-color: rgba(0,0,0,0.1); }
+
+        /* ACTIONS FOOTER - COMPACT */
+        .actions {
+            background: var(--card); padding: 8px 16px; border-top: 1px solid var(--card-border);
+            display: flex; gap: 8px; flex-shrink: 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        .btn { flex: 1; padding: 10px 4px; border-radius: 12px; font-size: 13px; font-weight: 800; border: none; cursor: pointer; }
+        .btn-outline { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--card-border); }
+        body.light .btn-outline { background: #fff; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+
+        /* RESULT VIEW stays full screen */
+        #resultView {
+            position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto;
+            padding: 20px 16px; display: none;
+        }
+        .res-hero { 
+            background: var(--card); border-radius: 24px; padding: 30px 20px; text-align: center; 
+            border: 1px solid var(--card-border); margin-bottom: 20px; 
+        }
+        body.light .res-hero { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+        .res-score { font-size: 48px; font-weight: 950; color: var(--text-main); }
+        .res-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 24px; }
+        .rs-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px; border: 1px solid var(--card-border); }
+        body.light .rs-item { background: #fff; }
+
+        .rs-val { font-size: 18px; font-weight: 800; display: block; color: var(--text-main); }
+        .rs-lbl { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-top: 2px; }
+
+        .rev-item { 
+            background: rgba(255,255,255,0.03); border-radius: 18px; padding: 16px; 
+            border: 1px solid var(--card-border); margin-bottom: 12px; 
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        body.light .rev-item { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+
+        .rev-q { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-main); line-height: 1.5; }
+        .rev-ans { padding: 10px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 10px; border: 1px solid transparent; }
+        .rev-ans.correct { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.2); }
+        body.light .rev-ans.correct { background: #ecfdf5; color: #065f46; }
+
+        .rev-ans.wrong { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.2); }
+        body.light .rev-ans.wrong { background: #fef2f2; color: #991b1b; }
+
+        .rev-exp { font-size: 13px; color: var(--text-sub); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); }
+        body.light .rev-exp { background: #f8fafc; }
+
+        .hidden { display: none !important; }
+    </style>
+
+    <script>
+    // Auto theme sync from main app
+    (function(){
+      var th = localStorage.getItem('_th');
+      if(th === 'light'){
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+        // try data-theme too
+        document.body.dataset.theme = 'light';
+      } else {
+        document.body.dataset.theme = 'dark';
+      }
+    })();
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <button class="btn-back" onclick="handleExit()">✕</button>
+        <div class="title">NEET PYQ Paper</div>
+    </div>
+    <div class="timer-box">
+        <span id="timerText">200:00</span>
+    </div>
+</header>
+
+<main id="examView">
+    <!-- Progress Section -->
+    <div class="progress-card" style="display:flex; align-items:center; gap:12px">
+        <div style="flex:1">
+            <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--text-sub); margin-bottom:2px">
+                <span>PROGRESS</span>
+                <span id="progressText">0/180</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        <button class="btn-theme" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
+    </div>
+
+    <!-- Scrollable Question Area -->
+    <div class="q-section">
+        <div class="q-card">
+            <div class="q-meta">
+                <span id="qSubject" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:10px">Subject</span>
+                <span id="qCounter" style="color:var(--text-sub)">Question 1/180</span>
+            </div>
+            <div class="q-text" id="qText">Loading question...</div>
+            <div class="options-list" id="optionsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Fixed Status Area -->
+    <div class="palette-card">
+        <div class="palette-head">
+            Quick Palette
+            <span style="font-size:10px; color:var(--primary)">Slide to browse </span>
+        </div>
+        
+        <div class="sub-tabs">
+            <div class="s-tab active" onclick="jumpToSubject('Botany')">Botany</div>
+            <div class="s-tab" onclick="jumpToSubject('Zoology')">Zoology</div>
+            <div class="s-tab" onclick="jumpToSubject('Physics')">Physics</div>
+            <div class="s-tab" onclick="jumpToSubject('Chemistry')">Chemistry</div>
+        </div>
+
+        <div class="palette-scroll" id="paletteGrid"></div>
+        
+        <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,0.03); border:1px solid #555"></div> Not Visited</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div> Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--danger)"></div> Not Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--marked)"></div> Marked</div>
+        </div>
+    </div>
+</main>
+
+<footer class="actions" id="actionButtons">
+    <button class="btn btn-outline" style="flex:0.6" onclick="handleClear()">Clear</button>
+    <button class="btn btn-warning" onclick="handleMark()">Mark</button>
+    <button class="btn btn-primary" onclick="handleNext()">Save & Next</button>
+    <button class="btn btn-outline" id="btnSubmit" style="background:#1e293b; color:white; flex:0.4; display:none;" onclick="confirmSubmit()">Submit</button>
+</footer>
+
+<!-- RESULT VIEW -->
+<div id="resultView">
+    <div class="res-hero">
+        <div class="res-score" id="resScore">00</div>
+        <div class="res-lbl">Final NEET Score</div>
+        <div class="res-stats">
+            <div class="rs-item"><span class="rs-val" style="color:var(--success)" id="resCorrect">0</span><span class="rs-lbl">Correct</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--danger)" id="resWrong">0</span><span class="rs-lbl">Wrong</span></div>
+            <div class="rs-item"><span class="rs-val" style="color:var(--text-sub)" id="resSkipped">0</span><span class="rs-lbl">Skipped</span></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:20px; width:100%" onclick="window.close() || alert('Please use back button to exit.')">Close Result</button>
+    </div>
+    
+    <div id="reviewContainer">
+        <h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+    </div>
+</div>
+
+<script>
+    let QUESTIONS = [];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let status = new Array(QUESTIONS.length).fill('not-visited');
+            answers = new Array(QUESTIONS.length).fill(null); 
+    let timeLeft = 200 * 60; // 3 Hours
+    let timerInterval;
+
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        const isLight = document.body.classList.contains('light');
+        document.getElementById('themeToggleBtn').textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        localStorage.setItem('_th', isLight ? 'light' : 'dark');
+    }
+
+    async function init() {
+        const savedTheme = localStorage.getItem('_th');
+        if (savedTheme === 'light') toggleTheme();
+        
+        // Show loading screen
+        const examView = document.getElementById('examView');
+        const origHtml = examView.innerHTML;
+        examView.innerHTML = '<div style="text-align:center; padding:40px; font-weight:600; color:var(--neon-blue); font-size:18px;">Loading 200 Real NEET Questions...<br>Please wait...</div>';
+
+        try {
+            const questions = {
+
+botany: [
+{ id:'PP1', year:'2023', q:'Assertion (A): Six molecules of CO2 and twelve molecules of NADPH are required to make one molecule of glucose. Reason (R): The Calvin cycle operates six times to synthesize one molecule of glucose.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:1, sol:'To make one molecule of glucose (a 6-carbon sugar), the Calvin cycle must turn six times. Each turn fixes one CO2 and uses 2 NADPH and 3 ATP. So for 6 turns, 6 CO2, 12 NADPH, and 18 ATP are required. R is true, but it doesn\'t explain why specifically 12 NADPH are used per CO2.' },
+{ id:'PP2', year:'2022', q:'In the leaves of C4 plants, malic acid formation during CO2 fixation occurs in the cells of:', opts:['Epidermis','Mesophyll','Bundle sheath','Phloem'], ans:1, sol:'In C4 plants, the primary CO2 acceptor is PEP, which is converted to OAA and then to malic acid (or aspartic acid) in the mesophyll cells. This malic acid is then transported to the bundle sheath cells.' },
+{ id:'PP3', year:'2021', q:'Match the following related to Photosynthesis: (I) RuBisCO (II) PEP Case (III) Oxygen evolving complex -> (P) Thylakoid lumen (Q) Bundle sheath cells in C4 plants (R) Mesophyll cells in C4 plants', opts:['I-R, II-P, III-Q','I-Q, II-R, III-P','I-P, II-Q, III-R','I-Q, II-P, III-R'], ans:1, sol:'RuBisCO is found in bundle sheath cells in C4 plants (Q). PEP Case is found in mesophyll cells of C4 plants (R). The oxygen-evolving complex is located on the inner side of the thylakoid membrane facing the lumen (P).' },
+{ id:'PP4', year:'2020', q:'The first stable product of the Calvin cycle (C3 cycle) is:', opts:['Phosphoglyceraldehyde (PGAL)','Phosphoenolpyruvate (PEP)','3-Phosphoglyceric acid (3-PGA)','Oxaloacetic acid (OAA)'], ans:2, sol:'During the carboxylation step of the Calvin cycle, RuBP combines with CO2 to form two molecules of 3-Phosphoglyceric acid (3-PGA), making it the first stable product.' },
+{ id:'PP5', year:'NEET Mock', q:'The splitting of water during photosynthesis is associated with:', opts:['Photosystem I','Photosystem II','Both PSI and PSII','Cytochrome b6f complex'], ans:1, sol:'The water-splitting complex is associated with Photosystem II (PSII), which itself is physically located on the inner side of the membrane of the thylakoid. It provides electrons to replace those lost by PSII.' },
+{ id:'PP6', year:'2019', q:'Which of the following is NOT true regarding cyclic photophosphorylation?', opts:['Only PSI is functional','It occurs in the stroma lamellae','Both ATP and NADPH are synthesized','It involves the synthesis of ATP only'], ans:2, sol:'In cyclic photophosphorylation, only PSI is involved. The excited electron cycles back to PSI, resulting only in the synthesis of ATP, but NOT NADPH.' },
+{ id:'PP7', year:'2023', q:'According to Blackman\'s Law of Limiting Factors, if a chemical process is affected by more than one factor, then its rate will be determined by the factor which is:', opts:['Nearest to its maximum value','Nearest to its minimal value','Most abundant in the environment','Least abundant in the environment'], ans:1, sol:'Blackman\'s law (1905) states that when a biological process is conditioned by multiple factors, its rate is limited by the pace of the slowest factor (the one nearest to its minimal value).' },
+{ id:'PP8', year:'2022', q:'In C4 plants, the Calvin pathway takes place in:', opts:['Mesophyll cells','Bundle sheath cells','Both mesophyll and bundle sheath cells','Epidermal cells'], ans:1, sol:'In C4 plants, the light-independent reactions (Calvin cycle or C3 pathway) occur specifically in the agranal chloroplasts of the bundle sheath cells, where RuBisCO is present.' },
+{ id:'PP9', year:'2021', q:'Statement I: Photorespiration is a wasteful process. Statement II: In the photorespiratory pathway, there is no synthesis of ATP or NADPH.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Photorespiration is considered wasteful because it neither synthesizes sugars nor ATP/NADPH. Instead, it results in the release of CO2 with the utilization of ATP.' },
+{ id:'PP10', year:'2020', q:'The primary CO2 acceptor in C3 plants and C4 plants respectively are:', opts:['RuBP and PEP','PEP and RuBP','3-PGA and OAA','RuBP and OAA'], ans:0, sol:'In C3 plants, the primary acceptor is Ribulose-1,5-bisphosphate (RuBP), a 5-carbon compound. In C4 plants, it is Phosphoenolpyruvate (PEP), a 3-carbon compound.' },
+{ id:'PP11', year:'NEET Mock', q:'During non-cyclic photophosphorylation, the final electron acceptor is:', opts:['NADP+','Oxygen','Cytochrome f','Plastoquinone'], ans:0, sol:'In the Z-scheme (non-cyclic photophosphorylation), electrons from PSII pass to PSI, and from PSI they are finally accepted by NADP+ to form NADPH + H+.' },
+{ id:'PP12', year:'2019', q:'The action spectrum of photosynthesis was first described by:', opts:['Julius von Sachs','T.W. Engelmann','Jan Ingenhousz','Cornelius van Niel'], ans:1, sol:'T.W. Engelmann used a prism to split light and illuminated a green alga (Cladophora) placed in a suspension of aerobic bacteria to discover the action spectrum, which roughly matched the absorption spectra of chlorophyll a and b.' },
+{ id:'PP13', year:'2023', q:'Anatomy characterizing C4 plants is known as:', opts:['Bundle sheath anatomy','Kranz anatomy','Spongy anatomy','Palisade anatomy'], ans:1, sol:'The particularly large cells around the vascular bundles of C4 plants are called bundle sheath cells, and the wreath-like arrangement is called Kranz anatomy. It helps in concentrating CO2.' },
+{ id:'PP14', year:'2022', q:'At what concentration of CO2 do C3 plants show saturation?', opts:['360 µlL-1','450 µlL-1','100 µlL-1','500 µlL-1'], ans:1, sol:'C3 plants show CO2 saturation at a relatively higher concentration of about 450 µlL-1, while C4 plants show saturation at about 360 µlL-1.' },
+{ id:'PP15', year:'2021', q:'Assertion (A): Chloroplasts in the bundle sheath cells of C4 plants lack grana. Reason (R): This prevents the production of oxygen, which would competitively inhibit RuBisCO.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Agranal chloroplasts in bundle sheath cells lack PSII, meaning no photolysis of water and no oxygen evolution occurs here. This maintains a high CO2/O2 ratio, preventing photorespiration by RuBisCO.' },
+{ id:'PP16', year:'2020', q:'Which metal ion is a constituent of the oxygen-evolving complex?', opts:['Iron','Copper','Manganese','Zinc'], ans:2, sol:'Manganese (Mn2+), along with Calcium and Chloride ions, plays a crucial role in the photolysis of water by the oxygen-evolving complex during photosynthesis.' },
+{ id:'PP17', year:'NEET Mock', q:'The chemiosmotic hypothesis of ATP synthesis in chloroplasts requires all of the following EXCEPT:', opts:['A membrane','A proton pump','A proton gradient','A high concentration of NADP+'], ans:3, sol:'Chemiosmosis requires a membrane, a proton pump, a proton gradient (accumulation of protons in the lumen), and ATP synthase. It does not explicitly require a high concentration of NADP+.' },
+{ id:'PP18', year:'2019', q:'Match the pigments with their colors in the chromatogram: (I) Chlorophyll a (II) Chlorophyll b (III) Xanthophylls -> (P) Yellow to yellow-orange (Q) Yellow-green (R) Bright or blue-green', opts:['I-R, II-Q, III-P','I-Q, II-P, III-R','I-P, II-Q, III-R','I-R, II-P, III-Q'], ans:0, sol:'Chlorophyll a shows bright/blue-green (R). Chlorophyll b shows yellow-green (Q). Xanthophylls show yellow color, while Carotenes are yellow to yellow-orange (P represents general carotenoids, but here xanthophyll fits P best with yellow context).' },
+{ id:'PP19', year:'2023', q:'In CAM plants, stomata:', opts:['Are always open','Open during the day and close at night','Open at night and close during the day','Never open'], ans:2, sol:'Crassulacean Acid Metabolism (CAM) plants (like cacti) keep their stomata open at night to fix CO2 (scotoactive stomata) and close them during the day to prevent water loss.' },
+{ id:'PP20', year:'2022', q:'Which of the following is a 4-carbon compound?', opts:['Phosphoenolpyruvate','Oxaloacetic acid','Ribulose bisphosphate','Phosphoglyceric acid'], ans:1, sol:'Oxaloacetic acid (OAA) is a 4-carbon compound, which is the first stable product in the C4 pathway. PEP is 3C, RuBP is 5C, and PGA is 3C.' },
+{ id:'PP21', year:'2021', q:'Statement I: Chlorophyll a is the chief pigment associated with photosynthesis. Statement II: In the blue and red regions of the spectrum, there is maximum absorption by chlorophyll a.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both statements are correct. Chlorophyll a is the primary reaction center pigment and its absorption peaks in the blue and red regions, which correlates directly with the highest rates of photosynthesis.' },
+{ id:'PP22', year:'2020', q:'RuBisCO has the highest affinity for CO2 compared to O2, but the binding depends on:', opts:['Temperature','Light intensity','Relative concentration of O2 and CO2','Availability of water'], ans:2, sol:'RuBisCO acts as both a carboxylase and an oxygenase. The competitive binding is determined primarily by the relative concentration of O2 and CO2 at the enzyme site.' },
+{ id:'PP23', year:'2023', q:'Glycolysis is also known as the EMP pathway. It was discovered by:', opts:['Embden, Meyerhof, and Parnas','Emerson, Melvin, and Peter','Embden, Mitchell, and Parnas','Emerson, Meyerhof, and Peter'], ans:0, sol:'The scheme of glycolysis was given by Gustav Embden, Otto Meyerhof, and J. Parnas, and is often referred to as the EMP pathway.' },
+{ id:'PP24', year:'2022', q:'In glycolysis, during the conversion of fructose-1,6-bisphosphate to triose phosphates, the enzyme involved is:', opts:['Hexokinase','Aldolase','Enolase','Pyruvate kinase'], ans:1, sol:'Aldolase splits the 6-carbon Fructose-1,6-bisphosphate into two 3-carbon molecules: PGAL (Phosphoglyceraldehyde) and DHAP (Dihydroxyacetone phosphate).' },
+{ id:'PP25', year:'2021', q:'Which of the following connects glycolysis and the Krebs cycle?', opts:['Citric acid','Acetyl CoA','Pyruvic acid','Oxaloacetic acid'], ans:1, sol:'Pyruvic acid formed in glycolysis enters the mitochondrial matrix and undergoes oxidative decarboxylation to form the 2-carbon compound Acetyl CoA, which acts as the connecting link to the Krebs cycle.' },
+{ id:'PP26', year:'2020', q:'Assertion (A): Respiration is an amphibolic pathway. Reason (R): The respiratory pathway is involved in both catabolism (breakdown) and anabolism (synthesis) of cellular molecules.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Traditionally considered a catabolic pathway, the respiratory pathway provides carbon skeletons for the synthesis of other molecules (e.g., Acetyl CoA for fatty acids). Hence, it is correctly called an amphibolic pathway.' },
+{ id:'PP27', year:'NEET Mock', q:'Match the enzymes of the TCA cycle with their products: (I) Citrate synthase (II) Isocitrate dehydrogenase (III) Succinate dehydrogenase -> (P) Alpha-ketoglutarate (Q) Fumarate (R) Citric acid', opts:['I-R, II-P, III-Q','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-Q, III-P'], ans:0, sol:'Citrate synthase condenses Acetyl CoA and OAA to form Citric acid (R). Isocitrate dehydrogenase acts on isocitrate to form Alpha-ketoglutarate (P). Succinate dehydrogenase converts succinate to fumarate (Q).' },
+{ id:'PP28', year:'2019', q:'In the electron transport system (ETS), Complex IV refers to:', opts:['NADH dehydrogenase','Succinate dehydrogenase','Cytochrome bc1 complex','Cytochrome c oxidase'], ans:3, sol:'Complex I is NADH dehydrogenase, Complex II is Succinate dehydrogenase, Complex III is Cytochrome bc1 complex, and Complex IV is Cytochrome c oxidase (contains cytochromes a and a3, and two copper centers).' },
+{ id:'PP29', year:'2023', q:'Which of the following acts as the final electron acceptor in aerobic respiration?', opts:['NAD+','FAD','Oxygen','Water'], ans:2, sol:'Molecular oxygen (O2) acts as the final hydrogen and electron acceptor in the electron transport chain, getting reduced to form metabolic water.' },
+{ id:'PP30', year:'2022', q:'How many ATP molecules are directly synthesized during one turn of the Krebs cycle via substrate-level phosphorylation?', opts:['One','Two','Three','Four'], ans:0, sol:'During the conversion of succinyl-CoA to succinic acid in the Krebs cycle, one molecule of GTP is synthesized, which transfers its phosphate to ADP to form one ATP directly (substrate-level phosphorylation).' },
+{ id:'PP31', year:'2021', q:'The respiratory quotient (RQ) value of tripalmitin (a fat) is approximately:', opts:['1.0','0.7','0.9','Infinity'], ans:1, sol:'Fats have an RQ less than 1 because they contain less oxygen in their structure and require more O2 for complete oxidation. The RQ for tripalmitin is roughly 0.7.' },
+{ id:'PP32', year:'2020', q:'Which of the following is formed during anaerobic respiration in human muscle cells during strenuous exercise?', opts:['Ethanol and CO2','Lactic acid','Acetic acid','Citric acid'], ans:1, sol:'During intense exercise, oxygen supply is inadequate, so muscle cells undergo lactic acid fermentation, reducing pyruvic acid to lactic acid by the enzyme lactate dehydrogenase.' },
+{ id:'PP33', year:'NEET Mock', q:'Statement I: Glycolysis occurs in the cytoplasm of the cell and is present in all living organisms. Statement II: Glycolysis requires oxygen to proceed.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Statement I is true. Statement II is false because glycolysis is an anaerobic process; it does not require molecular oxygen to break down glucose into pyruvic acid.' },
+{ id:'PP34', year:'2019', q:'In the mitochondrial ETS, ubiquinone receives reducing equivalents via:', opts:['Complex I only','Complex II only','Both Complex I and Complex II','Complex III'], ans:2, sol:'Ubiquinone (Coenzyme Q) is a mobile carrier that receives electrons from NADH via Complex I and from FADH2 via Complex II.' },
+{ id:'PP35', year:'2023', q:'Which step of glycolysis is catalyzed by the enzyme hexokinase?', opts:['Glucose to Glucose-6-phosphate','Fructose-6-phosphate to Fructose-1,6-bisphosphate','PEP to Pyruvic acid','PGAL to 1,3-bisphosphoglycerate'], ans:0, sol:'Hexokinase catalyzes the very first step of glycolysis, phosphorylating Glucose to form Glucose-6-phosphate at the expense of one ATP molecule.' },
+{ id:'PP36', year:'2022', q:'During the complete oxidation of one molecule of glucose, how many NADH + H+ molecules are produced in the Krebs cycle (including the link reaction)?', opts:['6','8','10','2'], ans:1, sol:'Link reaction (Pyruvate -> Acetyl CoA) produces 1 NADH per pyruvate (total 2). Krebs cycle produces 3 NADH per turn (total 6 for two turns). So, 2 + 6 = 8 NADH + H+ are produced.' },
+{ id:'PP37', year:'2021', q:'Assertion (A): ATP acts as the energy currency of the cell. Reason (R): Energy released during respiration is trapped as chemical bonds in the form of ATP.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'The energy released by the breakdown of respiratory substrates is not used directly; it is used to synthesize ATP, which is broken down whenever and wherever energy needs to be utilized.' },
+{ id:'PP38', year:'2020', q:'RQ is infinity in which of the following conditions?', opts:['Aerobic respiration of carbohydrates','Aerobic respiration of organic acids','Anaerobic respiration','Aerobic respiration of proteins'], ans:2, sol:'In anaerobic respiration (fermentation), CO2 is evolved without the consumption of oxygen (O2 = 0). Since RQ = CO2 evolved / O2 consumed, anything divided by zero is infinity.' },
+{ id:'PP39', year:'NEET Mock', q:'The complete breakdown of pyruvate in the mitochondrial matrix involves the stepwise removal of all the hydrogen atoms, leaving:', opts:['Two molecules of CO2','Three molecules of CO2','Four molecules of CO2','Six molecules of CO2'], ans:1, sol:'Each pyruvate molecule (3-carbon) is completely broken down to yield 3 molecules of CO2 (1 during the link reaction and 2 during the Krebs cycle).' },
+{ id:'PP40', year:'2019', q:'Cytochrome c is a small protein attached to the outer surface of the inner mitochondrial membrane and acts as a mobile carrier for transfer of electrons between:', opts:['Complex I and II','Complex II and III','Complex III and IV','Complex IV and oxygen'], ans:2, sol:'Cytochrome c is a mobile electron carrier that transfers electrons from Complex III (Cytochrome bc1 complex) to Complex IV (Cytochrome c oxidase).' },
+{ id:'PP41', year:'2023', q:'Which of the following enzymes catalyzes the conversion of Pyruvate to Acetyl CoA?', opts:['Pyruvate kinase','Pyruvate dehydrogenase','Lactate dehydrogenase','Citrate synthase'], ans:1, sol:'The oxidative decarboxylation of pyruvate to form Acetyl CoA is catalyzed by a complex enzyme called pyruvate dehydrogenase, requiring several coenzymes including NAD+ and Coenzyme A.' },
+{ id:'PP42', year:'2022', q:'In fermentation by yeast, the incomplete oxidation of glucose is achieved under anaerobic conditions by sets of reactions where pyruvic acid is converted to:', opts:['CO2 and ethanol','Lactic acid and H2O','Citric acid and CO2','Acetyl CoA and CO2'], ans:0, sol:'In alcoholic fermentation, yeast cells convert pyruvic acid into CO2 and ethanol using the enzymes pyruvic acid decarboxylase and alcohol dehydrogenase.' },
+{ id:'PP43', year:'2021', q:'During oxidative phosphorylation, the passage of protons through the F0 channel is coupled to the catalytic site of F1 for the production of ATP. How many protons (H+) must pass through the F0 from the intermembrane space to the matrix to synthesize one ATP?', opts:['1','2','3','4'], ans:1, sol:'According to NCERT, the passage of 2H+ through the F0 channel down the electrochemical gradient is coupled with the synthesis of 1 ATP molecule by the F1 particle.' },
+{ id:'PP44', year:'2020', q:'The net gain of ATP molecules during glycolysis for one molecule of glucose is:', opts:['4','2','8','38'], ans:1, sol:'During glycolysis, 4 ATP are formed directly via substrate-level phosphorylation, but 2 ATP are consumed in the preparatory phase. Hence, the net gain is 2 ATP molecules.' },
+{ id:'PP45', year:'NEET Mock', q:'Match the respiratory substrates with their approximate RQ values: (I) Carbohydrates (II) Proteins (III) Organic acids -> (P) 0.9 (Q) >1.0 (R) 1.0', opts:['I-R, II-P, III-Q','I-Q, II-R, III-P','I-P, II-Q, III-R','I-R, II-Q, III-P'], ans:0, sol:'Carbohydrates have an RQ of exactly 1.0 (R). Proteins have an RQ of about 0.9 (P). Organic acids (like malic acid) contain more oxygen, so their RQ is greater than 1 (Q).' }
+],
+
+zoology: [
+{ id:'HP1', year:'2023', q:'Assertion (A): The opening of the windpipe (trachea) is covered by a cartilaginous flap called the epiglottis. Reason (R): It prevents the entry of food into the larynx during swallowing.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'The epiglottis is a thin cartilaginous flap that acts as a lid over the glottis, preventing food from entering the respiratory tract during swallowing.' },
+{ id:'HP2', year:'2022', q:'Match the respiratory volumes with their normal values: (I) Tidal Volume (II) Residual Volume (III) Vital Capacity -> (P) 1100-1200 mL (Q) 500 mL (R) 4000-4600 mL', opts:['I-Q, II-P, III-R','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-R, III-P'], ans:0, sol:'Tidal Volume (TV) is approx 500 mL. Residual Volume (RV) is 1100-1200 mL. Vital Capacity (VC = ERV + TV + IRV) is around 4000-4600 mL.' },
+{ id:'HP3', year:'2021', q:'The partial pressure of oxygen (pO2) in the alveolar air and oxygenated blood respectively are:', opts:['104 mmHg and 40 mmHg','40 mmHg and 95 mmHg','104 mmHg and 95 mmHg','159 mmHg and 104 mmHg'], ans:2, sol:'In the alveoli, the pO2 is 104 mmHg. In oxygenated blood (systemic arteries), it drops slightly to 95 mmHg.' },
+{ id:'HP4', year:'2020', q:'Statement I: Inspiration occurs when the pressure within the lungs is less than the atmospheric pressure. Statement II: Contraction of the diaphragm increases the volume of the thoracic chamber in the antero-posterior axis.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Inspiration is driven by a negative pressure gradient. The contraction of the diaphragm flattens it, increasing thoracic volume in the antero-posterior axis.' },
+{ id:'HP5', year:'NEET Mock', q:'Approximately what percentage of CO2 is transported in the blood in the form of bicarbonate ions?', opts:['7%','20-25%','70%','97%'], ans:2, sol:'About 70% of CO2 is transported as bicarbonate (HCO3-) ions with the help of the enzyme carbonic anhydrase. 20-25% binds to Hb as carbaminohemoglobin, and 7% is dissolved in plasma.' },
+{ id:'HP6', year:'2019', q:'Which of the following factors is NOT favorable for the formation of oxyhemoglobin in the alveoli?', opts:['High pO2','Low pCO2','Lesser H+ concentration','Higher temperature'], ans:3, sol:'Formation of oxyhemoglobin in the alveoli is favored by high pO2, low pCO2, low H+ concentration (higher pH), and lower temperature. Higher temperature shifts the dissociation curve to the right (promotes dissociation).' },
+{ id:'HP7', year:'2023', q:'Asthma is a respiratory disease characterized by:', opts:['Damage to alveolar walls','Spasm of smooth muscles in bronchi and bronchioles','Fibrosis of lung tissue','Accumulation of fluid in the pleural cavity'], ans:1, sol:'Asthma is a difficulty in breathing causing wheezing due to inflammation and spasm of bronchi and bronchioles.' },
+{ id:'HP8', year:'2022', q:'A shift of the oxygen dissociation curve to the right indicates:', opts:['Increased affinity of Hb for O2','Decreased affinity of Hb for O2','Decrease in pCO2','Increase in pH'], ans:1, sol:'A right shift (Bohr effect) means that hemoglobin has a decreased affinity for oxygen, promoting the release of O2 to the tissues. It is caused by high pCO2, high H+ (low pH), and high temperature.' },
+{ id:'HP9', year:'2021', q:'The respiratory rhythm centre, primarily responsible for regulating respiration, is located in the:', opts:['Pons','Cerebrum','Medulla oblongata','Cerebellum'], ans:2, sol:'A specialized centre present in the medulla region of the brain called the respiratory rhythm centre is primarily responsible for the normal regulation of respiration.' },
+{ id:'HP10', year:'2020', q:'Which of the following occupational respiratory disorders is caused by the inhalation of silica dust?', opts:['Silicosis','Emphysema','Asthma','Pneumonia'], ans:0, sol:'Prolonged exposure to dust in industries involving grinding or stone-breaking leads to occupational respiratory disorders like silicosis or asbestosis, characterized by fibrosis.' },
+{ id:'HP11', year:'NEET Mock', q:'Assertion (A): Emphysema is a chronic disorder heavily associated with cigarette smoking. Reason (R): In emphysema, alveolar walls are damaged resulting in decreased respiratory surface area.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Cigarette smoking is the major cause of emphysema. It destroys the alveolar walls, merging tiny alveoli into larger ones, drastically reducing the surface area for gas exchange.' },
+{ id:'HP12', year:'2019', q:'The maximum volume of air a person can breathe in after a forced expiration is known as:', opts:['Total Lung Capacity','Vital Capacity','Inspiratory Capacity','Functional Residual Capacity'], ans:1, sol:'Vital Capacity (VC) is the maximum volume of air a person can breathe in after a forced expiration (ERV + TV + IRV), or the maximum volume they can breathe out after a forced inspiration.' },
+{ id:'HP13', year:'2023', q:'The diffusion membrane for gas exchange is made up of three major layers. Which of the following is NOT one of them?', opts:['Thin squamous epithelium of alveoli','Endothelium of alveolar capillaries','Smooth muscle layer of bronchioles','Basement substance in between'], ans:2, sol:'The diffusion membrane consists of: 1) squamous epithelium of alveoli, 2) endothelium of alveolar capillaries, and 3) the basement substance connecting them. Smooth muscles are not part of the diffusion membrane.' },
+{ id:'HP14', year:'2022', q:'Statement I: The solubility of CO2 is 20-25 times higher than that of O2. Statement II: The amount of CO2 that can diffuse through the diffusion membrane per unit difference in partial pressure is much higher compared to that of O2.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Because CO2 is 20-25 times more soluble than O2, a much larger volume of CO2 diffuses across the membrane for the same partial pressure difference compared to O2.' },
+{ id:'HP15', year:'2021', q:'Enzyme carbonic anhydrase is highly concentrated in:', opts:['Blood plasma','RBCs','White blood cells','Platelets'], ans:1, sol:'RBCs contain a very high concentration of the enzyme carbonic anhydrase. Minute quantities of the same are also present in the blood plasma.' },
+{ id:'HP16', year:'2020', q:'The chemosensitive area situated adjacent to the rhythm centre is highly sensitive to:', opts:['O2 and CO2','CO2 and H+ ions','O2 and H+ ions','N2 and CO2'], ans:1, sol:'A chemosensitive area is situated adjacent to the rhythm centre which is highly sensitive to CO2 and hydrogen ions. Increase in these substances activates the centre to signal the elimination of these gases.' },
+{ id:'HP17', year:'NEET Mock', q:'In carbon monoxide poisoning, there is:', opts:['Increase in carbon dioxide concentration','Decrease in oxygen carrying capacity of blood','Increase in oxygen carrying capacity of blood','Damage to the alveolar walls'], ans:1, sol:'Carbon monoxide has an affinity for hemoglobin ~250 times greater than oxygen. It forms stable carboxyhemoglobin, drastically reducing the oxygen-carrying capacity of the blood.' },
+{ id:'HP18', year:'2019', q:'Total lung capacity is mathematically expressed as:', opts:['VC + RV','ERV + RV','IRV + TV','IC + FRC'], ans:0, sol:'Total Lung Capacity (TLC) is the total volume of air accommodated in the lungs at the end of a forced inspiration. TLC = RV + ERV + TV + IRV = VC + RV.' },
+{ id:'HP19', year:'2023', q:'Match the following: (I) Tidal volume (II) Inspiratory reserve volume (III) Expiratory reserve volume -> (P) 2500-3000 mL (Q) 1000-1100 mL (R) 500 mL', opts:['I-R, II-P, III-Q','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-Q, III-P'], ans:0, sol:'TV is 500 mL (R). IRV is 2500-3000 mL (P). ERV is 1000-1100 mL (Q).' },
+{ id:'HP20', year:'2022', q:'The \'pneumotaxic centre\' which can moderate the functions of the respiratory rhythm centre is present in the:', opts:['Medulla','Cerebellum','Pons','Hypothalamus'], ans:2, sol:'The pneumotaxic centre is located in the pons region of the brain. Neural signals from this centre can reduce the duration of inspiration, thereby altering the respiratory rate.' },
+{ id:'HP21', year:'2021', q:'When 100 mL of oxygenated blood is delivered to the tissues under normal physiological conditions, how much O2 is delivered?', opts:['20 mL','5 mL','4 mL','10 mL'], ans:1, sol:'Every 100 mL of oxygenated blood can deliver around 5 mL of O2 to the tissues under normal physiological conditions.' },
+{ id:'HP22', year:'2020', q:'A specialized structure in insects used for respiration is:', opts:['Book lungs','Gills','Tracheal tubes','Cuticle'], ans:2, sol:'Insects have a network of tubes called tracheal tubes to transport atmospheric air within the body.' },
+{ id:'HP23', year:'2023', q:'Serum differs from blood plasma in that it:', opts:['Lacks globulins','Lacks albumins','Lacks clotting factors','Has more water'], ans:2, sol:'Plasma without the clotting factors (like fibrinogen) is called serum. It cannot clot.' },
+{ id:'HP24', year:'2022', q:'Match the leucocytes with their major function: (I) Neutrophils (II) Basophils (III) Eosinophils -> (P) Associated with allergic reactions (Q) Phagocytosis (R) Secrete histamine and heparin', opts:['I-Q, II-R, III-P','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-P, III-R'], ans:0, sol:'Neutrophils are highly phagocytic (Q). Basophils secrete histamine, serotonin, heparin and are involved in inflammatory reactions (R). Eosinophils resist infections and are associated with allergic reactions (P).' },
+{ id:'HP25', year:'2021', q:'Which blood group is considered the universal recipient?', opts:['O negative','O positive','AB positive','AB negative'], ans:2, sol:'Individuals with AB blood group have both A and B antigens on their RBCs and no anti-A or anti-B antibodies in plasma, making AB positive the universal recipient.' },
+{ id:'HP26', year:'2020', q:'Erythroblastosis fetalis can be prevented by administering:', opts:['Anti-Rh antibodies to the mother immediately after delivery','Anti-Rh antibodies to the baby immediately after birth','Rh antigen to the mother during pregnancy','Rh antigen to the baby after birth'], ans:0, sol:'It can be avoided by administering anti-Rh antibodies (RhoGAM) to the Rh-negative mother immediately after the delivery of her first Rh-positive child to destroy any fetal RBCs that entered her bloodstream.' },
+{ id:'HP27', year:'NEET Mock', q:'Assertion (A): The sino-atrial node (SAN) is called the pacemaker of the heart. Reason (R): It is responsible for initiating and maintaining the rhythmic contractile activity of the heart.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'The SAN generates the maximum number of action potentials (70-75/min) and is responsible for initiating and maintaining the rhythmic contraction, hence it is the pacemaker.' },
+{ id:'HP28', year:'2019', q:'In a standard ECG, the P-wave represents:', opts:['Depolarization of the ventricles','Repolarization of the ventricles','Depolarization of the atria','Repolarization of the atria'], ans:2, sol:'The P-wave represents the electrical excitation (or depolarization) of the atria, which leads to the contraction of both the atria (atrial systole).' },
+{ id:'HP29', year:'2023', q:'During the cardiac cycle, the \'lub\' sound is produced due to:', opts:['Closure of semilunar valves','Closure of tricuspid and bicuspid valves','Opening of semilunar valves','Opening of tricuspid and bicuspid valves'], ans:1, sol:'The first heart sound (lub) is associated with the closure of the tricuspid and bicuspid (mitral) valves at the beginning of ventricular systole.' },
+{ id:'HP30', year:'2022', q:'Statement I: Lymph is a colorless fluid containing specialized lymphocytes. Statement II: Lymph has the same mineral distribution as that in plasma.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both statements are true. Lymph is essentially interstitial fluid that enters lymphatic vessels. It is colorless, contains lymphocytes for immunity, and its mineral distribution mimics blood plasma.' },
+{ id:'HP31', year:'2021', q:'The hepatic portal vein carries blood from:', opts:['Liver to Intestine','Intestine to Liver','Kidney to Liver','Liver to Heart'], ans:1, sol:'The hepatic portal system is a unique vascular connection. The hepatic portal vein carries nutrient-rich, deoxygenated blood from the intestine directly to the liver before it goes to systemic circulation.' },
+{ id:'HP32', year:'2020', q:'Which of the following is an incorrect match regarding formed elements of blood?', opts:['Erythrocytes - 5 to 5.5 million/mm3','Leucocytes - 6000 to 8000/mm3','Platelets - 1.5 to 3.5 lakh/mm3','Lymphocytes - 60 to 65% of total WBCs'], ans:3, sol:'Lymphocytes constitute 20-25% of WBCs. Neutrophils are the most abundant, making up 60-65% of total WBCs.' },
+{ id:'HP33', year:'NEET Mock', q:'The duration of a normal cardiac cycle is:', opts:['0.1 second','0.3 second','0.8 second','1.2 seconds'], ans:2, sol:'Assuming a normal heart rate of 72 beats per minute, the duration of one complete cardiac cycle is 60/72 = 0.8 seconds.' },
+{ id:'HP34', year:'2019', q:'An individual\'s cardiac output is mathematically defined as:', opts:['Heart Rate / Stroke Volume','Stroke Volume x Heart Rate','Blood Pressure x Heart Rate','End Diastolic Volume - End Systolic Volume'], ans:1, sol:'Cardiac output is the volume of blood pumped out by each ventricle per minute. It is calculated as Stroke Volume (approx 70 mL) multiplied by Heart Rate (approx 72 beats/min), averaging 5000 mL or 5 Liters.' },
+{ id:'HP35', year:'2023', q:'Assertion (A): The walls of ventricles are much thicker than the atria. Reason (R): Ventricles have to pump blood into various organs against higher resistance.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Atria merely pump blood into the adjacent ventricles. Ventricles must generate high pressure to pump blood to the lungs (right) or the entire body (left), requiring thicker muscular walls.' },
+{ id:'HP36', year:'2022', q:'Atherosclerosis is a condition specifically referred to as:', opts:['Angina pectoris','Heart failure','Coronary Artery Disease (CAD)','Hypertension'], ans:2, sol:'Coronary Artery Disease (CAD), often referred to as atherosclerosis, affects the vessels that supply blood to the heart muscle, caused by deposits of calcium, fat, cholesterol, and fibrous tissues.' },
+{ id:'HP37', year:'2021', q:'Which ion is essential for the blood clotting process?', opts:['Sodium (Na+)','Potassium (K+)','Calcium (Ca++)','Magnesium (Mg++)'], ans:2, sol:'Calcium ions (Ca++) play a very important role in the clotting cascade, specifically in the conversion of prothrombin to thrombin and in the cross-linking of fibrin polymers.' },
+{ id:'HP38', year:'2020', q:'Statement I: Fish have a 2-chambered heart with single circulation. Statement II: Amphibians and reptiles have a 3-chambered heart with incomplete double circulation.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Fish heart pumps deoxygenated blood to gills (single circulation). Amphibians/reptiles have 2 atria and 1 ventricle where oxygenated and deoxygenated blood mix (incomplete double circulation).' },
+{ id:'HP39', year:'NEET Mock', q:'The T-wave in a standard ECG represents:', opts:['Depolarization of atria','Depolarization of ventricles','Repolarization of ventricles','Repolarization of atria'], ans:2, sol:'The T-wave represents the return of the ventricles from excited to normal state (repolarization). The end of the T-wave marks the end of ventricular systole.' },
+{ id:'HP40', year:'2019', q:'Which node is known as the secondary pacemaker or pacesetter?', opts:['Sino-atrial node (SAN)','Atrio-ventricular node (AVN)','Bundle of His','Purkinje fibers'], ans:1, sol:'If the SAN fails, the Atrio-ventricular node (AVN) can take over generating action potentials, though at a slower rate (40-60/min), hence it is called the secondary pacemaker or pacesetter.' },
+{ id:'HP41', year:'2023', q:'Angina pectoris is characterized by:', opts:['High blood pressure','Acute chest pain due to inadequate oxygen reaching heart muscle','Heart stops beating completely','Inability of the heart to pump enough blood to meet body needs'], ans:1, sol:'Angina pectoris (angina) is a symptom of acute chest pain appearing when not enough oxygen is reaching the heart muscle. It indicates an underlying blood flow issue.' },
+{ id:'HP42', year:'2022', q:'In ABO blood grouping, a person with blood group \'O\' has:', opts:['A and B antigens on RBCs, no antibodies in plasma','No antigens on RBCs, anti-A and anti-B antibodies in plasma','A antigen on RBC, anti-B antibody in plasma','B antigen on RBC, anti-A antibody in plasma'], ans:1, sol:'Group O individuals lack both A and B antigens on the surface of their RBCs. Consequently, their immune system naturally produces both anti-A and anti-B antibodies in the plasma.' },
+{ id:'HP43', year:'2021', q:'Match the valves with their locations: (I) Tricuspid valve (II) Bicuspid (Mitral) valve (III) Semilunar valves -> (P) Between left atrium and left ventricle (Q) Base of pulmonary artery and aorta (R) Between right atrium and right ventricle', opts:['I-R, II-P, III-Q','I-P, II-R, III-Q','I-Q, II-P, III-R','I-R, II-Q, III-P'], ans:0, sol:'Tricuspid valve is on the right side (R). Bicuspid/Mitral valve is on the left side (P). Semilunar valves guard the pulmonary artery and aorta (Q).' },
+{ id:'HP44', year:'2020', q:'The normal systolic and diastolic blood pressure in a healthy adult is:', opts:['80 mm Hg / 120 mm Hg','120 mm Hg / 80 mm Hg','140 mm Hg / 90 mm Hg','100 mm Hg / 60 mm Hg'], ans:1, sol:'A normal blood pressure reading is 120/80 mm Hg, where 120 is the systolic (pumping) pressure and 80 is the diastolic (resting) pressure.' },
+{ id:'HP45', year:'NEET Mock', q:'The special neural center in the medulla oblongata can moderate cardiac functions through:', opts:['Somatic nervous system','Autonomic nervous system (ANS)','Endocrine system','Peripheral nervous system only'], ans:1, sol:'The medulla oblongata moderates cardiac activity via the ANS. Sympathetic nerves increase heart rate and ventricular contraction strength, while parasympathetic nerves decrease them.' }
+],
+
+physics: [
+{ id:'PHM1', year:'2023', q:'A particle covers half of its total distance with speed v1 and the rest half distance with speed v2. Its average speed during the complete journey is:', opts:['(v1 + v2)/2','(v1*v2)/(v1 + v2)','2*v1*v2/(v1 + v2)','(v1^2 + v2^2)/(v1 + v2)'], ans:2, sol:'Let total distance be 2x. Time for first half t1 = x/v1. Time for second half t2 = x/v2. Average speed = Total Distance / Total Time = 2x / (x/v1 + x/v2) = 2*v1*v2 / (v1 + v2).' },
+{ id:'PHM2', year:'2022', q:'Assertion (A): Static friction is a self-adjusting force up to its maximum value. Reason (R): The coefficient of static friction depends on the area of contact between the two surfaces.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:2, sol:'Static friction adjusts itself to exactly oppose the applied force until it reaches the limiting value (f_s_max). However, the coefficient of friction is independent of the apparent area of contact. So, R is false.' },
+{ id:'PHM3', year:'2021', q:'Match the Physical Quantity with its Dimensional Formula: (I) Planck\'s Constant (II) Gravitational Constant (III) Coefficient of Viscosity -> (P) [M-1 L3 T-2] (Q) [M L2 T-1] (R) [M L-1 T-1]', opts:['I-Q, II-P, III-R','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-R, III-P'], ans:0, sol:'Planck\'s Constant (h) has dimensions of angular momentum [M L2 T-1] (Q). Gravitational Constant (G) is [M-1 L3 T-2] (P). Coefficient of Viscosity (eta) is [M L-1 T-1] (R).' },
+{ id:'PHM4', year:'2020', q:'The escape velocity from the Earth is v. If a planet has twice the mass and twice the radius of the Earth, the escape velocity from that planet will be:', opts:['v','2v','v/2','√2 v'], ans:0, sol:'Escape velocity v_e = √(2GM/R). For the new planet, M\' = 2M and R\' = 2R. v_e\' = √(2G(2M)/(2R)) = √(2GM/R) = v.' },
+{ id:'PHM5', year:'NEET Mock', q:'A car is moving on a circular level road of radius R. If the coefficient of static friction is μ, the maximum safe speed of the car is:', opts:['√(μg/R)','√(μRg)','μRg','√(Rg/μ)'], ans:1, sol:'For a level circular road, the necessary centripetal force is provided by static friction. mv^2/R <= μmg, so v_max = √(μRg).' },
+{ id:'PHM6', year:'2019', q:'Statement I: The center of mass of a body always lies inside the body. Statement II: The center of mass of a uniform hollow sphere lies at its geometric center.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:3, sol:'Statement I is false because the center of mass can lie outside the body (e.g., in a ring or hollow sphere). Statement II is true, as the CM of a hollow sphere is at its geometric center, which is in the empty space.' },
+{ id:'PHM7', year:'2023', q:'The efficiency of a Carnot engine working between 300 K and 600 K is:', opts:['20%','50%','75%','100%'], ans:1, sol:'Efficiency (η) = 1 - (T_cold / T_hot) = 1 - (300/600) = 1 - 0.5 = 0.5. In percentage, η = 50%.' },
+{ id:'PHM8', year:'2022', q:'Which of the following processes is strictly isochoric?', opts:['Expansion of gas in a cylinder with a movable piston','Heating water in an open vessel','Heating a gas in a sealed, rigid container','Melting of ice at 0°C'], ans:2, sol:'An isochoric process occurs at constant volume. Heating a gas in a sealed, rigid container ensures that the volume cannot change (ΔV = 0).' },
+{ id:'PHM9', year:'2021', q:'Match the fluid mechanics principles: (I) Equation of Continuity (II) Bernoulli\'s Principle (III) Pascal\'s Law -> (P) Conservation of Energy (Q) Conservation of Mass (R) Transmission of fluid pressure', opts:['I-P, II-Q, III-R','I-Q, II-P, III-R','I-R, II-P, III-Q','I-Q, II-R, III-P'], ans:1, sol:'Continuity equation (A1v1 = A2v2) is based on conservation of mass (Q). Bernoulli\'s principle is based on conservation of energy (P). Pascal\'s law is about the transmission of fluid pressure (R).' },
+{ id:'PHM10', year:'2020', q:'The root mean square (rms) speed of an ideal gas molecule at absolute temperature T is proportional to:', opts:['T','T^2','√T','1/√T'], ans:2, sol:'The rms speed of gas molecules is given by v_rms = √(3RT/M). Therefore, v_rms is directly proportional to the square root of absolute temperature (√T).' },
+{ id:'PHM11', year:'NEET Mock', q:'Assertion (A): In simple harmonic motion (SHM), the velocity is maximum at the mean position. Reason (R): At the mean position, the restoring force is maximum.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:2, sol:'In SHM, velocity is maximum at the mean position (x=0). However, the restoring force F = -kx is zero at the mean position. So, Reason is false.' },
+{ id:'PHM12', year:'2019', q:'An open organ pipe and a closed organ pipe have the same fundamental frequency. The ratio of their lengths is:', opts:['1:2','2:1','1:1','1:3'], ans:1, sol:'Fundamental frequency of open pipe = v/(2L_o). Closed pipe = v/(4L_c). Given they are equal: v/(2L_o) = v/(4L_c) => 2L_o = 4L_c => L_o/L_c = 2/1. Ratio is 2:1.' },
+{ id:'PHM13', year:'2023', q:'The electric field at a point inside a uniformly charged thin spherical shell is:', opts:['Zero','Proportional to the distance from the center','Inversely proportional to the distance from the center','Inversely proportional to the square of the distance from the center'], ans:0, sol:'According to Gauss\'s Law, the charge enclosed by a Gaussian surface inside a uniformly charged thin spherical shell is zero. Hence, the electric field inside is zero everywhere.' },
+{ id:'PHM14', year:'2022', q:'Two point charges +q and -q are separated by a distance 2l. The electric potential at any point on the equatorial plane of this dipole is:', opts:['kq/l','kq/2l','Zero','Infinite'], ans:2, sol:'Any point on the equatorial plane is equidistant from both +q and -q. Since potential is a scalar (V = kq/r), the positive and negative potentials perfectly cancel each other out, giving zero net potential.' },
+{ id:'PHM15', year:'2021', q:'Statement I: The capacity of a parallel plate capacitor increases if the distance between the plates is decreased. Statement II: Capacitance is directly proportional to the distance between the plates.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Capacitance C = ε₀A/d. Statement I is correct because decreasing d increases C. Statement II is incorrect because capacitance is inversely proportional to the distance d.' },
+{ id:'PHM16', year:'2020', q:'Kirchhoff\'s loop rule is a direct consequence of the law of conservation of:', opts:['Charge','Momentum','Energy','Mass'], ans:2, sol:'Kirchhoff\'s second law (Loop rule) states that the sum of potential differences around any closed loop is zero, which reflects the principle of conservation of energy.' },
+{ id:'PHM17', year:'NEET Mock', q:'Match the magnetic materials with their susceptibility (χ): (I) Diamagnetic (II) Paramagnetic (III) Ferromagnetic -> (P) χ is small and positive (Q) χ is very large and positive (R) χ is small and negative', opts:['I-R, II-P, III-Q','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-Q, III-P'], ans:0, sol:'Diamagnetic materials weakly repel magnetic fields, so χ is small and negative (R). Paramagnetic are weakly attracted, χ is small and positive (P). Ferromagnetic are strongly attracted, χ is large and positive (Q).' },
+{ id:'PHM18', year:'2019', q:'The force experienced by a charged particle q moving with velocity v in a magnetic field B is given by:', opts:['F = q(v . B)','F = q(v x B)','F = q(B x v)','F = v(q x B)'], ans:1, sol:'The magnetic Lorentz force on a moving charge is the cross product of velocity and magnetic field vectors, scaled by the charge: F = q(v x B).' },
+{ id:'PHM19', year:'2023', q:'Assertion (A): A transformer can step up direct current (DC) voltage. Reason (R): Transformers work on the principle of mutual induction which requires a changing magnetic flux.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:3, sol:'A transformer cannot step up or step down DC voltage because DC provides a constant magnetic field. Mutual induction (Reason) requires alternating current (AC) to produce a changing magnetic flux. So, A is false and R is true.' },
+{ id:'PHM20', year:'2022', q:'In a purely inductive AC circuit, the current:', opts:['Leads the voltage by π/2','Lags the voltage by π/2','Is in phase with the voltage','Lags the voltage by π'], ans:1, sol:'In a purely inductive circuit, the alternating current lags behind the alternating voltage by a phase angle of 90° (π/2 radians).' },
+{ id:'PHM21', year:'2021', q:'Which of the following electromagnetic waves has the highest frequency?', opts:['Microwaves','X-rays','Gamma rays','Radio waves'], ans:2, sol:'In the electromagnetic spectrum, Gamma rays have the shortest wavelength and the highest frequency (and thus the highest energy).' },
+{ id:'PHM22', year:'2020', q:'A convex lens of focal length 20 cm and a concave lens of focal length -10 cm are placed in contact. The power of the combination is:', opts:['+5 D','-5 D','+15 D','-15 D'], ans:1, sol:'P1 = 100/20 = +5 D. P2 = 100/(-10) = -10 D. Power of combination P = P1 + P2 = +5 - 10 = -5 D.' },
+{ id:'PHM23', year:'NEET Mock', q:'The phenomenon of total internal reflection occurs only when light travels from:', opts:['A rarer medium to a denser medium and angle of incidence is greater than critical angle','A denser medium to a rarer medium and angle of incidence is greater than critical angle','A denser medium to a rarer medium and angle of incidence is less than critical angle','A rarer medium to a denser medium and angle of incidence is less than critical angle'], ans:1, sol:'TIR strictly requires light to travel from an optically denser medium to a rarer medium, with the angle of incidence exceeding the critical angle for that pair of media.' },
+{ id:'PHM24', year:'2019', q:'In Young\'s Double Slit Experiment, if the distance between the slits is halved and the distance to the screen is doubled, the fringe width will:', opts:['Remain the same','Become half','Become double','Become four times'], ans:3, sol:'Fringe width β = λD/d. New fringe width β\' = λ(2D)/(d/2) = 4 * (λD/d) = 4β. It becomes four times.' },
+{ id:'PHM25', year:'2023', q:'Match the optical phenomenon with its naturally occurring example: (I) Dispersion (II) Scattering (III) Total Internal Reflection -> (P) Blue color of the sky (Q) Mirage in deserts (R) Formation of rainbow', opts:['I-R, II-P, III-Q','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-Q, III-P'], ans:0, sol:'Rainbow formation involves dispersion of sunlight (R). The blue color of the sky is due to Rayleigh scattering (P). Mirages occur due to total internal reflection in varying air density layers (Q).' },
+{ id:'PHM26', year:'2022', q:'Statement I: The resolving power of a microscope increases with a decrease in the wavelength of light used. Statement II: Resolving power is inversely proportional to the numerical aperture of the objective lens.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Resolving power of a microscope = 2μsinθ / λ. It is inversely proportional to wavelength (so Statement I is true) and directly proportional to numerical aperture (μsinθ), making Statement II false.' },
+{ id:'PHM27', year:'2021', q:'The maximum kinetic energy of emitted photoelectrons depends on:', opts:['Intensity of incident light','Frequency of incident light and nature of material','Time of illumination','Distance of the light source'], ans:1, sol:'According to Einstein\'s photoelectric equation, K_max = hf - Φ. It depends on the frequency of the incident light (f) and the work function of the material (Φ), but is independent of intensity.' },
+{ id:'PHM28', year:'2020', q:'Assertion (A): Light has a dual nature, behaving as both a wave and a particle. Reason (R): Phenomena like interference and diffraction prove its particle nature.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:2, sol:'Assertion is true, light has dual nature. Reason is false because interference and diffraction prove the WAVE nature of light, while the photoelectric effect proves its particle nature.' },
+{ id:'PHM29', year:'NEET Mock', q:'The de Broglie wavelength associated with an electron accelerated through a potential difference V is proportional to:', opts:['V','1/V','√V','1/√V'], ans:3, sol:'The kinetic energy acquired is eV. Momentum p = √(2mE) = √(2meV). The de Broglie wavelength λ = h/p = h / √(2meV). Hence, λ is proportional to 1/√V.' },
+{ id:'PHM30', year:'2019', q:'In the Bohr model of the hydrogen atom, the angular momentum of an electron in the nth orbit is an integral multiple of:', opts:['h','h/2π','2π/h','h/π'], ans:1, sol:'Bohr\'s quantization condition states that the orbital angular momentum of an electron is quantized: mvr = nh / 2π.' },
+{ id:'PHM31', year:'2023', q:'The ratio of the radii of the first three Bohr orbits of a hydrogen atom is:', opts:['1 : 2 : 3','1 : 4 : 9','1 : 8 : 27','1 : √2 : √3'], ans:1, sol:'The radius of the nth Bohr orbit is r_n = 0.529 * (n^2 / Z) Å. Since r_n is proportional to n^2, the ratio for n=1, 2, 3 is 1^2 : 2^2 : 3^2 = 1 : 4 : 9.' },
+{ id:'PHM32', year:'2022', q:'As the mass number A increases, the binding energy per nucleon in a nucleus:', opts:['Increases continuously','Decreases continuously','First increases, reaches a maximum, and then decreases','Remains constant'], ans:2, sol:'The binding energy curve first rises steeply for light nuclei, reaches a maximum around Iron (A ≈ 56, ~8.8 MeV/nucleon), and then gradually decreases for heavier nuclei.' },
+{ id:'PHM33', year:'2021', q:'A radioactive substance has a half-life of 10 days. The fraction of the substance remaining undecayed after 30 days is:', opts:['1/2','1/4','1/8','1/16'], ans:2, sol:'Number of half-lives (n) = t / t_1/2 = 30 / 10 = 3. The fraction remaining = (1/2)^n = (1/2)^3 = 1/8.' },
+{ id:'PHM34', year:'2020', q:'In a p-type semiconductor, the majority charge carriers are:', opts:['Electrons','Protons','Holes','Neutrons'], ans:2, sol:'In a p-type semiconductor (doped with trivalent impurities like Boron), holes act as the majority charge carriers, and electrons are the minority carriers.' },
+{ id:'PHM35', year:'NEET Mock', q:'Match the Logic Gates with their Boolean expressions: (I) AND Gate (II) OR Gate (III) NAND Gate -> (P) Y = A + B (Q) Y = A . B (R) Y = (A . B)\'', opts:['I-Q, II-P, III-R','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-R, III-P'], ans:0, sol:'AND gate performs logical multiplication: Y = A . B (Q). OR gate performs logical addition: Y = A + B (P). NAND is the inverse of AND: Y = (A . B)\' (R).' },
+{ id:'PHM36', year:'2019', q:'A full-wave rectifier uses how many p-n junction diodes?', opts:['One','Two','Three','Four'], ans:1, sol:'A standard center-tapped full-wave rectifier uses exactly two p-n junction diodes to rectify both the positive and negative half-cycles of the AC input. (A bridge rectifier uses four).' },
+{ id:'PHM37', year:'2023', q:'Statement I: A Zener diode is heavily doped compared to an ordinary p-n junction diode. Statement II: A Zener diode is always operated in the forward bias condition.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:2, sol:'Statement I is true; heavy doping creates a very thin depletion region. Statement II is false; Zener diodes are specifically designed to operate in the reverse breakdown region as voltage regulators.' },
+{ id:'PHM38', year:'2022', q:'The minimum energy required to remove an electron from the surface of a metal is called:', opts:['Ionization energy','Work function','Stopping potential','Kinetic energy'], ans:1, sol:'The work function (Φ) is the minimum energy required by an electron to just escape from the metal surface.' },
+{ id:'PHM39', year:'2021', q:'According to Faraday\'s law of electromagnetic induction, the magnitude of induced EMF is equal to the:', opts:['Magnetic flux linked with the circuit','Rate of change of magnetic flux','Change in magnetic flux','Resistance of the circuit'], ans:1, sol:'Faraday\'s second law states that the induced EMF is directly proportional to the time rate of change of magnetic flux linked with the circuit (e = - dΦ/dt).' },
+{ id:'PHM40', year:'2020', q:'Assertion (A): The velocity of sound in air increases with an increase in temperature. Reason (R): The velocity of sound is directly proportional to the square root of the absolute temperature of the gas.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'The velocity of sound in a gas is given by v = √(γRT/M). Since it is directly proportional to √T, an increase in temperature leads to an increase in the velocity of sound.' },
+{ id:'PHM41', year:'NEET Mock', q:'The moment of inertia of a uniform solid sphere of mass M and radius R about its diameter is:', opts:['(2/3) MR^2','(2/5) MR^2','(1/2) MR^2','MR^2'], ans:1, sol:'For a uniform solid sphere, the moment of inertia about any axis passing through its center (diameter) is (2/5)MR^2. For a hollow sphere, it is (2/3)MR^2.' },
+{ id:'PHM42', year:'2019', q:'In an LCR series AC circuit at resonance, the impedance of the circuit is:', opts:['Maximum and purely resistive','Minimum and purely resistive','Zero','Equal to the inductive reactance'], ans:1, sol:'At resonance, inductive reactance equals capacitive reactance (X_L = X_C). They cancel each other out, making the total impedance Z = R. This is the minimum possible impedance, and the circuit becomes purely resistive.' },
+{ id:'PHM43', year:'2023', q:'An intrinsic semiconductor at absolute zero temperature (0 K) behaves like:', opts:['A superconductor','A perfect conductor','A perfect insulator','A semi-metal'], ans:2, sol:'At absolute zero, all electrons are tightly bound in covalent bonds (the valence band is full and the conduction band is completely empty). Without any thermal energy to break bonds, it acts as a perfect insulator.' },
+{ id:'PHM44', year:'2022', q:'Two blocks of masses m1 and m2 are connected by a light string over a frictionless pulley. If m1 > m2, the acceleration of the system is:', opts:['(m1 - m2)g / (m1 + m2)','(m1 + m2)g / (m1 - m2)','m1*g / m2','(m1*m2)g / (m1 + m2)'], ans:0, sol:'This is a standard Atwood machine. The net driving force is (m1g - m2g) and the total mass to be accelerated is (m1 + m2). Thus, acceleration a = (m1 - m2)g / (m1 + m2).' },
+{ id:'PHM45', year:'2021', q:'Match the type of spectra with its source: (I) Continuous emission spectrum (II) Line emission spectrum (III) Band emission spectrum -> (P) Molecular gas in a discharge tube (Q) Incandescent solid (R) Atomic gas in a discharge tube', opts:['I-Q, II-R, III-P','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-P, III-R'], ans:0, sol:'An incandescent solid (like a tungsten bulb) gives a continuous spectrum (Q). Excited individual atoms (like Na vapor) give a line spectrum (R). Excited molecules give a band spectrum (P).' }
+],
+
+chemistry: [
+{ id:'CHM1', year:'2023', q:'Assertion (A): The first ionization energy of Nitrogen is greater than that of Oxygen. Reason (R): Nitrogen has an exactly half-filled p-orbital which is extra stable.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Nitrogen (1s² 2s² 2p³) has a half-filled p-subshell, making it more stable and harder to remove an electron from compared to Oxygen (1s² 2s² 2p⁴).' },
+{ id:'CHM2', year:'2022', q:'Match the molecule with its shape according to VSEPR theory: (I) XeF4 (II) SF6 (III) ClF3 -> (P) T-shaped (Q) Square planar (R) Octahedral', opts:['I-Q, II-R, III-P','I-R, II-Q, III-P','I-Q, II-P, III-R','I-P, II-R, III-Q'], ans:0, sol:'XeF4 has 4 bond pairs and 2 lone pairs (Square planar - Q). SF6 has 6 bond pairs (Octahedral - R). ClF3 has 3 bond pairs and 2 lone pairs (T-shaped - P).' },
+{ id:'CHM3', year:'2021', q:'Which of the following is an intensive property?', opts:['Enthalpy','Entropy','Volume','Temperature'], ans:3, sol:'Intensive properties are independent of the mass or size of the system. Temperature, pressure, and density are intensive, whereas enthalpy, entropy, and volume are extensive.' },
+{ id:'CH4', year:'2020', q:'The rate constant for a first-order reaction is 0.693 min⁻¹. The half-life of this reaction is:', opts:['1 min','10 min','0.693 min','6.93 min'], ans:0, sol:'For a first-order reaction, t1/2 = 0.693 / k. Therefore, t1/2 = 0.693 / 0.693 min⁻¹ = 1 min.' },
+{ id:'CHM5', year:'NEET Mock', q:'Statement I: SN2 reactions proceed with complete stereochemical inversion. Statement II: SN1 reactions proceed with the formation of a carbocation intermediate.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both statements are true. SN2 involves backside attack leading to Walden inversion, while SN1 is a two-step process forming a planar carbocation, leading to racemization.' },
+{ id:'CHM6', year:'2019', q:'In the coordination compound K4[Fe(CN)6], the oxidation state and coordination number of Iron (Fe) are respectively:', opts:['+2 and 6','+3 and 6','+2 and 4','+3 and 4'], ans:0, sol:'Let oxidation state of Fe be x. 4(+1) + x + 6(-1) = 0 => x = +2. There are 6 CN- ligands attached directly to Fe, so the coordination number is 6.' },
+{ id:'CHM7', year:'2023', q:'Which of the following pairs represents a buffer solution?', opts:['HCl and NaCl','CH3COOH and CH3COONa','NaOH and NaCl','HNO3 and NH4NO3'], ans:1, sol:'A buffer solution consists of a weak acid and its salt with a strong base (acidic buffer) or a weak base and its salt with a strong acid (basic buffer). CH3COOH is a weak acid and CH3COONa is its salt.' },
+{ id:'CHM8', year:'2022', q:'The IUPAC name of the compound CH3-CH(OH)-CH2-C(=O)-CH3 is:', opts:['4-Hydroxypentan-2-one','2-Hydroxypentan-4-one','4-Oxopentan-2-ol','2-Oxopentan-4-ol'], ans:0, sol:'The ketone group gets higher priority over the hydroxyl group for numbering. Numbering starts from the right: carbon-2 has the ketone, carbon-4 has the OH group. Name: 4-Hydroxypentan-2-one.' },
+{ id:'CHM9', year:'2021', q:'Which of the following elements shows the maximum oxidation state in the 3d transition series?', opts:['Chromium (Cr)','Iron (Fe)','Manganese (Mn)','Vanadium (V)'], ans:2, sol:'Manganese (Mn) has the electronic configuration 3d⁵ 4s². It can lose all 7 valence electrons to exhibit a maximum oxidation state of +7 (e.g., in KMnO4).' },
+{ id:'CHM10', year:'2020', q:'Assertion (A): Boiling point of H2O is much higher than that of H2S. Reason (R): Oxygen is more electronegative than Sulfur, leading to strong intermolecular hydrogen bonding in water.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Water molecules associate via strong intermolecular hydrogen bonds due to the high electronegativity of oxygen. H2S lacks hydrogen bonding, hence it is a gas at room temperature while H2O is a liquid.' },
+{ id:'CHM11', year:'NEET Mock', q:'Match the Name Reaction with its Reagent: (I) Clemmensen reduction (II) Wolff-Kishner reduction (III) Rosenmund reduction -> (P) H2 / Pd-BaSO4 (Q) Zn-Hg / HCl (R) NH2NH2 / KOH', opts:['I-Q, II-R, III-P','I-P, II-Q, III-R','I-R, II-P, III-Q','I-Q, II-P, III-R'], ans:0, sol:'Clemmensen uses Zinc amalgam and HCl (Q). Wolff-Kishner uses Hydrazine and KOH (R). Rosenmund uses Hydrogen gas over poisoned Palladium (P).' },
+{ id:'CHM12', year:'2019', q:'According to Faraday\'s First Law of Electrolysis, the mass of a substance deposited at an electrode is directly proportional to:', opts:['The voltage applied','The quantity of electricity passed','The concentration of the electrolyte','The surface area of the electrode'], ans:1, sol:'Faraday\'s First Law states m = Z * Q, where m is mass, Z is the electrochemical equivalent, and Q (I*t) is the total quantity of charge passed.' },
+{ id:'CHM13', year:'2023', q:'A spontaneous reaction at constant temperature and pressure is characterized by:', opts:['Delta G > 0','Delta H > 0','Delta G < 0','Delta S < 0'], ans:2, sol:'For a process to be spontaneous at constant temperature and pressure, the change in Gibbs free energy (Delta G) must be negative (Delta G < 0).' },
+{ id:'CHM14', year:'2022', q:'Which of the following carbocations is the most stable?', opts:['Primary (1°) carbocation','Secondary (2°) carbocation','Tertiary (3°) carbocation','Methyl carbocation'], ans:2, sol:'Tertiary carbocations are the most stable due to maximum +I (inductive) effect of three alkyl groups and maximum hyperconjugation (more alpha-hydrogens).' },
+{ id:'CHM15', year:'2021', q:'Statement I: Phenol is more acidic than ethanol. Statement II: The phenoxide ion is stabilized by resonance.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both are correct. Phenol readily loses a proton to form a phenoxide ion, which is highly stabilized by delocalization of the negative charge over the benzene ring, making it more acidic than aliphatic alcohols.' },
+{ id:'CHM16', year:'2020', q:'The magnetic moment of an ion is calculated using the formula µ = √(n(n+2)) BM. Here, \'n\' represents:', opts:['Principal quantum number','Number of unpaired electrons','Total number of electrons','Oxidation state'], ans:1, sol:'The spin-only magnetic moment is given by µ = √(n(n+2)) Bohr Magnetons (BM), where \'n\' is the number of unpaired electrons in the ion.' },
+{ id:'CHM17', year:'NEET Mock', q:'Identify the correct order of electronegativity:', opts:['F > O > N > C','O > F > N > C','F > N > O > C','N > O > F > C'], ans:0, sol:'Electronegativity increases across a period. Fluorine is the most electronegative element (4.0), followed by Oxygen (3.5), Nitrogen (3.0), and Carbon (2.5).' },
+{ id:'CHM18', year:'2019', q:'Ozonolysis of an alkene yields one molecule of acetone and one molecule of formaldehyde. The original alkene was:', opts:['Propene','2-Methylpropene (Isobutylene)','But-2-ene','Ethene'], ans:1, sol:'Acetone is (CH3)2C=O and Formaldehyde is H2C=O. Joining them at the double bond gives (CH3)2C=CH2, which is 2-Methylpropene or isobutylene.' },
+{ id:'CHM19', year:'2023', q:'Which of the following acts as a Lewis acid?', opts:['NH3','H2O','BF3','CH4'], ans:2, sol:'A Lewis acid is an electron-pair acceptor. BF3 is an electron-deficient molecule (only 6 electrons around Boron) and thus strongly accepts an electron pair.' },
+{ id:'CHM20', year:'2022', q:'Assertion (A): A catalyst increases the rate of a reaction without itself being consumed. Reason (R): A catalyst lowers the activation energy of the reaction.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'A catalyst provides an alternative pathway for the reaction with a lower activation energy barrier, thereby increasing the rate of both forward and backward reactions.' },
+{ id:'CHM21', year:'2021', q:'Which of the following metal ions gives a blood-red color with thiocyanate ion (SCN-)?', opts:['Cu2+','Fe3+','Ni2+','Co2+'], ans:1, sol:'Fe3+ reacts with the thiocyanate ion to form a complex [Fe(SCN)(H2O)5]2+, which imparts a characteristic intense blood-red color, used as a test for Iron(III).' },
+{ id:'CHM22', year:'2020', q:'The reaction of primary aliphatic amines with nitrous acid (NaNO2 + HCl) at low temperature yields:', opts:['Diazonium salt','Nitroalkane','Alcohol and N2 gas','Secondary amine'], ans:2, sol:'Primary aliphatic amines form highly unstable aliphatic diazonium salts which immediately decompose to yield a mixture of alcohols and nitrogen gas.' },
+{ id:'CHM23', year:'NEET Mock', q:'Match the thermodynamic process with its condition: (I) Isothermal (II) Adiabatic (III) Isochoric -> (P) Delta q = 0 (Q) Delta V = 0 (R) Delta T = 0', opts:['I-R, II-P, III-Q','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-Q, III-P'], ans:0, sol:'Isothermal means constant temperature (R). Adiabatic means no heat exchange (P). Isochoric means constant volume (Q).' },
+{ id:'CHM24', year:'2019', q:'The primary valency of a metal ion in a coordination complex corresponds to its:', opts:['Coordination number','Oxidation state','Geometry','Number of ligands'], ans:1, sol:'According to Werner\'s theory, the primary valency corresponds to the oxidation state of the central metal ion and is ionizable. Secondary valency corresponds to the coordination number.' },
+{ id:'CHM25', year:'2023', q:'In the Daniel cell, the standard electrode potential for the cell is 1.1 V. The anode and cathode are respectively made of:', opts:['Copper and Zinc','Zinc and Copper','Silver and Copper','Zinc and Silver'], ans:1, sol:'In a Daniel cell, oxidation occurs at the Zinc electrode (anode) and reduction occurs at the Copper electrode (cathode). Zn(s) | Zn2+(aq) || Cu2+(aq) | Cu(s).' },
+{ id:'CHM26', year:'2022', q:'Which of the following tests is used to distinguish between aldehydes and ketones?', opts:['Lucas test','Hinsberg test','Tollens\' test','Iodoform test'], ans:2, sol:'Tollens\' test (ammoniacal silver nitrate) is a mild oxidizing agent that oxidizes aldehydes to carboxylate ions, forming a silver mirror. Ketones do not give this test.' },
+{ id:'CHM27', year:'2021', q:'Statement I: Graphite is a good conductor of electricity. Statement II: In graphite, each carbon atom is sp2 hybridized, leaving one free electron per carbon.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both are correct. The layered structure of graphite involves sp2 hybridization. The unhybridized p-orbital contains a free (delocalized) electron which conducts electricity parallel to the layers.' },
+{ id:'CHM28', year:'2020', q:'Which among the following lanthanoids shows a +4 oxidation state well known in its chemistry?', opts:['Europium (Eu)','Cerium (Ce)','Gadolinium (Gd)','Lutetium (Lu)'], ans:1, sol:'Cerium (Ce) easily exhibits a +4 oxidation state (Ce4+) because it attains the highly stable noble gas configuration of Xenon (f0). It acts as a strong analytical oxidizing agent.' },
+{ id:'CHM29', year:'NEET Mock', q:'Which rule states that "During the addition of an unsymmetrical reagent to an unsymmetrical alkene, the negative part of the reagent attaches to the carbon atom containing fewer hydrogen atoms"?', opts:['Saytzeff rule','Markovnikov\'s rule','Anti-Markovnikov\'s rule','Huckel\'s rule'], ans:1, sol:'This is the classic definition of Markovnikov\'s rule, which proceeds via the formation of the most stable carbocation intermediate.' },
+{ id:'CHM30', year:'2019', q:'The conversion of an amide to a primary amine with one carbon atom less, using Br2 and NaOH, is called:', opts:['Gabriel phthalimide synthesis','Hoffmann bromamide degradation','Carbylamine reaction','Sandmeyer reaction'], ans:1, sol:'Hoffmann bromamide degradation reaction converts a primary amide (R-CONH2) into a primary amine (R-NH2) containing one carbon less, releasing a carbonate ion.' },
+{ id:'CHM31', year:'2023', q:'A solid has a body-centered cubic (BCC) structure. The percentage of empty space (void volume) in this lattice is:', opts:['74%','68%','32%','26%'], ans:2, sol:'The packing efficiency of a BCC lattice is 68%. Therefore, the empty space (voids) remaining in the unit cell is 100% - 68% = 32%.' },
+{ id:'CHM32', year:'2022', q:'Assertion (A): The bond order of N2 molecule is 3. Reason (R): Nitrogen molecule has a triple bond, consisting of one sigma and two pi bonds.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'According to Molecular Orbital Theory, Nb = 10 and Na = 4, giving Bond Order = (10-4)/2 = 3. This matches the Lewis structure showing a triple bond (one sigma, two pi).' },
+{ id:'CHM33', year:'2021', q:'In which of the following compounds is the oxidation number of Oxygen +2?', opts:['H2O2','OF2','O3','K2O'], ans:1, sol:'Fluorine is the most electronegative element. In Oxygen difluoride (OF2), each F is -1, forcing Oxygen to exhibit a rare +2 oxidation state.' },
+{ id:'CHM34', year:'2020', q:'Match the polymer with its monomer(s): (I) Nylon 6,6 (II) Teflon (III) Natural Rubber -> (P) Isoprene (Q) Tetrafluoroethene (R) Adipic acid and Hexamethylenediamine', opts:['I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-P, III-Q'], ans:0, sol:'Nylon 6,6 is a condensation polymer of Adipic acid and Hexamethylenediamine (R). Teflon is made from Tetrafluoroethene (Q). Natural rubber is polyisoprene (P).' },
+{ id:'CHM35', year:'NEET Mock', q:'When phenol is treated with chloroform and aqueous NaOH at 340 K, followed by hydrolysis, the major product formed is:', opts:['Salicylic acid','Salicylaldehyde','Picric acid','p-Benzoquinone'], ans:1, sol:'This is the Reimer-Tiemann reaction. Phenol reacts with CHCl3/NaOH to introduce a formyl (-CHO) group at the ortho position, producing Salicylaldehyde as the major product.' },
+{ id:'CHM36', year:'2019', q:'Statement I: Enantiomers are non-superimposable mirror images of each other. Statement II: A racemic mixture is optically inactive due to external compensation.', opts:['Both statements are correct','Both statements are incorrect','Statement I is correct, II is incorrect','Statement I is incorrect, II is correct'], ans:0, sol:'Both statements are true. Enantiomers rotate plane-polarized light in opposite directions. A 1:1 mixture (racemic) has zero net rotation because the rotations cancel each other out (external compensation).' },
+{ id:'CHM37', year:'2023', q:'Which of the following orbitals has a spherical shape?', opts:['p-orbital','d-orbital','s-orbital','f-orbital'], ans:2, sol:'The s-orbital (where azimuthal quantum number l = 0) has a spherically symmetrical shape around the nucleus.' },
+{ id:'CHM38', year:'2022', q:'Which equation correctly represents the Nernst Equation for a single electrode potential at 298 K?', opts:['E = E° - (0.0591/n) log [M(s)]/[Mn+]','E = E° - (0.0591/n) log [Mn+]/[M(s)]','E = E° + (0.0591/n) log [M(s)]/[Mn+]','E = E° - (n/0.0591) log [M(s)]/[Mn+]'], ans:0, sol:'The Nernst equation for reduction Mn+ + ne- -> M(s) is E = E° - (RT/nF) ln([M]/[Mn+]). At 298 K, this simplifies to E = E° - (0.0591/n) log(1/[Mn+]) since solid concentration is taken as 1.' },
+{ id:'CHM39', year:'2021', q:'The color of KMnO4 is due to:', opts:['d-d transition','Ligand to metal charge transfer (LMCT)','Metal to ligand charge transfer (MLCT)','f-f transition'], ans:1, sol:'Manganese in KMnO4 is in the +7 oxidation state (d0 configuration). Since there are no d-electrons, d-d transition is impossible. The intense purple color is due to Charge Transfer from Oxygen to Manganese (LMCT).' },
+{ id:'CHM40', year:'2020', q:'Aromatics exhibit a property of resonance. According to Huckel\'s rule, a compound is aromatic if it is planar, cyclic, completely conjugated, and has:', opts:['4n pi electrons','(4n + 2) pi electrons','2n pi electrons','(2n + 4) pi electrons'], ans:1, sol:'Huckel\'s rule of aromaticity requires the presence of (4n + 2) completely delocalized pi electrons in a planar, cyclic system, where n is an integer (0, 1, 2, ...).' },
+{ id:'CHM41', year:'NEET Mock', q:'Assertion (A): H2O is a liquid while H2S is a gas at room temperature. Reason (R): Sulfur has a larger size and lower electronegativity compared to Oxygen, thus incapable of forming H-bonds.', opts:['Both A and R are true, R is the correct explanation','Both A and R are true, R is not the correct explanation','A is true, R is false','A is false, R is true'], ans:0, sol:'Hydrogen bonding requires a highly electronegative atom of small size (F, O, N). Sulfur is larger and less electronegative, so H2S does not form H-bonds and remains a gas.' },
+{ id:'CHM42', year:'2019', q:'Aniline reacts with a mixture of conc. HNO3 and conc. H2SO4 to yield a significant amount of m-nitroaniline. This is because:', opts:['Amino group is meta directing','In strong acid, aniline is protonated to form anilinium ion which is meta directing','The ortho/para products are unstable','Steric hindrance prevents ortho/para attack'], ans:1, sol:'In a strongly acidic medium, aniline gets protonated to form the anilinium ion (-NH3+). This group acts as a strong deactivating and meta-directing group.' },
+{ id:'CHM43', year:'2023', q:'What is the highest oxidation state exhibited by an Actinoid element?', opts:['+4','+5','+6','+7'], ans:3, sol:'Actinoids show a greater range of oxidation states due to the comparable energies of 5f, 6d, and 7s orbitals. Elements like Neptunium (Np) and Plutonium (Pu) can exhibit a maximum oxidation state of +7.' },
+{ id:'CHM44', year:'2022', q:'Match the vitamin with its deficiency disease: (I) Vitamin A (II) Vitamin B12 (III) Vitamin C -> (P) Scurvy (Q) Pernicious anemia (R) Night blindness', opts:['I-R, II-Q, III-P','I-P, II-Q, III-R','I-Q, II-R, III-P','I-R, II-P, III-Q'], ans:0, sol:'Vitamin A deficiency causes Night blindness (R). B12 deficiency causes Pernicious anemia (Q). Vitamin C deficiency causes Scurvy (P).' },
+{ id:'CHM45', year:'2021', q:'Which of the following compounds will give a positive Iodoform test?', opts:['Methanol','Propan-1-ol','Ethanol','Pentan-3-one'], ans:2, sol:'The iodoform test is given by compounds containing the CH3-CO- group or those that can be oxidized to it (CH3-CH(OH)- group). Ethanol (CH3CH2OH) oxidizes to acetaldehyde (CH3CHO) and thus gives a positive test.' }
+],
+
+};
+            
+            let collectedAll = [];
+            const subjects = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
+            for (let sub of subjects) {
+                const key = sub.toLowerCase();
+                const qList = questions[key] || [];
+                const mapped = qList.map(q => ({
+                    sub: sub,
+                    q: q.q,
+                    opts: q.opts,
+                    ans: q.ans !== undefined ? q.ans : -1,
+                    exp: q.sol || "No detailed explanation provided for this question."
+                }));
+                collectedAll = collectedAll.concat(mapped);
+            }
+            
+            QUESTIONS = collectedAll;
+            status = new Array(QUESTIONS.length).fill('not-visited');
+            answers = new Array(QUESTIONS.length).fill(null);
+            examView.innerHTML = origHtml;
+            
+            renderPalette();
+            loadQuestion(0);
+            startTimer();
+        } catch(e) {
+            examView.innerHTML = '<div style="text-align:center; padding:40px; color:red;">Failed to load PYQ data.</div>';
+            console.error(e);
+        }
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const h = Math.floor(timeLeft / 3600);
+            const m = Math.floor((timeLeft % 3600) / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerText').textContent = `${h > 0 ? h + ':' : ''}${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (timeLeft < 600) document.getElementById('timerText').style.color = '#ef4444';
+        }, 1000);
+    }
+
+    function renderPalette() {
+        const grid = document.getElementById('paletteGrid');
+        grid.innerHTML = '';
+        QUESTIONS.forEach((q, i) => {
+            const btn = document.createElement('div');
+            btn.className = `p-btn ${status[i]} ${i === currentIdx ? 'active' : ''}`;
+            btn.textContent = (i + 1).toString();
+            btn.id = `palBtn-${i}`;
+            btn.onclick = () => loadQuestion(i);
+            grid.appendChild(btn);
+        });
+        scrollPaletteToActive();
+        updateProgressBar();
+    }
+
+    function scrollPaletteToActive() {
+        const activeBtn = document.getElementById(`palBtn-${currentIdx}`);
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }
+
+    function updateProgressBar() {
+        const ans = status.filter(s => s === 'answered' || s === 'marked-answered').length;
+        const mark = status.filter(s => s === 'marked' || s === 'marked-answered').length;
+        const total = QUESTIONS.length;
+        const perc = (ans / total) * 100;
+        document.getElementById('progressBar').style.width = perc + '%';
+        document.getElementById('progressText').innerHTML = `<span>ANS: <b>${ans}</b></span> <span>MARKED: <b>${mark}</b></span> <span>TOTAL: <b>${total}</b></span>`;
+    }
+
+    function jumpToSubject(sub) {
+        const idx = QUESTIONS.findIndex(q => q.sub === sub);
+        if (idx !== -1) loadQuestion(idx);
+    }
+
+    function updateTabs() {
+        const sub = QUESTIONS[currentIdx].sub;
+        document.querySelectorAll('.s-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === sub);
+        });
+    }
+
+    function loadQuestion(idx) {
+        if (status[currentIdx] === 'not-visited') status[currentIdx] = 'not-answered';
+        currentIdx = idx;
+        const q = QUESTIONS[idx];
+        
+        document.getElementById('qSubject').textContent = q.sub;
+        document.getElementById('qCounter').textContent = `Question ${idx + 1}/${QUESTIONS.length}`;
+        document.getElementById('qText').innerHTML = q.q;
+        document.querySelector('.q-section').scrollTop = 0;
+
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        const letters = ['A','B','C','D'];
+        
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = `opt-btn ${userAnswers[idx] === i ? 'selected' : ''}`;
+            btn.innerHTML = `<div class="opt-letter">${letters[i]}</div> <span>${opt}</span>`;
+            btn.onclick = () => selectOption(i);
+            grid.appendChild(btn);
+        });
+
+        if (idx === QUESTIONS.length - 1) {
+            document.getElementById('btnSubmit').style.display = 'block';
+        }
+
+        updateTabs();
+        renderPalette();
+    }
+
+    function selectOption(optIdx) {
+        userAnswers[currentIdx] = optIdx;
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach((b, i) => b.classList.toggle('selected', i === optIdx));
+        
+        // Auto update status if marked, keep marked-answered
+        if (status[currentIdx] === 'marked' || status[currentIdx] === 'marked-answered') {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'answered';
+        }
+        renderPalette();
+    }
+
+    function handleClear() {
+        userAnswers[currentIdx] = null;
+        // If it was marked-answered, revert to marked. Otherwise not-answered.
+        status[currentIdx] = (status[currentIdx] === 'marked-answered') ? 'marked' : 'not-answered';
+        const btns = document.querySelectorAll('.opt-btn');
+        btns.forEach(b => b.classList.remove('selected'));
+        renderPalette();
+    }
+
+    function handleMark() {
+        if (userAnswers[currentIdx] !== null) {
+            status[currentIdx] = 'marked-answered';
+        } else {
+            status[currentIdx] = 'marked';
+        }
+        renderPalette();
+        if (currentIdx < QUESTIONS.length - 1) loadQuestion(currentIdx + 1);
+    }
+
+    function handleNext() {
+        if (userAnswers[currentIdx] === null && status[currentIdx] !== 'marked' && status[currentIdx] !== 'marked-answered') {
+            status[currentIdx] = 'not-answered';
+        }
+        if (currentIdx < QUESTIONS.length - 1) {
+            loadQuestion(currentIdx + 1);
+        } else {
+            confirmSubmit();
+        }
+    }
+
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to submit the exam?")) {
+            submitExam();
+        }
+    }
+
+    function submitExam() {
+        clearInterval(timerInterval);
+        document.getElementById('examView').classList.add('hidden');
+        document.getElementById('actionButtons').classList.add('hidden');
+        document.getElementById('resultView').style.display = 'block';
+        renderResults();
+    }
+
+    function renderResults(filter = 'all') {
+        const container = document.getElementById('reviewContainer');
+        container.innerHTML = `<h3 style="margin: 20px 4px 12px; font-weight: 800; font-size: 18px;">Detailed Review</h3>
+            <div class="sub-tabs" style="margin-bottom:20px">
+                <div class="s-tab ${filter === 'all' ? 'active' : ''}" onclick="renderResults('all')">All</div>
+                <div class="s-tab ${filter === 'wrong' ? 'active' : ''}" onclick="renderResults('wrong')">Incorrect</div>
+                <div class="s-tab ${filter === 'correct' ? 'active' : ''}" onclick="renderResults('correct')">Correct</div>
+                <div class="s-tab ${filter === 'skipped' ? 'active' : ''}" onclick="renderResults('skipped')">Skipped</div>
+            </div>`;
+
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+
+        QUESTIONS.forEach((q, i) => {
+            if (userAnswers[i] === null) skipped++;
+            else if (userAnswers[i] === q.ans) correct++;
+            else wrong++;
+        });
+
+        const score = (correct * 4) - (wrong * 1);
+        document.getElementById('resScore').textContent = score;
+        document.getElementById('resCorrect').textContent = correct;
+        document.getElementById('resWrong').textContent = wrong;
+        document.getElementById('resSkipped').textContent = skipped;
+
+        QUESTIONS.forEach((q, i) => {
+            const isCorrect = userAnswers[i] === q.ans;
+            const isSkipped = userAnswers[i] === null;
+            
+            if (filter === 'wrong' && (isCorrect || isSkipped)) return;
+            if (filter === 'correct' && (!isCorrect || isSkipped)) return;
+            if (filter === 'skipped' && !isSkipped) return;
+
+            const item = document.createElement('div');
+            item.className = 'rev-item';
+            
+            let userAnsText = isSkipped ? 'Not Answered' : q.opts[userAnswers[i]];
+            let statusColor = isCorrect ? 'correct' : (isSkipped ? '' : 'wrong');
+            
+            item.innerHTML = `
+                <div class="rev-q"><span style="color:var(--text-sub)">#${i+1}</span> ${q.q}</div>
+                <div class="rev-ans ${statusColor}">
+                    <b>Your Answer:</b> ${userAnsText} ${isCorrect ? '✓' : ''}
+                </div>
+                ${!isCorrect ? `
+                <div class="rev-ans correct">
+                    <b>Correct Answer:</b> ${q.opts[q.ans]}
+                </div>` : ''}
+                <div class="rev-exp">
+                    <b>Explanation:</b> ${q.exp}
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function handleExit() {
+        if (confirm("Do you want to exit the mock test? Your progress will be lost.")) {
+            window.history.back();
+        }
+    }
+
+    init();
+</script>
+
+</body>
+</html>
